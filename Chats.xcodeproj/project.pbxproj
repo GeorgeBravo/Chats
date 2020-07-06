@@ -482,13 +482,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2D17D6CC24AC8DB2009B2E16 /* Pods */ = {
+		2D17D6CC24AC8DB2009B2E16 /* SDKs */ = {
 			isa = PBXGroup;
 			children = (
 				2D17D96C24AC8E79009B2E16 /* MessageKit */,
 				2D17D6CD24AC8DBB009B2E16 /* InputBarAccessoryView */,
 			);
-			path = Pods;
+			path = SDKs;
 			sourceTree = "<group>";
 		};
 		2D17D6CD24AC8DBB009B2E16 /* InputBarAccessoryView */ = {
@@ -958,7 +958,7 @@
 		2D64CF4C24A1FE7400C8B94A /* Chats */ = {
 			isa = PBXGroup;
 			children = (
-				2D17D6CC24AC8DB2009B2E16 /* Pods */,
+				2D17D6CC24AC8DB2009B2E16 /* SDKs */,
 				2D64CF7224A20DB500C8B94A /* App */,
 				2D64CF8024A20E4400C8B94A /* Modules */,
 				2D64CF8D24A20EE300C8B94A /* CustomViews */,
@@ -989,8 +989,7 @@
 				2D64CF7324A20DB500C8B94A /* AppComponent.swift */,
 				2D64CF7424A20DB500C8B94A /* AppDelegate.swift */,
 			);
-			name = App;
-			path = "../../DNS/Cc Dns/App";
+			path = App;
 			sourceTree = "<group>";
 		};
 		2D64CF8024A20E4400C8B94A /* Modules */ = {
