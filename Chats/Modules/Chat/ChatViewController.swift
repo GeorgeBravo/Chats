@@ -29,6 +29,7 @@ final class ChatViewController: MockViewController {
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
         messagesCollectionView.register(CustomCell.self)
+        
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         

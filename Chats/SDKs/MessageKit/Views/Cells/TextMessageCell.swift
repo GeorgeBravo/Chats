@@ -38,6 +38,17 @@ open class TextMessageCell: MessageContentCell {
 
     /// The label used to display the message's text.
     open var messageLabel = MessageLabel()
+    
+    private lazy var messageTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = UIColor.red
+        
+        textView.isScrollEnabled = false
+        
+        return textView
+    }()
+    
+    private var heightConstraint: NSLayoutConstraint?
 
     // MARK: - Methods
 
@@ -57,8 +68,38 @@ open class TextMessageCell: MessageContentCell {
     }
 
     open override func setupSubviews() {
+        messagesContainerView.addSubview(messageTextView) {
+            $0.top == messagesContainerView.topAnchor
+            $0.bottom == messagesContainerView.bottomAnchor
+            $0.leading == messagesContainerView.leadingAnchor
+            $0.trailing == messagesContainerView.trailingAnchor
+            $0.width == 200
+        }
+        
+        heightConstraint = messagesContainerView.heightAnchor.constraint(equalTo: messageTextView.heightAnchor)
+        heightConstraint?.isActive = true
         super.setupSubviews()
-        messageContainerView.addSubview(messageLabel)
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+
+        messageBottomLabel.sizeToFit()
+        // Get glyph index in textview, make sure there is atleast one character present in message
+        let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
+        // Get CGRect for last character
+        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
+        
+        // Check whether enough space is avaiable to show in last line of message, if not add extra height for timestamp
+
+        if lastLineFragmentRect.maxX > (messageTextView.frame.width - messageBottomLabel.frame.width) {
+            // Subtracting 5 to reduce little top spacing for timestamp
+            heightConstraint?.constant += messageBottomLabel.frame.height
+//            print(messageBottomLabel.frame.midY)
+//            print(lastLineFragmentRect.midY)
+//            print("rwrw")
+            //            messageView.frame.size.height += (rightBottomViewHeight - 5)
+        }
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -79,13 +120,17 @@ open class TextMessageCell: MessageContentCell {
             switch message.kind {
             case .text(let text), .emoji(let text):
                 let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+                messageTextView.text = text
+                messageTextView.textColor = textColor
                 messageLabel.text = text
                 messageLabel.textColor = textColor
                 if let font = messageLabel.messageLabelFont {
                     messageLabel.font = font
+                    messageTextView.font = font
                 }
             case .attributedText(let text):
                 messageLabel.attributedText = text
+                messageTextView.attributedText = text
             default:
                 break
             }

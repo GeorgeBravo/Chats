@@ -27,14 +27,29 @@ import UIKit
 /// A subclass of `MessageCollectionViewCell` used to display text, media, and location messages.
 open class MessageContentCell: MessageCollectionViewCell {
 
+    //MARK: - Views
+    
     /// The image view displaying the avatar.
     open var avatarView = AvatarView()
 
     /// The container used for styling and holding the message's content view.
     open var messageContainerView: MessageContainerView = {
         let containerView = MessageContainerView()
-        containerView.clipsToBounds = true
-        containerView.layer.masksToBounds = true
+//        containerView.clipsToBounds = true
+//        containerView.layer.masksToBounds = true
+//        containerView.backgroundColor = UIColor.yellow
+        containerView.layer.borderColor = UIColor.red.cgColor
+        containerView.layer.borderWidth = 1
+        return containerView
+    }()
+    
+    public lazy var messagesContainerView: UIView = {
+        let containerView = UIView()
+        //        containerView.clipsToBounds = true
+        //        containerView.layer.masksToBounds = true
+//        containerView.backgroundColor = UIColor.yellow
+        containerView.layer.borderColor = UIColor.red.cgColor
+        containerView.layer.borderWidth = 1
         return containerView
     }()
 
@@ -62,10 +77,27 @@ open class MessageContentCell: MessageCollectionViewCell {
     }()
 
     /// The bottom label of the messageBubble.
-    open var messageBottomLabel: InsetLabel = {
-        let label = InsetLabel()
-        label.numberOfLines = 0
+    open var messageBottomLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.textAlignment = .left
         return label
+    }()
+    
+    private lazy var readMessageImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    private lazy var smileyImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "smiley")
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
     }()
 
     // Should only add customized subviews - don't change accessoryView itself.
@@ -75,35 +107,54 @@ open class MessageContentCell: MessageCollectionViewCell {
     open weak var delegate: MessageCellDelegate?
     
     private var isFromCurrentSender = false
+    
+    private var leadingConstraint: NSLayoutConstraint?
+    private var trailingConstraint: NSLayoutConstraint?
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
     }
 
     open func setupSubviews() {
-        contentView.addSubview(accessoryView)
-        contentView.addSubview(cellTopLabel)
+        contentView.addSubview(messagesContainerView) {
+            $0.top == contentView.topAnchor + 2
+            $0.bottom == contentView.bottomAnchor - 2
+            $0.height == 15
+        }
+        
+        messagesContainerView.addSubview(messageBottomLabel) {
+            $0.bottom == messagesContainerView.bottomAnchor - 5
+            $0.trailing == messagesContainerView.trailingAnchor - 10
+        }
+        
+//        contentView.addSubview(accessoryView)
+//        contentView.addSubview(cellTopLabel)
 //        contentView.addSubview(messageTopLabel)
 //        contentView.addSubview(messageBottomLabel)
-        contentView.addSubview(cellBottomLabel)
-        contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarView)
+//        contentView.addSubview(cellBottomLabel)
+//
+//        contentView.addSubview(avatarView)
     }
 
     open override func prepareForReuse() {
+        
         super.prepareForReuse()
         cellTopLabel.text = nil
         cellBottomLabel.text = nil
         messageTopLabel.text = nil
         messageBottomLabel.text = nil
+        
+        accessoryView.removeFromSuperview()
+        trailingConstraint?.isActive = false
+        leadingConstraint?.isActive = false
     }
 
     // MARK: - Configuration
@@ -134,6 +185,21 @@ open class MessageContentCell: MessageCollectionViewCell {
         
         self.isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         
+        if isFromCurrentSender {
+            
+            trailingConstraint = messagesContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+            trailingConstraint?.isActive = true
+        } else {
+            leadingConstraint = messagesContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
+            leadingConstraint?.isActive = true
+            
+            messagesContainerView.addSubview(smileyImageView) {
+                $0.size([\.all: 20])
+                $0.leading == messagesContainerView.trailingAnchor + 10
+                $0.top == messagesContainerView.topAnchor + 5
+            }
+        }
+
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
@@ -147,6 +213,7 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         displayDelegate.configureAccessoryView(accessoryView, for: message, at: indexPath, in: messagesCollectionView)
 
+        messagesContainerView.backgroundColor = messageColor
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
@@ -267,16 +334,16 @@ open class MessageContentCell: MessageCollectionViewCell {
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
 
-        messageContainerView.frame = CGRect(origin: origin, size: attributes.messageContainerSize)
+//        messageContainerView.frame = CGRect(origin: origin, size: attributes.messageContainerSize)
     }
 
     /// Positions the cell's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        cellTopLabel.textAlignment = attributes.cellTopLabelAlignment.textAlignment
-        cellTopLabel.textInsets = attributes.cellTopLabelAlignment.textInsets
+//        cellTopLabel.textAlignment = attributes.cellTopLabelAlignment.textAlignment
+//        cellTopLabel.textInsets = attributes.cellTopLabelAlignment.textInsets
 
-        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
+//        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
     }
     
     /// Positions the cell's bottom label.
@@ -288,7 +355,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         let y = messageBottomLabel.frame.maxY
         let origin = CGPoint(x: 0, y: y)
         
-        cellBottomLabel.frame = CGRect(origin: origin, size: attributes.cellBottomLabelSize)
+//        cellBottomLabel.frame = CGRect(origin: origin, size: attributes.cellBottomLabelSize)
     }
     
     /// Positions the message bubble's top label.
@@ -300,19 +367,19 @@ open class MessageContentCell: MessageCollectionViewCell {
         let y = messageContainerView.frame.minY - attributes.messageContainerPadding.top - attributes.messageTopLabelSize.height
         let origin = CGPoint(x: 0, y: y)
         
-        messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
+//        messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
     }
 
     /// Positions the message bubble's bottom label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutMessageBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
-        messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
+//        messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
+//        messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
 
         let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom
         let origin = CGPoint(x: 0, y: y)
 
-        messageBottomLabel.frame = CGRect(origin: origin, size: attributes.messageBottomLabelSize)
+//        messageBottomLabel.frame = CGRect(origin: origin, size: attributes.messageBottomLabelSize)
     }
 
     /// Positions the cell's accessory view.
@@ -347,11 +414,11 @@ open class MessageContentCell: MessageCollectionViewCell {
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
 
-        if !isFromCurrentSender {
-            origin.y = messageContainerView.frame.minY + 5
-            accessoryView.frame = CGRect(origin: origin, size: attributes.accessoryViewSize)
-        } else {
-            accessoryView.removeFromSuperview()
-        }
+//        accessoryView.isHidden = isFromCurrentSender
+        
+//        if !isFromCurrentSender {
+//            origin.y = messageContainerView.frame.minY + 5
+//            accessoryView.frame = CGRect(origin: origin, size: attributes.accessoryViewSize)
+//        }
     }
 }
