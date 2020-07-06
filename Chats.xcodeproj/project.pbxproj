@@ -1277,8 +1277,7 @@
 				2D65C1A024AE1A3E00C64534 /* TextField.swift */,
 				2D65C1A124AE1A3E00C64534 /* Button.swift */,
 			);
-			name = Views;
-			path = "../../../../Enzo/alerts-and-pickers-new/Source/Views";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2D65C1A224AE1A3E00C64534 /* Viewers */ = {
@@ -1303,8 +1302,7 @@
 				2D65C1CF24AE1A3E00C64534 /* Image */,
 				2D65C1D324AE1A3E00C64534 /* Telegram */,
 			);
-			name = Pickers;
-			path = "../../../../Enzo/alerts-and-pickers-new/Source/Pickers";
+			path = Pickers;
 			sourceTree = "<group>";
 		};
 		2D65C1A724AE1A3E00C64534 /* Locale */ = {
