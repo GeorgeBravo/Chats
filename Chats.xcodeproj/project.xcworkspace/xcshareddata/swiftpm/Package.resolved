@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BRIck",
+        "repositoryURL": "https://github.com/gorillka/BRIck",
+        "state": {
+          "branch": null,
+          "revision": "ded8f95033345feeff9a1f14a2aaf4a1ce3dec17",
+          "version": "2.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
