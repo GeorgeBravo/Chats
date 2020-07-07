@@ -20,7 +20,7 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .medium)
-        label.textColor = UIColor.optionsBlackColor
+        label.textColor = UIColor(named: .optionsBlackColor)
         return label
     }()
     
