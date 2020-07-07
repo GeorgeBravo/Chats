@@ -101,6 +101,8 @@ final class ChatViewController: MockViewController {
         layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 20, height: 20))
         layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
+        
+//        layout?.estimatedItemSize = .automaticSize
 
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -126,47 +128,7 @@ final class ChatViewController: MockViewController {
 
     private func configureInputBarItems() {
         messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
-//        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
-//        messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-//        messageInputBar.sendButton.setSize(CGSize(width: 40, height: 40), animated: false)
-//        messageInputBar.addAttachmentsButton.setSize(CGSize(width: 40, height: 40), animated: false)
-//        messageInputBar.addAudioMessageButton.setSize(CGSize(width: 40, height: 40), animated: false)
 
-//        messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
-//        let charCountButton = InputBarButtonItem()
-//            .configure {
-//                $0.title = "0/140"
-//                $0.contentHorizontalAlignment = .right
-//                $0.setTitleColor(UIColor(white: 0.6, alpha: 1), for: .normal)
-//                $0.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-//                $0.setSize(CGSize(width: 50, height: 25), animated: false)
-//            }.onTextViewDidChange { (item, textView) in
-//                item.title = "\(textView.text.count)/140"
-//                let isOverLimit = textView.text.count > 140
-//                item.inputBarAccessoryView?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
-//                if isOverLimit {
-//                    item.inputBarAccessoryView?.sendButton.isEnabled = false
-//                }
-//                let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
-//                item.setTitleColor(color, for: .normal)
-//        }
-//        let bottomItems = [.flexibleSpace, charCountButton]
-        
-//        configureInputBarPadding()
-        
-//        messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
-
-        // This just adds some more flare
-//        messageInputBar.sendButton
-//            .onEnabled { item in
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    item.imageView?.backgroundColor = .primaryColor
-//                })
-//            }.onDisabled { item in
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    item.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
-//                })
-//        }
     }
     
     /// The input bar will autosize based on the contained text, but we can add padding to adjust the height or width if neccesary

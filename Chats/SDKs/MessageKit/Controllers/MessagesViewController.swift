@@ -32,8 +32,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
-    
-    var otsosis = 0
+
 
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
     open lazy var messageInputBar = InputBarAccessoryView()
@@ -334,6 +333,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+//        return UICollectionViewFlowLayout.automaticSize
         return messagesFlowLayout.sizeForItem(at: indexPath)
     }
 
