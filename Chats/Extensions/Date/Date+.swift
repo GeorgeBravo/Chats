@@ -11,7 +11,7 @@ import Foundation
 extension Date {
     var shortDate: NSAttributedString {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "HH:mm a"
         let stringDate = dateFormatter.string(from: self)
         return NSAttributedString(string: stringDate)
     }

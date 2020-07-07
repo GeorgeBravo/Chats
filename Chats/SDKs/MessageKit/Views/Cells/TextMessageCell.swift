@@ -26,7 +26,18 @@ import UIKit
 
 /// A subclass of `MessageContentCell` used to display text messages.
 open class TextMessageCell: MessageContentCell {
-
+    
+    //MARK: Lifecycle
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Properties
 
     /// The `MessageCellDelegate` for the cell.
@@ -38,6 +49,21 @@ open class TextMessageCell: MessageContentCell {
 
     /// The label used to display the message's text.
     open var messageLabel = MessageLabel()
+    
+    private lazy var messageTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = UIColor.red
+        textView.backgroundColor = UIColor.clear
+        
+        textView.layer.borderColor = UIColor.green.cgColor
+        textView.layer.borderWidth = 3
+        
+        textView.isScrollEnabled = false
+        
+        return textView
+    }()
+    
+    private var heightConstraint: NSLayoutConstraint?
 
     // MARK: - Methods
 
@@ -51,16 +77,24 @@ open class TextMessageCell: MessageContentCell {
     }
 
     open override func prepareForReuse() {
+        heightConstraint?.constant = 0
         super.prepareForReuse()
         messageLabel.attributedText = nil
         messageLabel.text = nil
     }
 
-    open override func setupSubviews() {
-        super.setupSubviews()
-        messageContainerView.addSubview(messageLabel)
+    private func setupViews() {
+        messagesContainerView.addSubview(messageTextView) {
+            $0.top == messagesContainerView.topAnchor
+            $0.bottom == messagesContainerView.bottomAnchor
+            $0.leading == messagesContainerView.leadingAnchor
+            $0.trailing == messagesContainerView.trailingAnchor
+            $0.width <= UIScreen.main.bounds.width * 0.6
+        }
+        
+        heightConstraint = messagesContainerView.heightAnchor.constraint(equalTo: messageTextView.heightAnchor)
+        heightConstraint?.isActive = true
     }
-
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
@@ -79,16 +113,22 @@ open class TextMessageCell: MessageContentCell {
             switch message.kind {
             case .text(let text), .emoji(let text):
                 let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+                messageTextView.text = "hugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetext"
+                messageTextView.textColor = textColor
                 messageLabel.text = text
                 messageLabel.textColor = textColor
                 if let font = messageLabel.messageLabelFont {
                     messageLabel.font = font
+                    messageTextView.font = font
                 }
             case .attributedText(let text):
                 messageLabel.attributedText = text
+                messageTextView.attributedText = NSAttributedString(string: "hugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetext")
             default:
                 break
             }
+            
+            layoutTextViewIfNeeded()
         }
     }
     
@@ -97,5 +137,17 @@ open class TextMessageCell: MessageContentCell {
     open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return messageLabel.handleGesture(touchPoint)
     }
-
+    
+    private func layoutTextViewIfNeeded() {
+        messageTextView.sizeToFit()
+        let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
+        // Get CGRect for last character
+        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
+    
+        if lastLineFragmentRect.maxX > (messageTextView.frame.width - readMessageImageContainerView.frame.width) {
+            
+            heightConstraint?.constant += 8
+//            heightConstraint?.constant += readMessageImageContainerView.frame.height
+        }
+    }
 }
