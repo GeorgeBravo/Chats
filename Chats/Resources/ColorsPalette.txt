@@ -1,0 +1,6 @@
+#Colors for Chats Project
+#Extend this file, SwiftGen will recreate it to Constants
+
+#optionsBlackColor: #262626
+#optionsBlueColor: #504eeb
+#optionsRedColor: #ed1c24

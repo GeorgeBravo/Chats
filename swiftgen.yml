@@ -1,0 +1,15 @@
+strings:
+  inputs: Chats/Resources/en.lproj
+  filter: .+\.strings$
+  outputs:
+    templatePath: Chats/Resources/Templates/custom-localization.stencil
+    output: Chats/Generated/LocalizationDictionary.swift
+    params:
+        enumName: LocalizationKeys
+        publicAccess: true
+
+colors:
+    inputs: Chats/Resources/ColorsPalette.txt
+    outputs:
+        templatePath: Chats/Resources/Templates/custom-colors.stencil
+        output: Chats/Generated/Colors.swift
