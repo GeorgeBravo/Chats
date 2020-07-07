@@ -67,6 +67,18 @@ internal extension UIColor {
         }
     }
     
+    static var optionsBlueColor: UIColor {
+        return UIColor(red: 80/255, green: 78/255, blue: 235/255, alpha: 1.0)
+    }
+    
+    static var optionsRedColor: UIColor {
+        return UIColor(red: 237/255, green: 28/255, blue: 36/255, alpha: 1.0)
+    }
+    
+    static var optionsBlackColor: UIColor {
+        return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1.0)
+    }
+    
 }
 
 internal extension UIColor {
@@ -119,4 +131,3 @@ internal extension UIColor {
         }
     }
 }
-

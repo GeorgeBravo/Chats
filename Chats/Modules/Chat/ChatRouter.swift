@@ -8,7 +8,7 @@
 
 import BRIck
 
-protocol ChatInteractable: Interactable {
+protocol ChatInteractable: Interactable, CollocutorProfileListener {
     var router: ChatRouting? { get set }
     var listener: ChatListener? { get set }
 }
@@ -22,10 +22,38 @@ final class ChatRouter: ViewableRouter<ChatInteractable, ChatViewControllable> {
 
     // TODO: Constructor inject child builder protocols to allow building children.
 
-    override init(interactor: ChatInteractable, viewController: ChatViewControllable) {
+    init(interactor: ChatInteractable,
+         viewController: ChatViewControllable,
+         _ collocutorProfileBuilder: CollocutorProfileBuildable) {
+        self.collocutorProfileBuilder = collocutorProfileBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
+    
+    // MARK: - CollocutorProfile
+    private var collocutorProfileBuilder: CollocutorProfileBuildable
+    private var collocutorProfileRouter: ViewableRouting?
 }
 
-extension ChatRouter: ChatRouting {}
+extension ChatRouter: ChatRouting {
+    
+    func showUser(with profile: Collocutor) {
+        let collocutorProfileRouter = collocutorProfileBuilder.build(withListener: interactor, profile: profile)
+        self.collocutorProfileRouter = collocutorProfileRouter
+
+        attach(collocutorProfileRouter)
+        
+        presentModally(collocutorProfileRouter, animated: true, embedInNavigationController: true)
+    }
+    
+    func hideUser() {
+        guard let collocutorProfileRouter = collocutorProfileRouter else {
+            return
+        }
+
+        detach(collocutorProfileRouter)
+        collocutorProfileRouter.dismiss(animated: true)
+        self.collocutorProfileRouter = nil
+    }
+    
+}

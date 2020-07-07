@@ -38,6 +38,20 @@ extension UITableView {
         }
         return cell
     }
+    
+    func dequeueReusableCell<T: UITableViewCell>(of type: T.Type) -> T {
+        guard let cell = dequeueReusableCell(withIdentifier: String(describing: type.self)) as? T else {
+            fatalError("Unable to Dequeue Reusable Table View Cell")
+        }
+        return cell
+    }
+    
+    func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>(of type: T.Type) -> T {
+        guard let headerFooterView = dequeueReusableHeaderFooterView(withIdentifier: String(describing: type.self)) as? T else {
+            fatalError("Unable to Dequeue Reusable Table View Cell")
+        }
+        return headerFooterView
+    }
 
     func dequeueReusableHeaderFooterView<HeaderFooter: UITableViewHeaderFooterView>() -> HeaderFooter {
         let identifier = HeaderFooter.reusableIdentifier

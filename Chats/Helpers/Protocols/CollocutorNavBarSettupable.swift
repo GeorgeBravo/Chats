@@ -18,15 +18,17 @@ extension CollocutorNavBarSettupable where Self: UIViewController  {
     func setupNavBar(with collocutor: Collocutor, target: Any? = nil, action: Selector? = nil) {
         
         collocutorView.setup(with: collocutor)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: target, action: action)
+        collocutorView.addGestureRecognizer(tapGestureRecognizer)
+        collocutorView.isUserInteractionEnabled = true
         
         let barButton = UIBarButtonItem(customView: collocutorView)
         
         navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
         navigationItem.leftBarButtonItems?.append(barButton)
         
-//        navigationController?.navigationBar.backgroundColor = UIColor.white
         navigationController?.navigationBar.barTintColor = UIColor.white
-
+        
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 }

@@ -39,6 +39,7 @@ extension ChatBuilder: ChatBuildable {
         let interactor = ChatInteractor(presenter: viewController)
         interactor.listener = listener
 
-        return ChatRouter(interactor: interactor, viewController: viewController)
+        let collocutorProfileBuilder = CollocutorProfileBuilder(dependency: component)
+        return ChatRouter(interactor: interactor, viewController: viewController, collocutorProfileBuilder)
     }
 }

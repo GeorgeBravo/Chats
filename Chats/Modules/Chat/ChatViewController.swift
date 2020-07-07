@@ -16,6 +16,8 @@ protocol ChatPresentableListener: class {
 
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
+    func showUser(with profile: Collocutor)
+    
 }
 
 final class ChatViewController: MockViewController {
@@ -23,6 +25,7 @@ final class ChatViewController: MockViewController {
     weak var listener: ChatPresentableListener?
     
     private var unreadMessagesCount: Int = 24
+    private let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
     lazy var collocutorView: CollocutorView = CollocutorView()
 
@@ -35,9 +38,7 @@ final class ChatViewController: MockViewController {
         
         unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
         
-        let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
-        
-        setupNavBar(with: collocutor)
+        setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
     }
     
     let outgoingAvatarOverlap: CGFloat = 17.5
@@ -281,6 +282,11 @@ extension ChatViewController {
     @objc
     private func onBackButtonTapped() {
         
+    }
+    
+    @objc
+    private func onCollocutorViewTapped() {
+        listener?.showUser(with: collocutor)
     }
 }
 

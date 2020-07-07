@@ -30,6 +30,7 @@ extension ViewableRouting {
     func presentModally(_ routerToParent: ViewableRouting,
                         animated flag: Bool,
                         embedInNavigationController: Bool = false,
+                        modalPresentationStyle: UIModalPresentationStyle = .pageSheet,
                         completion: (() -> Void)? = nil) {
         let vc: UIViewController
         if embedInNavigationController {
@@ -37,7 +38,9 @@ extension ViewableRouting {
         } else {
             vc = routerToParent.viewControllable
         }
-
+        
+        viewControllable.modalPresentationStyle = modalPresentationStyle
+        
         viewControllable.present(vc, animated: flag, completion: completion)
     }
 

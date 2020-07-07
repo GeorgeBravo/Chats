@@ -10,6 +10,8 @@ import BRIck
 
 protocol ChatRouting: ViewableRouting {
 
+    func showUser(with profile: Collocutor)
+    func hideUser()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -49,6 +51,19 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
     }
 }
 
-extension ChatInteractor: ChatInteractable {}
+extension ChatInteractor: ChatInteractable {
+    
+    // MARK: - Collocutor Profile Listener
+    func hideCollocutorProfile() {
+        router?.hideUser()
+    }
+    
+}
 
-extension ChatInteractor: ChatPresentableListener {}
+extension ChatInteractor: ChatPresentableListener {
+
+    func showUser(with profile: Collocutor) {
+        router?.showUser(with: profile)
+    }
+    
+}
