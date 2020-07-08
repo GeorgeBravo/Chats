@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+//import UIKit
 
 enum CollocutorOptionCellAppearance {
     case standard
@@ -15,15 +15,28 @@ enum CollocutorOptionCellAppearance {
     case destructive
 }
 
-enum CollocutorOptionType: String {
-    case sendMessage = "Send Message"
-    case addToContacts = "Add to Contacts"
-    case addToGroups = "Add to Groups"
-    case sharedMedia = "Shared Media"
-    case notification = "Notifications"
-    case groupsInCommon = "Groups In Common"
-    case blockUser = "Block User"
-    case username = "@username"
+enum CollocutorOptionType: Int {
+    case addToContacts
+    case addToGroups
+    case blockUser
+    case groupsInCommon
+    case notification
+    case sendMessage
+    case sharedMedia
+    case username
+    
+    var stringDescription: String {
+        switch self {
+        case .addToContacts: return LocalizationKeys.addToContacts.localized()
+        case .addToGroups: return LocalizationKeys.addToGroups.localized()
+        case .blockUser: return LocalizationKeys.blockUser.localized()
+        case .groupsInCommon: return LocalizationKeys.groupsInCommon.localized()
+        case .notification: return LocalizationKeys.notifications.localized()
+        case .sendMessage: return LocalizationKeys.sendMessage.localized()
+        case .sharedMedia: return LocalizationKeys.sharedMedia.localized()
+        case .username: return LocalizationKeys.username.localized()
+        }
+    }
     
     var cellAppearance: CollocutorOptionCellAppearance {
         switch self {
@@ -38,11 +51,11 @@ enum CollocutorOptionType: String {
         }
     }
     
-    var buttonTextColor: UIColor {
+    var buttonTextColorName: ColorName {
         switch self.cellAppearance {
-        case .arrowCell: return UIColor.optionsBlackColor
-        case .destructive: return UIColor.optionsRedColor
-        case .standard: return UIColor.optionsBlueColor
+        case .arrowCell: return ColorName.optionsBlackColor
+        case .destructive: return ColorName.optionsRedColor
+        case .standard: return ColorName.optionsBlueColor
         }
     }
 }
@@ -54,7 +67,7 @@ struct ActionTableViewCellModel: TableViewCellModel {
     var optionType: CollocutorOptionType
     
     init(optionType: CollocutorOptionType) {
-        title = optionType.rawValue
+        title = optionType.stringDescription
         self.optionType = optionType
     }
 }

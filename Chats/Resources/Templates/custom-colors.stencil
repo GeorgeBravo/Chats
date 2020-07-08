@@ -1,0 +1,65 @@
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+
+{% if palettes %}
+{% set colorAlias %}{{param.colorAliasName|default:"Color"}}{% endset %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+#if os(OSX)
+  import AppKit.NSColor
+  {{accessModifier}} typealias {{colorAlias}} = NSColor
+#elseif os(iOS) || os(tvOS) || os(watchOS)
+  import UIKit.UIColor
+  {{accessModifier}} typealias {{colorAlias}} = UIColor
+#endif
+
+// swiftlint:disable superfluous_disable_command
+// swiftlint:disable file_length
+
+// MARK: - Colors
+
+// swiftlint:disable identifier_name line_length type_body_length
+{% set enumName %}{{param.enumName|default:"ColorName"}}{% endset %}
+{{accessModifier}} struct {{enumName}} {
+  {{accessModifier}} let rgbValue: UInt32
+  {{accessModifier}} var color: {{colorAlias}} { return {{colorAlias}}(named: self) }
+
+{% macro rgbValue color %}0x{{color.red}}{{color.green}}{{color.blue}}{% endmacro %}
+{% macro enumBlock colors %}
+  {% for color in colors %}
+  {{accessModifier}} static let {{color.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = {{enumName}}(rgbValue: {% call rgbValue color %})
+  {% endfor %}
+{% endmacro %}
+  {% if palettes.count > 1 %}
+  {% for palette in palettes %}
+  {{accessModifier}} enum {{palette.name|swiftIdentifier:"pretty"|escapeReservedKeywords}} {
+    {% filter indent:2 %}{% call enumBlock palette.colors %}{% endfilter %}
+  }
+  {% endfor %}
+  {% else %}
+  {% call enumBlock palettes.first.colors %}
+  {% endif %}
+}
+// swiftlint:enable identifier_name line_length type_body_length
+
+// MARK: - Implementation Details
+
+// swiftlint:disable operator_usage_whitespace
+internal extension {{colorAlias}} {
+  convenience init(hex rgbValue: UInt32) {
+    let red = CGFloat((rgbValue >> 16) & 0xff) / 255.0
+    let green  = CGFloat((rgbValue >>  8) & 0xff) / 255.0
+    let blue = CGFloat((rgbValue      ) & 0xff) / 255.0
+    let alpha: CGFloat = 1
+    self.init(red: red, green: green, blue: blue, alpha: alpha)
+  }
+}
+// swiftlint:enable operator_usage_whitespace
+
+{{accessModifier}} extension {{colorAlias}} {
+  convenience init(named color: {{enumName}}) {
+    self.init(hex: color.rgbValue)
+  }
+}
+{% else %}
+// No color found
+{% endif %}

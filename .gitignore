@@ -265,3 +265,5 @@ ChatApp.xcodeproj/xcshareddata/xcschemes/ChatApp.xcscheme
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+Pods/

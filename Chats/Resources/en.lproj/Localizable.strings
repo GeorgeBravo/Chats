@@ -1,0 +1,17 @@
+/*
+  Localizable.strings
+  Chats
+
+  Created by user on 7.07.2020.
+  Copyright © 2020 name. All rights reserved.
+*/
+
+// MARK: - Collocutor Profile Screen
+"SendMessage" = "Send Message";
+"AddToContacts" = "Add to Contacts";
+"AddToGroups" = "Add to Groups";
+"SharedMedia" = "Shared Media";
+"Notifications" = "Notifications";
+"GroupsInCommon" = "Groups In Common";
+"BlockUser" = "Block User";
+"username" = "@username";

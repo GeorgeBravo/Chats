@@ -53,6 +53,6 @@ class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
         if let title = model.title {
             actionButton.setTitle(title, for: .normal)
         }
-        actionButton.setTitleColor(model.optionType.buttonTextColor, for: .normal)
+        actionButton.setTitleColor(UIColor(named: model.optionType.buttonTextColorName), for: .normal)
     }
 }
