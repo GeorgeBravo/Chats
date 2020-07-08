@@ -17,10 +17,11 @@ protocol CollocutorProfilePresentableListener: class {
 
     func hideCollocutorProfile()
     func combineCollocutorOptionsSections()
-    func cellForRow(at: IndexPath) -> TableViewCellModel
+    func cellModelForRow(at: IndexPath) -> TableViewCellModel
     func numberOfRows(in section: Int) -> Int
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
+    func didTapCell(at indexPath: IndexPath)
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -33,6 +34,8 @@ final class CollocutorProfileViewController: UIViewController {
         let tableView = UITableView()
         tableView.estimatedRowHeight = Constants.estimatedCellHeigth
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorColor = UIColor(named: .separatorColor)
+        tableView.allowsMultipleSelection = false
         tableView.tableFooterView = UIView()
         tableView.register(ActionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
@@ -63,8 +66,7 @@ final class CollocutorProfileViewController: UIViewController {
 extension CollocutorProfileViewController {
     
     private func setupNavigationBarAppearance() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.setNavigationBarAppearance(true)
         setupBackButton(target: self, action: #selector(onBackButtonTapped))
         setupEditButton(target: self, action: #selector(editButtonPressed))
     }
@@ -88,7 +90,10 @@ extension CollocutorProfileViewController {
     }
     
     @objc func editButtonPressed() {
-        print("CollocutorProfileViewController editButtonPressed")
+        UIAlertController.showAlert(viewController: self,
+                                    title: LocalizationKeys.action.localized(),
+                                    message: LocalizationKeys.edit.localized(),
+                                    actions: [UIAlertAction.okAction()])
     }
 }
 
@@ -97,6 +102,10 @@ extension CollocutorProfileViewController: CollocutorProfilePresentable {
         DispatchQueue.main.async { [unowned self] in
             self.optionsTableView.reloadData()
         }
+    }
+    
+    func showAlert(with title: String, message: String) {
+        UIAlertController.showAlert(viewController: self, title: title, message: message, actions: [UIAlertAction.okAction()])
     }
 }
 
@@ -121,7 +130,7 @@ extension CollocutorProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellModel = listener?.cellForRow(at: indexPath) else { return UITableViewCell() }
+        guard let cellModel = listener?.cellModelForRow(at: indexPath) else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(of: cellModel.cellType.classType)
         if let cell = cell as? TableViewCellSetup {
             cell.setup(with: cellModel)
@@ -137,6 +146,22 @@ extension CollocutorProfileViewController: UITableViewDataSource {
             view.setup(with: sectionModel)
         }
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(0.0, 0.0, tableView.bounds.width, 1.0))
+        let separatorView = UIView(frame: CGRect(x: tableView.separatorInset.left, y: footerView.frame.height, width: tableView.frame.width - tableView.separatorInset.right - tableView.separatorInset.left, height: 0.5))
+        separatorView.backgroundColor = UIColor(named: .separatorColor)
+        footerView.addSubview(separatorView)
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 2.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        listener?.didTapCell(at: indexPath)
     }
     
 }

@@ -18,6 +18,7 @@ protocol CollocutorProfilePresentable: Presentable {
     var listener: CollocutorProfilePresentableListener? { get set }
     
     func update()
+    func showAlert(with title: String, message: String)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -69,12 +70,12 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
     func combineCollocutorOptionsSections() {
         let firstSection = OptionsTableViewSectionModel(headerViewType: .options, title: "username", cellModels: [ActionTableViewCellModel(optionType: .username)])
         let secondSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sendMessage), ActionTableViewCellModel(optionType: .addToContacts), ActionTableViewCellModel(optionType: .addToGroups)])
-        let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia), ActionTableViewCellModel(optionType: .notification), ActionTableViewCellModel(optionType: .groupsInCommon)])
+        let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia, descriptionText: " "), ActionTableViewCellModel(optionType: .notification, descriptionText: "Enabled"), ActionTableViewCellModel(optionType: .groupsInCommon, descriptionText: "3")])
         let fourthSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .blockUser)])
         sections = [firstSection, secondSection, thirdSection, fourthSection]
     }
     
-    func cellForRow(at indexPath: IndexPath) -> TableViewCellModel {
+    func cellModelForRow(at indexPath: IndexPath) -> TableViewCellModel {
         let section = indexPath.section
         let row = indexPath.row
         return sections[section].cellModels[row]
@@ -90,5 +91,11 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
     
     func sectionModel(for number: Int) -> TableViewSectionModel {
         return sections[number]
+    }
+    
+    func didTapCell(at indexPath: IndexPath) {
+        if let cellModel = sections[indexPath.section].cellModels[indexPath.row] as? ActionTableViewCellModel, let message = cellModel.title {
+            presenter.showAlert(with: LocalizationKeys.action.localized(), message: message)
+        }
     }
 }
