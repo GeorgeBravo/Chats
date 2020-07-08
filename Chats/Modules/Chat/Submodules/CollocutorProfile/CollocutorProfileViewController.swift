@@ -35,9 +35,10 @@ final class CollocutorProfileViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.estimatedRowHeight = Constants.estimatedCellHeigth
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorColor = .clear//UIColor(named: .separatorColor)
+        tableView.separatorColor = .clear
         tableView.backgroundColor = .white
         tableView.allowsMultipleSelection = false
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: CGFloat.leastNormalMagnitude))
         tableView.tableFooterView = UIView()
         tableView.register(ActionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
@@ -153,6 +154,10 @@ extension CollocutorProfileViewController: UITableViewDataSource {
         }
         view.tintColor = UIColor(named: .whiteColor)
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? .leastNormalMagnitude : UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

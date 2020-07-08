@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias OnCollocutorManipulationPressClosure = ((CollocutorManipulations) -> Void)
+
 struct CollocutorInfoCellModel: TableViewCellModel {
     
     // MARK: - Variables
@@ -15,17 +17,21 @@ struct CollocutorInfoCellModel: TableViewCellModel {
     var name: String
     var image: UIImage
     var fontSize: CGFloat
+    var lastSeenDescriptionText: String
+    var manipulationCallback: OnCollocutorManipulationPressClosure?
     
     // MARK: - Inits
-    init(name: String, image: UIImage, fontSize: CGFloat) {
+    init(name: String, image: UIImage, fontSize: CGFloat, lastSeenDescriptionText: String) {
         self.name = name
         self.image = image
         self.fontSize = fontSize
+        self.lastSeenDescriptionText = lastSeenDescriptionText
     }
     
-    init(collocutor: Collocutor, fontSize: CGFloat) {
+    init(collocutor: Collocutor, fontSize: CGFloat, lastSeenDescriptionText: String) {
         name = collocutor.name
         image = collocutor.collocutorImage
         self.fontSize = fontSize
+        self.lastSeenDescriptionText = lastSeenDescriptionText
     }
 }

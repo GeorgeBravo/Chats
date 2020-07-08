@@ -11,12 +11,17 @@ import UIKit
 private struct Constants {
     static let profileImageHeight: CGFloat = 140.0
     static let imageTopSpacing: CGFloat = 8.0
+    static let labelTopSpacing: CGFloat = 4.0
     static let separatorHeight: CGFloat = 0.4
+    static let lastSeenLabelFontSize: CGFloat = 16.0
+    static let buttonStackLeadingOffset: CGFloat = 32.0
 }
 
 class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     
     // MARK: - Variables
+    private var model: CollocutorInfoCellModel?
+    
     private lazy var collocutorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.profileImageHeight / 2
@@ -31,9 +36,23 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         return label
     }()
     
+    private lazy var lastSeenLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: Constants.lastSeenLabelFontSize, weight: .regular)
+        label.textColor = UIColor(named: .blackColor)
+        return label
+    }()
+    
+    private lazy var buttonsStackView: CollocutorManipulationsButtonsStackView = {
+        let stackView = CollocutorManipulationsButtonsStackView()
+        return stackView
+    }()
+    
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: .blackColor)
+        view.alpha = 0.5
         return view
     }()
     
@@ -56,6 +75,8 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
 
 extension CollocutorProfileTableViewCell {
     private func setupViews() {
+        selectionStyle = .none
+        
         addSubview(collocutorImageView) {
             $0.top == topAnchor + Constants.imageTopSpacing
             $0.centerX == centerXAnchor
@@ -66,7 +87,18 @@ extension CollocutorProfileTableViewCell {
         addSubview(collocutorNameLabel) {
             $0.top == collocutorImageView.bottomAnchor + Constants.imageTopSpacing
             $0.centerX == centerXAnchor
-            $0.bottom == bottomAnchor - Constants.imageTopSpacing
+        }
+        
+        addSubview(lastSeenLabel) {
+            $0.top == collocutorNameLabel.bottomAnchor + Constants.labelTopSpacing
+            $0.centerX == centerXAnchor
+        }
+        
+        addSubview(buttonsStackView) {
+            $0.top == lastSeenLabel.bottomAnchor + Constants.buttonStackLeadingOffset
+            $0.bottom == bottomAnchor - Constants.buttonStackLeadingOffset
+            $0.leading == leadingAnchor + Constants.buttonStackLeadingOffset
+            $0.trailing == trailingAnchor - Constants.buttonStackLeadingOffset
         }
         
         addSubview(separatorView) {
@@ -79,8 +111,17 @@ extension CollocutorProfileTableViewCell {
     
     func setup(with model: TableViewCellModel) {
         guard let model = model as? CollocutorInfoCellModel else { return }
+        self.model = model
         collocutorImageView.image = model.image
         collocutorNameLabel.text = model.name
         collocutorNameLabel.font = UIFont.systemFont(ofSize: model.fontSize, weight: .heavy)
+        lastSeenLabel.text = model.lastSeenDescriptionText
+        buttonsStackView.delegate = self
+    }
+}
+
+extension CollocutorProfileTableViewCell: CollocutorManipulationsButtonsStackViewDelegate {
+    func buttonPressed(with action: CollocutorManipulations) {
+        model?.manipulationCallback?(action)
     }
 }

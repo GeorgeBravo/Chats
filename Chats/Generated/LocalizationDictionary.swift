@@ -18,14 +18,24 @@ public enum LocalizationKeys {
   public static let addToGroups: String = "AddToGroups"
   /// Block User
   public static let blockUser: String = "BlockUser"
+  /// Call
+  public static let call: String = "Call"
   /// Edit
   public static let edit: String = "Edit"
   /// Groups In Common
   public static let groupsInCommon: String = "GroupsInCommon"
+  /// last seen recently
+  public static let lastSeenRecently: String = "LastSeenRecently"
+  /// More
+  public static let more: String = "More"
+  /// Mute
+  public static let mute: String = "Mute"
   /// Notifications
   public static let notifications: String = "Notifications"
   /// Ok
   public static let ok: String = "Ok"
+  /// Search
+  public static let search: String = "Search"
   /// Send Message
   public static let sendMessage: String = "SendMessage"
   /// Shared Media

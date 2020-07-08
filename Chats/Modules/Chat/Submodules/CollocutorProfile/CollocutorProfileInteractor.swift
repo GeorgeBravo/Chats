@@ -69,7 +69,11 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
     
     // MARK: - TableView logic
     func combineCollocutorOptionsSections() {
-        let zeroSection = OptionsTableViewSectionModel(headerViewType: .options, title: "", cellModels: [CollocutorInfoCellModel(collocutor: profile, fontSize: 32.0)])
+        var collocutorInfoCellModel = CollocutorInfoCellModel(collocutor: profile, fontSize: 32.0, lastSeenDescriptionText: LocalizationKeys.lastSeenRecently.localized())
+        collocutorInfoCellModel.manipulationCallback = { [weak self] manipulation in
+            self?.presenter.showAlert(with: LocalizationKeys.action.localized(), message: manipulation.stringDescription)
+        }
+        let zeroSection = OptionsTableViewSectionModel(headerViewType: .options, title: "", cellModels: [collocutorInfoCellModel])
         let firstSection = OptionsTableViewSectionModel(headerViewType: .options, title: "username", cellModels: [ActionTableViewCellModel(optionType: .username)])
         let secondSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sendMessage), ActionTableViewCellModel(optionType: .addToContacts), ActionTableViewCellModel(optionType: .addToGroups)])
         let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia, descriptionText: " "), ActionTableViewCellModel(optionType: .notification, descriptionText: "Enabled"), ActionTableViewCellModel(optionType: .groupsInCommon, descriptionText: "3")])

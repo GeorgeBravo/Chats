@@ -263,6 +263,7 @@
 		CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4224B62B6B0067D5B6 /* UIAlertAction+Extension.swift */; };
 		CECA0E4724B62C6A0067D5B6 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4524B62C690067D5B6 /* UINavigationController+Extension.swift */; };
 		CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */; };
+		CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */; };
 		CED4208424B49AD900C557FC /* OptionsTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4208324B49AD900C557FC /* OptionsTableViewSectionModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -526,6 +527,7 @@
 		CECA0E4224B62B6B0067D5B6 /* UIAlertAction+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Extension.swift"; sourceTree = "<group>"; };
 		CECA0E4524B62C690067D5B6 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
+		CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorManipulationsButtonsStackView.swift; sourceTree = "<group>"; };
 		CED4208324B49AD900C557FC /* OptionsTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewSectionModel.swift; sourceTree = "<group>"; };
 		DEBDC9E49B3DBE427E91D8E6 /* Pods-Chats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.debug.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1125,6 +1127,7 @@
 			isa = PBXGroup;
 			children = (
 				CECA0E3B24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift */,
+				CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */,
 				2D501C2F24B5BB1C00C37DCB /* UITableViewHeaderFooterView */,
 				2D65C19124AE0DE100C64534 /* Alerts&Pickers */,
 				2D1C4D3024ABC7E40087449A /* Layout */,
@@ -1865,6 +1868,7 @@
 				2D64CFE224A20EF000C8B94A /* UICollectionViewCell+.swift in Sources */,
 				2D501B7724B320C800C37DCB /* DetectorType.swift in Sources */,
 				2D501BDE24B3223400C37DCB /* KeyboardManager.swift in Sources */,
+				CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */,
 				2D501BE124B3224600C37DCB /* HorizontalEdgePadding.swift in Sources */,
 				2D501BD424B3221B00C37DCB /* AutocompleteCell.swift in Sources */,
 				2D65C1FA24AE1A3F00C64534 /* TwoTextFieldsViewController.swift in Sources */,
