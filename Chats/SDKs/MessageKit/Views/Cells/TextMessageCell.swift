@@ -24,31 +24,21 @@
 
 import UIKit
 
-/// A subclass of `MessageContentCell` used to display text messages.
-open class TextMessageCell: MessageContentCell {
+final class TextMessageCell: MessageContentCell {
     
     //MARK: Lifecycle
     
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Properties
 
-    /// The `MessageCellDelegate` for the cell.
-    open override weak var delegate: MessageCellDelegate? {
-        didSet {
-            messageLabel.delegate = delegate
-        }
-    }
-
-    /// The label used to display the message's text.
-    open var messageLabel = MessageLabel()
     
     private lazy var messageTextView: UITextView = {
         let textView = UITextView()
@@ -67,20 +57,10 @@ open class TextMessageCell: MessageContentCell {
 
     // MARK: - Methods
 
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-            messageLabel.textInsets = attributes.messageLabelInsets
-            messageLabel.messageLabelFont = attributes.messageLabelFont
-            messageLabel.frame = messageContainerView.bounds
-        }
-    }
 
-    open override func prepareForReuse() {
+    public override func prepareForReuse() {
         heightConstraint?.constant = 0
         super.prepareForReuse()
-        messageLabel.attributedText = nil
-        messageLabel.text = nil
     }
 
     private func setupViews() {
@@ -95,49 +75,7 @@ open class TextMessageCell: MessageContentCell {
         heightConstraint = messagesContainerView.heightAnchor.constraint(equalTo: messageTextView.heightAnchor)
         heightConstraint?.isActive = true
     }
-    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-
-        let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
-
-        messageLabel.configure {
-            messageLabel.enabledDetectors = enabledDetectors
-            for detector in enabledDetectors {
-                let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
-                messageLabel.setAttributes(attributes, detector: detector)
-            }
-            switch message.kind {
-            case .text(let text), .emoji(let text):
-                let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
-                messageTextView.text = "hugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetext"
-                messageTextView.textColor = textColor
-                messageLabel.text = text
-                messageLabel.textColor = textColor
-                if let font = messageLabel.messageLabelFont {
-                    messageLabel.font = font
-                    messageTextView.font = font
-                }
-            case .attributedText(let text):
-                messageLabel.attributedText = text
-                messageTextView.attributedText = NSAttributedString(string: "hugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetexthugetext")
-            default:
-                break
-            }
-            
-            layoutTextViewIfNeeded()
-        }
-    }
-    
-    /// Used to handle the cell's contentView's tap gesture.
-    /// Return false when the contentView does not need to handle the gesture.
-    open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
-        return messageLabel.handleGesture(touchPoint)
-    }
-    
     private func layoutTextViewIfNeeded() {
         messageTextView.sizeToFit()
         let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)

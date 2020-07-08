@@ -9,15 +9,15 @@
 import UIKit
 
 protocol CollocutorNavBarSettupable: class {
-    var collocutorView: CollocutorView { get }
-    
     func setupNavBar(with collocutor: Collocutor, target: Any?, action: Selector?)
 }
 
 extension CollocutorNavBarSettupable where Self: UIViewController  {
     func setupNavBar(with collocutor: Collocutor, target: Any? = nil, action: Selector? = nil) {
         
+        let collocutorView: CollocutorView = CollocutorView()
         collocutorView.setup(with: collocutor)
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: target, action: action)
         collocutorView.addGestureRecognizer(tapGestureRecognizer)
         collocutorView.isUserInteractionEnabled = true

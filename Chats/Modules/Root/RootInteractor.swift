@@ -9,7 +9,8 @@
 import BRIck
 
 protocol RootRouting: LaunchRouting {
-    func showLogin()
+    func showSingleChat()
+    func showChatList()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -26,6 +27,15 @@ protocol RootListener: class {
 final class RootInteractor: PresentableInteractor<RootPresentable> {
     weak var router: RootRouting?
     weak var listener: RootListener?
+    
+    private enum StartRouting {
+        //Роутинг для Мишы
+        case chatList
+        
+        // Роутинг Для Жоры и Савы
+        case defaultt
+
+    }
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
@@ -37,7 +47,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
     override func didBecomeActive() {
         super.didBecomeActive()
 
-        router?.showLogin()
+        showInitialScreen(with: .defaultt)
         // TODO: Implement business logic here.
     }
 
@@ -45,6 +55,15 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
         super.willResignActive()
 
         // TODO: Pause any business logic.
+    }
+    
+    private func showInitialScreen(with startPoint: StartRouting) {
+        switch startPoint {
+        case .chatList:
+            router?.showChatList()
+        case .defaultt:
+            router?.showSingleChat()
+        }
     }
 }
 

@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol Creatable: class {}
 
-extension Creatable where Self: NSObject {
+extension Creatable where Self: UIView {
     @discardableResult
     static func create( configure: (Self) -> Void = { _ in }) -> Self {
         let view = Self()

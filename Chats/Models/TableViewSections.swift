@@ -10,10 +10,12 @@ import UIKit
 
 enum TableViewSectionType {
     case options
+    case messagesTimestamp
     
     var classType: UITableViewHeaderFooterView.Type? {
         switch self {
         case .options: return OptionSectionHeaderView.self
+        case .messagesTimestamp: return OptionSectionHeaderView.self
         }
     }
 }

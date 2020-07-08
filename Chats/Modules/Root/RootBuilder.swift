@@ -8,7 +8,6 @@
 
 import BRIck
 
-
 protocol RootDependency: Dependency {
     // TODO: Declare the set of dependencies required by this BRIck, but cannot be created by this BRIck.
 }
@@ -43,8 +42,11 @@ extension RootBuilder: RootBuildable {
         let interactor = RootInteractor(presenter: viewController)
         
         let chatBuilder = ChatBuilder(dependency: component)
+        let chatListBuilder = ChatListBuilder(dependency: component)
 
         return RootRouter(interactor: interactor,
-                          viewController: viewController, chatBuilder)
+                          viewController: viewController,
+                          chatBuilder,
+                          chatListBuilder)
     }
 }
