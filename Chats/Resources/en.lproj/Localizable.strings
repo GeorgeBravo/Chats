@@ -14,4 +14,7 @@
 "Notifications" = "Notifications";
 "GroupsInCommon" = "Groups In Common";
 "BlockUser" = "Block User";
-"username" = "@username";
+"Username" = "@username";
+"Ok" = "Ok";
+"Action" = "Action";
+"Edit" = "Edit";

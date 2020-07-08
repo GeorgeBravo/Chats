@@ -24,4 +24,8 @@ extension String {
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }
+    
+    static func isEmpty(_ string: String?) -> Bool {
+        return string?.count ?? 0 == 0
+    }
 }

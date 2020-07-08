@@ -63,11 +63,12 @@ enum CollocutorOptionType: Int {
 struct ActionTableViewCellModel: TableViewCellModel {
     var cellType: TableViewCellType! { return .collocutorOption }
     var title: String?
-    var imageLink: String?
+    var descriptionText: String?
     var optionType: CollocutorOptionType
     
-    init(optionType: CollocutorOptionType) {
+    init(optionType: CollocutorOptionType, descriptionText: String? = nil) {
         title = optionType.stringDescription
+        self.descriptionText = descriptionText
         self.optionType = optionType
     }
 }

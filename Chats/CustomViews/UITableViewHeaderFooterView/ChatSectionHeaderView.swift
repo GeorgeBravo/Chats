@@ -13,7 +13,7 @@ class ChatSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSetup
     // MARK: - Variables
     private lazy var titleLabel = UILabel.create {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        $0.textColor = UIColor.optionsBlackColor
+        $0.textColor = UIColor(named: .optionsBlackColor)
         $0.textAlignment = .center
     }
     

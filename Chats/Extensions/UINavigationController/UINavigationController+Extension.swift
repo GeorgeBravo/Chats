@@ -13,17 +13,18 @@ extension UINavigationController {
         navigationBar.isHidden = false
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
-//            navigationBarAppearance.backgroundColor = UIColor(named: ColorName.navigationBarBackground)
-            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.systemBackground]
-            navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemBackground]
+            navigationBarAppearance.backgroundColor = UIColor(named: .whiteColor)
+            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: .optionsBlackColor)]
+            navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(named: .optionsBlackColor)]
             navigationBar.standardAppearance = navigationBarAppearance
             navigationBar.compactAppearance = navigationBarAppearance
             navigationBar.scrollEdgeAppearance = navigationBarAppearance
         }
-//        navigationBar.barTintColor = UIColor(named: ColorName.navigationBarTint)
+        navigationBar.isTranslucent = false
+        navigationBar.barTintColor = UIColor(named: .whiteColor)
         navigationBar.prefersLargeTitles = largeTitle
-        navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationBar.tintColor = .white
+        navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor(named: .optionsBlackColor)]
+        navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: .optionsBlackColor)]
+        navigationBar.tintColor = UIColor(named: .optionsBlackColor)
     }
 }

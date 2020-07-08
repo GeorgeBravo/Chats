@@ -30,15 +30,18 @@ final class CollocutorProfileViewController: UIViewController {
 
     // MARK: - Variables
     weak var listener: CollocutorProfilePresentableListener?
+    
     private lazy var optionsTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.estimatedRowHeight = Constants.estimatedCellHeigth
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorColor = UIColor(named: .separatorColor)
+        tableView.separatorColor = .clear//UIColor(named: .separatorColor)
+        tableView.backgroundColor = .white
         tableView.allowsMultipleSelection = false
         tableView.tableFooterView = UIView()
         tableView.register(ActionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
+        tableView.register(CollocutorProfileTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -66,19 +69,21 @@ final class CollocutorProfileViewController: UIViewController {
 extension CollocutorProfileViewController {
     
     private func setupNavigationBarAppearance() {
-        navigationController?.setNavigationBarAppearance(true)
+        navigationController?.setNavigationBarAppearance()
         setupBackButton(target: self, action: #selector(onBackButtonTapped))
         setupEditButton(target: self, action: #selector(editButtonPressed))
     }
     
     private func setupViews() {
+        view.backgroundColor = .white
+        
         view.addSubview(optionsTableView) {
             $0.top == view.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
             $0.bottom == view.bottomAnchor
         }
-        view.backgroundColor = .white
+        
     }
     
 }
@@ -139,25 +144,15 @@ extension CollocutorProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section > 0 else { return nil }
         guard let sectionModel = listener?.sectionModel(for: section),
             let classType = sectionModel.headerViewType.classType else { return nil }
         let view = tableView.dequeueReusableHeaderFooterView(of: classType)
         if let view = view as? SectionHeaderViewSetup {
             view.setup(with: sectionModel)
         }
+        view.tintColor = UIColor(named: .whiteColor)
         return view
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView(frame: CGRect(0.0, 0.0, tableView.bounds.width, 1.0))
-        let separatorView = UIView(frame: CGRect(x: tableView.separatorInset.left, y: footerView.frame.height, width: tableView.frame.width - tableView.separatorInset.right - tableView.separatorInset.left, height: 0.5))
-        separatorView.backgroundColor = UIColor(named: .separatorColor)
-        footerView.addSubview(separatorView)
-        return footerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 2.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

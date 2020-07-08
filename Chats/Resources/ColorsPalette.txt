@@ -4,3 +4,7 @@
 #optionsBlackColor: #262626
 #optionsBlueColor: #504eeb
 #optionsRedColor: #ed1c24
+#whiteColor: #ffffff
+#separatorColor: #a2a9b6
+#descriptionGrayColor: #a5aab1
+#blackColor: #000000
