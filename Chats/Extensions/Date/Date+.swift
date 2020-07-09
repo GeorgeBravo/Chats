@@ -9,10 +9,16 @@
 import Foundation
 
 extension Date {
-    var shortDate: NSAttributedString {
+    var shortDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm a"
-        let stringDate = dateFormatter.string(from: self)
-        return NSAttributedString(string: stringDate)
+        return dateFormatter.string(from: self)
+    }
+    
+    var headerSectionDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        dateFormatter.doesRelativeDateFormatting = true
+        return dateFormatter.string(from: self)
     }
 }

@@ -48,7 +48,7 @@ final class CollocutorProfileInteractor: PresentableInteractor<CollocutorProfile
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        
+            
         // TODO: Implement business logic here.
     }
 

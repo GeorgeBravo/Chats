@@ -12,7 +12,7 @@ public class MessageContentCell: UITableViewCell {
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupSubviews()
+//        setupSubviews()
     }
     
     required init?(coder: NSCoder) {
@@ -26,8 +26,7 @@ public class MessageContentCell: UITableViewCell {
 
     public lazy var messagesContainerView: UIView = {
         let containerView = UIView()
-        containerView.layer.borderColor = UIColor.red.cgColor
-        containerView.layer.borderWidth = 1
+        containerView.cornerRadius = 18
         return containerView
     }()
 
@@ -73,24 +72,25 @@ public class MessageContentCell: UITableViewCell {
     private var leadingConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
 
-    
-
-    open override func prepareForReuse() {
-//        accessoryView.removeFromSuperview()
+    public override func prepareForReuse() {
+//        smileyImageView.removeFromSuperview()
+        readMessageImageView.image = nil
+        messageTimestampLabel.text = nil
+        trailingConstraint?.isActive = false
+        leadingConstraint?.isActive = false
         super.prepareForReuse()
-
-//        messageTimestampLabel.text = nil
-//        trailingConstraint?.isActive = false
-//        leadingConstraint?.isActive = false
+        
     }
 
-
-    func someFunc() {
-
-            
-    //        self.isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-            
-            if isFromCurrentSender {
+    func setup(with viewModel: TableViewCellModel) {
+        switch viewModel {
+        case let viewModel as ChatTableViewTextMessageCellModel:
+            readMessageImageContainerView.isHidden = viewModel.isIncomingMessage
+            messageTimestampLabel.textColor = !viewModel.isIncomingMessage ? UIColor.white : UIColor.black.withAlphaComponent(0.5)
+            messageTimestampLabel.text = viewModel.timestamp.shortDate
+            readMessageImageView.image = viewModel.isMessageRead ? UIImage(named: "doubleCheckmark")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "singleCheckmark")?.withRenderingMode(.alwaysTemplate)
+        
+            if !viewModel.isIncomingMessage {
                 
                 trailingConstraint = messagesContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
                 trailingConstraint?.isActive = true
@@ -104,16 +104,28 @@ public class MessageContentCell: UITableViewCell {
                     $0.top == messagesContainerView.topAnchor + 5
                 }
             }
-            
-            readMessageImageContainerView.isHidden = !isFromCurrentSender
-            messageTimestampLabel.textColor = isFromCurrentSender ? UIColor.white : UIColor.black.withAlphaComponent(0.5)
-            
+        default:
+            break
         }
+    }
 }
 
 //MARK: - Setup views
 extension MessageContentCell {
-    private func setupSubviews() {
+    func setupSubviews() {
+        backgroundColor = UIColor.clear
+        
+        contentView.addSubview(messagesContainerView) {
+            $0.top == contentView.topAnchor + 5
+            $0.bottom == contentView.bottomAnchor - 5
+        }
+        
+        messagesContainerView.addSubview(smileyImageView) {
+            $0.size([\.all: 20])
+            $0.leading == messagesContainerView.trailingAnchor + 10
+            $0.top == messagesContainerView.topAnchor + 5
+        }
+        
         readMessageImageContainerView.addSubview(readMessageImageView) {
             $0.centerX == readMessageImageContainerView.centerXAnchor
             $0.centerY == readMessageImageContainerView.centerYAnchor
@@ -121,19 +133,14 @@ extension MessageContentCell {
             $0.trailing <= readMessageImageContainerView.trailingAnchor
             $0.top <= readMessageImageContainerView.topAnchor
             $0.bottom <= readMessageImageContainerView.bottomAnchor
-            $0.size([\.width: 15])
-        }
-        
-        contentView.addSubview(messagesContainerView) {
-            $0.top == contentView.topAnchor + 2
-            $0.bottom == contentView.bottomAnchor - 2
+            $0.width == 15
         }
         
         messagesContainerView.addSubview(horizontalStackView) {
             $0.bottom == messagesContainerView.bottomAnchor - 5
             $0.trailing == messagesContainerView.trailingAnchor - 10
         }
-        
+
         horizontalStackView.layout {
             $0.height == 8
         }

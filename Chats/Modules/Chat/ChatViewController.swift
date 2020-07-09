@@ -8,62 +8,207 @@
 
 import UIKit
 import MapKit
-//import MessageKit
-//
 import BRIck
 
 protocol ChatPresentableListener: class {
-
+    
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
     func showUser(with profile: Collocutor)
 }
 
 final class ChatViewController: UIViewController {
-
-    weak var listener: ChatPresentableListener?
     
+    weak var listener: ChatPresentableListener?
+    internal var isMessagesControllerBeingDismissed: Bool = false
+    var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
+    var scrollsToBottomOnKeyboardBeginsEditing: Bool = true
+    var maintainPositionOnKeyboardFrameChanged: Bool = true
+    internal var messageCollectionViewBottomInset: CGFloat = 0 {
+        didSet {
+            tableView.contentInset.bottom = messageCollectionViewBottomInset
+            tableView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+        }
+    }
+    
+    public var additionalBottomInset: CGFloat = 0 {
+        didSet {
+            let delta = additionalBottomInset - oldValue
+            messageCollectionViewBottomInset += delta
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     //MARK: - Private
     
     private var unreadMessagesCount: Int = 24
     private let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
+    override var inputAccessoryView: UIView? {
+        return messageInputBar
+    }
+    
+    lazy var messageInputBar = InputBarAccessoryView()
+    
+    var messageList: [MockMessage] = [] {
+        didSet {
+            messageListDidChange()
+        }
+    }
+    
+    private var sections: [TableViewSectionModel]? {
+        didSet {
+            #warning("Change logic to section reload.")
+            self.tableView.reloadData()
+            self.tableView.scrollToLastItem()
+        }
+    }
+    
     //MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        
-        unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
-        
-        setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
+        setupViews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        isMessagesControllerBeingDismissed = false
+        
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
-                self?.setTypingIndicatorViewHidden(false)
-            }.onNewMessage { [weak self] message in
-                self?.setTypingIndicatorViewHidden(true, performUpdates: {
-                    self?.insertMessage(message)
-                })
+                UIView.animate(withDuration: 0.1, animations: {
+//                    self?.typingIndicatorView.isHidden = false
+//                    self!.typingIndicatorHeightConstraint?.constant = 30
+//                    self?.view.layoutIfNeeded()
+                     self?.tableView.tableFooterView?.isHidden = false
+                }, completion: nil)
+                
+        }.onNewMessage { [weak self] message in
+            UIView.animate(withDuration: 0.1, animations: {
+//                self!.typingIndicatorHeightConstraint?.constant = 0
+//                self?.view.layoutIfNeeded()
+                self?.messageList.append(message)
+                self?.tableView.tableFooterView?.isHidden = true
+            }, completion: { finished in
+                if finished {
+//                    self?.typingIndicatorView.isHidden = true
+                }
+            })
         }
     }
     
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isMessagesControllerBeingDismissed = true
+    }
+    
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isMessagesControllerBeingDismissed = false
+    }
+
+    private var isFirstLayout: Bool = true
+
+    public override func viewDidLayoutSubviews() {
+        // Hack to prevent animation of the contentInset after viewDidAppear
+        if isFirstLayout {
+            defer { isFirstLayout = false }
+            addKeyboardObservers()
+            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+        }
+        adjustScrollViewTopInset()
+    }
+
+    public override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+        }
+        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+    }
+    
+        deinit {
+            removeKeyboardObservers()
+        }
+    
     // MARK: - Views
     
-    private lazy var tableView = UITableView
-        .create {
-            $0.delegate = self
-            $0.dataSource = self
-            $0.separatorStyle = .none
-            $0.backgroundColor = UIColor.white
-            $0.rowHeight = UITableView.automaticDimension
-            $0.estimatedRowHeight = 100
-            $0.register(TextMessageCell.self)
-            $0.register(MessageContentCell.self)
+    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), collocutor: self.collocutor)
+    
+    private var typingIndicatorHeightConstraint: NSLayoutConstraint?
+    
+    public lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.white
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.register(TextMessageCell.self)
+        tableView.register(MessageContentCell.self)
+        tableView.register(ChatSectionHeaderView.self)
+        
+        tableView.tableFooterView = typingIndicatorView
+        tableView.tableFooterView?.isHidden = true
+        
+        return tableView
+        }()
+    
+    private lazy var underneathView = UnderneathView
+        .create { _ in }
+    
+    // MARK: - Private
+    
+    private func messageListDidChange() {
+        
+        let sortedViewModels = groupSort(items: messageList, isAscending: true)
+        
+        let sections: [TableViewSectionModel] = sortedViewModels.map {
+            let oldestMessageDate = $0.first?.timestamp
+            return ChatTableViewSectionModel(headerViewType: .messagesTimestamp, title: oldestMessageDate?.headerSectionDate ?? "Unknown date", cellModels: $0)
+        }.compactMap { $0 }
+        
+        self.sections = sections
+    }
+    
+    private func groupSort(items: [ChatScreenDisplayingItems], isAscending: Bool) -> [[ChatTableViewCellModel]] {
+        var groups = [[ChatScreenDisplayingItems]]()
+        items.forEach { (item) in
+            let groupIndex = groups.firstIndex(where: { (group) -> Bool in
+                let isContains = group.contains(where: { (groupItem) -> Bool in
+                    Calendar.current.isDate(groupItem.sentDate, inSameDayAs: item.sentDate)
+                })
+                return isContains
+            })
+            if let groupIndex = groupIndex {
+                var group = groups[groupIndex]
+                let nextIndex = group.firstIndex(where: { (groupItem) -> Bool in
+                    groupItem.sentDate.compare(item.sentDate) == (isAscending ? .orderedDescending : .orderedAscending )
+                })
+                if let nextIndex = nextIndex {
+                    group.insert(item, at: nextIndex)
+                } else {
+                    group.append(item)
+                }
+                groups[groupIndex] = group
+            } else {
+                let nextIndex = groups.firstIndex(where: { (group) -> Bool in
+                    group[0].sentDate.compare(item.sentDate) == (isAscending ? .orderedDescending : .orderedAscending)
+                })
+                if let nextIndex = nextIndex {
+                    groups.insert([item], at: nextIndex)
+                } else {
+                    groups.append([item])
+                }
+            }
+        }
+        
+        return groups.compactMap { $0.compactMap { $0.tableViewCellViewModel }
+        }
     }
 }
 
@@ -71,16 +216,41 @@ final class ChatViewController: UIViewController {
 extension ChatViewController {
     private func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(tableView) {
-            $0.top == view.topAnchor
+        view.addSubview(underneathView) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
-            $0.bottom == view.bottomAnchor
+            let height = UIApplication.shared.statusBarFrame.height +
+                self.navigationController!.navigationBar.frame.height
+            $0.height == 100 - height
         }
+        
+//        view.addSubview(typingIndicatorView) {
+//            $0.leading == view.leadingAnchor
+//            $0.trailing == view.trailingAnchor
+//            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+//            typingIndicatorHeightConstraint = typingIndicatorView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+//            typingIndicatorHeightConstraint?.isActive = true
+//        }
+        
+        view.addSubview(tableView) {
+            $0.top == underneathView.bottomAnchor
+            $0.leading == view.leadingAnchor
+            $0.trailing == view.trailingAnchor
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+//            $0.bottom == typingIndicatorView.topAnchor
+        }
+        
+        unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
+        
+        setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
+        configureMessageInputBar()
+        
+        typingIndicatorView.isHidden = true
     }
 }
 
-//MARK: - Actions
+// MARK: - Actions
 
 extension ChatViewController {
     @objc
@@ -98,23 +268,112 @@ extension ChatViewController {
 extension ChatViewController: UITableViewDelegate {}
 //MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let numberOfSection = sections?.count else { return 0 }
+        return numberOfSection
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        guard let numberOfRowsInSection = sections?[section].cellModels.count else { return 0 }
+        return numberOfRowsInSection
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let section = indexPath.section
+        let row = indexPath.row
+        guard let cellModel = sections?[section].cellModels[row] else { return UITableViewCell() }
+        
+        let cell = tableView.dequeueReusableCell(of: cellModel.cellType.classType)
+        if let cell = cell as? TableViewCellSetup {
+            cell.setup(with: cellModel)
+        }
+        return cell
+    }
+    
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let section = indexPath.section
+//        let row = indexPath.row
+//        if let cell = cell as? TableViewCellSetup, let cellModel = sections?[section].cellModels[row]  {
+//            cell.setup(with: cellModel)
+//            if let cell = cell as? TextMessageCell {
+//                cell.onTextViewDidChange = { [unowned self] in
+//                    DispatchQueue.main.async {
+//                        //                        self.tableView.beginUpdates()
+//                        //                        self.tableView.endUpdates()
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sectionModel = sections?[section],
+            let classType = sectionModel.headerViewType.classType else { return nil }
+        let view = tableView.dequeueReusableHeaderFooterView(of: classType)
+        if let view = view as? SectionHeaderViewSetup {
+            view.setup(with: sectionModel)
+        }
+        view.tintColor = UIColor.clear
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
+
 extension ChatViewController: ChatPresentable {}
 extension ChatViewController: ChatViewControllable {}
 extension ChatViewController: BackButtonSettupable {}
 extension ChatViewController: CollocutorNavBarSettupable {}
 
-//MUSOR
 extension ChatViewController {
-    // MARK: - MessagesDataSource
+    private func configureMessageInputBar() {
+        messageInputBar.delegate = self
+        messageInputBar.inputTextView.tintColor = .primaryColor
+        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.primaryColor.withAlphaComponent(0.3),
+            for: .highlighted
+        )
+        
+        messageInputBar.isTranslucent = true
+        messageInputBar.separatorLine.isHidden = true
+        messageInputBar.inputTextView.tintColor = .black
+        messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
+        //        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
+        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        messageInputBar.inputTextView.layer.borderWidth = 1.0
+        messageInputBar.inputTextView.layer.cornerRadius = 16.0
+        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        configureInputBarItems()
+    }
+    
+    private func configureInputBarItems() {
+        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
+        
+    }
+    
+    private func configureInputBarPadding() {
+        
+        // Entire InputBar padding
+        messageInputBar.padding.bottom = 8
+        
+        // or MiddleContentView padding
+        messageInputBar.middleContentViewPadding.right = -38
+        
+        // or InputTextView padding
+        messageInputBar.inputTextView.textContainerInset.bottom = 8
+        
+    }
+}
 
+// MARK: - InputBarAccessoryViewDelegate
+extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAttachmentsButton(_ inputBar: InputBarAccessoryView) {
         let alert = UIAlertController(style: .actionSheet)
         alert.addTelegramPicker { result in
@@ -134,68 +393,9 @@ extension ChatViewController {
         self.present(alert, animated: true, completion: nil)
         //        alert.show()
     }
-
+    
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
-
-//    //MARK: - MUSOR
-//    override func loadFirstMessages() {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            let count = UserDefaults.standard.mockMessagesCount()
-//            SampleData.shared.getAdvancedMessages(count: count) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList = messages
-//                    self.messagesCollectionView.reloadData()
-//                    self.messagesCollectionView.scrollToBottom()
-//                }
-//            }
-//        }
-//    }
-//
-//    override func loadMoreMessages() {
-//        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getAdvancedMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messageList.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-//        }
-//    }
-
-//    override func configureMessageInputBar() {
-//        super.configureMessageInputBar()
-//
-//        messageInputBar.isTranslucent = true
-//        messageInputBar.separatorLine.isHidden = true
-//        messageInputBar.inputTextView.tintColor = .black
-//        messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-//        messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-//        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
-//        //        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-//        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-//        messageInputBar.inputTextView.layer.borderWidth = 1.0
-//        messageInputBar.inputTextView.layer.cornerRadius = 16.0
-//        messageInputBar.inputTextView.layer.masksToBounds = true
-//        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-//        configureInputBarItems()
-//    }
-
-//    private func configureInputBarItems() {
-//        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
-//
-//    }
-//
-//    private func configureInputBarPadding() {
-//
-//        // Entire InputBar padding
-//        messageInputBar.padding.bottom = 8
-//
-//        // or MiddleContentView padding
-//        messageInputBar.middleContentViewPadding.right = -38
-//
-//        // or InputTextView padding
-//        messageInputBar.inputTextView.textContainerInset.bottom = 8
-//
-//    }
 }
+
+
+

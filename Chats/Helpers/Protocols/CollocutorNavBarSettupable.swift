@@ -26,9 +26,9 @@ extension CollocutorNavBarSettupable where Self: UIViewController  {
         
         navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
         navigationItem.leftBarButtonItems?.append(barButton)
-        
+
         navigationController?.navigationBar.barTintColor = UIColor.white
-        
+
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 }

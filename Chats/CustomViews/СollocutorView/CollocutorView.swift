@@ -66,7 +66,7 @@ class CollocutorView: UIView {
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
-        stackView.spacing = 5
+        stackView.spacing = 2
 
         return stackView
     }()
@@ -89,8 +89,8 @@ extension CollocutorView {
 
         addSubview(stackView) {
             $0.leading == gradientView.trailingAnchor + 8
-            $0.top == topAnchor + 6
-            $0.bottom == bottomAnchor - 6
+            $0.top == topAnchor
+            $0.bottom == bottomAnchor
             $0.trailing == trailingAnchor
         }
     }

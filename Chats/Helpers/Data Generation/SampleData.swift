@@ -128,17 +128,21 @@ final  class SampleData {
         
         return NSAttributedString(attributedString: mutableAttributedString)
     }
+    
+    var valueToAdd = 1
 
     func dateAddingRandomTime() -> Date {
         let randomNumber = Int(arc4random_uniform(UInt32(10)))
         if randomNumber % 2 == 0 {
-            let date = Calendar.current.date(byAdding: .hour, value: randomNumber, to: now)!
+            let date = Calendar.current.date(byAdding: .minute, value: valueToAdd, to: Date())!
             now = date
+            valueToAdd += 1
             return date
         } else {
             let randomMinute = Int(arc4random_uniform(UInt32(59)))
-            let date = Calendar.current.date(byAdding: .minute, value: randomMinute, to: now)!
+            let date = Calendar.current.date(byAdding: .minute, value: valueToAdd, to: Date())!
             now = date
+            valueToAdd += 1
             return date
         }
     }
@@ -164,7 +168,7 @@ final  class SampleData {
         switch randomMessageType() {
         case .Text:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         case .AttributedText:
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
@@ -188,9 +192,9 @@ final  class SampleData {
             let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
             return MockMessage(location: locations[randomNumberLocation], user: user, messageId: uniqueID, date: date)
         case .Url:
-            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date)
+            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         case .Phone:
-            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date)
+            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         case .Custom:
             return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date)
         case .ShareContact:
@@ -209,7 +213,7 @@ final  class SampleData {
             let user = senders.random()!
             let date = dateAddingRandomTime()
             let randomSentence = Lorem.sentence()
-            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
             messages.append(message)
         }
         completion(messages)
@@ -235,7 +239,7 @@ final  class SampleData {
             let user = senders.random()!
             let date = dateAddingRandomTime()
             let randomSentence = Lorem.sentence()
-            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
             messages.append(message)
         }
         completion(messages)

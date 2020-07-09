@@ -11,6 +11,10 @@ import UIKit
 extension UIColor {
     //MARK: - New
     
+    static var steel: UIColor {
+        return UIColor(red: 142/255, green: 142/255, blue: 146/255, alpha: 1)
+    }
+    
     static var blackTwo: UIColor {
         return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
     }
