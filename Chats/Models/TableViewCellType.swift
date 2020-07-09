@@ -10,6 +10,7 @@ import UIKit
 
 enum TableViewCellType: CaseIterable {
     case collocutorOption
+    case collocutorInfo
 }
 
 extension TableViewCellType {
@@ -19,6 +20,7 @@ extension TableViewCellType {
     var classType: UITableViewCell.Type {
         switch self {
         case .collocutorOption: return ActionTableViewCell.self
+        case .collocutorInfo: return CollocutorProfileTableViewCell.self
         }
     }
 }
@@ -29,6 +31,4 @@ protocol TableViewCellSetup {
 
 protocol TableViewCellModel {
     var cellType: TableViewCellType! { get }
-    var title: String? { get set }
-    var imageLink: String? { get set }
 }

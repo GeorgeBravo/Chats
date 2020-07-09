@@ -67,12 +67,18 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
         listener?.hideCollocutorProfile()
     }
     
+    // MARK: - TableView logic
     func combineCollocutorOptionsSections() {
+        var collocutorInfoCellModel = CollocutorInfoCellModel(collocutor: profile, lastSeenDescriptionText: LocalizationKeys.lastSeenRecently.localized())
+        collocutorInfoCellModel.manipulationCallback = { [weak self] manipulation in
+            self?.presenter.showAlert(with: LocalizationKeys.action.localized(), message: manipulation.stringDescription)
+        }
+        let zeroSection = OptionsTableViewSectionModel(headerViewType: .options, title: "", cellModels: [collocutorInfoCellModel])
         let firstSection = OptionsTableViewSectionModel(headerViewType: .options, title: "username", cellModels: [ActionTableViewCellModel(optionType: .username)])
         let secondSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sendMessage), ActionTableViewCellModel(optionType: .addToContacts), ActionTableViewCellModel(optionType: .addToGroups)])
         let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia, descriptionText: " "), ActionTableViewCellModel(optionType: .notification, descriptionText: "Enabled"), ActionTableViewCellModel(optionType: .groupsInCommon, descriptionText: "3")])
         let fourthSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .blockUser)])
-        sections = [firstSection, secondSection, thirdSection, fourthSection]
+        sections = [zeroSection, firstSection, secondSection, thirdSection, fourthSection]
     }
     
     func cellModelForRow(at indexPath: IndexPath) -> TableViewCellModel {
@@ -98,4 +104,9 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
             presenter.showAlert(with: LocalizationKeys.action.localized(), message: message)
         }
     }
+    
+    func getCollocutorName() -> String {
+        return profile.name
+    }
+    
 }

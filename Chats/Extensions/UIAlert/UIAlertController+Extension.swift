@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIAlertController {
-    static func showAlert(title: String?, message: String?, actions: [UIAlertAction], preferredStyle: UIAlertController.Style = .alert) {
+    static func showAlert(viewController: UIViewController, title: String?, message: String?, actions: [UIAlertAction], preferredStyle: UIAlertController.Style = .alert) {
         let alert = UIAlertController(
             title: title,
             message: message,
@@ -17,9 +17,7 @@ extension UIAlertController {
         )
         actions.forEach { alert.addAction($0) }
         DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert,
-                                                                        animated: true,
-                                                                        completion: nil)
+            UIApplication.topViewController(viewController)?.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -36,4 +34,3 @@ extension UIAlertController {
 //        }
 //    }
 }
-
