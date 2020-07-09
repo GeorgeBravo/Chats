@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */; };
+		1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */; };
+		1279D5D124B608C70012467B /* ChatListTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D024B608C70012467B /* ChatListTableViewCellModel.swift */; };
+		1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */; };
+		1279D5D524B61C0A0012467B /* ChatListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */; };
+		1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D624B623220012467B /* UIFont+Extensions.swift */; };
+		1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D824B73D940012467B /* ChatListEditingModeView.swift */; };
 		2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */; };
 		2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */; };
 		2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */; };
@@ -265,6 +272,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListLargeTitleView.swift; sourceTree = "<group>"; };
+		1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
+		1279D5D024B608C70012467B /* ChatListTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCellModel.swift; sourceTree = "<group>"; };
+		1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewSectionModel.swift; sourceTree = "<group>"; };
+		1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListSectionHeaderView.swift; sourceTree = "<group>"; };
+		1279D5D624B623220012467B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIFont+Extensions.swift"; path = "Chats/CustomViews/UITableViewHeaderFooterView/UIFont+Extensions.swift"; sourceTree = SOURCE_ROOT; };
+		1279D5D824B73D940012467B /* ChatListEditingModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListEditingModeView.swift; sourceTree = "<group>"; };
 		2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -546,6 +560,15 @@
 				889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		1279D5CB24B5D2C40012467B /* ChatListView */ = {
+			isa = PBXGroup;
+			children = (
+				1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */,
+				1279D5D824B73D940012467B /* ChatListEditingModeView.swift */,
+			);
+			path = ChatListView;
 			sourceTree = "<group>";
 		};
 		2D17D6CC24AC8DB2009B2E16 /* SDKs */ = {
@@ -916,6 +939,8 @@
 				2D501C2D24B5B0F000C37DCB /* ChatTableViewCellModel.swift */,
 				2D501C2B24B5B0B900C37DCB /* ChatTableViewSectionModel.swift */,
 				2D1C4D3824ABC8060087449A /* Settings+UserDefaults.swift */,
+				1279D5D024B608C70012467B /* ChatListTableViewCellModel.swift */,
+				1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */,
 				2D1C4D2924ABC7CC0087449A /* Mock */,
 				2D1C4D2024AB97330087449A /* Collocutor */,
 			);
@@ -1012,6 +1037,7 @@
 			children = (
 				CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */,
 				2D501C3024B5BB7400C37DCB /* ChatSectionHeaderView.swift */,
+				1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */,
 			);
 			path = UITableViewHeaderFooterView;
 			sourceTree = "<group>";
@@ -1119,6 +1145,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				1279D5CB24B5D2C40012467B /* ChatListView */,
 				2D501C2F24B5BB1C00C37DCB /* UITableViewHeaderFooterView */,
 				2D65C19124AE0DE100C64534 /* Alerts&Pickers */,
 				2D1C4D3024ABC7E40087449A /* Layout */,
@@ -1136,6 +1163,7 @@
 				CE99B9F024B473A900F4CEB6 /* ActionTableViewCell.swift */,
 				2D1C4D2524ABC7B70087449A /* CustomCell.swift */,
 				2D1C4D2624ABC7B70087449A /* TableViewCells.swift */,
+				1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */,
 			);
 			path = UITableViewCells;
 			sourceTree = "<group>";
@@ -1221,6 +1249,7 @@
 		2D64CFB024A20EEE00C8B94A /* UIFont */ = {
 			isa = PBXGroup;
 			children = (
+				1279D5D624B623220012467B /* UIFont+Extensions.swift */,
 			);
 			path = UIFont;
 			sourceTree = "<group>";
@@ -1683,7 +1712,7 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
-		CE99B9EE24B4730200F4CEB6 /* Componetns */ = {
+		CE99B9EE24B4730200F4CEB6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -1848,6 +1877,7 @@
 				2D501BC724B321D600C37DCB /* AttachmentsView.swift in Sources */,
 				2D17D71C24AC8DBB009B2E16 /* InputBarAccessoryView.swift in Sources */,
 				2D501C1A24B3263700C37DCB /* LayoutAnchor+Comparable.swift in Sources */,
+				1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */,
 				2D64CFEE24A20EF000C8B94A /* ViewableRouting+.swift in Sources */,
 				2D64CFF424A20EF000C8B94A /* Configure.swift in Sources */,
 				2D64CFF324A20EF000C8B94A /* UIStackView+Extensions.swift in Sources */,
@@ -1881,6 +1911,7 @@
 				2D1C4D1A24AB4ACA0087449A /* GradientCircleView.swift in Sources */,
 				2D64CFEA24A20EF000C8B94A /* UIColor+.swift in Sources */,
 				2D501C2124B32BC400C37DCB /* NSAttributedString+Extensions.swift in Sources */,
+				1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */,
 				2D501B5D24B320B300C37DCB /* MessageSizeCalculator.swift in Sources */,
 				2D501BED24B3229900C37DCB /* InputBarViewController.swift in Sources */,
 				2D1C4D1324AB3AA70087449A /* UnreadMessagesBackButton.swift in Sources */,
@@ -1957,6 +1988,8 @@
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
 				2D64CFF924A20EF000C8B94A /* WorkflowResult.swift in Sources */,
 				CE99B9F124B473A900F4CEB6 /* ActionTableViewCell.swift in Sources */,
+				1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */,
+				1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */,
 				CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */,
 				2D65C21A24AE1A3F00C64534 /* UISearchBar+Extensions.swift in Sources */,
 				2D501B6424B320B300C37DCB /* ContactMessageSizeCalculator.swift in Sources */,
@@ -2016,6 +2049,7 @@
 				CE99B9F324B475AE00F4CEB6 /* ActionTableViewCellModel.swift in Sources */,
 				2D65C1FB24AE1A3F00C64534 /* OneTextFieldViewController.swift in Sources */,
 				2D501BEB24B3228F00C37DCB /* InputBarButtonItem.swift in Sources */,
+				1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */,
 				2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */,
 				2D501C1924B3263700C37DCB /* UniformKeyPathInitializable+Init.swift in Sources */,
 				2D501B9124B320D500C37DCB /* LocationItem.swift in Sources */,
@@ -2048,6 +2082,7 @@
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,
 				2D501B4224B3207C00C37DCB /* MessagesViewController+Menu.swift in Sources */,
 				2D65C20524AE1A3F00C64534 /* Contacts.swift in Sources */,
+				1279D5D124B608C70012467B /* ChatListTableViewCellModel.swift in Sources */,
 				CE26469924B3560700EE7241 /* CollocutorProfileInteractor.swift in Sources */,
 				2D65C21C24AE1A3F00C64534 /* UIAlertController+Extensions.swift in Sources */,
 				2D65C21224AE1A3F00C64534 /* UIImageView+Extensions.swift in Sources */,
@@ -2075,6 +2110,7 @@
 				CE26469824B3560700EE7241 /* CollocutorProfileBuilder.swift in Sources */,
 				2D65C21024AE1A3F00C64534 /* Array+Extensions.swift in Sources */,
 				2D501B9024B320D500C37DCB /* SenderType.swift in Sources */,
+				1279D5D524B61C0A0012467B /* ChatListSectionHeaderView.swift in Sources */,
 				2DB6987B24A362660075737F /* ChatViewController2.swift in Sources */,
 				2D65C21924AE1A3F00C64534 /* UIImage+Extensions.swift in Sources */,
 				2D501C1824B3263700C37DCB /* UIView+Layout.swift in Sources */,

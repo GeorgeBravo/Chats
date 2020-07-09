@@ -4,3 +4,6 @@
 #optionsBlackColor: #262626
 #optionsBlueColor: #504eeb
 #optionsRedColor: #ed1c24
+#coolGreyTwo: #a5aab1
+#slateGrey: #60676f
+#coolGrey: #a2a9b6

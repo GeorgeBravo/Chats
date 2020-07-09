@@ -44,11 +44,11 @@ final class ChatViewController: UIViewController {
         
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
-                self?.setTypingIndicatorViewHidden(false)
+//                self?.setTypingIndicatorViewHidden(false)
             }.onNewMessage { [weak self] message in
-                self?.setTypingIndicatorViewHidden(true, performUpdates: {
-                    self?.insertMessage(message)
-                })
+//                self?.setTypingIndicatorViewHidden(true, performUpdates: {
+//                    self?.insertMessage(message)
+//                })
         }
     }
     

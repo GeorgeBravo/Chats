@@ -10,6 +10,7 @@ import UIKit
 
 enum TableViewCellType: CaseIterable {
     case collocutorOption
+    case chatList
 }
 
 extension TableViewCellType {
@@ -19,6 +20,7 @@ extension TableViewCellType {
     var classType: UITableViewCell.Type {
         switch self {
         case .collocutorOption: return ActionTableViewCell.self
+        case .chatList: return ChatListTableViewCell.self
         }
     }
 }

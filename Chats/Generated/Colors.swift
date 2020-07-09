@@ -19,9 +19,12 @@ internal struct ColorName {
   internal let rgbValue: UInt32
   internal var color: Color { return Color(named: self) }
 
+  internal static let coolGrey = ColorName(rgbValue: 0xa2a9b6)
+  internal static let coolGreyTwo = ColorName(rgbValue: 0xa5aab1)
   internal static let optionsBlackColor = ColorName(rgbValue: 0x262626)
   internal static let optionsBlueColor = ColorName(rgbValue: 0x504eeb)
   internal static let optionsRedColor = ColorName(rgbValue: 0xed1c24)
+  internal static let slateGrey = ColorName(rgbValue: 0x60676f)
 }
 // swiftlint:enable identifier_name line_length type_body_length
 

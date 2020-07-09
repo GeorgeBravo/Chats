@@ -47,7 +47,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
     override func didBecomeActive() {
         super.didBecomeActive()
 
-        showInitialScreen(with: .defaultt)
+        showInitialScreen(with: .chatList)
         // TODO: Implement business logic here.
     }
 
