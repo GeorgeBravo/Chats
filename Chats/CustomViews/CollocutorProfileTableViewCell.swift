@@ -124,14 +124,15 @@ extension CollocutorProfileTableViewCell {
         let fontSize = collocutorNameLabelFontSize(with: offset)
         collocutorNameLabel.isHidden = fontSize <= 0
         collocutorNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
-        return fontSize <= 0.0
+        return fontSize <= 22.0
     }
     
     func collocutorNameLabelFontSize(with offset: CGFloat) -> CGFloat {
         var fontSize = Constants.fontSize
-        if offset > Constants.imageTopSpacing + Constants.profileImageHeight * 0.2 {
-            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.5
+        if offset > Constants.imageTopSpacing + Constants.profileImageHeight * 0.5 {
+            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.13
             if fontSize > Constants.fontSize { fontSize = Constants.fontSize }
+            if fontSize < 22.0 { fontSize = 22.0 }
         }
         return fontSize
     }

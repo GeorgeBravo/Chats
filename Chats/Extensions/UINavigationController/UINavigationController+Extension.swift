@@ -11,7 +11,7 @@ import UIKit
 extension UINavigationController {
     func setNavigationBarAppearance(_ largeTitle: Bool = false, bigFont: Bool = false) {
         navigationBar.isHidden = false
-        let font = UIFont.systemFont(ofSize: 24.0, weight: .heavy)
+        let font = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.backgroundColor = UIColor(named: .whiteColor)
