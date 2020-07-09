@@ -67,7 +67,7 @@ class CollocutorManipulationsButtonsStackView: UIStackView {
     
     private lazy var moreOptionsButton: UIButton = {
         let button = UIButton()
-        let image = #imageLiteral(resourceName: "extras")
+        let image = #imageLiteral(resourceName: "more")
         button.backgroundColor = .clear
         button.setBackgroundImage(image, for: .normal)
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)

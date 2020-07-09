@@ -15,6 +15,7 @@ private struct Constants {
     static let separatorHeight: CGFloat = 0.4
     static let lastSeenLabelFontSize: CGFloat = 16.0
     static let buttonStackLeadingOffset: CGFloat = 32.0
+    static let fontSize: CGFloat = 36.0
 }
 
 class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -114,10 +115,27 @@ extension CollocutorProfileTableViewCell {
         self.model = model
         collocutorImageView.image = model.image
         collocutorNameLabel.text = model.name
-        collocutorNameLabel.font = UIFont.systemFont(ofSize: model.fontSize, weight: .heavy)
+        _ = update(with: 0.0)
         lastSeenLabel.text = model.lastSeenDescriptionText
         buttonsStackView.delegate = self
     }
+    
+    func update(with offset: CGFloat) -> Bool {
+        let fontSize = collocutorNameLabelFontSize(with: offset)
+        collocutorNameLabel.isHidden = fontSize <= 0
+        collocutorNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
+        return fontSize <= 0.0
+    }
+    
+    func collocutorNameLabelFontSize(with offset: CGFloat) -> CGFloat {
+        var fontSize = Constants.fontSize
+        if offset > Constants.imageTopSpacing + Constants.profileImageHeight * 0.2 {
+            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.5
+            if fontSize > Constants.fontSize { fontSize = Constants.fontSize }
+        }
+        return fontSize
+    }
+    
 }
 
 extension CollocutorProfileTableViewCell: CollocutorManipulationsButtonsStackViewDelegate {

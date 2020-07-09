@@ -69,7 +69,7 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
     
     // MARK: - TableView logic
     func combineCollocutorOptionsSections() {
-        var collocutorInfoCellModel = CollocutorInfoCellModel(collocutor: profile, fontSize: 32.0, lastSeenDescriptionText: LocalizationKeys.lastSeenRecently.localized())
+        var collocutorInfoCellModel = CollocutorInfoCellModel(collocutor: profile, lastSeenDescriptionText: LocalizationKeys.lastSeenRecently.localized())
         collocutorInfoCellModel.manipulationCallback = { [weak self] manipulation in
             self?.presenter.showAlert(with: LocalizationKeys.action.localized(), message: manipulation.stringDescription)
         }
@@ -103,6 +103,10 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
         if let cellModel = sections[indexPath.section].cellModels[indexPath.row] as? ActionTableViewCellModel, let message = cellModel.title {
             presenter.showAlert(with: LocalizationKeys.action.localized(), message: message)
         }
+    }
+    
+    func getCollocutorName() -> String {
+        return profile.name
     }
     
 }

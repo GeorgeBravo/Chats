@@ -22,6 +22,7 @@ protocol CollocutorProfilePresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func didTapCell(at indexPath: IndexPath)
+    func getCollocutorName() -> String
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -30,6 +31,13 @@ final class CollocutorProfileViewController: UIViewController {
 
     // MARK: - Variables
     weak var listener: CollocutorProfilePresentableListener?
+    private var navigationTitle: String = "" {
+        didSet {
+            if navigationTitle != oldValue {
+                navigationItem.title = navigationTitle
+            }
+        }
+    }
     
     private lazy var optionsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -70,7 +78,7 @@ final class CollocutorProfileViewController: UIViewController {
 extension CollocutorProfileViewController {
     
     private func setupNavigationBarAppearance() {
-        navigationController?.setNavigationBarAppearance()
+        navigationController?.setNavigationBarAppearance(bigFont: true)
         setupBackButton(target: self, action: #selector(onBackButtonTapped))
         setupEditButton(target: self, action: #selector(editButtonPressed))
     }
@@ -84,7 +92,6 @@ extension CollocutorProfileViewController {
             $0.trailing == view.trailingAnchor
             $0.bottom == view.bottomAnchor
         }
-        
     }
     
 }
@@ -162,6 +169,19 @@ extension CollocutorProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         listener?.didTapCell(at: indexPath)
+    }
+    
+}
+
+extension CollocutorProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        for cell in optionsTableView.visibleCells {
+            guard let cell = cell as? CollocutorProfileTableViewCell else { return }
+            let needShowScreenTitle = cell.update(with: scrollView.contentOffset.y)
+            var newTitle = ""
+            if let newName = listener?.getCollocutorName(), needShowScreenTitle { newTitle = newName }
+            navigationTitle = newTitle
+        }
     }
     
 }
