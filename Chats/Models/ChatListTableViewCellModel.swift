@@ -19,4 +19,6 @@ struct ChatListTableViewCellModel: TableViewCellModel {
     var messageCount: Int?
     var isEditing: Bool?
     var id: Int?
+    var isGroupChat: Bool?
+    var lastSender: String?
 }

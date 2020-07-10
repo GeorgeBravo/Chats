@@ -42,10 +42,7 @@ class ChatListSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewS
     
     // MARK: - UI
     func setupViews() {
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = UIColor.white
-        
-        backgroundView?.addSubview(titleLabel) {
+        addSubview(titleLabel) {
             $0.leading == leadingAnchor + Constants.leadingOffset
             $0.top == topAnchor + Constants.verticalOffset
             $0.centerY == centerYAnchor

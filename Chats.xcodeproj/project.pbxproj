@@ -14,6 +14,7 @@
 		1279D5D524B61C0A0012467B /* ChatListSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */; };
 		1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D624B623220012467B /* UIFont+Extensions.swift */; };
 		1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D824B73D940012467B /* ChatListEditingModeView.swift */; };
+		1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5DB24B8A81E0012467B /* StatusView.swift */; };
 		2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */; };
 		2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */; };
 		2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */; };
@@ -279,6 +280,7 @@
 		1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListSectionHeaderView.swift; sourceTree = "<group>"; };
 		1279D5D624B623220012467B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIFont+Extensions.swift"; path = "Chats/CustomViews/UITableViewHeaderFooterView/UIFont+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		1279D5D824B73D940012467B /* ChatListEditingModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListEditingModeView.swift; sourceTree = "<group>"; };
+		1279D5DB24B8A81E0012467B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -569,6 +571,14 @@
 				1279D5D824B73D940012467B /* ChatListEditingModeView.swift */,
 			);
 			path = ChatListView;
+			sourceTree = "<group>";
+		};
+		1279D5DA24B8A7E30012467B /* EmptyChatView */ = {
+			isa = PBXGroup;
+			children = (
+				1279D5DB24B8A81E0012467B /* StatusView.swift */,
+			);
+			path = EmptyChatView;
 			sourceTree = "<group>";
 		};
 		2D17D6CC24AC8DB2009B2E16 /* SDKs */ = {
@@ -1145,6 +1155,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				1279D5DA24B8A7E30012467B /* EmptyChatView */,
 				1279D5CB24B5D2C40012467B /* ChatListView */,
 				2D501C2F24B5BB1C00C37DCB /* UITableViewHeaderFooterView */,
 				2D65C19124AE0DE100C64534 /* Alerts&Pickers */,
@@ -1988,6 +1999,7 @@
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
 				2D64CFF924A20EF000C8B94A /* WorkflowResult.swift in Sources */,
 				CE99B9F124B473A900F4CEB6 /* ActionTableViewCell.swift in Sources */,
+				1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */,
 				1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */,
 				1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */,
 				CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */,

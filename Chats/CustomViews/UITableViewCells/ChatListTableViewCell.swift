@@ -18,7 +18,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     
     // MARK: - Variables
     var leadingUserAvatarConstraint: NSLayoutConstraint?
-    var checkButtonWidthConstraint: NSLayoutConstraint?
+    var countViewWidthConstraint: NSLayoutConstraint?
     var chatId: Int?
     var delegate: ChatListTableViewCellDelegate?
     var chatSelected: Bool?
@@ -82,6 +82,13 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return button
     }()
     
+    lazy var  bottomBorder: UIView = {
+        let bottomBorder = UIView()
+        bottomBorder.backgroundColor =  UITableView().separatorColor
+        return bottomBorder
+    }()
+    
+    
     // MARK: - Inits
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,6 +108,29 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
                 self.layoutIfNeeded()
             }
         }
+    }
+    
+    //MARK: - Private Funcs
+    private func changeCountView(count: Int) {
+        if count <= 9 && count > 0 {
+            countViewWidthConstraint?.constant = 21.7
+            messageCount.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
+        }
+        if count >= 10 && count <= 99 {
+            countViewWidthConstraint?.constant = 31.7
+            messageCount.backgroundColor = UIColor.black
+        }
+    }
+    
+    private func setupGroupChatMessage(lastSender: String, message: String) {
+        var attributes = [NSAttributedString.Key: AnyObject]()
+        attributes[.foregroundColor] = UIColor.black
+        attributes[.font] = UIFont.helveticaNeueFontOfSize(size: 15.3, style: .regular)
+        let attributedString = NSAttributedString(string: lastSender + "\n", attributes: attributes)
+        attributes[.foregroundColor] = UIColor(named: ColorName.slateGrey)
+        let attributedStringTwo = NSAttributedString(string: message, attributes: attributes)
+        messageLabel.text = nil
+        messageLabel.attributedText = attributedString + attributedStringTwo
     }
     
     //MARK: - Objc Functions
@@ -160,7 +190,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             $0.bottom == mainView.bottomAnchor - 10
             $0.trailing == mainView.trailingAnchor - 21
             $0.height == 21.7
-            $0.width == 21.7
+            countViewWidthConstraint = $0.width == 21.7
             
         }
         
@@ -169,6 +199,13 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             $0.top == userName.bottomAnchor
             $0.leading == userAvatar.trailingAnchor + 13.3
             $0.trailing == messageCount.leadingAnchor - 23.7
+        }
+        
+        mainView.addSubview(bottomBorder) {
+            $0.bottom == mainView.bottomAnchor
+            $0.leading == messageLabel.leadingAnchor
+            $0.trailing == timeSent.trailingAnchor
+            $0.height == 1
         }
     }
     
@@ -181,14 +218,21 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         if let isSelectedd = model.isSelected {
             chatSelected = isSelectedd
         }
-        if let message = model.message {
-            messageLabel.text = message
+        if let groupChat = model.isGroupChat, let  message = model.message , let sender = model.lastSender {
+            if groupChat == true {
+                setupGroupChatMessage(lastSender: sender, message: message)
+            }
+        } else {
+            if let message = model.message {
+                messageLabel.text = message
+            }
         }
         if let sentTime = model.timeSent {
             timeSent.text = sentTime
         }
         if let messCount = model.messageCount {
             messageCount.text = String(messCount)
+            changeCountView(count: messCount)
         }
         if let id = model.id {
             chatId = id
