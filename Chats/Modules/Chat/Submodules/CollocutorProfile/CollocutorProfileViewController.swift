@@ -183,15 +183,17 @@ extension CollocutorProfileViewController: UITableViewDataSource {
 
 extension CollocutorProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        for cell in optionsTableView.visibleCells {
-            guard let cell = cell as? CollocutorProfileTableViewCell else { return }
-            let offsetY = scrollView.contentOffset.y
-            cell.update(with: offsetY)
-            let needShowCollocutorTitle = (cell.getCollocutorNameLabelMaxY() - offsetY) >= collocutorNavigationView.getTitleLabelMaxY()
-            collocutorNavigationView.setup(with: needShowCollocutorTitle ? nil : listener?.collocutorName())
-            showCollocutorNavigationViewSeparator = cell.bounds.height <= offsetY + Constants.collocutorNavigationHeight
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            for cell in self.optionsTableView.visibleCells {
+                guard let cell = cell as? CollocutorProfileTableViewCell else { return }
+                let offsetY = scrollView.contentOffset.y
+                cell.update(with: offsetY)
+                let needShowCollocutorTitle = (cell.getCollocutorNameLabelMaxY() - offsetY) >= self.collocutorNavigationView.getTitleLabelMaxY()
+                self.collocutorNavigationView.setup(with: needShowCollocutorTitle ? nil : self.listener?.collocutorName())
+                self.showCollocutorNavigationViewSeparator = cell.bounds.height <= offsetY + Constants.collocutorNavigationHeight
+            }
         }
-        
     }
     
 }
