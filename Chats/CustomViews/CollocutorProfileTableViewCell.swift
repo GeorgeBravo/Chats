@@ -11,6 +11,7 @@ import UIKit
 private struct Constants {
     static let profileImageHeight: CGFloat = 140.0
     static let imageTopSpacing: CGFloat = 8.0
+    static let nameLabelTopSpacing: CGFloat = 14.0
     static let labelTopSpacing: CGFloat = 4.0
     static let separatorHeight: CGFloat = 0.4
     static let lastSeenLabelFontSize: CGFloat = 16.0
@@ -72,6 +73,10 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         super.setSelected(false, animated: animated)
     }
     
+    func getCollocutorNameLabelMaxY() -> CGFloat {
+        return collocutorNameLabel.frame.midY
+    }
+    
 }
 
 extension CollocutorProfileTableViewCell {
@@ -86,7 +91,7 @@ extension CollocutorProfileTableViewCell {
         }
         
         addSubview(collocutorNameLabel) {
-            $0.top == collocutorImageView.bottomAnchor + Constants.imageTopSpacing
+            $0.top == collocutorImageView.bottomAnchor + Constants.nameLabelTopSpacing
             $0.centerX == centerXAnchor
         }
         
@@ -120,17 +125,15 @@ extension CollocutorProfileTableViewCell {
         buttonsStackView.delegate = self
     }
     
-    func update(with offset: CGFloat) -> Bool {
+    func update(with offset: CGFloat) {
         let fontSize = collocutorNameLabelFontSize(with: offset)
-        collocutorNameLabel.isHidden = fontSize <= 0
         collocutorNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
-        return fontSize <= 22.0
     }
     
     func collocutorNameLabelFontSize(with offset: CGFloat) -> CGFloat {
         var fontSize = Constants.fontSize
         if offset > Constants.imageTopSpacing + Constants.profileImageHeight * 0.5 {
-            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.13
+            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.23
             if fontSize > Constants.fontSize { fontSize = Constants.fontSize }
             if fontSize < 22.0 { fontSize = 22.0 }
         }
@@ -140,7 +143,7 @@ extension CollocutorProfileTableViewCell {
 }
 
 extension CollocutorProfileTableViewCell: CollocutorManipulationsButtonsStackViewDelegate {
-    func buttonPressed(with action: CollocutorManipulations) {
+    func buttonPressed(with action: CollocutorOptionType) {
         model?.manipulationCallback?(action)
     }
 }

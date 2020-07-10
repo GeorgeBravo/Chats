@@ -11,6 +11,7 @@ import BRIck
 
 private struct Constants {
     static let estimatedCellHeigth: CGFloat = 100.0
+    static let collocutorNavigationHeight: CGFloat = 56.0
 }
 
 protocol CollocutorProfilePresentableListener: class {
@@ -22,7 +23,7 @@ protocol CollocutorProfilePresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func didTapCell(at indexPath: IndexPath)
-    func getCollocutorName() -> String
+    func collocutorName() -> String
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -31,11 +32,11 @@ final class CollocutorProfileViewController: UIViewController {
 
     // MARK: - Variables
     weak var listener: CollocutorProfilePresentableListener?
-    private var navigationTitle: String = "" {
+    
+    private var collocutorNavigationView = CollocutorNavigationView()
+    private var showCollocutorNavigationViewSeparator: Bool = false {
         didSet {
-            if navigationTitle != oldValue {
-                navigationItem.title = navigationTitle
-            }
+            collocutorNavigationView.setSeparator(visible: showCollocutorNavigationViewSeparator)
         }
     }
     
@@ -44,9 +45,12 @@ final class CollocutorProfileViewController: UIViewController {
         tableView.estimatedRowHeight = Constants.estimatedCellHeigth
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorColor = .clear
+        tableView.clipsToBounds = true
         tableView.backgroundColor = .white
         tableView.allowsMultipleSelection = false
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: CGFloat.leastNormalMagnitude))
+        tableView.contentInset = UIEdgeInsets(top: Constants.collocutorNavigationHeight, left: 0.0, bottom: 0.0, right: 0.0)
         tableView.tableFooterView = UIView()
         tableView.register(ActionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
@@ -59,9 +63,11 @@ final class CollocutorProfileViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBarAppearance()
         setupViews()
+        collocutorNavigationView.delegate = self
         listener?.combineCollocutorOptionsSections()
+        navigationController?.navigationBar.isHidden = true
+        optionsTableView.setContentOffset(CGPoint(x: 0.0, y: -Constants.collocutorNavigationHeight), animated: false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -77,32 +83,35 @@ final class CollocutorProfileViewController: UIViewController {
 // MARK: - Setup Views
 extension CollocutorProfileViewController {
     
-    private func setupNavigationBarAppearance() {
-        navigationController?.setNavigationBarAppearance(bigFont: true)
-        setupBackButton(target: self, action: #selector(onBackButtonTapped))
-        setupEditButton(target: self, action: #selector(editButtonPressed))
-    }
-    
     private func setupViews() {
         view.backgroundColor = .white
         
+        view.addSubview(collocutorNavigationView) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.leading == view.leadingAnchor
+            $0.trailing == view.trailingAnchor
+            $0.height == Constants.collocutorNavigationHeight
+        }
+        
         view.addSubview(optionsTableView) {
-            $0.top == view.topAnchor
+            $0.top == collocutorNavigationView.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
             $0.bottom == view.bottomAnchor
         }
+        
+        view.bringSubviewToFront(collocutorNavigationView)
     }
     
 }
 
 // MARK: - Actions
-extension CollocutorProfileViewController {
-    @objc func onBackButtonTapped() {
+extension CollocutorProfileViewController: CollocutorNavigationViewDelegate {
+    func backButtonTapped() {
         listener?.hideCollocutorProfile()
     }
     
-    @objc func editButtonPressed() {
+    func editButtonPressed() {
         UIAlertController.showAlert(viewController: self,
                                     title: LocalizationKeys.action.localized(),
                                     message: LocalizationKeys.edit.localized(),
@@ -118,15 +127,14 @@ extension CollocutorProfileViewController: CollocutorProfilePresentable {
     }
     
     func showAlert(with title: String, message: String) {
-        UIAlertController.showAlert(viewController: self, title: title, message: message, actions: [UIAlertAction.okAction()])
+        UIAlertController.showAlert(viewController: self,
+                                    title: title,
+                                    message: message,
+                                    actions: [UIAlertAction.okAction()])
     }
 }
 
 extension CollocutorProfileViewController: CollocutorProfileViewControllable {}
-
-extension CollocutorProfileViewController: BackButtonSettupable {}
-
-extension CollocutorProfileViewController: EditButtonSettupable {}
 
 extension CollocutorProfileViewController: UITableViewDelegate {}
 
@@ -177,11 +185,13 @@ extension CollocutorProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for cell in optionsTableView.visibleCells {
             guard let cell = cell as? CollocutorProfileTableViewCell else { return }
-            let needShowScreenTitle = cell.update(with: scrollView.contentOffset.y)
-            var newTitle = ""
-            if let newName = listener?.getCollocutorName(), needShowScreenTitle { newTitle = newName }
-            navigationTitle = newTitle
+            let offsetY = scrollView.contentOffset.y
+            cell.update(with: offsetY)
+            let needShowCollocutorTitle = (cell.getCollocutorNameLabelMaxY() - offsetY) >= collocutorNavigationView.getTitleLabelMaxY()
+            collocutorNavigationView.setup(with: needShowCollocutorTitle ? nil : listener?.collocutorName())
+            showCollocutorNavigationViewSeparator = cell.bounds.height <= offsetY + Constants.collocutorNavigationHeight
         }
+        
     }
     
 }
