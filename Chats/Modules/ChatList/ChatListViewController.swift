@@ -343,7 +343,6 @@ extension ChatListViewController {
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        print(indexPath)
         return .none
     }
 }

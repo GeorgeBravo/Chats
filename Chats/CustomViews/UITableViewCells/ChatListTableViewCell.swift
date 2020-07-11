@@ -101,6 +101,12 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        #warning("weird subview appears in editing style .none while editing mode")
+        for subview in self.subviews {
+            if (subview.height == 1) && (subview.width == 24) {
+                subview.removeFromSuperview()
+            }
+        }
         if !editing {
             self.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
