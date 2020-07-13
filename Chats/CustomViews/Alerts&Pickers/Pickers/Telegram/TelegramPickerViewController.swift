@@ -245,7 +245,7 @@ final class TelegramPickerViewController: UIViewController {
         selectedAssets.contains(asset)
             ? selectedAssets.remove(asset)
             : selectedAssets.append(asset)
-        selection?(TelegramSelectionType.photo(selectedAssets))
+//        selection?(TelegramSelectionType.photo(selectedAssets))
         
         let currentCount = selectedAssets.count
 
