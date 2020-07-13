@@ -14,4 +14,12 @@
 "Notifications" = "Notifications";
 "GroupsInCommon" = "Groups In Common";
 "BlockUser" = "Block User";
-"username" = "@username";
+"Username" = "@username";
+"Ok" = "Ok";
+"Action" = "Action";
+"Edit" = "Edit";
+"LastSeenRecently" = "last seen recently";
+"Call" = "Call";
+"Search" = "Search";
+"Mute" = "Mute";
+"More" = "More";

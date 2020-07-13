@@ -11,6 +11,7 @@ import UIKit
 enum TableViewCellType: CaseIterable {
     case collocutorOption
     case chatList
+    case collocutorInfo
 }
 
 extension TableViewCellType {
@@ -21,6 +22,7 @@ extension TableViewCellType {
         switch self {
         case .collocutorOption: return ActionTableViewCell.self
         case .chatList: return ChatListTableViewCell.self
+        case .collocutorInfo: return CollocutorProfileTableViewCell.self
         }
     }
 }
@@ -31,6 +33,4 @@ protocol TableViewCellSetup {
 
 protocol TableViewCellModel {
     var cellType: TableViewCellType! { get }
-    var title: String? { get set }
-    var imageLink: String? { get set }
 }

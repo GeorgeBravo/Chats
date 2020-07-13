@@ -22,12 +22,12 @@ extension UIAlertAction {
         return action
     }
     
-//    static func cameraAction(handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-//        return UIAlertAction.action(
-//            title: LocalizationKeys.camera.localized(),
-//            image: #imageLiteral(resourceName: "smallCameraIcon"),
-//            handler: handler
-//        )
-//    }
+    static func okAction(handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction.action(
+            title: LocalizationKeys.ok.localized(),
+            image: nil,
+            handler: handler
+        )
+    }
     
 }

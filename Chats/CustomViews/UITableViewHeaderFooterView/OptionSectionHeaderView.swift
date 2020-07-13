@@ -10,7 +10,8 @@ import UIKit
 
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
-    static let verticalOffset: CGFloat = 8.0
+    static let topOffset: CGFloat = 4.0
+    static let bottomOffset: CGFloat = 2.0
     static let fontSize: CGFloat = 17.0
 }
 
@@ -41,13 +42,10 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
     
     // MARK: - UI
     func setupViews() {
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = UIColor.white
-        
-        backgroundView?.addSubview(titleLabel) {
+        addSubview(titleLabel) {
             $0.leading == leadingAnchor + Constants.leadingOffset
-            $0.top == topAnchor + Constants.verticalOffset
-            $0.centerY == centerYAnchor
+            $0.top == topAnchor + Constants.topOffset
+            $0.bottom == bottomAnchor - Constants.bottomOffset
         }
     }
     
