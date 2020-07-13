@@ -74,7 +74,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
     
     var columns: CGFloat {
         switch layout.scrollDirection {
-        case .vertical: return UIDevice.current.userInterfaceIdiom == .pad ? 3 : 2
+        case .vertical: return UIDevice.current.userInterfaceIdiom == .pad ? 3 : 4
         case .horizontal: return 1
         }
     }

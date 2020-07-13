@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ChatTableViewCellModel: TableViewCellModel {
     var cellType: TableViewCellType! { get }
     
     var isMessageRead: Bool { get }
     var isIncomingMessage: Bool { get }
+    
     var timestamp: Date { get }
+    var profileImage: UIImage? { get }
 }

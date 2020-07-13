@@ -11,6 +11,7 @@ import UIKit
 enum TableViewCellType: CaseIterable {
     case collocutorOption
     case textMessage
+    case location
 }
 
 extension TableViewCellType {
@@ -23,6 +24,8 @@ extension TableViewCellType {
             return ActionTableViewCell.self
         case .textMessage:
             return TextMessageCell.self
+        case .location:
+            return LocationMessageCell.self
         }
     }
 }

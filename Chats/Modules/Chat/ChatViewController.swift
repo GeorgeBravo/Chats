@@ -54,6 +54,7 @@ final class ChatViewController: UIViewController {
     
     var messageList: [MockMessage] = [] {
         didSet {
+            messageInputBar.inputTextView.text = ""
             messageListDidChange()
         }
     }
@@ -150,6 +151,7 @@ final class ChatViewController: UIViewController {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(TextMessageCell.self)
         tableView.register(MessageContentCell.self)
+        tableView.register(LocationMessageCell.self)
         tableView.register(ChatSectionHeaderView.self)
         
         tableView.tableFooterView = typingIndicatorView
@@ -169,7 +171,7 @@ final class ChatViewController: UIViewController {
         
         let sections: [TableViewSectionModel] = sortedViewModels.map {
             let oldestMessageDate = $0.first?.timestamp
-            return ChatTableViewSectionModel(headerViewType: .messagesTimestamp, title: oldestMessageDate?.headerSectionDate ?? "Unknown date", cellModels: $0)
+            return ChatTableViewSectionModel(headerViewType: .messagesTimestamp, title: oldestMessageDate?.headerSectionDate ?? "Unknown date", cellModels: $0, headerStyle: .simple)
         }.compactMap { $0 }
         
         self.sections = sections
@@ -291,22 +293,6 @@ extension ChatViewController: UITableViewDataSource {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let section = indexPath.section
-//        let row = indexPath.row
-//        if let cell = cell as? TableViewCellSetup, let cellModel = sections?[section].cellModels[row]  {
-//            cell.setup(with: cellModel)
-//            if let cell = cell as? TextMessageCell {
-//                cell.onTextViewDidChange = { [unowned self] in
-//                    DispatchQueue.main.async {
-//                        //                        self.tableView.beginUpdates()
-//                        //                        self.tableView.endUpdates()
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionModel = sections?[section],
             let classType = sectionModel.headerViewType.classType else { return nil }
@@ -316,10 +302,6 @@ extension ChatViewController: UITableViewDataSource {
         }
         view.tintColor = UIColor.clear
         return view
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
     }
 }
 
@@ -343,18 +325,21 @@ extension ChatViewController {
         messageInputBar.inputTextView.tintColor = .black
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
-        //        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
+
+//        messageInputBar.inputTextView.textContainerInset = [\.left: 20]
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
         messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.layer.masksToBounds = true
-        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        
+//        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         configureInputBarItems()
     }
     
     private func configureInputBarItems() {
-        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
+//        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
         
     }
     
@@ -385,8 +370,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 break
             // action with contact
             case .location(let location):
-                break
-                // action with location
+                guard let location = location else { return }
+                let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                self.messageList.append(mockLocationMessage)
             }
         }
         alert.addAction(title: "Cancel", style: .cancel)
@@ -395,6 +381,11 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
     
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        let mockTextMessage = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+        messageList.append(mockTextMessage)
+    }
 }
 
 

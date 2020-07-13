@@ -18,7 +18,7 @@ extension Date {
     var headerSectionDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
-        dateFormatter.doesRelativeDateFormatting = true
+//        dateFormatter.doesRelativeDateFormatting = true
         return dateFormatter.string(from: self)
     }
 }

@@ -132,6 +132,7 @@ final  class SampleData {
     var valueToAdd = 1
 
     func dateAddingRandomTime() -> Date {
+        return Date()
         let randomNumber = Int(arc4random_uniform(UInt32(10)))
         if randomNumber % 2 == 0 {
             let date = Calendar.current.date(byAdding: .minute, value: valueToAdd, to: Date())!
@@ -189,8 +190,8 @@ final  class SampleData {
             let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
             return MockMessage(emoji: emojis[randomNumberEmoji], user: user, messageId: uniqueID, date: date)
         case .Location:
-            let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
-            return MockMessage(location: locations[randomNumberLocation], user: user, messageId: uniqueID, date: date)
+            let randomSentence = Lorem.sentence()
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         case .Url:
             return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         case .Phone:

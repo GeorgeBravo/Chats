@@ -24,20 +24,11 @@
 
 import Foundation
 import CoreLocation
-//import MessageKit
 import AVFoundation
 import UIKit
 
-private struct CoordinateItem: LocationItem {
-    
-    var location: CLLocation
-    var size: CGSize
-    
-    init(location: CLLocation) {
-        self.location = location
-        self.size = CGSize(width: 240, height: 240)
-    }
-    
+public struct CoordinateItem: LocationItem {
+    public var location: CLLocation
 }
 
 private struct ImageMediaItem: MediaItem {
@@ -115,6 +106,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         switch self.kind {
         case let .text(message):
             return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
+        case let .location(locationItem):
+            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
             
@@ -151,9 +144,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         self.init(kind: .video(mediaItem), user: user, messageId: messageId, date: date)
     }
     
-    init(location: CLLocation, user: MockUser, messageId: String, date: Date) {
-        let locationItem = CoordinateItem(location: location)
-        self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
+    init(location: LocationItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
+        self.init(kind: .location(location), user: user, messageId: messageId, date: date)
     }
     
     init(emoji: String, user: MockUser, messageId: String, date: Date) {

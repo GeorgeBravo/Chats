@@ -12,6 +12,7 @@ struct ChatTableViewTextMessageCellModel: ChatTableViewCellModel {
     var cellType: TableViewCellType! { return .textMessage }
     
     var message: String
+    
     var timestamp: Date
     var profileImage: UIImage?
     
