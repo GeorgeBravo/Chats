@@ -1,14 +1,15 @@
 import Foundation
 import CoreLocation
 import Contacts
+import MapKit
 
 // class because protocol
-public class Location: NSObject {
+public class Location: NSObject, LocationItem {
 	public let name: String?
 	
 	// difference from placemark location is that if location was reverse geocoded,
 	// then location point to user selected location
-	public let location: CLLocation
+	public var location: CLLocation
 	public let placemark: CLPlacemark
 	
 	public var address: String {
@@ -27,8 +28,6 @@ public class Location: NSObject {
 		self.placemark = placemark
 	}
 }
-
-import MapKit
 
 extension Location: MKAnnotation {
     

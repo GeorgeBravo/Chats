@@ -36,6 +36,8 @@ protocol ChatListPresentableListener: class {
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
     func setupContent()
+    
+    func showChat()
 }
 
 final class ChatListViewController: UITableViewController {
@@ -344,5 +346,9 @@ extension ChatListViewController {
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        listener?.showChat()
     }
 }

@@ -69,4 +69,6 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
 
 extension RootInteractor: RootPresentableListener {}
 
-extension RootInteractor: RootInteractable {}
+extension RootInteractor: RootInteractable {
+    func hideChat() {}
+}

@@ -12,6 +12,9 @@ enum TableViewCellType: CaseIterable {
     case collocutorOption
     case collocutorInfo
     case chatList
+    case textMessage
+    case location
+    case assets
 }
 
 extension TableViewCellType {
@@ -23,14 +26,12 @@ extension TableViewCellType {
         case .collocutorOption: return ActionTableViewCell.self
         case .collocutorInfo: return CollocutorProfileTableViewCell.self
         case .chatList: return ChatListTableViewCell.self
+        case .textMessage:
+            return TextMessageCell.self
+        case .location:
+            return LocationMessageCell.self
+        case .assets:
+            return MediaMessageCell.self
         }
     }
-}
-
-protocol TableViewCellSetup {
-    func setup(with viewModel: TableViewCellModel)
-}
-
-protocol TableViewCellModel {
-    var cellType: TableViewCellType! { get }
 }

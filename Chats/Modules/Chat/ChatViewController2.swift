@@ -89,7 +89,7 @@
 //
 //        // Hide the outgoing avatar and adjust the label alignment to line up with the messages
 //        layout?.setMessageOutgoingAvatarSize(.zero)
-//        layout?.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)))
+//        layout?.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsemessageInputBarts: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)))
 //        layout?.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)))
 //
 //        // Set outgoing avatar to overlap with the message bubble

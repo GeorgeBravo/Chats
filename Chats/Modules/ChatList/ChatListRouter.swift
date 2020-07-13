@@ -8,7 +8,7 @@
 
 import BRIck
 
-protocol ChatListInteractable: Interactable {
+protocol ChatListInteractable: Interactable, ChatListener {
     var router: ChatListRouting? { get set }
     var listener: ChatListListener? { get set }
 }
@@ -22,10 +22,37 @@ final class ChatListRouter: ViewableRouter<ChatListInteractable, ChatListViewCon
 
     // TODO: Constructor inject child builder protocols to allow building children.
 
-    override init(interactor: ChatListInteractable, viewController: ChatListViewControllable) {
+    init(interactor: ChatListInteractable,
+         viewController: ChatListViewControllable,
+         _ chatBuilder: ChatBuildable) {
+        self.chatBuilder = chatBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
+    
+    
+    // MARK: - Chat
+    private var chatBuilder: ChatBuildable
+    private var chatRouter: ViewableRouting?
 }
 
-extension ChatListRouter: ChatListRouting {}
+extension ChatListRouter: ChatListRouting {
+    func showChat() {
+        let chatRouter = chatBuilder.build(withListener: interactor)
+        self.chatRouter = chatRouter
+
+        attach(chatRouter)
+        
+        pushRouter(chatRouter, animated: true)
+    }
+    
+    func hideChat() {
+        guard let chatRouter = chatRouter else {
+            return
+        }
+
+        detach(chatRouter)
+        chatRouter.popRouter(animated: true)
+        self.chatRouter = nil
+    }
+}

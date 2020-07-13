@@ -1,5 +1,5 @@
 //
-//  ChatTableViewCellModel.swift
+//  TableViewCellModel.swift
 //  Chats
 //
 //  Created by Касилов Георгий on 08.07.2020.
@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+protocol TableViewCellModel {
+    var cellType: TableViewCellType! { get }
+}
+

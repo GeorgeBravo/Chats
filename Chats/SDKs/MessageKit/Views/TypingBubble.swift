@@ -151,5 +151,4 @@ open class TypingBubble: UIView {
         typingIndicator.stopAnimating()
         [contentBubble, cornerBubble, tinyBubble].forEach { $0.layer.removeAnimation(forKey: AnimationKeys.pulse) }
     }
-    
 }

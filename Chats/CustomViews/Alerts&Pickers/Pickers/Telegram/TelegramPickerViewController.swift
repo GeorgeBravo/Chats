@@ -172,7 +172,8 @@ final class TelegramPickerViewController: UIViewController {
     
     func layoutSubviews() {
         tableView.tableHeaderView?.height = preferredHeight
-        preferredContentSize.height = tableView.contentSize.height
+        preferredContentSize.height = preferredHeight + (CGFloat(buttons.count) * UI.rowHeight)
+//            .contentSize.height
     }
     
     func updatePhotos() {

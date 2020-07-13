@@ -18,18 +18,8 @@ enum TableViewSectionType {
         switch self {
         case .options: return OptionSectionHeaderView.self
         case .collocutorProfile: return OptionSectionHeaderView.self
-        case .messagesTimestamp: return OptionSectionHeaderView.self
         case .chatList: return ChatListSectionHeaderView.self
+        case .messagesTimestamp: return ChatSectionHeaderView.self
         }
     }
-}
-
-protocol SectionHeaderViewSetup {
-    func setup(with viewModel: TableViewSectionModel)
-}
-
-protocol TableViewSectionModel {
-    var headerViewType: TableViewSectionType { get }
-    var title: String { get set }
-    var cellModels: [TableViewCellModel] { get set }
 }

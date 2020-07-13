@@ -10,6 +10,8 @@ import BRIck
 import Foundation
 
 protocol ChatListRouting: ViewableRouting {
+    func showChat()
+    func hideChat()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -96,7 +98,16 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
      }
 }
 
-extension ChatListInteractor: ChatListInteractable {}
+extension ChatListInteractor: ChatListInteractable {
+    
+    func showChat() {
+        router?.showChat()
+    }
+    // MARK: - Chat Listener
+    func hideChat() {
+        router?.hideChat()
+    }
+}
 
 extension ChatListInteractor: ChatListPresentableListener {
     func setupContent() {
@@ -153,5 +164,3 @@ extension ChatListInteractor: ChatListPresentableListener {
         return sections[number]
     }
 }
-
-extension ChatListInteractor {}

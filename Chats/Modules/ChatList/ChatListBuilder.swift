@@ -38,7 +38,11 @@ extension ChatListBuilder: ChatListBuildable {
         let viewController = ChatListViewController()
         let interactor = ChatListInteractor(presenter: viewController)
         interactor.listener = listener
+        
+        let chatBuilder = ChatBuilder(dependency: component)
 
-        return ChatListRouter(interactor: interactor, viewController: viewController)
+        return ChatListRouter(interactor: interactor,
+                              viewController: viewController,
+                              chatBuilder)
     }
 }

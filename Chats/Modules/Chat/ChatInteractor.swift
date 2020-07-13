@@ -23,6 +23,7 @@ protocol ChatPresentable: Presentable {
 
 protocol ChatListener: class {
 
+    func hideChat()
     // TODO: Declare methods the interactor can invoke to communicate with other BRIcks.
 }
 
@@ -66,4 +67,7 @@ extension ChatInteractor: ChatPresentableListener {
         router?.showUser(with: profile)
     }
     
+    func hideChat() {
+        listener?.hideChat()
+    }
 }

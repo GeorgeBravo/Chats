@@ -22,16 +22,11 @@
  SOFTWARE.
  */
 
-import class CoreLocation.CLLocation
-import UIKit
+import CoreLocation
 
 /// A protocol used to represent the data for a location message.
 public protocol LocationItem {
 
     /// The location.
     var location: CLLocation { get }
-
-    /// The size of the location item.
-    var size: CGSize { get }
-
 }
