@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias OnCollocutorManipulationPressClosure = ((CollocutorManipulations) -> Void)
+typealias OnCollocutorManipulationPressClosure = ((CollocutorOptionType) -> Void)
 
 struct CollocutorInfoCellModel: TableViewCellModel {
     

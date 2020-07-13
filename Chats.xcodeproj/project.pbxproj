@@ -265,6 +265,7 @@
 		CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */; };
 		CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */; };
 		CED4208424B49AD900C557FC /* OptionsTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4208324B49AD900C557FC /* OptionsTableViewSectionModel.swift */; };
+		CEFA663924B866250034E802 /* CollocutorNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA663824B866250034E802 /* CollocutorNavigationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -529,6 +530,7 @@
 		CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorManipulationsButtonsStackView.swift; sourceTree = "<group>"; };
 		CED4208324B49AD900C557FC /* OptionsTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewSectionModel.swift; sourceTree = "<group>"; };
+		CEFA663824B866250034E802 /* CollocutorNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorNavigationView.swift; sourceTree = "<group>"; };
 		DEBDC9E49B3DBE427E91D8E6 /* Pods-Chats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.debug.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1133,6 +1135,7 @@
 				2D1C4D3024ABC7E40087449A /* Layout */,
 				2D1C4D1824AB4AAC0087449A /* GradientCircleView */,
 				2D1C4D1424AB3F810087449A /* СollocutorView */,
+				CEFA663724B865C00034E802 /* CollocutorNavigationView */,
 				2D1C4D1124AB39AF0087449A /* BackButtonUnreadMessages */,
 				2D64CF8E24A20EE300C8B94A /* UITableViewCells */,
 			);
@@ -1717,6 +1720,14 @@
 			path = UINavigationController;
 			sourceTree = "<group>";
 		};
+		CEFA663724B865C00034E802 /* CollocutorNavigationView */ = {
+			isa = PBXGroup;
+			children = (
+				CEFA663824B866250034E802 /* CollocutorNavigationView.swift */,
+			);
+			path = CollocutorNavigationView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1887,6 +1898,7 @@
 				2D64CFF224A20EF000C8B94A /* CGPoint+UniformKeyPathInitializable.swift in Sources */,
 				2D65C20724AE1A3F00C64534 /* ContactCell.swift in Sources */,
 				2D65C20024AE1A3F00C64534 /* SearchHistoryManager.swift in Sources */,
+				CEFA663924B866250034E802 /* CollocutorNavigationView.swift in Sources */,
 				2D65C1F524AE1A3F00C64534 /* LocaleInfo.swift in Sources */,
 				2D1C4D1A24AB4ACA0087449A /* GradientCircleView.swift in Sources */,
 				2D64CFEA24A20EF000C8B94A /* UIColor+.swift in Sources */,

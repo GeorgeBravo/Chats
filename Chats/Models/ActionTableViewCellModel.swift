@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//import UIKit
 
 enum CollocutorOptionCellAppearance {
     case standard
@@ -16,6 +15,10 @@ enum CollocutorOptionCellAppearance {
 }
 
 enum CollocutorOptionType: Int {
+    case call
+    case search
+    case mute
+    case more
     case addToContacts
     case addToGroups
     case blockUser
@@ -35,19 +38,20 @@ enum CollocutorOptionType: Int {
         case .sendMessage: return LocalizationKeys.sendMessage.localized()
         case .sharedMedia: return LocalizationKeys.sharedMedia.localized()
         case .username: return LocalizationKeys.username.localized()
+        case .call: return LocalizationKeys.call.localized()
+        case .search: return LocalizationKeys.search.localized()
+        case .mute: return LocalizationKeys.mute.localized()
+        case .more: return LocalizationKeys.more.localized()
         }
     }
     
     var cellAppearance: CollocutorOptionCellAppearance {
         switch self {
-        case .sendMessage: return .standard
-        case .addToContacts: return .standard
-        case .addToGroups: return .standard
         case .sharedMedia: return .arrowCell
         case .notification: return .arrowCell
         case .groupsInCommon: return .arrowCell
         case .blockUser: return .destructive
-        case .username: return .standard
+        default: return .standard
         }
     }
     

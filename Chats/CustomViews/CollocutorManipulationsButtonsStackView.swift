@@ -13,24 +13,8 @@ private struct Constants {
     static let buttonFrame: CGRect = CGRect(0.0, 0.0, height, height)
 }
 
-enum CollocutorManipulations: Int {
-    case call
-    case search
-    case mute
-    case more
-    
-    var stringDescription: String {
-        switch self {
-        case .call: return LocalizationKeys.call.localized()
-        case .search: return LocalizationKeys.search.localized()
-        case .mute: return LocalizationKeys.mute.localized()
-        case .more: return LocalizationKeys.more.localized()
-        }
-    }
-}
-
 protocol CollocutorManipulationsButtonsStackViewDelegate: class {
-    func buttonPressed(with action: CollocutorManipulations)
+    func buttonPressed(with action: CollocutorOptionType)
 }
 
 class CollocutorManipulationsButtonsStackView: UIStackView {
@@ -108,7 +92,7 @@ extension CollocutorManipulationsButtonsStackView {
 // MARK: - Selectors
 extension CollocutorManipulationsButtonsStackView {
     @objc func buttonPressed(_ sender: UIButton) {
-        guard let manipulation = CollocutorManipulations(rawValue: sender.tag) else { return }
+        guard let manipulation = CollocutorOptionType(rawValue: sender.tag) else { return }
         delegate?.buttonPressed(with: manipulation)
     }
 }
