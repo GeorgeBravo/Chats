@@ -174,14 +174,6 @@ final  class SampleData {
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
             return MockMessage(attributedText: attributedText, user: user, messageId: uniqueID, date: date)
-        case .Photo:
-            let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
-            let image = messageImages[randomNumberImage]
-            return MockMessage(image: image, user: user, messageId: uniqueID, date: date)
-        case .Video:
-            let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
-            let image = messageImages[randomNumberImage]
-            return MockMessage(thumbnail: image, user: user, messageId: uniqueID, date: date)
         case .Audio:
             let randomNumberSound = Int(arc4random_uniform(UInt32(sounds.count)))
             let soundURL = sounds[randomNumberSound]
@@ -201,6 +193,9 @@ final  class SampleData {
         case .ShareContact:
             let randomContact = Int(arc4random_uniform(UInt32(contactsToShare.count)))
             return MockMessage(contact: contactsToShare[randomContact], user: user, messageId: uniqueID, date: date)
+        default:
+            let randomSentence = Lorem.sentence()
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
         }
     }
     // swiftlint:enable cyclomatic_complexity

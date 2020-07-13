@@ -49,7 +49,7 @@ public class MessageContentCell: UITableViewCell {
         return imageView
     }()
     
-    public lazy var readMessageImageContainerView: UIView = UIView()
+    private lazy var readMessageImageContainerView: UIView = UIView()
     
     private lazy var smileyImageView: UIImageView = {
         let imageView = UIImageView()
@@ -59,7 +59,7 @@ public class MessageContentCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var horizontalStackView: UIStackView = {
+    public lazy var horizontalContainerStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [messageTimestampLabel, readMessageImageContainerView])
         
         stackView.axis = .horizontal
@@ -85,7 +85,7 @@ public class MessageContentCell: UITableViewCell {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        bringSubviewToFront(horizontalStackView)
+//        bringSubviewToFront(horizontalContainerStackView)x
     }
 
     func setup(with viewModel: TableViewCellModel) {
@@ -142,12 +142,12 @@ extension MessageContentCell {
             $0.width == 15
         }
         
-        messageContainerView.addSubview(horizontalStackView) {
+        messageContainerView.addSubview(horizontalContainerStackView) {
             $0.bottom == messageContainerView.bottomAnchor - 5
             $0.trailing == messageContainerView.trailingAnchor - 10
         }
 
-        horizontalStackView.layout {
+        horizontalContainerStackView.layout {
             $0.height == 8
         }
     }

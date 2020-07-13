@@ -106,7 +106,7 @@ extension TextMessageCell {
         // Get CGRect for last character
         let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
         
-        if lastLineFragmentRect.maxX > (messageTextView.frame.width - readMessageImageContainerView.frame.width) {
+        if lastLineFragmentRect.maxX > (messageTextView.frame.width - horizontalContainerStackView.frame.width) {
             
             heightConstraint?.constant = messageTextView.frame.height + 8
             //            heightConstraint?.constant += readMessageImageContainerView.frame.height

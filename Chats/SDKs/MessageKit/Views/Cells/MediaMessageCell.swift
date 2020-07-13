@@ -41,59 +41,42 @@ final class MediaMessageCell: MessageContentCell {
 
     // MARK: - Methods
 
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        self.assetImageView.image = nil
+    }
+    
+    override func setup(with viewModel: TableViewCellModel) {
+    super.setup(with: viewModel)
+        guard let model = viewModel as? ChatTableViewLocationCellModel else { return }
+        
+//        switch message.kind {
+//        case .photo(let mediaItem):
+//            assetImageView.image = mediaItem.image ?? mediaItem.placeholderImage
+//            playButtonView.isHidden = true
+//        case .video(let mediaItem):
+//            assetImageView.image = mediaItem.image ?? mediaItem.placeholderImage
+//            playButtonView.isHidden = false
+//        default:
+//            break
+//        }
+
+    }
+}
+
+// MARK: - Setup Views
+extension MediaMessageCell: TableViewCellSetup {
     /// Responsible for setting up the constraints of the cell's subviews.
     private func setupConstraints() {
-        imageView.fillSuperview()
+        assetImageView.fillSuperview()
         playButtonView.centerInSuperview()
         playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
     }
 
-    open override func setupSubviews() {
+    private func setupViews() {
         super.setupSubviews()
-        messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(assetImageView)
         messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
-
-    open override func prepareForReuse() {
-        super.prepareForReuse()
-        self.imageView.image = nil
-    }
-
-    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        super.configure(with: message, at: indexPath, and: messagesCollectionView)
-
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-
-        switch message.kind {
-        case .photo(let mediaItem):
-            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
-            playButtonView.isHidden = true
-        case .video(let mediaItem):
-            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
-            playButtonView.isHidden = false
-        default:
-            break
-        }
-
-        displayDelegate.configureMediaMessageImageView(imageView, for: message, at: indexPath, in: messagesCollectionView)
-    }
-
-    /// Handle tap gesture on contentView and its subviews.
-    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        let touchLocation = gesture.location(in: imageView)
-
-        guard imageView.frame.contains(touchLocation) else {
-            super.handleTapGesture(gesture)
-            return
-        }
-        delegate?.didTapImage(in: self)
-    }
-
-}
-
-extension MediaMessageCell {
-    
 }

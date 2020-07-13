@@ -364,7 +364,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         alert.addTelegramPicker { result in
             switch result {
             case .photo(let assets):
-                break
+                let assets = assets.map { AssetMediaItem(asset: $0) }
             // action with assets
             case .contact(let contact):
                 break

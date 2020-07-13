@@ -226,6 +226,7 @@
 		2D65C21F24AE1A3F00C64534 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1EA24AE1A3E00C64534 /* Locale+Extensions.swift */; };
 		2D65C22024AE1A3F00C64534 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1EB24AE1A3E00C64534 /* UITextField+Extensions.swift */; };
 		2D65C22D24AE43AA00C64534 /* AttributedTextBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C22C24AE43AA00C64534 /* AttributedTextBlock.swift */; };
+		2D6A76C524BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */; };
 		2D7F273624B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */; };
 		2DB6987A24A362660075737F /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB6987624A362660075737F /* ChatRouter.swift */; };
 		2DB6987B24A362660075737F /* ChatViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB6987724A362660075737F /* ChatViewController2.swift */; };
@@ -478,6 +479,7 @@
 		2D65C1EA24AE1A3E00C64534 /* Locale+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C1EB24AE1A3E00C64534 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C22C24AE43AA00C64534 /* AttributedTextBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedTextBlock.swift; sourceTree = "<group>"; };
+		2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewAssetCellModel.swift; sourceTree = "<group>"; };
 		2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewLocationCellModel.swift; sourceTree = "<group>"; };
 		2DB6987624A362660075737F /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		2DB6987724A362660075737F /* ChatViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController2.swift; sourceTree = "<group>"; };
@@ -992,6 +994,7 @@
 				CE99B9F224B475AE00F4CEB6 /* ActionTableViewCellModel.swift */,
 				2D501C2D24B5B0F000C37DCB /* ChatTableViewTextMessageCellModel.swift */,
 				2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */,
+				2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -1848,6 +1851,7 @@
 				2D1C4D3624ABC7F30087449A /* Lorem.swift in Sources */,
 				2D64CFE224A20EF000C8B94A /* UICollectionViewCell+.swift in Sources */,
 				2D501B7724B320C800C37DCB /* DetectorType.swift in Sources */,
+				2D6A76C524BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift in Sources */,
 				CE26469624B3560700EE7241 /* CollocutorProfileRouter.swift in Sources */,
 				2D501BDE24B3223400C37DCB /* KeyboardManager.swift in Sources */,
 				2D501BE124B3224600C37DCB /* HorizontalEdgePadding.swift in Sources */,

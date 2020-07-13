@@ -26,24 +26,14 @@ import Foundation
 import CoreLocation
 import AVFoundation
 import UIKit
+import Photos
 
 public struct CoordinateItem: LocationItem {
     public var location: CLLocation
 }
 
-private struct ImageMediaItem: MediaItem {
-    
-    var url: URL?
-    var image: UIImage?
-    var placeholderImage: UIImage
-    var size: CGSize
-    
-    init(image: UIImage) {
-        self.image = image
-        self.size = CGSize(width: 240, height: 240)
-        self.placeholderImage = UIImage()
-    }
-    
+public struct AssetMediaItem: MediaItem {
+    public var asset: PHAsset
 }
 
 private struct MockAudiotem: AudioItem {
@@ -108,6 +98,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
             return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         case let .location(locationItem):
             return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
+        case let .asset(assets):
+            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
             
@@ -134,14 +126,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
     }
     
-    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
-        let mediaItem = ImageMediaItem(image: image)
-        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
-    }
-    
-    init(thumbnail: UIImage, user: MockUser, messageId: String, date: Date) {
-        let mediaItem = ImageMediaItem(image: thumbnail)
-        self.init(kind: .video(mediaItem), user: user, messageId: messageId, date: date)
+    init(assets: [AssetMediaItem], user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
+        self.init(kind: .asset(assets), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
     }
     
     init(location: LocationItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
