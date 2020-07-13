@@ -15,7 +15,7 @@ protocol ChatPresentableListener: class {
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
     func showUser(with profile: Collocutor)
-    
+    func showGroupProfile()
     func hideChat()
 }
 
@@ -258,7 +258,8 @@ extension ChatViewController {
     
     @objc
     private func onCollocutorViewTapped() {
-        listener?.showUser(with: collocutor)
+//        listener?.showUser(with: collocutor)
+        listener?.showGroupProfile()
     }
 }
 

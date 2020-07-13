@@ -23,3 +23,8 @@
 "Search" = "Search";
 "Mute" = "Mute";
 "More" = "More";
+
+// MARK: - Group Profile
+"GroupInfo" = "Group Info";
+"LeaveGroup" = "Leave Group";
+"shortcut" = "shortcut";

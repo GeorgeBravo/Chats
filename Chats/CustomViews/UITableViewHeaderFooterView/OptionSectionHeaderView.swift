@@ -22,6 +22,8 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .medium)
         label.textColor = UIColor(named: .optionsBlackColor)
+        label.clipsToBounds = true
+        label.numberOfLines = 0
         return label
     }()
     
@@ -46,6 +48,7 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
             $0.leading == leadingAnchor + Constants.leadingOffset
             $0.top == topAnchor + Constants.topOffset
             $0.bottom == bottomAnchor - Constants.bottomOffset
+            $0.trailing == trailingAnchor - Constants.leadingOffset
         }
     }
     

@@ -28,6 +28,7 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.profileImageHeight / 2
         imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         return imageView
     }()
     

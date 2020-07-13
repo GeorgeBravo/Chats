@@ -70,9 +70,9 @@ extension TextMessageCell {
         
         messageContainerView.addSubview(messageTextView) {
             let top = $0.top == messageContainerView.topAnchor
-            top.priority = .defaultLow
+//            top.priority = .defaultLow
             let bottom = $0.bottom == messageContainerView.bottomAnchor
-            bottom.priority = .defaultLow
+//            bottom.priority = .defaultLow
             $0.leading == messageContainerView.leadingAnchor
             $0.trailing == messageContainerView.trailingAnchor
             //            $0.height >= 100

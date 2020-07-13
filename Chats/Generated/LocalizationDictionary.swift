@@ -22,10 +22,14 @@ public enum LocalizationKeys {
   public static let call: String = "Call"
   /// Edit
   public static let edit: String = "Edit"
+  /// Group Info
+  public static let groupInfo: String = "GroupInfo"
   /// Groups In Common
   public static let groupsInCommon: String = "GroupsInCommon"
   /// last seen recently
   public static let lastSeenRecently: String = "LastSeenRecently"
+  /// Leave Group
+  public static let leaveGroup: String = "LeaveGroup"
   /// More
   public static let more: String = "More"
   /// Mute
@@ -40,6 +44,8 @@ public enum LocalizationKeys {
   public static let sendMessage: String = "SendMessage"
   /// Shared Media
   public static let sharedMedia: String = "SharedMedia"
+  /// shortcut
+  public static let shortcut: String = "shortcut"
   /// @username
   public static let username: String = "Username"
 }

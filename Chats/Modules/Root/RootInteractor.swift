@@ -32,7 +32,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
         //Роутинг для Мишы
         case chatList
         
-        // Роутинг Для Жоры и Савы
+        // Роутинг Для Жоры и Саввы
         case defaultt
 
     }
@@ -71,4 +71,5 @@ extension RootInteractor: RootPresentableListener {}
 
 extension RootInteractor: RootInteractable {
     func hideChat() {}
+    func hideGroup() {}
 }
