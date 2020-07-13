@@ -82,6 +82,7 @@ final class ChatListViewController: UITableViewController {
         tableView.showsHorizontalScrollIndicator = false
         
         setupView()
+        dismissKey()
         listener?.combineChatListSections()
     }
     override func viewWillAppear(_ animated: Bool) {
