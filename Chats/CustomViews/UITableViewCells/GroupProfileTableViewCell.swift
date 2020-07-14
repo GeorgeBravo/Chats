@@ -12,11 +12,11 @@ private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 16.0
     static let descriptionFontSize: CGFloat = 20.0
-    static let profileImageHeight: CGFloat = 80.0
+    static let profileImageHeight: CGFloat = 68.0
     static let separatorHeight: CGFloat = 1.0
-    static let bigFontSize: CGFloat = 24.0
+    static let bigFontSize: CGFloat = 20.0
     static let stackViewItemsSpacing: CGFloat = 4.0
-    static let smallFontSize: CGFloat = 16.0
+    static let smallFontSize: CGFloat = 14.0
 }
 
 class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -35,7 +35,7 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .blackColor)
-        label.font = UIFont.systemFont(ofSize: Constants.bigFontSize, weight: .heavy)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.bigFontSize, style: .bold)
         return label
     }()
     
@@ -44,7 +44,7 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .optionsBlackColor)
-        label.font = UIFont.systemFont(ofSize: Constants.smallFontSize, weight: .regular)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.smallFontSize, style: .regular)
         return label
     }()
     

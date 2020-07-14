@@ -10,7 +10,7 @@ import UIKit
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 8.0
-    static let descriptionFontSize: CGFloat = 18.0
+    static let descriptionFontSize: CGFloat = 16.0
     static let separatorHeight: CGFloat = 1.0
 }
 
@@ -19,7 +19,7 @@ class DescriptionTableViewCell: UITableViewCell, TableViewCellSetup {
     // MARK: - Variables
     private var descriptionTextView: UITextView = {
         let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: Constants.descriptionFontSize, weight: .regular)
+        textView.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionFontSize, style: .regular)
         textView.textColor = UIColor(named: .optionsBlackColor)
         textView.dataDetectorTypes = .all
         textView.isScrollEnabled = false

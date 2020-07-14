@@ -9,11 +9,11 @@
 import UIKit
 
 private struct Constants {
-    static let leadingOffset: CGFloat = 16.0
-    static let topOffset: CGFloat = 8.0
-    static let profileImageHeight: CGFloat = 60.0
+    static let leadingOffset: CGFloat = 20.0
+    static let topOffset: CGFloat = 6.0
+    static let profileImageHeight: CGFloat = 40.0
     static let separatorHeight: CGFloat = 1.0
-    static let bigFontSize: CGFloat = 20.0
+    static let bigFontSize: CGFloat = 18.0
 }
 
 class AddContactsTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -31,7 +31,7 @@ class AddContactsTableViewCell: UITableViewCell, TableViewCellSetup {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .optionsBlueColor)
-        label.font = UIFont.systemFont(ofSize: Constants.bigFontSize, weight: .regular)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.bigFontSize, style: .regular)
         return label
     }()
     

@@ -12,12 +12,12 @@ private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 20.0
-    static let profileImageHeight: CGFloat = 60.0
+    static let profileImageHeight: CGFloat = 48.0
     static let separatorHeight: CGFloat = 1.0
-    static let bigFontSize: CGFloat = 20.0
-    static let stackViewItemsSpacing: CGFloat = 4.0
-    static let mediumFontSize: CGFloat = 16.0
-    static let smallFontSize: CGFloat = 14.0
+    static let bigFontSize: CGFloat = 18.0
+    static let stackViewItemsSpacing: CGFloat = 0.0
+    static let mediumFontSize: CGFloat = 14.0
+    static let smallFontSize: CGFloat = 12.0
 }
 
 class UserTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -36,7 +36,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .optionsBlackColor)
-        label.font = UIFont.systemFont(ofSize: Constants.bigFontSize, weight: .heavy)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.bigFontSize, style: .medium)
         return label
     }()
     
@@ -44,7 +44,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
         let label = UILabel()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.font = UIFont.systemFont(ofSize: Constants.mediumFontSize, weight: .regular)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.mediumFontSize, style: .regular)
         return label
     }()
     
@@ -53,7 +53,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .descriptionGrayColor)
-        label.font = UIFont.systemFont(ofSize: Constants.smallFontSize, weight: .regular)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.smallFontSize, style: .regular)
         label.text = LocalizationKeys.author.localized()
         return label
     }()
