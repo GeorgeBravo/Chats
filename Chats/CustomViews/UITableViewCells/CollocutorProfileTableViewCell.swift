@@ -9,14 +9,15 @@
 import UIKit
 
 private struct Constants {
-    static let profileImageHeight: CGFloat = 140.0
-    static let imageTopSpacing: CGFloat = 8.0
-    static let nameLabelTopSpacing: CGFloat = 14.0
-    static let labelTopSpacing: CGFloat = 4.0
+    static let profileImageHeight: CGFloat = 100.0
+    static let nameLabelTopSpacing: CGFloat = 8.0
+    static let labelTopSpacing: CGFloat = 2.0
     static let separatorHeight: CGFloat = 0.4
     static let lastSeenLabelFontSize: CGFloat = 16.0
     static let buttonStackLeadingOffset: CGFloat = 32.0
-    static let fontSize: CGFloat = 36.0
+    static let buttonStackTopOffset: CGFloat = 24.0
+    static let fontSize: CGFloat = 28.0
+    static let minFontSize: CGFloat = 20.0
 }
 
 class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -27,7 +28,7 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     private lazy var collocutorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.profileImageHeight / 2
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -35,6 +36,7 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     private lazy var collocutorNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.fontSize, style: .bold)
         label.textColor = UIColor(named: .blackColor)
         return label
     }()
@@ -42,8 +44,8 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     private lazy var lastSeenLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: Constants.lastSeenLabelFontSize, weight: .regular)
-        label.textColor = UIColor(named: .blackColor)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.lastSeenLabelFontSize, style: .regular)
+        label.textColor = UIColor(named: .presenceDescriptionColor)
         return label
     }()
     
@@ -85,7 +87,7 @@ extension CollocutorProfileTableViewCell {
         selectionStyle = .none
         
         addSubview(collocutorImageView) {
-            $0.top == topAnchor + Constants.imageTopSpacing
+            $0.top == topAnchor
             $0.centerX == centerXAnchor
             $0.height == Constants.profileImageHeight
             $0.width == Constants.profileImageHeight
@@ -102,7 +104,7 @@ extension CollocutorProfileTableViewCell {
         }
         
         addSubview(buttonsStackView) {
-            $0.top == lastSeenLabel.bottomAnchor + Constants.buttonStackLeadingOffset
+            $0.top == lastSeenLabel.bottomAnchor + Constants.buttonStackTopOffset
             $0.bottom == bottomAnchor - Constants.buttonStackLeadingOffset
             $0.leading == leadingAnchor + Constants.buttonStackLeadingOffset
             $0.trailing == trailingAnchor - Constants.buttonStackLeadingOffset
@@ -128,15 +130,15 @@ extension CollocutorProfileTableViewCell {
     
     func update(with offset: CGFloat) {
         let fontSize = collocutorNameLabelFontSize(with: offset)
-        collocutorNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .heavy)
+        collocutorNameLabel.font = UIFont.helveticaNeueFontOfSize(size: fontSize, style: .bold)
     }
     
     func collocutorNameLabelFontSize(with offset: CGFloat) -> CGFloat {
         var fontSize = Constants.fontSize
-        if offset > Constants.imageTopSpacing + Constants.profileImageHeight * 0.5 {
-            fontSize = fontSize - (offset - Constants.imageTopSpacing - Constants.profileImageHeight * 0.5) * 0.23
+        if offset > Constants.profileImageHeight * 0.5 {
+            fontSize = fontSize - (offset - Constants.profileImageHeight * 0.5) * 0.23
             if fontSize > Constants.fontSize { fontSize = Constants.fontSize }
-            if fontSize < 22.0 { fontSize = 22.0 }
+            if fontSize < Constants.minFontSize { fontSize = Constants.minFontSize }
         }
         return fontSize
     }

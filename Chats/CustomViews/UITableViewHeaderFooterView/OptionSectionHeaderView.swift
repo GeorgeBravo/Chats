@@ -11,8 +11,8 @@ import UIKit
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 4.0
-    static let bottomOffset: CGFloat = 2.0
-    static let fontSize: CGFloat = 17.0
+    static let bottomOffset: CGFloat = 0.0
+    static let fontSize: CGFloat = 14.0
 }
 
 class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSetup {
@@ -20,7 +20,7 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
     // MARK: - Variables
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .medium)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.fontSize, style: .regular)
         label.textColor = UIColor(named: .optionsBlackColor)
         label.clipsToBounds = true
         label.numberOfLines = 0
@@ -47,7 +47,7 @@ class OptionSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSet
         addSubview(titleLabel) {
             $0.leading == leadingAnchor + Constants.leadingOffset
             $0.top == topAnchor + Constants.topOffset
-            $0.bottom == bottomAnchor - Constants.bottomOffset
+            $0.bottom == bottomAnchor
             $0.trailing == trailingAnchor - Constants.leadingOffset
         }
     }

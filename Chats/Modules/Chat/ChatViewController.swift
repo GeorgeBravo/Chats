@@ -46,7 +46,7 @@ final class ChatViewController: UIViewController {
     //MARK: - Private
     
     private var unreadMessagesCount: Int = 24
-    private let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
+    private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
     override var inputAccessoryView: UIView? {
         return messageInputBar

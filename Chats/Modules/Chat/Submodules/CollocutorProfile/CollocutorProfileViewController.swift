@@ -11,7 +11,8 @@ import BRIck
 
 private struct Constants {
     static let estimatedCellHeigth: CGFloat = 100.0
-    static let collocutorNavigationHeight: CGFloat = 56.0
+    static let collocutorNavigationHeight: CGFloat = 48.0
+    static let collocutorOffset: CGFloat = 16.0
 }
 
 protocol CollocutorProfilePresentableListener: class {
@@ -48,9 +49,9 @@ final class CollocutorProfileViewController: UIViewController {
         tableView.clipsToBounds = true
         tableView.backgroundColor = .white
         tableView.allowsMultipleSelection = false
-        tableView.contentInsetAdjustmentBehavior = .never
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: CGFloat.leastNormalMagnitude))
-        tableView.contentInset = UIEdgeInsets(top: Constants.collocutorNavigationHeight, left: 0.0, bottom: 0.0, right: 0.0)
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInset = UIEdgeInsets(top: Constants.collocutorNavigationHeight - Constants.collocutorOffset, left: 0.0, bottom: 0.0, right: 0.0)
         tableView.tableFooterView = UIView()
         tableView.register(ActionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
