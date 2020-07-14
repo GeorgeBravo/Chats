@@ -69,7 +69,8 @@ extension GroupProfileInteractor: GroupProfilePresentableListener {
         let secondSection = OptionsTableViewSectionModel(headerViewType: .options, title: "\n\(LocalizationKeys.shortcut.localized())", cellModels: [DescriptionTableViewCellModel(description: "alfa.io/alfaenzo", isShortcut: true)])
         let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia, descriptionText: " "), ActionTableViewCellModel(optionType: .notification, descriptionText: "Enabled")])
         let fourthSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .leaveGroup)])
-        sections = [firstSection, secondSection, thirdSection, fourthSection]
+        let fifthSection = OptionsTableViewSectionModel(headerViewType: .options, title: "\n", cellModels: [AddContactsTableViewCellModel(imageName: "account", addContactsText: LocalizationKeys.addContacts.localized()), UserTableViewCellModel(imageName: "Steve-Jobs", userNameText: "Steve Jobs", lastPresenceText: "online", isOnline: true, isAuthor: true), UserTableViewCellModel(imageName: "Dan-Leonard", userNameText: "Dan Leonard", lastPresenceText: "seen recently", isOnline: false, isAuthor: false)])
+        sections = [firstSection, secondSection, thirdSection, fourthSection, fifthSection]
     }
     
     func cellModelForRow(at indexPath: IndexPath) -> TableViewCellModel {
@@ -93,6 +94,12 @@ extension GroupProfileInteractor: GroupProfilePresentableListener {
     func didTapCell(at indexPath: IndexPath) {
         if let cellModel = sections[indexPath.section].cellModels[indexPath.row] as? ActionTableViewCellModel, let message = cellModel.title {
             presenter.showAlert(with: LocalizationKeys.action.localized(), message: message)
+        }
+        if let cellModel = sections[indexPath.section].cellModels[indexPath.row] as? UserTableViewCellModel {
+            presenter.showAlert(with: LocalizationKeys.action.localized(), message: cellModel.userNameText)
+        }
+        if let _ = sections[indexPath.section].cellModels[indexPath.row] as? AddContactsTableViewCellModel {
+            presenter.showAlert(with: LocalizationKeys.action.localized(), message: LocalizationKeys.addContacts.localized())
         }
     }
 }

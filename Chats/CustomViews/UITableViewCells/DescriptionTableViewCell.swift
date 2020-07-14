@@ -71,8 +71,6 @@ class DescriptionTableViewCell: UITableViewCell, TableViewCellSetup {
             $0.leading == leadingAnchor + Constants.leadingOffset
             $0.trailing == trailingAnchor
         }
-        
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setup(with model: TableViewCellModel) {

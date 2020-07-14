@@ -12,10 +12,14 @@ import Foundation
 public enum LocalizationKeys {
   /// Action
   public static let action: String = "Action"
+  /// Add Contacts
+  public static let addContacts: String = "AddContacts"
   /// Add to Contacts
   public static let addToContacts: String = "AddToContacts"
   /// Add to Groups
   public static let addToGroups: String = "AddToGroups"
+  /// author
+  public static let author: String = "Author"
   /// Block User
   public static let blockUser: String = "BlockUser"
   /// Call

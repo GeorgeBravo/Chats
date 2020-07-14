@@ -279,6 +279,10 @@
 		CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */; };
 		CEDC1FF124BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */; };
 		CEDC1FF324BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */; };
+		CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */; };
+		CEE78EF524BDC8D600B7E236 /* UserTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */; };
+		CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */; };
+		CEE78EF924BDD16300B7E236 /* AddContactsTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */; };
 		CEFA663924B866250034E802 /* CollocutorNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA663824B866250034E802 /* CollocutorNavigationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -558,6 +562,10 @@
 		CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorManipulationsButtonsStackView.swift; sourceTree = "<group>"; };
 		CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
 		CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCellModel.swift; sourceTree = "<group>"; };
+		CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCellModel.swift; sourceTree = "<group>"; };
+		CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCell.swift; sourceTree = "<group>"; };
+		CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCellModel.swift; sourceTree = "<group>"; };
 		CEFA663824B866250034E802 /* CollocutorNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorNavigationView.swift; sourceTree = "<group>"; };
 		DEBDC9E49B3DBE427E91D8E6 /* Pods-Chats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.debug.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1062,12 +1070,14 @@
 			isa = PBXGroup;
 			children = (
 				2D8B98ED24BC61EB00D9F560 /* ActionTableViewCellModel.swift */,
+				CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */,
 				2D8B98F224BC625F00D9F560 /* ChatTableViewCellModel.swift */,
 				2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */,
 				2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */,
 				2D8B98FD24BC62E300D9F560 /* ChatTableViewTextMessageCellModel.swift */,
 				CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */,
 				CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */,
+				CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -1204,12 +1214,14 @@
 			isa = PBXGroup;
 			children = (
 				CECA0E3F24B629BA0067D5B6 /* ActionTableViewCell.swift */,
+				CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */,
 				1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */,
 				CECA0E3B24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift */,
 				2D1C4D2524ABC7B70087449A /* CustomCell.swift */,
 				CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */,
 				CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */,
 				2D1C4D2624ABC7B70087449A /* TableViewCells.swift */,
+				CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */,
 			);
 			path = UITableViewCells;
 			sourceTree = "<group>";
@@ -1780,6 +1792,7 @@
 				CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */,
 				CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */,
 				CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */,
+				CEE78EF124BDC5F600B7E236 /* Components */,
 			);
 			path = GroupProfile;
 			sourceTree = "<group>";
@@ -1824,6 +1837,13 @@
 				CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */,
 			);
 			path = UINavigationController;
+			sourceTree = "<group>";
+		};
+		CEE78EF124BDC5F600B7E236 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		CEFA663724B865C00034E802 /* CollocutorNavigationView */ = {
@@ -2039,11 +2059,13 @@
 				2D501BA724B3210900C37DCB /* TypingIndicatorCell.swift in Sources */,
 				2D64CFFB24A20EF000C8B94A /* WorkflowError.swift in Sources */,
 				2D501BF924B322B600C37DCB /* InputItem.swift in Sources */,
+				CEE78EF924BDD16300B7E236 /* AddContactsTableViewCellModel.swift in Sources */,
 				2D7F273624B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift in Sources */,
 				2D501BAF24B3213400C37DCB /* MessageReusableView.swift in Sources */,
 				2D64CFFA24A20EF000C8B94A /* Promise.swift in Sources */,
 				2D501BAB24B3210900C37DCB /* MediaMessageCell.swift in Sources */,
 				2D64CFF724A20EF000C8B94A /* WorkflowObserver.swift in Sources */,
+				CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */,
 				2D501C1F24B3293D00C37DCB /* ChatType.swift in Sources */,
 				2D501BD924B3222500C37DCB /* AutocompleteManagerDelegate.swift in Sources */,
 				2D501B9624B320D500C37DCB /* MessagesDataSource.swift in Sources */,
@@ -2111,6 +2133,7 @@
 				2D65C21324AE1A3F00C64534 /* UIViewController+Extensions.swift in Sources */,
 				2D501BA424B3210900C37DCB /* LocationMessageCell.swift in Sources */,
 				2D501BA824B3210900C37DCB /* MessageCollectionViewCell.swift in Sources */,
+				CEE78EF524BDC8D600B7E236 /* UserTableViewCellModel.swift in Sources */,
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				2D1C4D2D24ABC7D50087449A /* MockUser.swift in Sources */,
 				2D65C1F224AE1A3F00C64534 /* TextViewController.swift in Sources */,
@@ -2206,6 +2229,7 @@
 				CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */,
 				2D64CFF024A20EF000C8B94A /* String+Empty.swift in Sources */,
 				2D65C1F824AE1A3F00C64534 /* CurrencyCell.swift in Sources */,
+				CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */,
 				2DB6987C24A362660075737F /* ChatBuilder.swift in Sources */,
 				2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */,
 				2D65C1F624AE1A3F00C64534 /* LocalePickerViewController.swift in Sources */,

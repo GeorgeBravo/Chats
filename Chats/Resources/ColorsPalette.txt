@@ -11,3 +11,5 @@
 #coolGreyTwo: #a5aab1
 #slateGrey: #60676f
 #coolGrey: #a2a9b6
+#presenceDescriptionColor: #8e8e92
+

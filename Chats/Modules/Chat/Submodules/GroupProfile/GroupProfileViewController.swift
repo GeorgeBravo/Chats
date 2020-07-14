@@ -47,6 +47,8 @@ final class GroupProfileViewController: UIViewController {
         tableView.register(OptionSectionHeaderView.self)
         tableView.register(ActionTableViewCell.self)
         tableView.register(CollocutorProfileTableViewCell.self)
+        tableView.register(AddContactsTableViewCell.self)
+        tableView.register(UserTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         return tableView

@@ -17,6 +17,8 @@ enum TableViewCellType: CaseIterable {
     case assets
     case description
     case groupInfo
+    case user
+    case addContacts
 }
 
 extension TableViewCellType {
@@ -33,6 +35,8 @@ extension TableViewCellType {
         case .assets: return MediaMessageCell.self
         case .description: return DescriptionTableViewCell.self
         case .groupInfo: return GroupProfileTableViewCell.self
+        case .user: return UserTableViewCell.self
+        case .addContacts: return AddContactsTableViewCell.self
         }
     }
 }

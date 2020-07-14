@@ -1,8 +1,8 @@
 //
-//  GroupProfileTableViewCell.swift
+//  UserTableViewCell.swift
 //  Chats
 //
-//  Created by user on 13.07.2020.
+//  Created by user on 14.07.2020.
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
@@ -10,19 +10,20 @@ import UIKit
 
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
-    static let topOffset: CGFloat = 16.0
+    static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 20.0
-    static let profileImageHeight: CGFloat = 80.0
+    static let profileImageHeight: CGFloat = 60.0
     static let separatorHeight: CGFloat = 1.0
-    static let bigFontSize: CGFloat = 24.0
+    static let bigFontSize: CGFloat = 20.0
     static let stackViewItemsSpacing: CGFloat = 4.0
-    static let smallFontSize: CGFloat = 16.0
+    static let mediumFontSize: CGFloat = 16.0
+    static let smallFontSize: CGFloat = 14.0
 }
 
-class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
+class UserTableViewCell: UITableViewCell, TableViewCellSetup {
     
     // MARK: - Variables
-    private lazy var groupLogoImageView: UIImageView = {
+    private lazy var userImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.layer.cornerRadius = Constants.profileImageHeight / 2
         imageView.clipsToBounds = true
@@ -30,21 +31,30 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         return imageView
     }()
     
-    private lazy var groupNameLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
-        label.lineBreakMode = .byTruncatingTail
-        label.textColor = UIColor(named: .blackColor)
-        label.font = UIFont.systemFont(ofSize: Constants.bigFontSize, weight: .heavy)
-        return label
-    }()
-    
-    private lazy var membersCountLabel: UILabel = {
+    private lazy var userNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
         label.textColor = UIColor(named: .optionsBlackColor)
+        label.font = UIFont.systemFont(ofSize: Constants.bigFontSize, weight: .heavy)
+        return label
+    }()
+    
+    private lazy var lastPrescenceTimeLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
+        label.font = UIFont.systemFont(ofSize: Constants.mediumFontSize, weight: .regular)
+        return label
+    }()
+    
+    private var authorLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
+        label.textColor = UIColor(named: .descriptionGrayColor)
         label.font = UIFont.systemFont(ofSize: Constants.smallFontSize, weight: .regular)
+        label.text = LocalizationKeys.author.localized()
         return label
     }()
     
@@ -66,7 +76,7 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        groupLogoImageView.image = nil
+        userImageView.image = nil
     }
     
     // MARK: - UI
@@ -77,7 +87,7 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     private func setupViews() {
         selectionStyle = .none
         
-        addSubview(groupLogoImageView) {
+        addSubview(userImageView) {
             $0.top == topAnchor + Constants.topOffset
             $0.width == Constants.profileImageHeight
             $0.height == Constants.profileImageHeight
@@ -89,31 +99,39 @@ class GroupProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = Constants.stackViewItemsSpacing
-        stackView.addArrangedSubview(groupNameLabel)
-        stackView.addArrangedSubview(membersCountLabel)
+        stackView.addArrangedSubview(userNameLabel)
+        stackView.addArrangedSubview(lastPrescenceTimeLabel)
         
         addSubview(stackView) {
-            $0.top >= groupLogoImageView.topAnchor
-            $0.bottom <= groupLogoImageView.bottomAnchor
-            $0.centerY == groupLogoImageView.centerYAnchor
-            $0.leading == groupLogoImageView.trailingAnchor + Constants.leadingOffset
-            $0.trailing <= trailingAnchor - Constants.leadingOffset
+            $0.leading == userImageView.trailingAnchor + Constants.leadingOffset
+            $0.top >= userImageView.topAnchor
+            $0.bottom <= userImageView.bottomAnchor
+            $0.centerY == userImageView.centerYAnchor
+        }
+        
+        addSubview(authorLabel) {
+            $0.trailing == trailingAnchor - Constants.leadingOffset
+            $0.centerY == centerYAnchor
+            $0.leading >= stackView.trailingAnchor - Constants.stackViewItemsSpacing
         }
         
         addSubview(separatorView) {
             $0.bottom == bottomAnchor
             $0.height == Constants.separatorHeight
-            $0.leading == leadingAnchor + Constants.leadingOffset
+            let leadingSpacing = Constants.leadingOffset * 2 + Constants.profileImageHeight
+            $0.leading == leadingAnchor + leadingSpacing
             $0.trailing == trailingAnchor
         }
     }
     
     func setup(with model: TableViewCellModel) {
-        guard let model = model as? GroupProfileTableViewCellModel else { return }
+        guard let model = model as? UserTableViewCellModel else { return }
         var image: UIImage? = nil
         if let imageName = model.imageName { image = UIImage(named: imageName) }
-        groupLogoImageView.image = image
-        groupNameLabel.text = model.groupNameText
-        membersCountLabel.text = model.membersCountText
+        userImageView.image = image
+        userNameLabel.text = model.userNameText
+        lastPrescenceTimeLabel.textColor = UIColor(named: model.isOnline ? .optionsBlueColor : .presenceDescriptionColor)
+        lastPrescenceTimeLabel.text = model.lastPresenceText
+        authorLabel.isHidden = !model.isAuthor
     }
 }
