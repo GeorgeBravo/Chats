@@ -151,6 +151,7 @@ extension FilePickerViewController: UIDocumentPickerDelegate {
         let dataSize = Double(integerLiteral: Int64(d.count))
         let file = FileAsset(fileName: fileName, data: d, size: dataSize, image: image ?? UIImage(data: d))
         selection?(file)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
