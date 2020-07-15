@@ -78,7 +78,7 @@ final class TelegramPickerViewController: UIViewController {
     func sizeFor(asset: PHAsset) -> CGSize {
         let height: CGFloat = UI.maxHeight
         let width: CGFloat = CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
-        return CGSize(width: width, height: height)
+        return CGSize(width: 200, height: 200)
     }
     
     func sizeForItem(asset: PHAsset) -> CGSize {

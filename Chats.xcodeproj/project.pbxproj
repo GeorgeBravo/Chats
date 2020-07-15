@@ -39,6 +39,7 @@
 		2D1C4D3E24ABC9190087449A /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D3D24ABC9190087449A /* BasicAudioController.swift */; };
 		2D1C4D4224ABCB8E0087449A /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C4D4024ABCB8E0087449A /* sound2.m4a */; };
 		2D1C4D4324ABCB8E0087449A /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C4D4124ABCB8E0087449A /* sound1.m4a */; };
+		2D4D967524BDD56D0051E7B4 /* ChatTableViewContactCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */; };
 		2D4FF56224B7013000CAFF53 /* UnderneathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4FF56124B7013000CAFF53 /* UnderneathView.swift */; };
 		2D501B4224B3207C00C37DCB /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D501B3F24B3207C00C37DCB /* MessagesViewController+Menu.swift */; };
 		2D501B4324B3207C00C37DCB /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D501B4024B3207C00C37DCB /* MessagesViewController.swift */; };
@@ -319,6 +320,7 @@
 		2D1C4D3D24ABC9190087449A /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		2D1C4D4024ABCB8E0087449A /* sound2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound2.m4a; sourceTree = "<group>"; };
 		2D1C4D4124ABCB8E0087449A /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
+		2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewContactCellModel.swift; sourceTree = "<group>"; };
 		2D4FF56124B7013000CAFF53 /* UnderneathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderneathView.swift; sourceTree = "<group>"; };
 		2D501B3F24B3207C00C37DCB /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		2D501B4024B3207C00C37DCB /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -1078,6 +1080,7 @@
 				CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */,
 				CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */,
 				CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */,
+				2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -2137,6 +2140,7 @@
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				2D1C4D2D24ABC7D50087449A /* MockUser.swift in Sources */,
 				2D65C1F224AE1A3F00C64534 /* TextViewController.swift in Sources */,
+				2D4D967524BDD56D0051E7B4 /* ChatTableViewContactCellModel.swift in Sources */,
 				2D1C4D3724ABC7F30087449A /* SampleData.swift in Sources */,
 				2D64CFED24A20EF000C8B94A /* ViewControllable+ShowError.swift in Sources */,
 				2D8B98F624BC626000D9F560 /* SectionHeaderViewSetup.swift in Sources */,
