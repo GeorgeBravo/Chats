@@ -111,6 +111,7 @@ public struct Contacts {
                 // Ordering contacts based on alphabets in firstname
                 var key: String = "#"
                 // If ordering has to be happening via family name change it here.
+                guard !contact.givenName.isEmpty else { return }
                 let firstLetter = contact.givenName[0..<1]
                 if firstLetter.containsAlphabets {
                     key = firstLetter.uppercased()

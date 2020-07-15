@@ -21,18 +21,17 @@ final class ContactMessageCell: MessageContentCell, TableViewCellSetup {
     
     // MARK: - Views
 
-    private lazy var initialsLabel = UILabel
+    private lazy var displayNameLabel = UILabel
         .create {
-            $0.textColor = UIColor.black
-            $0.font = UIFont.helveticaNeueFontOfSize(size: 12, style: .regular)
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 15, style: .medium)
             $0.textAlignment = .left
     }
     
     private lazy var phoneNumberLabel = UILabel
         .create {
-            $0.textColor = UIColor.lightGray
-            $0.font = UIFont.helveticaNeueFontOfSize(size: 12, style: .regular)
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 14, style: .regular)
             $0.textAlignment = .left
+            $0.numberOfLines = 0
     }
     
     private lazy var contactImageView = UIImageView
@@ -40,10 +39,22 @@ final class ContactMessageCell: MessageContentCell, TableViewCellSetup {
             $0.contentMode = .scaleAspectFit
     }
     
+    fileprivate lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [displayNameLabel, phoneNumberLabel])
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .fill
+        stackView.spacing = 2
+
+        return stackView
+    }()
+    
     public override func prepareForReuse() {
+        phoneNumberLabel.text = nil
+        displayNameLabel.text = nil
+        contactImageView.image = nil
         super.prepareForReuse()
-        phoneNumberLabel.text = ""
-        initialsLabel.text = ""
+        
     }
     
     // MARK: - Setup
@@ -51,11 +62,18 @@ final class ContactMessageCell: MessageContentCell, TableViewCellSetup {
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewContactCellModel else { return }
-        contactImageView.image = model.contact.thumbnail
-        model.contact.phones.forEach {
-            phoneNumberLabel.text?.append(contentsOf: $0.number)
+
+        displayNameLabel.text = model.contact.displayName
+        phoneNumberLabel.text = model.contact.phones.map { $0.number }.joined(separator: "\n")
+        
+        if let thubmnail = model.contact.thumbnail {
+            contactImageView.image = thubmnail
+        } else {
+            contactImageView.setImage(string: model.contact.initials, circular: true)
         }
-        initialsLabel.text = model.contact.initials
+
+        phoneNumberLabel.textColor = model.isIncomingMessage ? UIColor.black : UIColor.white
+        displayNameLabel.textColor = model.isIncomingMessage ? UIColor.black : UIColor.white
     }
 }
 
@@ -63,26 +81,35 @@ final class ContactMessageCell: MessageContentCell, TableViewCellSetup {
 extension ContactMessageCell {
     private func setupViews() {
         super.setupSubviews()
+        
         selectionStyle = .none
         
         messageContainerView.addSubview(contactImageView) {
             $0.top == messageContainerView.topAnchor + 8
-            $0.bottom == messageContainerView.bottomAnchor - 8
             $0.leading == messageContainerView.leadingAnchor + 8
             $0.size([\.all: 50])
         }
         
-        messageContainerView.addSubview(initialsLabel) {
+        messageContainerView.addSubview(stackView) {
             $0.top == messageContainerView.topAnchor + 10
+            $0.bottom == messageContainerView.bottomAnchor - 20
             $0.leading == contactImageView.trailingAnchor + 10
             $0.trailing == messageContainerView.trailingAnchor - 10
-            $0.width == UIScreen.main.bounds.width * 0.3
+            $0.width == UIScreen.main.bounds.width * 0.4
         }
         
-        messageContainerView.addSubview(phoneNumberLabel) {
-            $0.top == initialsLabel.bottomAnchor + 1
-            $0.leading == initialsLabel.trailingAnchor + 10
-            $0.trailing == messageContainerView.trailingAnchor - 10
-        }
+//        messageContainerView.addSubview(displayNameLabel) {
+//            $0.top == messageContainerView.topAnchor + 10
+//            $0.leading == contactImageView.trailingAnchor + 10
+//            $0.trailing == messageContainerView.trailingAnchor - 10
+//            $0.width == UIScreen.main.bounds.width * 0.4
+//        }
+//
+//        messageContainerView.addSubview(phoneNumberLabel) {
+//            $0.top == displayNameLabel.bottomAnchor + 2
+//            $0.bottom == messageContainerView.bottomAnchor - 20
+//            $0.leading == contactImageView.trailingAnchor + 10
+//            $0.trailing == messageContainerView.trailingAnchor - 10
+//        }
     }
 }

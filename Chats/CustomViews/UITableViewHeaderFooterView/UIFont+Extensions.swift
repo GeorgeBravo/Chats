@@ -10,15 +10,12 @@ import Foundation
 import UIKit
 
 enum FontStyle: String {
-    case ulraLight
-    case thin
-    case light
+    case ulraLight = "HelveticaNeue-UltraLight"
+    case thin = "HelveticaNeue-Thin"
+    case light = "HelveticaNeue-Light"
     case regular = "HelveticaNeue"
     case medium = "HelveticaNeue-Medium"
-    case semibold
-    case bold
-    case heavy
-    case black
+    case bold = "HelveticaNeue-Bold"
 }
 
 extension UIFont {

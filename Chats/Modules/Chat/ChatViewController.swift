@@ -302,15 +302,6 @@ extension ChatViewController: UITableViewDataSource {
         view.tintColor = UIColor.clear
         return view
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? TextMessageCell {
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                cell.layoutTextViewIfNeeded()
-            })
-        }
-    }
 }
 
 extension ChatViewController: ChatPresentable {}

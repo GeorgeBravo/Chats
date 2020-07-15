@@ -23,10 +23,12 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     
     public override func prepareForReuse() {
 //        heightConstraint?.isActive = false
+        messageTextView.text = ""
         super.prepareForReuse()
+        messageTextView.text = ""
 //        heightConstraint?.isActive = false
 //        heightConstraint?.constant = 0
-        messageTextView.text = nil
+        
     }
     
     // MARK: - Views
@@ -60,7 +62,7 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
             .foregroundColor: model.isIncomingMessage ? UIColor.black : UIColor.white
         ]
         messageTextView.attributedText = NSAttributedString(string: model.message, attributes: attributes)
-//        layoutTextViewIfNeeded()
+        layoutTextViewIfNeeded()
     }
     
     override func layoutSubviews() {
@@ -101,8 +103,7 @@ extension TextMessageCell {
      func layoutTextViewIfNeeded() {
         messageTextView.sizeToFit()
 //        layoutSubviews()
-        let size = messageTextView.intrinsicContentSize
-        //        heightConstraint?.constant = size.height
+
         let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
         
         let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
@@ -111,12 +112,12 @@ extension TextMessageCell {
         print(lastLineFragmentRect.maxX)
         print(horizontalContainerStackView.frame.origin.x)
         if lastLineFragmentRect.maxX > (horizontalContainerStackView.frame.origin.x) {
-            
-            heightConstraint?.constant = horizontalContainerStackView.frame.height + messageTextView.frame.height
-            heightConstraint?.isActive = true
+            messageTextView.text.append(contentsOf: "\n   ")
+//            heightConstraint?.constant = horizontalContainerStackView.frame.height + messageTextView.frame.height
+//            heightConstraint?.isActive = true
             //            heightConstraint?.constant += readMessageImageContainerView.frame.height
         } else {
-            heightConstraint?.constant = messageTextView.frame.height
+//            heightConstraint?.constant = messageTextView.frame.height
         }
         
 //        layoutSubviews()
