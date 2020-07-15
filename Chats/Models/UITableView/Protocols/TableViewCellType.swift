@@ -15,6 +15,10 @@ enum TableViewCellType: CaseIterable {
     case textMessage
     case location
     case assets
+    case description
+    case groupInfo
+    case user
+    case addContacts
 }
 
 extension TableViewCellType {
@@ -26,12 +30,13 @@ extension TableViewCellType {
         case .collocutorOption: return ActionTableViewCell.self
         case .collocutorInfo: return CollocutorProfileTableViewCell.self
         case .chatList: return ChatListTableViewCell.self
-        case .textMessage:
-            return TextMessageCell.self
-        case .location:
-            return LocationMessageCell.self
-        case .assets:
-            return MediaMessageCell.self
+        case .textMessage: return TextMessageCell.self
+        case .location: return LocationMessageCell.self
+        case .assets: return MediaMessageCell.self
+        case .description: return DescriptionTableViewCell.self
+        case .groupInfo: return GroupProfileTableViewCell.self
+        case .user: return UserTableViewCell.self
+        case .addContacts: return AddContactsTableViewCell.self
         }
     }
 }

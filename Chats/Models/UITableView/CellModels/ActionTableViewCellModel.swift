@@ -22,6 +22,7 @@ enum CollocutorOptionType: Int {
     case addToContacts
     case addToGroups
     case blockUser
+    case leaveGroup
     case groupsInCommon
     case notification
     case sendMessage
@@ -33,6 +34,7 @@ enum CollocutorOptionType: Int {
         case .addToContacts: return LocalizationKeys.addToContacts.localized()
         case .addToGroups: return LocalizationKeys.addToGroups.localized()
         case .blockUser: return LocalizationKeys.blockUser.localized()
+        case .leaveGroup: return LocalizationKeys.leaveGroup.localized()
         case .groupsInCommon: return LocalizationKeys.groupsInCommon.localized()
         case .notification: return LocalizationKeys.notifications.localized()
         case .sendMessage: return LocalizationKeys.sendMessage.localized()
@@ -51,6 +53,7 @@ enum CollocutorOptionType: Int {
         case .notification: return .arrowCell
         case .groupsInCommon: return .arrowCell
         case .blockUser: return .destructive
+        case .leaveGroup: return .destructive
         default: return .standard
         }
     }

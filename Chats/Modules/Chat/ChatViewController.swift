@@ -15,7 +15,7 @@ protocol ChatPresentableListener: class {
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
     func showUser(with profile: Collocutor)
-    
+    func showGroupProfile()
     func hideChat()
 }
 
@@ -46,7 +46,7 @@ final class ChatViewController: UIViewController {
     //MARK: - Private
     
     private var unreadMessagesCount: Int = 24
-    private let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
+    private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
     override var inputAccessoryView: UIView? {
         return messageInputBar
@@ -258,7 +258,8 @@ extension ChatViewController {
     
     @objc
     private func onCollocutorViewTapped() {
-        listener?.showUser(with: collocutor)
+//        listener?.showUser(with: collocutor)
+        listener?.showGroupProfile()
     }
 }
 

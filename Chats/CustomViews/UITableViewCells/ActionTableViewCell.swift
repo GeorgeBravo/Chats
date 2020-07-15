@@ -10,9 +10,10 @@ import UIKit
 
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
-    static let topOffset: CGFloat = 12.0
-    static let fontSize: CGFloat = 22.0
-    static let descriptionFontSize: CGFloat = 20.0
+    static let topOffset: CGFloat = 8.0
+    static let bottomOffset: CGFloat = 12.0
+    static let fontSize: CGFloat = 18.0
+    static let descriptionFontSize: CGFloat = 17.0
     static let spacingOffset: CGFloat = 12.0
     static let separatorHeight: CGFloat = 1.0
 }
@@ -23,7 +24,7 @@ class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
     private lazy var actionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: Constants.fontSize, weight: .medium)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.fontSize, style: .regular)
         label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         return label
     }()
@@ -38,7 +39,7 @@ class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
     private var infoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: Constants.descriptionFontSize, weight: .regular)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionFontSize, style: .regular)
         label.textColor = UIColor(named: .descriptionGrayColor)
         return label
     }()
@@ -67,21 +68,21 @@ class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
     private func setupViews() {
         selectionStyle = .none
         
+        addSubview(actionLabel) {
+            $0.top == topAnchor + Constants.topOffset
+            $0.leading == leadingAnchor + Constants.leadingOffset
+            $0.bottom == bottomAnchor - Constants.bottomOffset
+        }
+        
         addSubview(arrowImageView) {
-            $0.centerY == centerYAnchor
+            $0.centerY == actionLabel.centerYAnchor
             $0.trailing == trailingAnchor - Constants.leadingOffset
         }
         
         addSubview(infoLabel) {
-            $0.centerY == centerYAnchor
+            $0.centerY == actionLabel.centerYAnchor
             $0.trailing == arrowImageView.leadingAnchor - Constants.spacingOffset
-        }
-        
-        addSubview(actionLabel) {
-            $0.top == topAnchor + Constants.topOffset
-            $0.leading == leadingAnchor + Constants.leadingOffset
-            $0.centerY == centerYAnchor
-            $0.trailing <= infoLabel.leadingAnchor - Constants.spacingOffset
+            $0.leading >= actionLabel.trailingAnchor + Constants.spacingOffset
         }
         
         addSubview(separatorView) {

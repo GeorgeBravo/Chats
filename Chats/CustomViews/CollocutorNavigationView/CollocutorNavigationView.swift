@@ -9,10 +9,11 @@
 import UIKit
 
 private struct Constants {
-    static let topButtonSpacing: CGFloat = 8.0
+    static let topButtonSpacing: CGFloat = 4.0
     static let horizontalButtonSpacing: CGFloat = 16.0
     static let horizontalLabelSpacing: CGFloat = 8.0
     static let separatorLineHeight: CGFloat = 0.5
+    static let fontSize: CGFloat = 20.0
 }
 
 protocol CollocutorNavigationViewDelegate: class {
@@ -37,13 +38,14 @@ class CollocutorNavigationView: UIView {
         button.setTitle(LocalizationKeys.edit.localized(), for: .normal)
         button.setTitleColor(UIColor(named: .blackColor), for: .normal)
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.helveticaNeueFontOfSize(size: Constants.fontSize, style: .regular)
         return button
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: ColorName.blackColor)
-        label.font = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.fontSize, style: .bold)
         return label
     }()
     
