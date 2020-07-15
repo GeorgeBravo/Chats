@@ -260,6 +260,7 @@
 		CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */; };
 		CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */; };
 		CE4E426824BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */; };
+		CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */; };
 		CE71CFCA24B4B3F900862A73 /* ColorsPalette.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */; };
 		CE71CFCD24B4B47900862A73 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFCF24B4B47900862A73 /* Localizable.strings */; };
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
@@ -544,6 +545,7 @@
 		CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+GroupProfile.swift"; sourceTree = "<group>"; };
 		CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCellModel.swift; sourceTree = "<group>"; };
+		CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWithCameraPreview.swift; sourceTree = "<group>"; };
 		CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ColorsPalette.txt; sourceTree = "<group>"; };
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -1677,6 +1679,7 @@
 		2D65C1D724AE1A3E00C64534 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */,
 				2D65C1D824AE1A3E00C64534 /* ItemWithPhoto.swift */,
 				2D65C1D924AE1A3E00C64534 /* LikeButtonCell.swift */,
 			);
@@ -2154,6 +2157,7 @@
 				2D1C4D1D24AB90AB0087449A /* CollocutorNavBarSettupable.swift in Sources */,
 				2D501BBB24B3216100C37DCB /* PlayButtonView.swift in Sources */,
 				CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */,
+				CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */,
 				2D501BB824B3216100C37DCB /* MessagesCollectionView.swift in Sources */,
 				2DCA29FD24B753630060913C /* UITableView+Scrolll.swift in Sources */,
 				2D501B4324B3207C00C37DCB /* MessagesViewController.swift in Sources */,
