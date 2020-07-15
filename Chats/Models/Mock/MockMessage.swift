@@ -36,6 +36,13 @@ public struct AssetMediaItem: MediaItem {
     public var assets: [PHAsset]
 }
 
+public struct AssetFileItem: FileItem {
+    public var data: Data
+    public var fileName: String
+    public var image: UIImage
+    public var size: Double
+}
+
 private struct MockAudiotem: AudioItem {
     
     var url: URL
@@ -100,6 +107,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
             return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         case let .asset(assets):
             return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
+        case let .fileItem(fileItem):
+            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
             
@@ -145,5 +154,9 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
     
     init(contact: MockContactItem, user: MockUser, messageId: String, date: Date) {
         self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    }
+    
+    init(fileItem: FileItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
+        self.init(kind: .fileItem(fileItem), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
     }
 }

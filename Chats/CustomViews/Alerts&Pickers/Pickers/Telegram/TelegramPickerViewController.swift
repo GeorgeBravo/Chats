@@ -9,6 +9,7 @@ public enum TelegramSelectionType {
     case photo([PHAsset])
     case location(Location?)
     case contact(Contact?)
+    case file(FileAsset?)
 }
 
 extension UIAlertController {
@@ -29,7 +30,7 @@ extension UIAlertController {
 final class TelegramPickerViewController: UIViewController {
     var buttons: [ButtonType] {
         return selectedAssets.count == 0
-            ? [.photoOrVideo, .location, .contact]
+            ? [.photoOrVideo, .location, .contact, .file]
             : [.sendPhotos]
     }
     
@@ -269,8 +270,9 @@ final class TelegramPickerViewController: UIViewController {
                 }))
             
         case .file:
-            
-            break
+            alertController?.addFilePicker { file in
+                self.selection?(TelegramSelectionType.file(file))
+            }
             
         case .location:
             alertController?.addLocationPicker { location in

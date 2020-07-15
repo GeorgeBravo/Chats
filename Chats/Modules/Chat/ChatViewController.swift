@@ -156,6 +156,7 @@ final class ChatViewController: UIViewController {
         tableView.register(LocationMessageCell.self)
         tableView.register(ChatSectionHeaderView.self)
         tableView.register(MediaMessageCell.self)
+        tableView.register(FileMessageCell.self)
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
@@ -372,6 +373,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 guard let location = location else { return }
                 let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
                 self.messageList.append(mockLocationMessage)
+            case .file(let file):
+                guard let file = file  else { return }
+                let mockFileMessage = MockMessage(fileItem: file, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: true)
+                self.messageList.append(mockFileMessage)
             }
         }
         alert.addAction(title: "Cancel", style: .cancel)
