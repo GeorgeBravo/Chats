@@ -1,7 +1,7 @@
 import UIKit
 import Contacts
 
-public struct Contact {
+public struct Contact: ContactItem {
     
     var value: CNContact
     
@@ -9,11 +9,11 @@ public struct Contact {
     var lastName: String
     var company: String
     var image: UIImage?
-    var thumbnail: UIImage?
+    public var thumbnail: UIImage?
     var birthday: Date?
     var id: String?
-    var phones: [(number: String, label: String)] = []
-    var emails: [(email: String, label: String )] = []
+    public var phones: [(number: String, label: String)] = []
+    public var emails: [(email: String, label: String )] = []
     
     public init(contact: CNContact) {
         value = contact
@@ -47,11 +47,11 @@ public struct Contact {
         }
     }
     
-    var displayName:  String {
+    public var displayName:  String {
         return firstName + " " + lastName
     }
     
-    var initials: String {
+    public var initials: String {
         var initials = String()
         if let first = firstName.first { initials.append(first) }
         if let second = lastName.first { initials.append(second) }

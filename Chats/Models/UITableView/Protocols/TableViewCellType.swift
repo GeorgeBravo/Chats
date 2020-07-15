@@ -15,6 +15,7 @@ enum TableViewCellType: CaseIterable {
     case textMessage
     case location
     case assets
+    case contact
 }
 
 extension TableViewCellType {
@@ -32,6 +33,8 @@ extension TableViewCellType {
             return LocationMessageCell.self
         case .assets:
             return MediaMessageCell.self
+        case .contact:
+            return ContactMessageCell.self
         }
     }
 }

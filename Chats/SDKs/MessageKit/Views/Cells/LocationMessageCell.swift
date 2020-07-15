@@ -29,8 +29,6 @@ final class LocationMessageCell: MessageContentCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        self.horizontalContainerStackView.cornerRadius g= 4
-//        self.horizontalContainerStackView.addBackground(color: UIColor.black.withAlphaComponent(0.5))
     }
     
     /// The activity indicator to be displayed while the map image is loading.

@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 
 /// A protocol used to represent the data for a contact message.
 public protocol ContactItem {
@@ -33,9 +34,11 @@ public protocol ContactItem {
     /// initials from contact first and last name
     var initials: String { get }
     
+    var thumbnail: UIImage? { get }
+
     /// contact phone numbers
-    var phoneNumbers: [String] { get }
+    var phones: [(number: String, label: String)] { get }
     
-    /// contact emails
-    var emails: [String] { get }
+     /// contact emails
+    var emails: [(email: String, label: String )] { get }
 }

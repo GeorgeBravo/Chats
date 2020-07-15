@@ -22,18 +22,20 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     }
     
     public override func prepareForReuse() {
-        heightConstraint?.constant = 0
-        messageTextView.text = nil
+//        heightConstraint?.isActive = false
         super.prepareForReuse()
+//        heightConstraint?.isActive = false
+//        heightConstraint?.constant = 0
+        messageTextView.text = nil
     }
     
     // MARK: - Views
     
     private lazy var messageTextView: UITextView = {
         let textView = UITextView()
-        textView.textColor = UIColor.red
+        
         textView.backgroundColor = UIColor.clear
-        textView.textAlignment = .center
+        textView.textAlignment = .left
         
         textView.isScrollEnabled = false
         
@@ -48,17 +50,22 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewTextMessageCellModel else { return }
         
-        messageTextView.text = "sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi sosi "
+//        messageTextView.textColor = model.isIncomingMessage ? UIColor.black : UIColor.white
         
-        messageTextView.textColor = model.isIncomingMessage ? UIColor.black : UIColor.white
-        
-        messageContainerView.backgroundColor = model.isIncomingMessage ? UIColor.paleGrey : UIColor.coolGrey
-        layoutTextViewIfNeeded()
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        let attributes = [
+            NSAttributedString.Key.paragraphStyle: style,
+            .font: UIFont.helveticaNeueFontOfSize(size: 16, style: .regular),
+            .foregroundColor: model.isIncomingMessage ? UIColor.black : UIColor.white
+        ]
+        messageTextView.attributedText = NSAttributedString(string: model.message, attributes: attributes)
+//        layoutTextViewIfNeeded()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //        layoutTextViewIfNeeded()
+//        layoutTextViewIfNeeded()
     }
 }
 
@@ -66,45 +73,53 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
 extension TextMessageCell {
     private func setupViews() {
         super.setupSubviews()
+        
         selectionStyle = .none
         
         messageContainerView.addSubview(messageTextView) {
             let top = $0.top == messageContainerView.topAnchor
-            top.priority = .defaultLow
+//            top.priority = .defaultLow
             let bottom = $0.bottom == messageContainerView.bottomAnchor
-            bottom.priority = .defaultLow
-            $0.leading == messageContainerView.leadingAnchor
+//            bottom.priority = .defaultLow
+            $0.leading == messageContainerView.leadingAnchor + 5
             $0.trailing == messageContainerView.trailingAnchor
-            //            $0.height >= 100
+            $0.width >= UIScreen.main.bounds.width * 0.3
             $0.width <= UIScreen.main.bounds.width * 0.6
         }
+
         messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         
-        //        heightConstraint =  messageContainerView.heightAnchor.constraint(greaterThanOrEqualTo: messageTextView.heightAnchor, constant: 10)
+        heightConstraint = messageContainerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
         
-        
-        //        heightConstraint = messageContainerView.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint?.isActive = true
         
-        //        heightConstraint?.constant = 200
-        
         //        heightConstraint?.priority = .defaultHigh
+        
+        layoutTextViewIfNeeded()
     }
     
-    private func layoutTextViewIfNeeded() {
-        //        messageTextView.sizeToFit()
+     func layoutTextViewIfNeeded() {
+        messageTextView.sizeToFit()
+//        layoutSubviews()
         let size = messageTextView.intrinsicContentSize
         //        heightConstraint?.constant = size.height
         let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
-        // Get CGRect for last character
-        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
         
-        if lastLineFragmentRect.maxX > (messageTextView.frame.width - horizontalContainerStackView.frame.width) {
+        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
+//        heightConstraint?.constant = messageTextView.frame.height
+        
+        print(lastLineFragmentRect.maxX)
+        print(horizontalContainerStackView.frame.origin.x)
+        if lastLineFragmentRect.maxX > (horizontalContainerStackView.frame.origin.x) {
             
-            heightConstraint?.constant = messageTextView.frame.height + 8
+            heightConstraint?.constant = horizontalContainerStackView.frame.height + messageTextView.frame.height
+            heightConstraint?.isActive = true
             //            heightConstraint?.constant += readMessageImageContainerView.frame.height
         } else {
             heightConstraint?.constant = messageTextView.frame.height
         }
+        
+//        layoutSubviews()
+//        setNeedsLayout()
     }
 }
