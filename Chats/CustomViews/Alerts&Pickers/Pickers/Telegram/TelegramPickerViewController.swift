@@ -106,6 +106,7 @@ final class TelegramPickerViewController: UIViewController {
         $0.maskToBounds = false
         $0.clipsToBounds = false
         $0.register(ItemWithPhoto.self, forCellWithReuseIdentifier: String(describing: ItemWithPhoto.self))
+        $0.register(ItemWithCameraPreview.self, forCellWithReuseIdentifier: String(describing: ItemWithCameraPreview.self))
         
         return $0
         }(UICollectionView(frame: .zero, collectionViewLayout: layout))
@@ -136,6 +137,13 @@ final class TelegramPickerViewController: UIViewController {
     
     var selection: TelegramSelection?
     
+    private var videoDataOutput: AVCaptureVideoDataOutput!
+    private var videoDataOutputQueue: DispatchQueue!
+    private var captureDevice: AVCaptureDevice!
+    private let session = AVCaptureSession()
+    private var hasCamera: Bool = false
+    private var needShowCameraPreviewCell = true
+    
     // MARK: Initialize
     
     required init(selection: @escaping TelegramSelection) {
@@ -162,7 +170,13 @@ final class TelegramPickerViewController: UIViewController {
             preferredContentSize.width = UIScreen.main.bounds.width * 0.5
         }
         
+        setupAVCapture()
         updatePhotos()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopCamera()
     }
         
     override func viewDidLayoutSubviews() {
@@ -180,6 +194,7 @@ final class TelegramPickerViewController: UIViewController {
         checkStatus { [unowned self] assets in
             
             self.assets.removeAll()
+            if self.hasCamera { self.assets.append(PHAsset()) }
             self.assets.append(contentsOf: assets)
             
             DispatchQueue.main.async {
@@ -242,13 +257,30 @@ final class TelegramPickerViewController: UIViewController {
     func action(withAsset asset: PHAsset, at indexPath: IndexPath) {
         let previousCount = selectedAssets.count
         
+        if hasCamera && needShowCameraPreviewCell && indexPath.item == 0 {
+            UIAlertController.showAlert(viewController: self, title: "Alert", message: "camera button pressed", actions: [UIAlertAction.okAction()])
+            return
+        }
+        
         selectedAssets.contains(asset)
             ? selectedAssets.remove(asset)
             : selectedAssets.append(asset)
 //        selection?(TelegramSelectionType.photo(selectedAssets))
         
         let currentCount = selectedAssets.count
+        
+        if hasCamera && previousCount == 0 && currentCount != 0 {
+            assets.removeFirst()
+            collectionView.deleteItems(at: [IndexPath(item: 0, section: 0)])
+            needShowCameraPreviewCell = false
+        }
 
+        if hasCamera && previousCount != 0 && currentCount == 0 {
+            assets.insert(PHAsset(), at: 0)
+            needShowCameraPreviewCell = true
+            collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+        }
+        
         if (previousCount == 0 && currentCount > 0) || (previousCount > 0 && currentCount == 0) {
             UIView.animate(withDuration: 0.25, animations: {
                 self.layout.invalidateLayout()
@@ -321,6 +353,14 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0 && hasCamera && needShowCameraPreviewCell {
+            guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithCameraPreview.self), for: indexPath) as? ItemWithCameraPreview else { return UICollectionViewCell() }
+            item.delegate = self
+            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            item.setup(with: previewLayer)
+            return item
+        }
         guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithPhoto.self), for: indexPath) as? ItemWithPhoto else { return UICollectionViewCell() }
         
         let asset = assets[indexPath.item]
@@ -375,5 +415,57 @@ extension TelegramPickerViewController: UITableViewDataSource {
         cell.textLabel?.font = font(for: buttons[indexPath.row])
         cell.textLabel?.text = title(for: buttons[indexPath.row])
         return cell
+    }
+}
+
+extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDelegate, ItemWithCameraPreviewDelegate {
+    func setupAVCapture() {
+        session.sessionPreset = AVCaptureSession.Preset.medium
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: AVCaptureDevice.Position.back) else {
+            hasCamera = false
+            return
+        }
+        captureDevice = device
+        beginSession()
+    }
+    
+    func beginSession() {
+        var deviceInput: AVCaptureDeviceInput!
+
+        do {
+            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
+            guard deviceInput != nil else {
+                print("error: cant get deviceInput")
+                return
+            }
+
+            if self.session.canAddInput(deviceInput) {
+                self.session.addInput(deviceInput)
+            }
+
+            videoDataOutput = AVCaptureVideoDataOutput()
+            videoDataOutput.alwaysDiscardsLateVideoFrames = true
+            videoDataOutputQueue = DispatchQueue(label: "VideoDataOutputQueue")
+            videoDataOutput.setSampleBufferDelegate(self, queue: self.videoDataOutputQueue)
+
+            if session.canAddOutput(self.videoDataOutput){
+                session.addOutput(self.videoDataOutput)
+            }
+
+            videoDataOutput.connection(with: .video)?.isEnabled = true
+
+            hasCamera = true
+        } catch let error as NSError {
+            deviceInput = nil
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func startCamera() {
+        session.startRunning()
+    }
+    
+    func stopCamera() {
+        session.stopRunning()
     }
 }
