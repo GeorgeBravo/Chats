@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class FileAsset: NSObject, FileItem {
+public struct FileAsset: FileItem {
     public var data: Data
     
     public var fileName: String

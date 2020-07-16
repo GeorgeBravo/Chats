@@ -36,13 +36,6 @@ public struct AssetMediaItem: MediaItem {
     public var assets: [PHAsset]
 }
 
-public struct AssetFileItem: FileItem {
-    public var data: Data
-    public var fileName: String
-    public var image: UIImage
-    public var size: Double
-}
-
 private struct MockAudiotem: AudioItem {
     
     var url: URL
