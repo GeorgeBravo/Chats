@@ -33,7 +33,9 @@ public struct CoordinateItem: LocationItem {
 }
 
 public struct AssetMediaItem: MediaItem {
-    public var assets: [PHAsset]
+    public var assets: [PHAsset]?
+    public var imageData: Data?
+    public var videoURL: URL?
 }
 
 private struct MockAudiotem: AudioItem {
@@ -91,7 +93,6 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
             return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
-            
         }
     }
     
