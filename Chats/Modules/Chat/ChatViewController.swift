@@ -15,7 +15,7 @@ protocol ChatPresentableListener: class {
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
     func showUser(with profile: Collocutor)
-    
+    func showGroupProfile()
     func hideChat()
 }
 
@@ -46,7 +46,7 @@ final class ChatViewController: UIViewController {
     //MARK: - Private
     
     private var unreadMessagesCount: Int = 24
-    private let collocutor = Collocutor(name: "Mock", collocutorImage: UIImage(named: "roflan")!, status: .online)
+    private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
     override var inputAccessoryView: UIView? {
         return messageInputBar
@@ -65,7 +65,7 @@ final class ChatViewController: UIViewController {
         didSet {
             #warning("Change logic to section reload.")
             self.tableView.reloadData()
-            self.tableView.scrollToLastItem()
+//            self.tableView.scrollToLastItem()
         }
     }
     
@@ -157,6 +157,7 @@ final class ChatViewController: UIViewController {
         tableView.register(ChatSectionHeaderView.self)
         tableView.register(MediaMessageCell.self)
         tableView.register(FileMessageCell.self)
+        tableView.register(ContactMessageCell.self)
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
@@ -221,8 +222,9 @@ final class ChatViewController: UIViewController {
 //MARK: - Setup subviews
 extension ChatViewController {
     private func setupViews() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+//        self.navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+        
         view.backgroundColor = .white
         
         view.addSubview(underneathView) {
@@ -259,7 +261,8 @@ extension ChatViewController {
     
     @objc
     private func onCollocutorViewTapped() {
-        listener?.showUser(with: collocutor)
+//        listener?.showUser(with: collocutor)
+        listener?.showGroupProfile()
     }
 }
 
@@ -358,6 +361,8 @@ extension ChatViewController {
 // MARK: - InputBarAccessoryViewDelegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAttachmentsButton(_ inputBar: InputBarAccessoryView) {
+        inputBar.inputTextView.resignFirstResponder()
+        
         let alert = UIAlertController(style: .actionSheet)
         alert.addTelegramPicker { result in
             switch result {
@@ -365,10 +370,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 let assets = AssetMediaItem(assets: assets)
                 let mockAssetMessage = MockMessage(assets: assets, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
                 self.messageList.append(mockAssetMessage)
-            // action with assets
             case .contact(let contact):
-                break
-            // action with contact
+                guard let contact = contact else { return }
+                let mockContactMessage = MockMessage(contact: contact, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                self.messageList.append(mockContactMessage)
             case .location(let location):
                 guard let location = location else { return }
                 let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
@@ -381,7 +386,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
         alert.addAction(title: "Cancel", style: .cancel)
         self.present(alert, animated: true, completion: nil)
-        //        alert.show()
     }
     
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}

@@ -34,6 +34,7 @@ extension BackButtonSettupable where Self: UIViewController {
         self.navigationItem.leftBarButtonItem = nil
         
         let backButtonView = UnreadMessagesBackButton()
+        backButtonView.isUserInteractionEnabled = false
         backButtonView.unreadMessages = unreadMessages
         
         let button = UIButton(type: .custom)

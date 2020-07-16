@@ -12,20 +12,28 @@ import Foundation
 public enum LocalizationKeys {
   /// Action
   public static let action: String = "Action"
+  /// Add Contacts
+  public static let addContacts: String = "AddContacts"
   /// Add to Contacts
   public static let addToContacts: String = "AddToContacts"
   /// Add to Groups
   public static let addToGroups: String = "AddToGroups"
+  /// author
+  public static let author: String = "Author"
   /// Block User
   public static let blockUser: String = "BlockUser"
   /// Call
   public static let call: String = "Call"
   /// Edit
   public static let edit: String = "Edit"
+  /// Group Info
+  public static let groupInfo: String = "GroupInfo"
   /// Groups In Common
   public static let groupsInCommon: String = "GroupsInCommon"
   /// last seen recently
   public static let lastSeenRecently: String = "LastSeenRecently"
+  /// Leave Group
+  public static let leaveGroup: String = "LeaveGroup"
   /// More
   public static let more: String = "More"
   /// Mute
@@ -40,6 +48,8 @@ public enum LocalizationKeys {
   public static let sendMessage: String = "SendMessage"
   /// Shared Media
   public static let sharedMedia: String = "SharedMedia"
+  /// shortcut
+  public static let shortcut: String = "shortcut"
   /// @username
   public static let username: String = "Username"
 }

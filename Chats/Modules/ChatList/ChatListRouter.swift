@@ -42,8 +42,8 @@ extension ChatListRouter: ChatListRouting {
         self.chatRouter = chatRouter
 
         attach(chatRouter)
-        
-        pushRouter(chatRouter, animated: true)
+        present(chatRouter, animated: true, embedInNavigationController: true, completion: nil)
+//        pushRouter(chatRouter, animated: true)
     }
     
     func hideChat() {
@@ -52,7 +52,8 @@ extension ChatListRouter: ChatListRouting {
         }
 
         detach(chatRouter)
-        chatRouter.popRouter(animated: true)
+        chatRouter.dismiss(animated: true)
+//        chatRouter.popRouter(animated: true)
         self.chatRouter = nil
     }
 }

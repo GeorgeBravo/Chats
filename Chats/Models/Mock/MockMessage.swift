@@ -52,21 +52,6 @@ private struct MockAudiotem: AudioItem {
     
 }
 
-struct MockContactItem: ContactItem {
-    
-    var displayName: String
-    var initials: String
-    var phoneNumbers: [String]
-    var emails: [String]
-    
-    init(name: String, initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
-        self.displayName = name
-        self.initials = initials
-        self.phoneNumbers = phoneNumbers
-        self.emails = emails
-    }
-}
-
 protocol ChatScreenDisplayingItems {
     
     var tableViewCellViewModel: ChatTableViewCellModel { get }
@@ -102,6 +87,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
             return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         case let .fileItem(fileItem):
             return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
+        case let .contact(contact):
+            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
             
@@ -145,7 +132,7 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
     }
     
-    init(contact: MockContactItem, user: MockUser, messageId: String, date: Date) {
+    init(contact: ContactItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
         self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
     }
     

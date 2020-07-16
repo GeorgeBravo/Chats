@@ -1,8 +1,8 @@
 // 
-//  CollocutorProfileViewController.swift
+//  GroupProfileViewController.swift
 //  Chats
 //
-//  Created by user on 06.07.2020.
+//  Created by user on 13.07.2020.
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
@@ -11,35 +11,25 @@ import BRIck
 
 private struct Constants {
     static let estimatedCellHeigth: CGFloat = 100.0
-    static let collocutorNavigationHeight: CGFloat = 48.0
-    static let collocutorOffset: CGFloat = 16.0
 }
 
-protocol CollocutorProfilePresentableListener: class {
+protocol GroupProfilePresentableListener: class {
 
-    func hideCollocutorProfile()
-    func combineCollocutorOptionsSections()
-    func cellModelForRow(at: IndexPath) -> TableViewCellModel
+    func hideGroupProfile()
+    func combineGroupOptionsSections()
     func numberOfRows(in section: Int) -> Int
     func numberOfSection() -> Int
+    func cellModelForRow(at: IndexPath) -> TableViewCellModel
     func sectionModel(for number: Int) -> TableViewSectionModel
     func didTapCell(at indexPath: IndexPath)
-    func collocutorName() -> String
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
 
-final class CollocutorProfileViewController: UIViewController {
+final class GroupProfileViewController: UIViewController {
 
     // MARK: - Variables
-    weak var listener: CollocutorProfilePresentableListener?
-    
-    private var collocutorNavigationView = CollocutorNavigationView()
-    private var showCollocutorNavigationViewSeparator: Bool = false {
-        didSet {
-            collocutorNavigationView.setSeparator(visible: showCollocutorNavigationViewSeparator)
-        }
-    }
+    weak var listener: GroupProfilePresentableListener?
     
     private lazy var optionsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -49,70 +39,60 @@ final class CollocutorProfileViewController: UIViewController {
         tableView.clipsToBounds = true
         tableView.backgroundColor = .white
         tableView.allowsMultipleSelection = false
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: CGFloat.leastNormalMagnitude))
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.contentInset = UIEdgeInsets(top: Constants.collocutorNavigationHeight - Constants.collocutorOffset, left: 0.0, bottom: 0.0, right: 0.0)
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: CGFloat.leastNormalMagnitude))
         tableView.tableFooterView = UIView()
-        tableView.register(ActionTableViewCell.self)
+        tableView.register(GroupProfileTableViewCell.self)
+        tableView.register(DescriptionTableViewCell.self)
         tableView.register(OptionSectionHeaderView.self)
+        tableView.register(ActionTableViewCell.self)
         tableView.register(CollocutorProfileTableViewCell.self)
+        tableView.register(AddContactsTableViewCell.self)
+        tableView.register(UserTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
     
-    // MARK: - Life cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        collocutorNavigationView.delegate = self
-        listener?.combineCollocutorOptionsSections()
-        navigationController?.navigationBar.isHidden = true
-        optionsTableView.setContentOffset(CGPoint(x: 0.0, y: -Constants.collocutorNavigationHeight), animated: false)
+        listener?.combineGroupOptionsSections()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        listener?.hideCollocutorProfile()
+        listener?.hideGroupProfile()
     }
     
     deinit {
-        print("CollocutorProfileViewController deinit")
+        print("GroupProfileViewController deinit")
     }
-    
 }
 
-// MARK: - Setup Views
-extension CollocutorProfileViewController {
-    
+extension GroupProfileViewController {
     private func setupViews() {
-        view.backgroundColor = .white
-        
-        view.addSubview(collocutorNavigationView) {
-            $0.top == view.safeAreaLayoutGuide.topAnchor
-            $0.leading == view.leadingAnchor
-            $0.trailing == view.trailingAnchor
-            $0.height == Constants.collocutorNavigationHeight
-        }
+        navigationController?.setNavigationBarAppearance(true, bigFont: false)
+        navigationItem.title = LocalizationKeys.groupInfo.localized()
+        setupBackButton(target: self, action: #selector(backButtonTapped))
+        setupEditButton(target: self, action: #selector(editButtonPressed))
         
         view.addSubview(optionsTableView) {
-            $0.top == collocutorNavigationView.topAnchor
+            $0.top == view.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
             $0.bottom == view.bottomAnchor
         }
-        
-        view.bringSubviewToFront(collocutorNavigationView)
     }
-    
 }
 
-// MARK: - Actions
-extension CollocutorProfileViewController: CollocutorNavigationViewDelegate {
-    func backButtonTapped() {
-        listener?.hideCollocutorProfile()
+// MARK: - Selectors
+extension GroupProfileViewController {
+    @objc func backButtonTapped() {
+        listener?.hideGroupProfile()
     }
     
-    func editButtonPressed() {
+    @objc func editButtonPressed() {
         UIAlertController.showAlert(viewController: self,
                                     title: LocalizationKeys.action.localized(),
                                     message: LocalizationKeys.edit.localized(),
@@ -120,7 +100,7 @@ extension CollocutorProfileViewController: CollocutorNavigationViewDelegate {
     }
 }
 
-extension CollocutorProfileViewController: CollocutorProfilePresentable {
+extension GroupProfileViewController: GroupProfilePresentable {
     func update() {
         DispatchQueue.main.async { [unowned self] in
             self.optionsTableView.reloadData()
@@ -135,11 +115,17 @@ extension CollocutorProfileViewController: CollocutorProfilePresentable {
     }
 }
 
-extension CollocutorProfileViewController: CollocutorProfileViewControllable {}
+extension GroupProfileViewController: BackButtonSettupable {}
 
-extension CollocutorProfileViewController: UITableViewDelegate {}
+extension GroupProfileViewController: EditButtonSettupable {}
 
-extension CollocutorProfileViewController: UITableViewDataSource {
+extension GroupProfileViewController: GroupProfileViewControllable {}
+
+// MARK: - Table View Delegate
+extension GroupProfileViewController: UITableViewDelegate {}
+
+// MARK: - Table View Data Source
+extension GroupProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let numberOfSection = listener?.numberOfSection() else { return 0 }
@@ -179,22 +165,4 @@ extension CollocutorProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         listener?.didTapCell(at: indexPath)
     }
-    
-}
-
-extension CollocutorProfileViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            for cell in self.optionsTableView.visibleCells {
-                guard let cell = cell as? CollocutorProfileTableViewCell else { return }
-                let offsetY = scrollView.contentOffset.y
-                cell.update(with: offsetY)
-                let needShowCollocutorTitle = (cell.getCollocutorNameLabelMaxY() - offsetY) >= self.collocutorNavigationView.getTitleLabelMaxY()
-                self.collocutorNavigationView.setup(with: needShowCollocutorTitle ? nil : self.listener?.collocutorName())
-                self.showCollocutorNavigationViewSeparator = cell.bounds.height <= offsetY + Constants.collocutorNavigationHeight
-            }
-        }
-    }
-    
 }

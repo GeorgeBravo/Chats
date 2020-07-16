@@ -44,6 +44,7 @@
 		2D1C4D3E24ABC9190087449A /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D3D24ABC9190087449A /* BasicAudioController.swift */; };
 		2D1C4D4224ABCB8E0087449A /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C4D4024ABCB8E0087449A /* sound2.m4a */; };
 		2D1C4D4324ABCB8E0087449A /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2D1C4D4124ABCB8E0087449A /* sound1.m4a */; };
+		2D4D967524BDD56D0051E7B4 /* ChatTableViewContactCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */; };
 		2D4FF56224B7013000CAFF53 /* UnderneathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4FF56124B7013000CAFF53 /* UnderneathView.swift */; };
 		2D501B4224B3207C00C37DCB /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D501B3F24B3207C00C37DCB /* MessagesViewController+Menu.swift */; };
 		2D501B4324B3207C00C37DCB /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D501B4024B3207C00C37DCB /* MessagesViewController.swift */; };
@@ -257,6 +258,13 @@
 		2DCA29FD24B753630060913C /* UITableView+Scrolll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCA29FC24B753630060913C /* UITableView+Scrolll.swift */; };
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
+		CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */; };
+		CE4E426024BC8AFD00BCA9F8 /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */; };
+		CE4E426124BC8AFD00BCA9F8 /* GroupProfileBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */; };
+		CE4E426224BC8AFD00BCA9F8 /* GroupProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */; };
+		CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */; };
+		CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */; };
+		CE4E426824BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */; };
 		CE71CFCA24B4B3F900862A73 /* ColorsPalette.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */; };
 		CE71CFCD24B4B47900862A73 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFCF24B4B47900862A73 /* Localizable.strings */; };
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
@@ -275,6 +283,12 @@
 		CECA0E4724B62C6A0067D5B6 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4524B62C690067D5B6 /* UINavigationController+Extension.swift */; };
 		CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */; };
 		CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */; };
+		CEDC1FF124BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */; };
+		CEDC1FF324BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */; };
+		CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */; };
+		CEE78EF524BDC8D600B7E236 /* UserTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */; };
+		CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */; };
+		CEE78EF924BDD16300B7E236 /* AddContactsTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */; };
 		CEFA663924B866250034E802 /* CollocutorNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA663824B866250034E802 /* CollocutorNavigationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -317,6 +331,7 @@
 		2D1C4D3D24ABC9190087449A /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		2D1C4D4024ABCB8E0087449A /* sound2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound2.m4a; sourceTree = "<group>"; };
 		2D1C4D4124ABCB8E0087449A /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
+		2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewContactCellModel.swift; sourceTree = "<group>"; };
 		2D4FF56124B7013000CAFF53 /* UnderneathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderneathView.swift; sourceTree = "<group>"; };
 		2D501B3F24B3207C00C37DCB /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		2D501B4024B3207C00C37DCB /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -533,6 +548,13 @@
 		455760A4044106F48F993A05 /* Pods_Chats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
+		CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileRouter.swift; sourceTree = "<group>"; };
+		CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
+		CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileBuilder.swift; sourceTree = "<group>"; };
+		CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileInteractor.swift; sourceTree = "<group>"; };
+		CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+GroupProfile.swift"; sourceTree = "<group>"; };
+		CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCellModel.swift; sourceTree = "<group>"; };
 		CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ColorsPalette.txt; sourceTree = "<group>"; };
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -551,6 +573,12 @@
 		CECA0E4524B62C690067D5B6 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorManipulationsButtonsStackView.swift; sourceTree = "<group>"; };
+		CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
+		CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCellModel.swift; sourceTree = "<group>"; };
+		CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCellModel.swift; sourceTree = "<group>"; };
+		CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCell.swift; sourceTree = "<group>"; };
+		CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCellModel.swift; sourceTree = "<group>"; };
 		CEFA663824B866250034E802 /* CollocutorNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorNavigationView.swift; sourceTree = "<group>"; };
 		DEBDC9E49B3DBE427E91D8E6 /* Pods-Chats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.debug.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1073,11 +1101,17 @@
 		2D501C3D24B5E64800C37DCB /* CellModels */ = {
 			isa = PBXGroup;
 			children = (
-				2D8B98FD24BC62E300D9F560 /* ChatTableViewTextMessageCellModel.swift */,
 				2D8B98ED24BC61EB00D9F560 /* ActionTableViewCellModel.swift */,
-				2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */,
+				CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */,
+				2D8B98F224BC625F00D9F560 /* ChatTableViewCellModel.swift */,
 				2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */,
 				1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */,
+				2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */,
+				2D8B98FD24BC62E300D9F560 /* ChatTableViewTextMessageCellModel.swift */,
+				CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */,
+				CEDC1FF224BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift */,
+				CEE78EF424BDC8D600B7E236 /* UserTableViewCellModel.swift */,
+				2D4D967424BDD56C0051E7B4 /* ChatTableViewContactCellModel.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -1194,8 +1228,6 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				CECA0E3B24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift */,
-				CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */,
 				1279D5DA24B8A7E30012467B /* EmptyChatView */,
 				1279D5CB24B5D2C40012467B /* ChatListView */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
@@ -1204,8 +1236,9 @@
 				2D65C19124AE0DE100C64534 /* Alerts&Pickers */,
 				2D1C4D3024ABC7E40087449A /* Layout */,
 				2D1C4D1824AB4AAC0087449A /* GradientCircleView */,
-				2D1C4D1424AB3F810087449A /* СollocutorView */,
+				CE8EE11A24BCAAFE00A07F6E /* CollocutorManipulationsButtonsStackView */,
 				CEFA663724B865C00034E802 /* CollocutorNavigationView */,
+				2D1C4D1424AB3F810087449A /* СollocutorView */,
 				2D1C4D1124AB39AF0087449A /* BackButtonUnreadMessages */,
 				2D64CF8E24A20EE300C8B94A /* UITableViewCells */,
 			);
@@ -1216,9 +1249,14 @@
 			isa = PBXGroup;
 			children = (
 				CECA0E3F24B629BA0067D5B6 /* ActionTableViewCell.swift */,
-				2D1C4D2524ABC7B70087449A /* CustomCell.swift */,
-				2D1C4D2624ABC7B70087449A /* TableViewCells.swift */,
+				CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */,
 				1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */,
+				CECA0E3B24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift */,
+				2D1C4D2524ABC7B70087449A /* CustomCell.swift */,
+				CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */,
+				CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */,
+				2D1C4D2624ABC7B70087449A /* TableViewCells.swift */,
+				CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */,
 			);
 			path = UITableViewCells;
 			sourceTree = "<group>";
@@ -1712,7 +1750,6 @@
 		2D6A76CF24BC5EC50075A8C8 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				2D8B98F224BC625F00D9F560 /* ChatTableViewCellModel.swift */,
 				2D8B98EF24BC625F00D9F560 /* SectionHeaderViewSetup.swift */,
 				2D8B98F424BC626000D9F560 /* TableViewCellModel.swift */,
 				2D8B98F124BC625F00D9F560 /* TableViewCellSetup.swift */,
@@ -1769,6 +1806,7 @@
 		CE26469024B3545800EE7241 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				CE4E425A24BC8AD500BCA9F8 /* GroupProfile */,
 				CE26468F24B3540A00EE7241 /* CollocutorProfile */,
 			);
 			path = Submodules;
@@ -1778,8 +1816,21 @@
 			isa = PBXGroup;
 			children = (
 				CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */,
+				CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		CE4E425A24BC8AD500BCA9F8 /* GroupProfile */ = {
+			isa = PBXGroup;
+			children = (
+				CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */,
+				CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */,
+				CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */,
+				CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */,
+				CEE78EF124BDC5F600B7E236 /* Components */,
+			);
+			path = GroupProfile;
 			sourceTree = "<group>";
 		};
 		CE71CFC824B4B3C900862A73 /* Generated */ = {
@@ -1789,6 +1840,14 @@
 				CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */,
 			);
 			path = Generated;
+			sourceTree = "<group>";
+		};
+		CE8EE11A24BCAAFE00A07F6E /* CollocutorManipulationsButtonsStackView */ = {
+			isa = PBXGroup;
+			children = (
+				CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */,
+			);
+			path = CollocutorManipulationsButtonsStackView;
 			sourceTree = "<group>";
 		};
 		CE99B9EE24B4730200F4CEB6 /* Components */ = {
@@ -1814,6 +1873,13 @@
 				CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */,
 			);
 			path = UINavigationController;
+			sourceTree = "<group>";
+		};
+		CEE78EF124BDC5F600B7E236 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		CEFA663724B865C00034E802 /* CollocutorNavigationView */ = {
@@ -2001,6 +2067,7 @@
 				2D64CFEA24A20EF000C8B94A /* UIColor+.swift in Sources */,
 				2D501C2124B32BC400C37DCB /* NSAttributedString+Extensions.swift in Sources */,
 				1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */,
+				CE4E426024BC8AFD00BCA9F8 /* GroupProfileViewController.swift in Sources */,
 				2D1C4D1324AB3AA70087449A /* UnreadMessagesBackButton.swift in Sources */,
 				2D65C1FE24AE1A3F00C64534 /* LocationSearchResultsViewController.swift in Sources */,
 				2D501B5024B320A700C37DCB /* UIEdgeInsets+Extensions.swift in Sources */,
@@ -2031,11 +2098,13 @@
 				2D501BA724B3210900C37DCB /* TypingIndicatorCell.swift in Sources */,
 				2D64CFFB24A20EF000C8B94A /* WorkflowError.swift in Sources */,
 				2D501BF924B322B600C37DCB /* InputItem.swift in Sources */,
+				CEE78EF924BDD16300B7E236 /* AddContactsTableViewCellModel.swift in Sources */,
 				2D7F273624B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift in Sources */,
 				2D501BAF24B3213400C37DCB /* MessageReusableView.swift in Sources */,
 				2D64CFFA24A20EF000C8B94A /* Promise.swift in Sources */,
 				2D501BAB24B3210900C37DCB /* MediaMessageCell.swift in Sources */,
 				2D64CFF724A20EF000C8B94A /* WorkflowObserver.swift in Sources */,
+				CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */,
 				2D501C1F24B3293D00C37DCB /* ChatType.swift in Sources */,
 				2D501BD924B3222500C37DCB /* AutocompleteManagerDelegate.swift in Sources */,
 				2D501B9624B320D500C37DCB /* MessagesDataSource.swift in Sources */,
@@ -2066,6 +2135,7 @@
 				2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				CECA0E3C24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift in Sources */,
 				2D8B98F924BC626000D9F560 /* ChatTableViewCellModel.swift in Sources */,
+				CE4E426124BC8AFD00BCA9F8 /* GroupProfileBuilder.swift in Sources */,
 				2D501B7F24B320C800C37DCB /* MessageKitError.swift in Sources */,
 				2D1C4D2424AB97510087449A /* CollocutorStatus.swift in Sources */,
 				2D65C20224AE1A3F00C64534 /* Address.swift in Sources */,
@@ -2104,9 +2174,11 @@
 				2D65C21324AE1A3F00C64534 /* UIViewController+Extensions.swift in Sources */,
 				2D501BA424B3210900C37DCB /* LocationMessageCell.swift in Sources */,
 				2D501BA824B3210900C37DCB /* MessageCollectionViewCell.swift in Sources */,
+				CEE78EF524BDC8D600B7E236 /* UserTableViewCellModel.swift in Sources */,
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				2D1C4D2D24ABC7D50087449A /* MockUser.swift in Sources */,
 				2D65C1F224AE1A3F00C64534 /* TextViewController.swift in Sources */,
+				2D4D967524BDD56D0051E7B4 /* ChatTableViewContactCellModel.swift in Sources */,
 				2D1C4D3724ABC7F30087449A /* SampleData.swift in Sources */,
 				2D64CFED24A20EF000C8B94A /* ViewControllable+ShowError.swift in Sources */,
 				2D8B98F624BC626000D9F560 /* SectionHeaderViewSetup.swift in Sources */,
@@ -2114,21 +2186,26 @@
 				2D8B98FE24BC62E300D9F560 /* ChatTableViewTextMessageCellModel.swift in Sources */,
 				2D501B7D24B320C800C37DCB /* MessageKitDateFormatter.swift in Sources */,
 				CE71CFD324B4B58000862A73 /* LocalizationDictionary.swift in Sources */,
+				CEDC1FF124BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift in Sources */,
 				2D64CF8C24A20E5400C8B94A /* RootBuilder.swift in Sources */,
+				CE4E426224BC8AFD00BCA9F8 /* GroupProfileInteractor.swift in Sources */,
 				2D1C4D1D24AB90AB0087449A /* CollocutorNavBarSettupable.swift in Sources */,
 				2D501BBB24B3216100C37DCB /* PlayButtonView.swift in Sources */,
+				CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */,
 				2D501BB824B3216100C37DCB /* MessagesCollectionView.swift in Sources */,
 				2DCA29FD24B753630060913C /* UITableView+Scrolll.swift in Sources */,
 				2D501B4324B3207C00C37DCB /* MessagesViewController.swift in Sources */,
 				2D501BAA24B3210900C37DCB /* TextMessageCell.swift in Sources */,
 				2D501BE724B3228100C37DCB /* UIView+AutoLayout.swift in Sources */,
 				2D501B9A24B320E900C37DCB /* MessageInputBar.swift in Sources */,
+				CE4E426824BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift in Sources */,
 				2D65C21524AE1A3F00C64534 /* Date+Extension.swift in Sources */,
 				2D8B98EE24BC61EB00D9F560 /* ActionTableViewCellModel.swift in Sources */,
 				2D64CFE424A20EF000C8B94A /* UIAlertController+.swift in Sources */,
 				2D65C20B24AE1A3F00C64534 /* ItemWithImage.swift in Sources */,
 				2D65C1FD24AE1A3F00C64534 /* PhotoLibraryPickerViewController.swift in Sources */,
 				2D501BD824B3222500C37DCB /* AutocompleteManagerDataSource.swift in Sources */,
+				CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */,
 				2D64CFDC24A20EF000C8B94A /* UINavigationBar+Gradient.swift in Sources */,
 				2D501BBA24B3216100C37DCB /* AvatarView.swift in Sources */,
 				CECA0E3A24B627B70067D5B6 /* CollocutorInfoCellModel.swift in Sources */,
@@ -2155,6 +2232,7 @@
 				2D64CFDF24A20EF000C8B94A /* TimeStamp+Date.swift in Sources */,
 				CECA0E3524B627680067D5B6 /* CollocutorProfileInteractor.swift in Sources */,
 				2D65C21B24AE1A3F00C64534 /* UIApplication+Extensions.swift in Sources */,
+				CEDC1FF324BCB1EE00EB4B5F /* GroupProfileTableViewCellModel.swift in Sources */,
 				2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */,
 				CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */,
 				2DCA29FB24B734810060913C /* TypingIndicatorView.swift in Sources */,
@@ -2186,12 +2264,14 @@
 				2D501C1624B3263700C37DCB /* LayoutAnchor.swift in Sources */,
 				2D64CFDD24A20EF000C8B94A /* UIView+GradienColor.swift in Sources */,
 				2D1C4D3924ABC8060087449A /* Settings+UserDefaults.swift in Sources */,
+				CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */,
 				2D501BA524B3210900C37DCB /* MessageContentCell.swift in Sources */,
 				2D64CFDB24A20EF000C8B94A /* UIImageView+Gradient.swift in Sources */,
 				2D501B4C24B320A700C37DCB /* CGRect+Extensions.swift in Sources */,
 				CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */,
 				2D64CFF024A20EF000C8B94A /* String+Empty.swift in Sources */,
 				2D65C1F824AE1A3F00C64534 /* CurrencyCell.swift in Sources */,
+				CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */,
 				2DB6987C24A362660075737F /* ChatBuilder.swift in Sources */,
 				2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */,
 				2D65C1F624AE1A3F00C64534 /* LocalePickerViewController.swift in Sources */,

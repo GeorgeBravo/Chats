@@ -9,7 +9,7 @@
 import UIKit
 
 private struct Constants {
-    static let height: CGFloat = 32.0
+    static let height: CGFloat = 28.0
     static let buttonFrame: CGRect = CGRect(0.0, 0.0, height, height)
 }
 

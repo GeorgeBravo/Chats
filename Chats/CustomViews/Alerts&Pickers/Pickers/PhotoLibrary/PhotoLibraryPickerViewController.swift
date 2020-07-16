@@ -82,13 +82,21 @@ final class PhotoLibraryPickerViewController: UIViewController {
     var itemSize: CGSize {
         switch layout.scrollDirection {
         case .vertical:
-            return CGSize(width: view.bounds.width / columns, height: view.bounds.width / columns)
+            return CGSize(width: (view.bounds.width / columns) - self.minimumInteritemSpacing, height: view.bounds.width / columns)
         case .horizontal:
             return CGSize(width: view.bounds.width, height: view.bounds.height / columns)
         }
     }
     
     // MARK: Properties
+    
+    private var minimumInteritemSpacing: CGFloat {
+        return 2
+    }
+    
+    private var minimumLineSpacing: CGFloat {
+        return 2
+    }
     
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
@@ -106,8 +114,8 @@ final class PhotoLibraryPickerViewController: UIViewController {
         }(UICollectionView(frame: .zero, collectionViewLayout: layout))
     
     fileprivate lazy var layout: UICollectionViewFlowLayout = {
-        $0.minimumInteritemSpacing = 0
-        $0.minimumLineSpacing = 0
+        $0.minimumInteritemSpacing = self.minimumInteritemSpacing
+        $0.minimumLineSpacing = self.minimumLineSpacing
         $0.sectionInset = .zero
         return $0
     }(UICollectionViewFlowLayout())

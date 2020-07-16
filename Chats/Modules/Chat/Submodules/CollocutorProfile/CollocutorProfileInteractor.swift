@@ -78,7 +78,7 @@ extension CollocutorProfileInteractor: CollocutorProfilePresentableListener {
         let secondSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sendMessage), ActionTableViewCellModel(optionType: .addToContacts), ActionTableViewCellModel(optionType: .addToGroups)])
         let thirdSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .sharedMedia, descriptionText: " "), ActionTableViewCellModel(optionType: .notification, descriptionText: "Enabled"), ActionTableViewCellModel(optionType: .groupsInCommon, descriptionText: "3")])
         let fourthSection = OptionsTableViewSectionModel(headerViewType: .options, title: " ", cellModels: [ActionTableViewCellModel(optionType: .blockUser)])
-        sections = [zeroSection, firstSection, secondSection, thirdSection, fourthSection]//, firstSection, secondSection, thirdSection, fourthSection]
+        sections = [zeroSection, firstSection, secondSection, thirdSection, fourthSection]
     }
     
     func cellModelForRow(at indexPath: IndexPath) -> TableViewCellModel {
