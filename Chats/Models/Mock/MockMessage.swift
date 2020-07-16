@@ -85,6 +85,8 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
             return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         case let .asset(assets):
             return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
+        case let .fileItem(fileItem):
+            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         case let .contact(contact):
             return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage)
         default:
@@ -132,5 +134,9 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
     
     init(contact: ContactItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
         self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    }
+    
+    init(fileItem: FileItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
+        self.init(kind: .fileItem(fileItem), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
     }
 }

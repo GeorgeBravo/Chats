@@ -85,8 +85,8 @@ extension ChatListEditingModeView {
     
     private func setupViews() {
         backgroundColor = UIColor.white
-        layer.borderWidth = 1
-        layer.borderColor = UIColor(named: ColorName.optionsBlackColor).cgColor
+        layer.borderWidth = 0.4
+        layer.borderColor = UIColor(named: ColorName.separatorColor).cgColor
         
         addSubview(readAllButton) {
             $0.leading == leadingAnchor + 25
