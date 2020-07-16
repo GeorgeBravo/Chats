@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 protocol ChatListLargeTitleViewProtocol: class {
     func editAction()
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Kingfisher
 
 private struct Constants {
     static let bigSizeFont: CGFloat = 21

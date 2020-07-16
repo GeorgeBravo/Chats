@@ -34,9 +34,9 @@ class CollocutorView: UIView {
     
     private lazy var gradientView: GradientCircleView = {
         let view = GradientCircleView()
-        view.colors = [UIColor.sunflowerYellowTwo.cgColor,
-                       UIColor.violetPink.cgColor,
-                       UIColor.brightCyan.cgColor]
+        view.colors = [UIColor(named: .sunflowerYellowTwo).cgColor,
+                       UIColor(named: .violetPink).cgColor,
+                       UIColor(named: .brightCyan).cgColor]
 //        view.margin = 10
         view.isCustomViewRounded = true
         view.customView = collocutorImageView
@@ -102,7 +102,7 @@ extension CollocutorView {
 
             switch collocutor.status {
             case .online:
-                self.statusLabel.textColor = UIColor.electricBlue
+                self.statusLabel.textColor = UIColor(named: .electricBlue)
                 self.statusLabel.text = "Online"
             case .offline:
                 self.statusLabel.textColor = UIColor.lightGray

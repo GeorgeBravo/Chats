@@ -65,7 +65,7 @@ final class ImagePickerViewController: UIViewController {
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
         $0.delegate = self
-        $0.register(ItemWithImage.self, forCellWithReuseIdentifier: ItemWithImage.identifier)
+        $0.register(ItemWithImage.self)
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
         $0.decelerationRate = UIScrollView.DecelerationRate.fast
@@ -162,7 +162,7 @@ extension ImagePickerViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: ItemWithImage.identifier, for: indexPath) as? ItemWithImage else { return UICollectionViewCell() }
+        let item: ItemWithImage = collectionView.dequeueReusableCell(for: indexPath)
         item.imageView.image = images[indexPath.row]
         return item
     }

@@ -144,13 +144,16 @@ final class ChatViewController: UIViewController {
     private var typingIndicatorHeightConstraint: NSLayoutConstraint?
     
     public lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .plain)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.white
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        
         tableView.register(TextMessageCell.self)
         tableView.register(MessageContentCell.self)
         tableView.register(LocationMessageCell.self)
@@ -175,7 +178,7 @@ final class ChatViewController: UIViewController {
         
         let sections: [TableViewSectionModel] = sortedViewModels.map {
             let oldestMessageDate = $0.first?.timestamp
-            return ChatTableViewSectionModel(headerViewType: .messagesTimestamp, title: oldestMessageDate?.headerSectionDate ?? "Unknown date", cellModels: $0, headerStyle: .simple)
+            return ChatTableViewSectionModel(headerViewType: .messagesTimestamp, title: oldestMessageDate?.headerSectionDate ?? "Unknown date", cellModels: $0, headerStyle: .bubble)
         }.compactMap { $0 }
         
         self.sections = sections
@@ -222,7 +225,6 @@ final class ChatViewController: UIViewController {
 extension ChatViewController {
     private func setupViews() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
-//        self.navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         
         view.backgroundColor = .white
         
@@ -277,6 +279,7 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
         guard let numberOfRowsInSection = sections?[section].cellModels.count else { return 0 }
         return numberOfRowsInSection
     }
@@ -284,7 +287,8 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
-        guard let cellModel = sections?[section].cellModels[row] else { return UITableViewCell() }
+        guard let models = sections?[section].cellModels else { return UITableViewCell() }
+        guard let cellModel = sections?[section].cellModels[models.count - 1] else { return UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(of: cellModel.cellType.classType)
         if let cell = cell as? TableViewCellSetup {
@@ -313,12 +317,6 @@ extension ChatViewController: CollocutorNavBarSettupable {}
 extension ChatViewController {
     private func configureMessageInputBar() {
         messageInputBar.delegate = self
-        messageInputBar.inputTextView.tintColor = .primaryColor
-        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
-        messageInputBar.sendButton.setTitleColor(
-            UIColor.primaryColor.withAlphaComponent(0.3),
-            for: .highlighted
-        )
         
         messageInputBar.isTranslucent = true
         messageInputBar.separatorLine.isHidden = true
@@ -333,28 +331,8 @@ extension ChatViewController {
         messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.layer.masksToBounds = true
-        
-//        messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        configureInputBarItems()
     }
-    
-    private func configureInputBarItems() {
-//        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
-        
-    }
-    
-    private func configureInputBarPadding() {
-        
-        // Entire InputBar padding
-        messageInputBar.padding.bottom = 8
-        
-        // or MiddleContentView padding
-        messageInputBar.middleContentViewPadding.right = -38
-        
-        // or InputTextView padding
-        messageInputBar.inputTextView.textContainerInset.bottom = 8
-        
-    }
+
 }
 
 // MARK: - InputBarAccessoryViewDelegate

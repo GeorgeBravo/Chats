@@ -2,6 +2,8 @@ import UIKit
 
 final class ItemWithPhoto: UICollectionViewCell {
     
+    public var block: (() -> Int)?
+    
     lazy var imageView: UIImageView = {
         $0.backgroundColor = .clear
         $0.contentMode = .scaleAspectFill
@@ -16,6 +18,17 @@ final class ItemWithPhoto: UICollectionViewCell {
         $0.maskToBounds = false
         return $0
     }(UIView())
+    
+    override var isSelected: Bool {
+        didSet {
+            selectedStateDidChange(from: oldValue)
+        }
+    }
+    
+    private func selectedStateDidChange(from oldValue: Bool) {
+        guard isSelected != oldValue, isSelected, let selectedCount = block?() else { return }
+        print(selectedCount)
+    }
     
     lazy var selectedCircle: UIView = {
         $0.backgroundColor = .clear
