@@ -27,10 +27,12 @@ class ItemWithImage: UICollectionViewCell {
         return $0
     }(UIView())
     
-    lazy var selectedPoint: UIView = {
+    lazy var selectedPoint: UILabel = {
+        $0.textColor = UIColor.white
+        $0.textAlignment = .center
         $0.backgroundColor = UIColor(hex: 0x007AFF)
         return $0
-    }(UIView())
+    }(UILabel())
     
     fileprivate let inset: CGFloat = 8
     
@@ -44,18 +46,31 @@ class ItemWithImage: UICollectionViewCell {
         setup()
     }
     
+    override var isSelected: Bool {
+        didSet {
+            selectionDidChange(from: oldValue)
+        }
+    }
+
+    func selectionDidChange(from oldValue: Bool) {
+        guard isSelected != oldValue else { return }
+        unselectedCircle.isHidden = isSelected
+        selectedPoint.isHidden = !isSelected
+        selectedCircle.isHidden = !isSelected
+    }
+    
     fileprivate func setup() {
         backgroundColor = .clear
         
         let unselected: UIView = UIView()
         unselected.addSubview(imageView)
         unselected.addSubview(unselectedCircle)
+        unselected.addSubview(selectedCircle)
+        unselected.addSubview(selectedPoint)
         backgroundView = unselected
         
-        let selected: UIView = UIView()
-        selected.addSubview(selectedCircle)
-        selected.addSubview(selectedPoint)
-        selectedBackgroundView = selected
+        selectedCircle.isHidden = true
+        selectedPoint.isHidden = true
     }
     
     override public func layoutSubviews() {
@@ -90,7 +105,7 @@ class ItemWithImage: UICollectionViewCell {
         view.shadowRasterizationScale = UIScreen.main.scale
     }
     
-    func updateAppearance(forPoint view: UIView) {
+    func updateAppearance(forPoint view: UILabel) {
         view.frame.size = CGSize(width: unselectedCircle.width - (unselectedCircle.borderWidth ?? 0) * 2, height: unselectedCircle.height - (unselectedCircle.borderWidth ?? 0) * 2)
         view.center = selectedCircle.center
         view.circleCorner = true

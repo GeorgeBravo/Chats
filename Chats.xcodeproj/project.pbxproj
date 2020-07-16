@@ -15,6 +15,11 @@
 		1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D624B623220012467B /* UIFont+Extensions.swift */; };
 		1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D824B73D940012467B /* ChatListEditingModeView.swift */; };
 		1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5DB24B8A81E0012467B /* StatusView.swift */; };
+		1279D5DF24BC73FF0012467B /* FilePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5DE24BC73FF0012467B /* FilePickerViewController.swift */; };
+		1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E124BDA7EA0012467B /* FileItem.swift */; };
+		1279D5E424BDA9EA0012467B /* ChatTableViewFileCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */; };
+		1279D5E624BDAAA10012467B /* FileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E524BDAAA10012467B /* FileMessageCell.swift */; };
+		1279D5E924BDB3CE0012467B /* FileAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E824BDB3CE0012467B /* FileAsset.swift */; };
 		2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */; };
 		2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */; };
 		2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */; };
@@ -297,6 +302,12 @@
 		1279D5D624B623220012467B /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIFont+Extensions.swift"; path = "Chats/CustomViews/UITableViewHeaderFooterView/UIFont+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		1279D5D824B73D940012467B /* ChatListEditingModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListEditingModeView.swift; sourceTree = "<group>"; };
 		1279D5DB24B8A81E0012467B /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		1279D5DE24BC73FF0012467B /* FilePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerViewController.swift; sourceTree = "<group>"; };
+		1279D5E024BC832C0012467B /* Chats.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Chats.entitlements; sourceTree = "<group>"; };
+		1279D5E124BDA7EA0012467B /* FileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileItem.swift; sourceTree = "<group>"; };
+		1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewFileCellModel.swift; sourceTree = "<group>"; };
+		1279D5E524BDAAA10012467B /* FileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageCell.swift; sourceTree = "<group>"; };
+		1279D5E824BDB3CE0012467B /* FileAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAsset.swift; sourceTree = "<group>"; };
 		2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -613,6 +624,23 @@
 			path = EmptyChatView;
 			sourceTree = "<group>";
 		};
+		1279D5DD24BC73CB0012467B /* File */ = {
+			isa = PBXGroup;
+			children = (
+				1279D5E724BDB3B30012467B /* Models */,
+				1279D5DE24BC73FF0012467B /* FilePickerViewController.swift */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		1279D5E724BDB3B30012467B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1279D5E824BDB3CE0012467B /* FileAsset.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		2D17D6CC24AC8DB2009B2E16 /* SDKs */ = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +883,7 @@
 				2D501B8424B320D500C37DCB /* MessagesLayoutDelegate.swift */,
 				2D501B8224B320D500C37DCB /* MessageType.swift */,
 				2D501B8524B320D500C37DCB /* SenderType.swift */,
+				1279D5E124BDA7EA0012467B /* FileItem.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -885,6 +914,7 @@
 				2D501B9D24B3210800C37DCB /* MessageContentCell.swift */,
 				2D501BA224B3210900C37DCB /* TextMessageCell.swift */,
 				2D501B9F24B3210800C37DCB /* TypingIndicatorCell.swift */,
+				1279D5E524BDAAA10012467B /* FileMessageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1077,6 +1107,7 @@
 				CEE78EF824BDD16300B7E236 /* AddContactsTableViewCellModel.swift */,
 				2D8B98F224BC625F00D9F560 /* ChatTableViewCellModel.swift */,
 				2D6A76C424BC4A530075A8C8 /* ChatTableViewAssetCellModel.swift */,
+				1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */,
 				2D7F273524B8A48A00EBBA09 /* ChatTableViewLocationCellModel.swift */,
 				2D8B98FD24BC62E300D9F560 /* ChatTableViewTextMessageCellModel.swift */,
 				CE4E426724BC9CE900BCA9F8 /* DescriptionTableViewCellModel.swift */,
@@ -1127,6 +1158,7 @@
 		2D64CF4C24A1FE7400C8B94A /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				1279D5E024BC832C0012467B /* Chats.entitlements */,
 				CE71CFC824B4B3C900862A73 /* Generated */,
 				2D17D6CC24AC8DB2009B2E16 /* SDKs */,
 				2D64CF7224A20DB500C8B94A /* App */,
@@ -1485,6 +1517,7 @@
 		2D65C1A624AE1A3E00C64534 /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
+				1279D5DD24BC73CB0012467B /* File */,
 				2D65C1A724AE1A3E00C64534 /* Locale */,
 				2D65C1B224AE1A3E00C64534 /* TextFields */,
 				2D65C1B524AE1A3E00C64534 /* PhotoLibrary */,
@@ -1998,6 +2031,7 @@
 				2D1C4D2724ABC7B70087449A /* CustomCell.swift in Sources */,
 				2D65C22024AE1A3F00C64534 /* UITextField+Extensions.swift in Sources */,
 				2D501BC724B321D600C37DCB /* AttachmentsView.swift in Sources */,
+				1279D5DF24BC73FF0012467B /* FilePickerViewController.swift in Sources */,
 				2D17D71C24AC8DBB009B2E16 /* InputBarAccessoryView.swift in Sources */,
 				2D501C1A24B3263700C37DCB /* LayoutAnchor+Comparable.swift in Sources */,
 				1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */,
@@ -2047,6 +2081,7 @@
 				2D501BC524B321D600C37DCB /* ImageAttachmentCell.swift in Sources */,
 				2D64CFF824A20EF000C8B94A /* Workflow.swift in Sources */,
 				2D501C1B24B3263700C37DCB /* NSLayoutAnchor+LayoutAnchor.swift in Sources */,
+				1279D5E924BDB3CE0012467B /* FileAsset.swift in Sources */,
 				2D64CFEF24A20EF000C8B94A /* UIString+ForceLineBreak.swift in Sources */,
 				2D501B8F24B320D500C37DCB /* MessagesLayoutDelegate.swift in Sources */,
 				2D1C4D3B24ABC84A0087449A /* MockViewController.swift in Sources */,
@@ -2055,6 +2090,7 @@
 				2D65C20924AE1A3F00C64534 /* DatePickerViewController.swift in Sources */,
 				2D501C3124B5BB7400C37DCB /* ChatSectionHeaderView.swift in Sources */,
 				2D64CFEC24A20EF000C8B94A /* UIViewController+.swift in Sources */,
+				1279D5E624BDAAA10012467B /* FileMessageCell.swift in Sources */,
 				2D501B9324B320D500C37DCB /* MessageCellDelegate.swift in Sources */,
 				2D501C1524B3263700C37DCB /* LayoutProperty.swift in Sources */,
 				2D501C2424B361FC00C37DCB /* Creatable.swift in Sources */,
@@ -2087,6 +2123,7 @@
 				2D64CFDA24A20EF000C8B94A /* CAGradientLayer+.swift in Sources */,
 				2D501BBD24B3216100C37DCB /* TypingIndicator.swift in Sources */,
 				2D64CFE324A20EF000C8B94A /* UICollectionView+.swift in Sources */,
+				1279D5E424BDA9EA0012467B /* ChatTableViewFileCellModel.swift in Sources */,
 				2D501BDF24B3223400C37DCB /* KeyboardEvent.swift in Sources */,
 				2D64CF8A24A20E5400C8B94A /* RootRouter.swift in Sources */,
 				2D64CF8924A20E5400C8B94A /* RootViewController.swift in Sources */,
@@ -2111,6 +2148,7 @@
 				2D501C1C24B3263700C37DCB /* LayoutProxy.swift in Sources */,
 				2D501BF424B322AC00C37DCB /* SeparatorLine.swift in Sources */,
 				CECA0E3624B627680067D5B6 /* CollocutorProfileBuilder.swift in Sources */,
+				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
 				2D64CFF924A20EF000C8B94A /* WorkflowResult.swift in Sources */,
 				1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */,
@@ -2402,6 +2440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Chats/Chats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L3QAWRZFYR;
 				INFOPLIST_FILE = "$(SRCROOT)/Chats/Resources/Info.plist";
@@ -2425,6 +2464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Chats/Chats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L3QAWRZFYR;
 				INFOPLIST_FILE = "$(SRCROOT)/Chats/Resources/Info.plist";
