@@ -123,6 +123,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
     fileprivate var selection: Selection?
     fileprivate var assets: [PHAsset] = []
     fileprivate var selectedAssets: [PHAsset] = []
+    fileprivate var selectedCells: [IndexPath] = []
     
     // MARK: Initialize
     
@@ -222,7 +223,19 @@ final class PhotoLibraryPickerViewController: UIViewController {
 extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = collectionView.cellForItem(at: indexPath) as? ItemWithImage else { return }
         let asset = assets[indexPath.item]
+        if selectedCells.contains(indexPath) {
+            selectedCells = selectedCells.filter(){$0 != indexPath}
+        } else {
+            selectedCells.append(indexPath)
+        }
+        
+        if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
+            //use index
+            item.selectedPoint.text = "\(index + 1)"
+        }
+        
         switch selection {
             
         case .single(let action)?:
@@ -235,9 +248,14 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
             action?(selectedAssets)
             
         case .none: break }
+    
+        collectionView.reloadItems(at: selectedCells)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if selectedCells.contains(indexPath) {
+           selectedCells = selectedCells.filter(){$0 != indexPath}
+        }
         let asset = assets[indexPath.item]
         switch selection {
         case .multiple(let action)?:
@@ -246,6 +264,12 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
                 : selectedAssets.append(asset)
             action?(selectedAssets)
         default: break }
+        
+        if selectedCells.isEmpty {
+            collectionView.reloadItems(at: [indexPath])
+        } else {
+            collectionView.reloadItems(at: selectedCells)
+        }
     }
 }
 
@@ -266,6 +290,14 @@ extension PhotoLibraryPickerViewController: UICollectionViewDataSource {
         let asset = assets[indexPath.item]
         Assets.resolve(asset: asset, size: item.bounds.size) { new in
             item.imageView.image = new
+        }
+        
+        if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
+            //use index
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            item.selectedPoint.text = "\(index + 1)"
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
         }
         return item
     }

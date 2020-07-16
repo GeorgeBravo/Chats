@@ -25,10 +25,13 @@ final class ItemWithPhoto: UICollectionViewCell {
         return $0
     }(UIView())
     
-    lazy var selectedPoint: UIView = {
+    lazy var selectedPoint: UILabel = {
+        $0.textColor = UIColor.white
+        $0.textAlignment = .center
         $0.backgroundColor = UIColor(hex: 0x007AFF)
         return $0
-    }(UIView())
+    }(UILabel())
+    
     
     fileprivate let inset: CGFloat = 6
     
@@ -42,18 +45,31 @@ final class ItemWithPhoto: UICollectionViewCell {
         setup()
     }
     
+    override var isSelected: Bool {
+          didSet {
+              selectionDidChange(from: oldValue)
+          }
+      }
+
+      func selectionDidChange(from oldValue: Bool) {
+          guard isSelected != oldValue else { return }
+          unselectedCircle.isHidden = isSelected
+          selectedPoint.isHidden = !isSelected
+          selectedCircle.isHidden = !isSelected
+      }
+    
     public func setup() {
         backgroundColor = .clear
         
         let unselected: UIView = UIView()
         unselected.addSubview(imageView)
         unselected.addSubview(unselectedCircle)
+        unselected.addSubview(selectedCircle)
+        unselected.addSubview(selectedPoint)
         backgroundView = unselected
         
-        let selected: UIView = UIView()
-        selected.addSubview(selectedCircle)
-        selected.addSubview(selectedPoint)
-        selectedBackgroundView = selected
+        selectedCircle.isHidden = true
+        selectedPoint.isHidden = true
     }
     
     override public func layoutSubviews() {

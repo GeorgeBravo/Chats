@@ -134,6 +134,7 @@ final class TelegramPickerViewController: UIViewController {
     
     lazy var assets = [PHAsset]()
     lazy var selectedAssets = [PHAsset]()
+    lazy var selectedCells: [IndexPath] = []
     
     var selection: TelegramSelection?
     
@@ -301,12 +302,33 @@ final class TelegramPickerViewController: UIViewController {
 extension TelegramPickerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = collectionView.cellForItem(at: indexPath) as? ItemWithPhoto else { return }
         layout.selectedCellIndexPath = layout.selectedCellIndexPath == indexPath ? nil : indexPath
         action(withAsset: assets[indexPath.item], at: indexPath)
+        if selectedCells.contains(indexPath) {
+            selectedCells = selectedCells.filter(){$0 != indexPath}
+        } else {
+            selectedCells.append(indexPath)
+        }
+        
+        if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
+            //use index
+            item.selectedPoint.text = "\(index + 1)"
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         action(withAsset: assets[indexPath.item], at: indexPath)
+        if selectedCells.contains(indexPath) {
+            selectedCells = selectedCells.filter(){$0 != indexPath}
+            collectionView.reloadItems(at: [indexPath])
+        }
+                
+        if selectedCells.isEmpty {
+            collectionView.reloadItems(at: [indexPath])
+        } else {
+            collectionView.reloadItems(at: selectedCells)
+        }
     }
 }
 
@@ -332,6 +354,14 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
             Assets.resolve(asset: asset, size: size) { new in
                 item.imageView.image = new
             }
+        }
+        
+        if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
+            //use index
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .bottom)
+            item.selectedPoint.text = "\(index + 1)"
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: true)
         }
         
         return item
