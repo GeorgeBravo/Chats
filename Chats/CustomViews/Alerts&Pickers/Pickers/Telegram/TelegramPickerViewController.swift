@@ -189,6 +189,14 @@ final class TelegramPickerViewController: UIViewController {
         }
     }
     
+    func getAssetInfoForFile() -> FileAsset? {
+        guard let asset = self.selectedAssets.first else { return nil}
+        let image = asset.image
+        let data = image.pngData()
+        let fileName = asset.originalFilename
+        return FileAsset(fileName: fileName, data: data, size: nil, image: image)
+    }
+    
     func checkStatus(completionHandler: @escaping ([PHAsset]) -> ()) {
         Log("status = \(PHPhotoLibrary.authorizationStatus())")
         switch PHPhotoLibrary.authorizationStatus() {
@@ -290,9 +298,7 @@ final class TelegramPickerViewController: UIViewController {
             
         case .sendAsFile:
             alertController?.dismiss(animated: true) { [unowned self] in
-                guard let asset = self.selectedAssets.first else { return }
-                let fileAsset = FileAsset(fileName: "", data: nil, size: nil, image: asset.image)
-                self.selection?(TelegramSelectionType.file(fileAsset))
+                self.selection?(TelegramSelectionType.file(self.getAssetInfoForFile()))
             }
         }
     }
@@ -419,5 +425,21 @@ extension PHAsset {
             thumbnail = image!
         })
         return thumbnail
+    }
+    
+    var originalFilename: String? {
+        
+        var fname:String?
+        if #available(iOS 9.0, *) {
+            let resources = PHAssetResource.assetResources(for: self)
+            if let resource = resources.first {
+                fname = resource.originalFilename
+            }
+        }
+        if fname == nil {
+            // this is an undocumented workaround that works as of iOS 9.1
+            fname = self.value(forKey: "filename") as? String
+        }
+        return fname
     }
 }
