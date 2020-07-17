@@ -18,26 +18,23 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         
-        observer = horizontalContainerStackView.layer.observe(\.bounds) { object, _ in
-            self.layoutTextViewIfNeeded()
-            self.bla = true
+        observer = horizontalStackView.layer.observe(\.bounds) { object, _ in
+//            self.layoutTextViewIfNeeded()
+//            self.bla = true
         }
     }
     
+    //    var bla = false
     
-    var bla = false
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public override func prepareForReuse() {
-//        heightConstraint?.isActive = false
-        messageTextView.text = ""
         super.prepareForReuse()
         messageTextView.text = ""
-//        heightConstraint?.isActive = false
+//        verticalSpacingConstraint?.constant = 0
 //        heightConstraint?.constant = 0
-        
     }
     
     // MARK: - Views
@@ -49,10 +46,14 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         textView.textAlignment = .left
         
         textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.showsVerticalScrollIndicator =  false
+        textView.showsHorizontalScrollIndicator = false
         
         return textView
     }()
     
+    private var verticalSpacingConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
     
     // MARK: - Setup
@@ -60,97 +61,109 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewTextMessageCellModel else { return }
-        
+        setupTextView(with: model)
+    }
+}
+
+// MARK: - Setup Views
+extension TextMessageCell {
+    
+    private func setupTextView(with model: ChatTableViewTextMessageCellModel) {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 3
+        
         let attributes = [
             NSAttributedString.Key.paragraphStyle: style,
             .font: UIFont.helveticaNeueFontOfSize(size: 16, style: .regular),
             .foregroundColor: model.isIncomingMessage ? UIColor.black : UIColor.white
         ]
+        
         messageTextView.attributedText = NSAttributedString(string: model.message, attributes: attributes)
         
-        if bla {
-            layoutTextViewIfNeeded()
-        }
-
+//        layoutTextViewIfNeeded()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        let exclusionPath = UIBezierPath(rect: horizontalContainerStackView.frame)
-//        messageTextView.textContainer.exclusionPaths = [exclusionPath]
 //        layoutTextViewIfNeeded()
     }
-
-}
-
-// MARK: - Setup Views
-extension TextMessageCell {
+    
     private func setupViews() {
         super.setupSubviews()
-        
-//        let imageView = UIImageView(image: UIImage(named: "bubble_full"))
-//        mask = imageView
         
         selectionStyle = .none
         
         messageContainerView.addSubview(messageTextView) {
             $0.top == messageContainerView.topAnchor
-            $0.bottom == messageContainerView.bottomAnchor
+            $0.bottom == horizontalStackView.topAnchor
             $0.leading == messageContainerView.leadingAnchor + 5
             $0.trailing == messageContainerView.trailingAnchor
             
             $0.width >= UIScreen.main.bounds.width * 0.3
             $0.width <= UIScreen.main.bounds.width * 0.6
+            
+//            $0.height == 100
         }
         
-//        heightConstraint = messageContainerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
-//
+//        heightConstraint = messageTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
+        
 //        heightConstraint?.isActive = true
+//        messageTextView.translatesAutoresizingMaskIntoConstraints = false
+    
+//        verticalSpacingConstraint = messageTextView.bottomAnchor.constraint(greaterThanOrEqualTo: horizontalStackView.topAnchor)
         
-        //        heightConstraint?.priority = .defaultHigh
-        
-//        layoutTextViewIfNeeded()
-        
+//        verticalSpacingConstraint?.isActive = true
     }
     
-     func layoutTextViewIfNeeded() {
+    func layoutTextViewIfNeeded() {
+                
+        //        layoutSubviews()
+        
+        
+        
+        //        messageTextView.layoutManager.ensureLayout(for: messageTextView.textContainer)
+        
+        
+        
+        //        guard let pos2 = messageTextView.position(from: messageTextView.endOfDocument, offset: 0), let pos1 = messageTextView.position(from: messageTextView.endOfDocument, offset: -1) ,let range = messageTextView.textRange(from: pos1, to: pos2) else { return }
+        //
+        //        let lastCharRect = messageTextView.firstRect(for: range)
+        //        let freeSpace = messageTextView.frame.size.width - lastCharRect.origin.x - lastCharRect.size.width
+        //
+        //        if freeSpace < horizontalStackView.frame.width - 10 {
+        //            messageTextView.text.append(contentsOf: "\n")
+        ////            print("sosi")
+        //            return
+        //        }
+        
 //        messageTextView.sizeToFit()
 //        messageContainerView.sizeToFit()
-//        layoutSubviews()
-
-        messageTextView.layoutManager.ensureLayout(for: messageTextView.textContainer)
+//        horizontalStackView.sizeToFit()
+        
+//        heightConstraint?.constant = messageTextView.intrinsicContentSize.height
+        
+        heightConstraint?.constant = 100
+        
         let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
         
         let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
-//        heightConstraint?.constant = messageTextView.frame.height
         
-//        print(lastLineFragmentRect.maxX)
-//        print(horizontalContainerStackView.frame.origin.x)
+        print("\n")
+        print(messageTextView.frame)
+        print(horizontalStackView.frame)
+
+        print(lastLineFragmentRect.maxX)
+        print(horizontalStackView.frame.width)
+        print(messageTextView.frame.width - horizontalStackView.frame.width)
         
-        guard let pos2 = messageTextView.position(from: messageTextView.endOfDocument, offset: 0), let pos1 = messageTextView.position(from: messageTextView.endOfDocument, offset: -1) ,let range = messageTextView.textRange(from: pos1, to: pos2) else { return }
-        
-        let lastCharRect = messageTextView.firstRect(for: range)
-        let freeSpace = messageTextView.frame.size.width - lastCharRect.origin.x - lastCharRect.size.width
-        
-        if freeSpace < horizontalContainerStackView.frame.width - 10 {
-            messageTextView.text.append(contentsOf: "\n")
-//            print("sosi")
-            return
-        }
-        
-        if lastLineFragmentRect.maxX > (messageTextView.frame.width - horizontalContainerStackView.frame.width - 10) {
-//            messageTextView.text.append(contentsOf: "\n")
-//            print("sosi")
-//            heightConstraint?.constant = horizontalContainerStackView.frame.height + messageTextView.frame.height
-//            hxeightConstraint?.isActive = true
-            //            heightConstraint?.constant += readMessageImageContainerView.frame.height
+        if lastLineFragmentRect.maxX > messageTextView.frame.width - horizontalStackView.frame.width {
+//        if lastLineFragmentRect.maxX >= (horizontalStackView.frame.minX) {
+            print("sosi")
+//            heightConstraint?.constant = messageTextView.frame.height + 20
+            verticalSpacingConstraint?.constant = 10
+            print("Height is \(messageTextView.frame.height)")
         } else {
-//            heightConstraint?.constant = messageTextView.frame.height
+            verticalSpacingConstraint?.constant = -10
         }
-        
-//        layoutSubviews()
-//        setNeedsLayout()
     }
 }

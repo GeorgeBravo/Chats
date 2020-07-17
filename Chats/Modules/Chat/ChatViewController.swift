@@ -65,7 +65,6 @@ final class ChatViewController: UIViewController {
         didSet {
             #warning("Change logic to section reload.")
             self.tableView.reloadData()
-//            self.tableView.scrollToLastItem()
         }
     }
     
@@ -74,6 +73,15 @@ final class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupGroupButton()
+    }
+    
+    private func setupGroupButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Group Info", style: .plain, target: self, action: #selector(setupGroupButtonTapped))
+    }
+    
+    @objc private func setupGroupButtonTapped() {
+        listener?.showGroupProfile()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,23 +92,14 @@ final class ChatViewController: UIViewController {
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
                 UIView.animate(withDuration: 0.1, animations: {
-//                    self?.typingIndicatorView.isHidden = false
-//                    self!.typingIndicatorHeightConstraint?.constant = 30
-//                    self?.view.layoutIfNeeded()
                      self?.tableView.tableFooterView?.isHidden = false
                 }, completion: nil)
                 
         }.onNewMessage { [weak self] message in
             UIView.animate(withDuration: 0.1, animations: {
-//                self!.typingIndicatorHeightConstraint?.constant = 0
-//                self?.view.layoutIfNeeded()
                 self?.messageList.append(message)
                 self?.tableView.tableFooterView?.isHidden = true
-            }, completion: { finished in
-                if finished {
-//                    self?.typingIndicatorView.isHidden = true
-                }
-            })
+            }, completion: nil)
         }
     }
     
@@ -151,7 +150,6 @@ final class ChatViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.white
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 50
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         
         tableView.register(TextMessageCell.self)
@@ -263,8 +261,8 @@ extension ChatViewController {
     
     @objc
     private func onCollocutorViewTapped() {
-//        listener?.showUser(with: collocutor)
-        listener?.showGroupProfile()
+        listener?.showUser(with: collocutor)
+//        listener?.showGroupProfile()
     }
 }
 
@@ -325,7 +323,6 @@ extension ChatViewController {
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
 
-//        messageInputBar.inputTextView.textContainerInset = [\.left: 20]
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -333,7 +330,6 @@ extension ChatViewController {
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.layer.masksToBounds = true
     }
-
 }
 
 // MARK: - InputBarAccessoryViewDelegate

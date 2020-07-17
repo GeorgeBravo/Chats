@@ -60,8 +60,8 @@ public class MessageContentCell: UITableViewCell {
             $0.contentMode = .scaleAspectFit
     }
     
-    public lazy var horizontalContainerStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [editedMessageLabel, messageTimestampLabel, readMessageImageContainerView])
+    public lazy var horizontalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [messageTimestampLabel, readMessageImageContainerView])
         
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
@@ -158,12 +158,9 @@ extension MessageContentCell {
             $0.width == 15
         }
         
-        messageContainerView.addSubview(horizontalContainerStackView) {
+        messageContainerView.addSubview(horizontalStackView) {
             $0.bottom == messageContainerView.bottomAnchor - 7
             $0.trailing == messageContainerView.trailingAnchor - 10
-        }
-        
-        horizontalContainerStackView.layout {
             $0.height == 8
         }
     }
