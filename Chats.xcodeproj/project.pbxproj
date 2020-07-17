@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		120E17CA24C1C7BC007FADA0 /* PHAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */; };
 		1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */; };
 		1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */; };
 		1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */; };
@@ -223,6 +224,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extensions.swift"; sourceTree = "<group>"; };
 		1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListLargeTitleView.swift; sourceTree = "<group>"; };
 		1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
 		1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewSectionModel.swift; sourceTree = "<group>"; };
@@ -462,6 +464,14 @@
 				889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		120E17C824C1C798007FADA0 /* PHAsset */ = {
+			isa = PBXGroup;
+			children = (
+				120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */,
+			);
+			path = PHAsset;
 			sourceTree = "<group>";
 		};
 		1279D5CB24B5D2C40012467B /* ChatListView */ = {
@@ -978,6 +988,7 @@
 		2D64CFA124A20EEE00C8B94A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				120E17C824C1C798007FADA0 /* PHAsset */,
 				2D751D3824C0B0FE00C40122 /* UIEdgeInsets */,
 				2D751D3724C0B09400C40122 /* CGRect */,
 				CED4208A24B4A81700C557FC /* UINavigationController */,
@@ -1745,6 +1756,7 @@
 				2D65C21324AE1A3F00C64534 /* UIViewController+Extensions.swift in Sources */,
 				2D501BA424B3210900C37DCB /* LocationMessageCell.swift in Sources */,
 				2D751D4524C1382000C40122 /* ChatTableViewTextMessageCellModel.swift in Sources */,
+				120E17CA24C1C7BC007FADA0 /* PHAsset+Extensions.swift in Sources */,
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */,
 				2D1C4D2D24ABC7D50087449A /* MockUser.swift in Sources */,

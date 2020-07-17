@@ -32,7 +32,7 @@ final class TelegramPickerViewController: UIViewController {
     var buttons: [ButtonType] {
         return selectedAssets.count == 0
             ? [.photoOrVideo, .location, .contact, .file]
-            : [.sendPhotos]
+            : [.sendPhotos, .sendAsFile]
     }
     
     enum ButtonType {
@@ -80,7 +80,7 @@ final class TelegramPickerViewController: UIViewController {
     func sizeFor(asset: PHAsset) -> CGSize {
         let height: CGFloat = UI.maxHeight
         let width: CGFloat = CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
-        return CGSize(width: 200, height: 200)
+        return CGSize(width: width, height: height)
     }
     
     func sizeForItem(asset: PHAsset) -> CGSize {
@@ -207,6 +207,14 @@ final class TelegramPickerViewController: UIViewController {
         }
     }
     
+    func getAssetInfoForFile() -> FileAsset? {
+        guard let asset = self.selectedAssets.first else { return nil}
+        let image = asset.image
+        let data = image.pngData()
+        let fileName = asset.originalFilename
+        return FileAsset(fileName: fileName, data: data, size: nil, image: image)
+    }
+    
     func checkStatus(completionHandler: @escaping ([PHAsset]) -> ()) {
         Log("status = \(PHPhotoLibrary.authorizationStatus())")
         switch PHPhotoLibrary.authorizationStatus() {
@@ -324,8 +332,9 @@ final class TelegramPickerViewController: UIViewController {
             }
             
         case .sendAsFile:
-            
-            break
+            alertController?.dismiss(animated: true) { [unowned self] in
+                self.selection?(TelegramSelectionType.file(self.getAssetInfoForFile()))
+            }
         }
     }
     
@@ -371,7 +380,6 @@ extension TelegramPickerViewController: UICollectionViewDelegate {
         if hasCamera && needShowCameraPreviewCell && indexPath.item == 0 { return }
         if selectedCells.contains(indexPath) {
             selectedCells = selectedCells.filter(){$0 != indexPath}
-            collectionView.reloadItems(at: [indexPath])
         }
         
         if selectedCells.isEmpty {
@@ -415,7 +423,7 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
         
         if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
             //use index
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .bottom)
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
             item.selectedPoint.text = "\(index + 1)"
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
