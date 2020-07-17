@@ -168,6 +168,12 @@ final class ChatViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var messageManipulationView: MessageManipulationView = {
+        let messageManipulationView = MessageManipulationView()
+        messageManipulationView.delegate = self
+        return messageManipulationView
+    }()
+    
     private lazy var underneathView = UnderneathView
         .create { _ in }
     
@@ -217,8 +223,23 @@ final class ChatViewController: UIViewController {
             }
         }
         
-        return groups.compactMap { $0.compactMap { $0.tableViewCellViewModel }
+        return groups.compactMap {
+            $0.compactMap { item in
+                guard let mockMessage = item as? MockMessage else { return nil }
+                var model = mockMessage.tableViewCellViewModel()
+                model.messageSelection = { [weak self] chatTableViewCellModel in
+                    self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel)
+                }
+                return model
+            }
         }
+    }
+    
+    func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel) {
+        resignFirstResponder()
+        guard let currentWindow = UIApplication.shared.keyWindow else { return }
+        messageManipulationView.frame = currentWindow.bounds
+        currentWindow.addSubview(messageManipulationView)
     }
 }
 
@@ -256,13 +277,11 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @objc
-    private func onBackButtonTapped() {
+    @objc private func onBackButtonTapped() {
         listener?.hideChat()
     }
     
-    @objc
-    private func onCollocutorViewTapped() {
+    @objc private func onCollocutorViewTapped() {
 //        listener?.showUser(with: collocutor)
         listener?.showGroupProfile()
     }
@@ -389,5 +408,12 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     }
 }
 
-
-
+extension ChatViewController: MessageManipulationViewDelegate {
+    func removeMessageManipulationView() {
+        guard let currentWindow = UIApplication.shared.keyWindow else { return }
+        currentWindow.subviews.forEach { subview in
+            if let subview = subview as? MessageManipulationView { subview.removeFromSuperview() }
+        }
+        becomeFirstResponder()
+    }
+}

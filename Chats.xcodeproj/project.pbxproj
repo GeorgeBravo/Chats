@@ -202,6 +202,7 @@
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
 		CE71CFD324B4B58000862A73 /* LocalizationDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */; };
 		CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D4924C1382F00C40122 /* UserTableViewCellModel.swift */; };
+		CE88617124C1E52800B837C6 /* MessageManipulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE88617024C1E52800B837C6 /* MessageManipulationView.swift */; };
 		CE99B9E924B45F3100F4CEB6 /* EditButtonSettupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */; };
 		CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */; };
 		CECA0E3524B627680067D5B6 /* CollocutorProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */; };
@@ -421,6 +422,7 @@
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationDictionary.swift; sourceTree = "<group>"; };
+		CE88617024C1E52800B837C6 /* MessageManipulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationView.swift; sourceTree = "<group>"; };
 		CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonSettupable.swift; sourceTree = "<group>"; };
 		CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSectionHeaderView.swift; sourceTree = "<group>"; };
 		CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollocutorProfileInteractor.swift; sourceTree = "<group>"; };
@@ -956,6 +958,7 @@
 				CEFA663724B865C00034E802 /* CollocutorNavigationView */,
 				2D1C4D1424AB3F810087449A /* СollocutorView */,
 				2D1C4D1124AB39AF0087449A /* BackButtonUnreadMessages */,
+				CE88616F24C1E50500B837C6 /* MessageManipulationView */,
 				2D64CF8E24A20EE300C8B94A /* UITableViewCells */,
 			);
 			path = CustomViews;
@@ -1454,6 +1457,14 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		CE88616F24C1E50500B837C6 /* MessageManipulationView */ = {
+			isa = PBXGroup;
+			children = (
+				CE88617024C1E52800B837C6 /* MessageManipulationView.swift */,
+			);
+			path = MessageManipulationView;
+			sourceTree = "<group>";
+		};
 		CE8EE11A24BCAAFE00A07F6E /* CollocutorManipulationsButtonsStackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1803,6 +1814,7 @@
 				2D65C21E24AE1A3F00C64534 /* Common+Extensions.swift in Sources */,
 				2D65C18F24ADF86600C64534 /* Date+.swift in Sources */,
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,
+				CE88617124C1E52800B837C6 /* MessageManipulationView.swift in Sources */,
 				2D65C20524AE1A3F00C64534 /* Contacts.swift in Sources */,
 				2D65C21C24AE1A3F00C64534 /* UIAlertController+Extensions.swift in Sources */,
 				2D65C21224AE1A3F00C64534 /* UIImageView+Extensions.swift in Sources */,

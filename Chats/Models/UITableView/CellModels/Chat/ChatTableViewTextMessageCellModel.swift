@@ -9,6 +9,8 @@
 import UIKit
 
 struct ChatTableViewTextMessageCellModel: ChatTableViewCellModel {
+    
+    // MARK: - Variables
     var cellType: TableViewCellType! { return .textMessage }
     
     var message: String
@@ -19,7 +21,9 @@ struct ChatTableViewTextMessageCellModel: ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+    var messageSelection: MessageSelection?
     
+    // MARK: - Init
     init(message: String, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
         self.message = message
         self.timestamp = timestamp
@@ -28,4 +32,5 @@ struct ChatTableViewTextMessageCellModel: ChatTableViewCellModel {
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
     }
+    
 }

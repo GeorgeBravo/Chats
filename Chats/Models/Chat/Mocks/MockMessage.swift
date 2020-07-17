@@ -39,9 +39,6 @@ private struct MockAudiotem: AudioItem {
 }
 
 protocol ChatScreenDisplayingItems {
-    
-    var tableViewCellViewModel: ChatTableViewCellModel { get }
-    
     var sentDate: Date { get set }
 }
 
@@ -63,7 +60,7 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         return .oneToOne
     }
     
-    var tableViewCellViewModel: ChatTableViewCellModel {
+    func tableViewCellViewModel() -> ChatTableViewCellModel {
         switch self.kind {
         case let .text(message):
             return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)

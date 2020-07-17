@@ -6,10 +6,11 @@
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 struct ChatTableViewContactCellModel: ChatTableViewCellModel {
+    
+    // MARK: - Variables
     var cellType: TableViewCellType! { return .contact }
     
     var timestamp: Date
@@ -20,7 +21,9 @@ struct ChatTableViewContactCellModel: ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
-
+    var messageSelection: MessageSelection?
+    
+    // MARK: - Init
     init(contact: ContactItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
         self.contact = contact
         self.timestamp = timestamp
@@ -29,4 +32,5 @@ struct ChatTableViewContactCellModel: ChatTableViewCellModel {
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
     }
+    
 }
