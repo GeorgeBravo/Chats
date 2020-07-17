@@ -1,5 +1,5 @@
 //
-//  CollocutorNavigationView.swift
+//  CollocutorProfileNavigationView.swift
 //  Chats
 //
 //  Created by user on 10.07.2020.
@@ -21,7 +21,7 @@ protocol CollocutorNavigationViewDelegate: class {
     func editButtonPressed()
 }
 
-class CollocutorNavigationView: UIView {
+class CollocutorProfileNavigationView: UIView {
     
     // MARK: - Variables
     weak var delegate: CollocutorNavigationViewDelegate?
@@ -77,7 +77,7 @@ class CollocutorNavigationView: UIView {
     }
 }
 
-extension CollocutorNavigationView {
+extension CollocutorProfileNavigationView {
     func setupViews() {
         backgroundColor = .clear
         tintColor = .clear
@@ -113,7 +113,7 @@ extension CollocutorNavigationView {
 }
 
 // MARK: - Selectors
-extension CollocutorNavigationView {
+extension CollocutorProfileNavigationView {
     @objc func backButtonTapped() {
         delegate?.backButtonTapped()
     }

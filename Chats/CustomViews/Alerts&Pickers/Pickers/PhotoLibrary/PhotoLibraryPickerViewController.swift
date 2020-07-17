@@ -101,7 +101,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
         $0.delegate = self
-        $0.register(ItemWithImage.self, forCellWithReuseIdentifier: String(describing: ItemWithImage.self))
+        $0.register(ItemWithImage.self)
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
         $0.decelerationRate = UIScrollView.DecelerationRate.fast

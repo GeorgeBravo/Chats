@@ -21,7 +21,7 @@ extension EditButtonSettupable where Self: UIViewController {
 
         button.setTitle("Edit", for: .normal)
         button.addTarget(target, action: action, for: .touchUpInside)
-        button.setTitleColor(UIColor.labelColor, for: .normal)
+        button.setTitleColor(UIColor(named: .blackColor), for: .normal)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }

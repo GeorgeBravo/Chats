@@ -28,7 +28,6 @@ extension UIAlertController {
 }
 
 
-
 final class TelegramPickerViewController: UIViewController {
     var buttons: [ButtonType] {
         return selectedAssets.count == 0
@@ -382,7 +381,6 @@ extension TelegramPickerViewController: UICollectionViewDelegate {
         }
     }
 }
-
 // MARK: - CollectionViewDataSource
 
 extension TelegramPickerViewController: UICollectionViewDataSource {

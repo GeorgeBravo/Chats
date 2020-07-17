@@ -216,14 +216,12 @@ extension ChatListViewController {
         let offset = UIOffset(horizontal: 50, vertical: 0)
         search.searchBar.setPositionAdjustment(offset, for: .search)
         if let searchField = search.searchBar.value(forKey: "searchField") as? UITextField {
-            //            searchField.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
+            
             searchField.textAlignment = .center
             searchField.font = UIFont(name: "HelveticaNeue", size: 16.7)
         }
         
         tableView.tableHeaderView = search.searchBar
-        //        self.navigationItem.searchController = search
-        //        self.navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     private func moveAndResizeImage(for height: CGFloat) {

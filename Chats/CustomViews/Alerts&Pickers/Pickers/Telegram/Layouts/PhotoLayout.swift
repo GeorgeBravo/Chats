@@ -5,7 +5,6 @@ protocol PhotoLayoutDelegate: class {
     func collectionView(_ collectionView: UICollectionView, sizeForPhotoAtIndexPath indexPath: IndexPath) -> CGSize
 }
 
-
 class PhotoLayout: UICollectionViewLayout {
     
     weak var delegate: PhotoLayoutDelegate!
@@ -17,6 +16,8 @@ class PhotoLayout: UICollectionViewLayout {
     
     fileprivate var contentSize: CGSize = .zero
     public var selectedCellIndexPath: IndexPath?
+    
+    var randomIndex = 0
     
     override var collectionViewContentSize: CGSize {
         return contentSize
@@ -96,9 +97,7 @@ class PhotoLayout: UICollectionViewLayout {
         }
         return false
     }
-    
-    
-    
+
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         Log(selectedCellIndexPath)
         guard let selectedCellIndexPath = selectedCellIndexPath else { return proposedContentOffset }

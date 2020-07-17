@@ -32,7 +32,7 @@ class ChatSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSetup
         $0.textAlignment = .center
     }
     
-    private var containerView = UIView
+    private lazy var containerView = UIView
         .create { _ in }
 }
 
@@ -41,8 +41,9 @@ extension ChatSectionHeaderView {
     private func setupViews() {
         addSubview(containerView) {
             $0.top == topAnchor + 10
+            $0.bottom == bottomAnchor - 10
             $0.centerX == centerXAnchor
-            
+            $0.centerY == centerYAnchor
         }
         
         containerView.addSubview(titleLabel) {
@@ -65,7 +66,7 @@ extension ChatSectionHeaderView {
                 containerView.backgroundColor = UIColor.clear
             case .bubble:
                 titleLabel.textColor = UIColor.white
-                containerView.backgroundColor = UIColor.greyish
+                containerView.backgroundColor = UIColor(named: .greyish)
             }
         }
     }
