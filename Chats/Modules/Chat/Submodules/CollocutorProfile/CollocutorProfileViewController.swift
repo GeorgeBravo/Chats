@@ -34,7 +34,7 @@ final class CollocutorProfileViewController: UIViewController {
     // MARK: - Variables
     weak var listener: CollocutorProfilePresentableListener?
     
-    private var collocutorNavigationView = CollocutorNavigationView()
+    private var collocutorNavigationView = CollocutorProfileNavigationView()
     private var showCollocutorNavigationViewSeparator: Bool = false {
         didSet {
             collocutorNavigationView.setSeparator(visible: showCollocutorNavigationViewSeparator)

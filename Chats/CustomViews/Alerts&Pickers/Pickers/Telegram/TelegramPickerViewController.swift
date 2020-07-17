@@ -5,7 +5,6 @@ import Photos
 public typealias TelegramSelection = (TelegramSelectionType) -> ()
 
 public enum TelegramSelectionType {
-    
     case photo([PHAsset])
     case location(Location?)
     case contact(Contact?)
@@ -24,7 +23,6 @@ extension UIAlertController {
         set(vc: vc)
     }
 }
-
 
 
 final class TelegramPickerViewController: UIViewController {
@@ -331,7 +329,6 @@ extension TelegramPickerViewController: UICollectionViewDelegate {
         }
     }
 }
-
 // MARK: - CollectionViewDataSource
 
 extension TelegramPickerViewController: UICollectionViewDataSource {

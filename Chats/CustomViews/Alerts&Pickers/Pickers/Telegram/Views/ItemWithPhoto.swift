@@ -2,6 +2,8 @@ import UIKit
 
 final class ItemWithPhoto: UICollectionViewCell {
     
+    public var block: (() -> Int)?
+    
     lazy var imageView: UIImageView = {
         $0.backgroundColor = .clear
         $0.contentMode = .scaleAspectFill

@@ -46,7 +46,7 @@ class UnreadMessagesBackButton: UIView {
 
 extension UnreadMessagesBackButton {
     private func setupViews() {
-        self.backgroundColor = UIColor.pinkishRedTwo
+        self.backgroundColor = UIColor(named: .pinkishRedTwo)
         
         addSubview(unreadMessagesLabel) {
             $0.centerY == centerYAnchor

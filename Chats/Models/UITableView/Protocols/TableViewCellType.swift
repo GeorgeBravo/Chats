@@ -39,16 +39,8 @@ extension TableViewCellType {
         case .groupInfo: return GroupProfileTableViewCell.self
         case .user: return UserTableViewCell.self
         case .addContacts: return AddContactsTableViewCell.self
-        case .textMessage:
-            return TextMessageCell.self
-        case .location:
-            return LocationMessageCell.self
-        case .assets:
-            return MediaMessageCell.self
-        case .file:
-            return FileMessageCell.self
-        case .contact:
-            return ContactMessageCell.self
+        case .file: return FileMessageCell.self
+        case .contact: return ContactMessageCell.self
         }
     }
 }

@@ -2,8 +2,6 @@ import UIKit
 
 class ItemWithImage: UICollectionViewCell {
     
-    static let identifier = String(describing: CurrencyTableViewCell.self)
-    
     lazy var imageView: UIImageView = {
         $0.backgroundColor = .clear
         $0.contentMode = .scaleAspectFill

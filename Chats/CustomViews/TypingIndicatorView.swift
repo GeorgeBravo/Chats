@@ -46,7 +46,7 @@ final class TypingIndicatorView: UIView {
             $0.text = "typing"
             $0.font = UIFont.systemFont(ofSize: 13)
             $0.textAlignment = .left
-            $0.textColor = UIColor.steel
+            $0.textColor = UIColor(named: .steel)
     }
     
     init(frame: CGRect, collocutor: Collocutor) {
