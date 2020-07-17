@@ -536,7 +536,9 @@ extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDele
 extension TelegramPickerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.startCamera()
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true) { [unowned self] in
+            self.selection?(TelegramSelectionType.newPhoto(nil))
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -548,6 +550,5 @@ extension TelegramPickerViewController: UIImagePickerControllerDelegate, UINavig
         } else {
             selection?(TelegramSelectionType.newPhoto(nil))
         }
-        
     }
 }

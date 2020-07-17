@@ -364,10 +364,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.resignFirstResponder()
         
         let alert = UIAlertController(style: .actionSheet)
-        alert.addTelegramPicker { result in
+        alert.addTelegramPicker { [unowned self] result in
             switch result {
             case .newPhoto(let photo):
-                guard let photo = photo, let photoData = photo.pngData() else { return }
+                guard let photo = photo, let photoData = photo.pngData() else {
+                    self.resignFirstResponder()
+                    return
+                }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: photoData, videoURL: nil)
                 let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
