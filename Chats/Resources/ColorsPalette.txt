@@ -18,7 +18,6 @@
 #violetPink: #ff3aea
 #sunflowerYellowTwo: #ffd100
 #paleGrey: #f5f5f6
-#blackTwo: #262626
 #steel: #8e8e92
 #greyish: #b7b7b7
 #white50: #fcfcfc

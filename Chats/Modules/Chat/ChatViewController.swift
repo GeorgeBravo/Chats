@@ -166,7 +166,7 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView?.isHidden = true
         
         return tableView
-        }()
+    }()
     
     private lazy var underneathView = UnderneathView
         .create { _ in }
