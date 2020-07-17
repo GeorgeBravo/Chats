@@ -17,7 +17,9 @@ public struct CoordinateItem: LocationItem {
 }
 
 public struct AssetMediaItem: MediaItem {
-    public var assets: [PHAsset]
+    public var assets: [PHAsset]?
+    public var imageData: Data?
+    public var videoURL: URL?
 }
 
 private struct MockAudiotem: AudioItem {

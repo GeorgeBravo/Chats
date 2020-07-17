@@ -19,7 +19,6 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         setupViews()
         
         observer = horizontalContainerStackView.layer.observe(\.bounds) { object, _ in
-            print(object.bounds)
             self.layoutTextViewIfNeeded()
             self.bla = true
         }

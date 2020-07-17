@@ -39,8 +39,22 @@ final class MediaMessageCell: MessageContentCell {
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewAssetCellModel else { return }
-        guard let asset = model.assets.assets.first else { return }
-        
+        if let assets = model.assets.assets, assets.count > 0 {
+            setupWith(assets: model.assets)
+            playButtonView.isHidden = true
+        }
+        if let imageData = model.assets.imageData, let image = UIImage(data: imageData) {
+            self.assetImageView.image = image
+            playButtonView.isHidden = true
+        }
+        if let videoURl = model.assets.videoURL {
+            self.assetImageView.backgroundColor = .black
+            playButtonView.isHidden = false
+        }
+    }
+    
+    func setupWith(assets: MediaItem) {
+        guard let asset = assets.assets?.first else { return }
         switch asset.mediaType {
         case .image:
             Assets.resolve(asset: asset, size: [\.width: 240, \.height: 240], completion: { [unowned self] image in

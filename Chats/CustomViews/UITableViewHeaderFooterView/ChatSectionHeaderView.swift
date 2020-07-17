@@ -39,6 +39,10 @@ class ChatSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewSetup
 //MARK: - Setup Views
 extension ChatSectionHeaderView {
     private func setupViews() {
+        let customBackgroundView = UIView(frame: bounds)
+        customBackgroundView.backgroundColor = .clear
+        backgroundView = customBackgroundView
+
         addSubview(containerView) {
             $0.top == topAnchor + 10
             $0.bottom == bottomAnchor - 10

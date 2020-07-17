@@ -133,9 +133,9 @@ final class ChatViewController: UIViewController {
         messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
     
-        deinit {
-            removeKeyboardObservers()
-        }
+    deinit {
+        removeKeyboardObservers()
+    }
     
     // MARK: - Views
     
@@ -166,7 +166,7 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView?.isHidden = true
         
         return tableView
-        }()
+    }()
     
     private lazy var underneathView = UnderneathView
         .create { _ in }
@@ -342,8 +342,23 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         inputBar.inputTextView.resignFirstResponder()
         
         let alert = UIAlertController(style: .actionSheet)
-        alert.addTelegramPicker { result in
+        alert.addTelegramPicker { [unowned self] result in
             switch result {
+            case .newPhoto(let photo):
+                guard let photo = photo, let photoData = photo.pngData() else {
+                    self.resignFirstResponder()
+                    return
+                }
+                alert.dismiss(animated: true, completion: nil)
+                let asset = AssetMediaItem(assets: nil, imageData: photoData, videoURL: nil)
+                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                self.messageList.append(mockImageMessage)
+            case .newVideo(let videoURL):
+                guard let videoURL = videoURL else { return }
+                alert.dismiss(animated: true, completion: nil)
+                let asset = AssetMediaItem(assets: nil, imageData: nil, videoURL: videoURL)
+                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                self.messageList.append(mockImageMessage)
             case .photo(let assets):
                 let assets = AssetMediaItem(assets: assets)
                 let mockAssetMessage = MockMessage(assets: assets, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
@@ -357,7 +372,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
                 self.messageList.append(mockLocationMessage)
             case .file(let file):
-                guard let file = file  else { return }
+                guard let file = file else { return }
                 let mockFileMessage = MockMessage(fileItem: file, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: true)
                 self.messageList.append(mockFileMessage)
             }

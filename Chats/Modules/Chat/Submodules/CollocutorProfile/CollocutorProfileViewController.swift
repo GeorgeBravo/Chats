@@ -74,11 +74,6 @@ final class CollocutorProfileViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         listener?.hideCollocutorProfile()
     }
-    
-    deinit {
-        print("CollocutorProfileViewController deinit")
-    }
-    
 }
 
 // MARK: - Setup Views

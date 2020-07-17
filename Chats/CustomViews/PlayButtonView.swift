@@ -72,7 +72,7 @@ open class PlayButtonView: UIView {
         triangleView.clipsToBounds = true
         triangleView.backgroundColor = .black
         
-        backgroundColor = UIColor(named: .blackColor)
+        backgroundColor = .white
     }
 
     private func setupConstraints() {

@@ -30,5 +30,8 @@ import Photos
 public protocol MediaItem {
 
     /// The url where the media is located.
-    var assets: [PHAsset] { get }
+    var assets: [PHAsset]? { get }
+    var imageData: Data? { get }
+    var videoURL: URL? { get }
+
 }

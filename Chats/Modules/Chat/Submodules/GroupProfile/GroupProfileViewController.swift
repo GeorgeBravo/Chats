@@ -64,10 +64,6 @@ final class GroupProfileViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         listener?.hideGroupProfile()
     }
-    
-    deinit {
-        print("GroupProfileViewController deinit")
-    }
 }
 
 extension GroupProfileViewController {

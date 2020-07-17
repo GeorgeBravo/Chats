@@ -20,7 +20,6 @@ internal struct ColorName {
   internal var color: Color { return Color(named: self) }
 
   internal static let blackColor = ColorName(rgbValue: 0x000000)
-  internal static let blackTwo = ColorName(rgbValue: 0x262626)
   internal static let brightCyan = ColorName(rgbValue: 0x40ddf3)
   internal static let coolGrey = ColorName(rgbValue: 0xa2a9b6)
   internal static let coolGreyTwo = ColorName(rgbValue: 0xa5aab1)
