@@ -110,6 +110,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
         $0.backgroundColor = .clear
         $0.maskToBounds = false
         $0.clipsToBounds = false
+        $0.allowsMultipleSelection = true
         return $0
         }(UICollectionView(frame: .zero, collectionViewLayout: layout))
     
@@ -119,11 +120,12 @@ final class PhotoLibraryPickerViewController: UIViewController {
         $0.sectionInset = .zero
         return $0
     }(UICollectionViewFlowLayout())
-
+    
     fileprivate var selection: Selection?
     fileprivate var assets: [PHAsset] = []
     fileprivate var selectedAssets: [PHAsset] = []
     fileprivate var selectedCells: [IndexPath] = []
+    fileprivate var previousSelectedCell = IndexPath(row: 1, section: 1)
     
     // MARK: Initialize
     
@@ -159,6 +161,12 @@ final class PhotoLibraryPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updatePhotos()
+        setupGesture()
+    }
+    
+    func setupGesture() {
+        let panGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        self.collectionView.addGestureRecognizer(panGesture)
     }
     
     func updatePhotos() {
@@ -216,6 +224,43 @@ final class PhotoLibraryPickerViewController: UIViewController {
             }
         }
     }
+    
+    func handleSelection(indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? ItemWithImage else { return }
+        if selectedCells.contains(indexPath) {
+            selectedCells = selectedCells.filter {$0 != indexPath}
+            collectionView.deselectItem(at: indexPath, animated: true)
+            collectionView.reloadItems(at: selectedCells)
+        } else {
+            selectedCells.append(indexPath)
+            if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
+                //use index
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                cell.selectedPoint.text = "\(index + 1)"
+            }
+        }
+    }
+    
+    @objc func handleLongPress(longPressGR: UILongPressGestureRecognizer) {
+        if longPressGR.state == .ended {
+            previousSelectedCell = IndexPath(row: 1, section: 1)
+            return
+        }
+        
+        let point = longPressGR.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: point)
+        
+        if let indexPath = indexPath {
+            if indexPath != previousSelectedCell {
+                previousSelectedCell = indexPath
+                handleSelection(indexPath: indexPath)
+            } else {
+                return
+            }
+        } else {
+            print("Could not find index path")
+        }
+    }
 }
 
 // MARK: - CollectionViewDelegate
@@ -223,18 +268,8 @@ final class PhotoLibraryPickerViewController: UIViewController {
 extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = collectionView.cellForItem(at: indexPath) as? ItemWithImage else { return }
         let asset = assets[indexPath.item]
-        if selectedCells.contains(indexPath) {
-            selectedCells = selectedCells.filter(){$0 != indexPath}
-        } else {
-            selectedCells.append(indexPath)
-        }
-        
-        if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
-            //use index
-            item.selectedPoint.text = "\(index + 1)"
-        }
+        handleSelection(indexPath: indexPath)
         
         switch selection {
             
@@ -248,14 +283,10 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
             action?(selectedAssets)
             
         case .none: break }
-    
-        collectionView.reloadItems(at: selectedCells)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if selectedCells.contains(indexPath) {
-           selectedCells = selectedCells.filter(){$0 != indexPath}
-        }
+        handleSelection(indexPath: indexPath)
         let asset = assets[indexPath.item]
         switch selection {
         case .multiple(let action)?:
@@ -296,7 +327,9 @@ extension PhotoLibraryPickerViewController: UICollectionViewDataSource {
             //use index
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             item.selectedPoint.text = "\(index + 1)"
+            item.isSelected = true
         } else {
+            item.isSelected = false
             collectionView.deselectItem(at: indexPath, animated: true)
         }
         return item
