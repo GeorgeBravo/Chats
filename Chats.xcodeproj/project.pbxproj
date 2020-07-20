@@ -176,6 +176,7 @@
 		2D751D4B24C1382F00C40122 /* AddContactsTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D4724C1382F00C40122 /* AddContactsTableViewCellModel.swift */; };
 		2D751D4C24C1382F00C40122 /* GroupProfileTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D4824C1382F00C40122 /* GroupProfileTableViewCellModel.swift */; };
 		2D751D5124C139D300C40122 /* FileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D5024C139D300C40122 /* FileMessageCell.swift */; };
+		2D751DB424C585C200C40122 /* NSAttribubtedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751DB324C585C200C40122 /* NSAttribubtedString+.swift */; };
 		2D8B98EE24BC61EB00D9F560 /* ActionTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B98ED24BC61EB00D9F560 /* ActionTableViewCellModel.swift */; };
 		2D8B98F624BC626000D9F560 /* SectionHeaderViewSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B98EF24BC625F00D9F560 /* SectionHeaderViewSetup.swift */; };
 		2D8B98F724BC626000D9F560 /* TableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B98F024BC625F00D9F560 /* TableViewCellType.swift */; };
@@ -402,6 +403,7 @@
 		2D751D4824C1382F00C40122 /* GroupProfileTableViewCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCellModel.swift; sourceTree = "<group>"; };
 		2D751D4924C1382F00C40122 /* UserTableViewCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCellModel.swift; sourceTree = "<group>"; };
 		2D751D5024C139D300C40122 /* FileMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMessageCell.swift; sourceTree = "<group>"; };
+		2D751DB324C585C200C40122 /* NSAttribubtedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttribubtedString+.swift"; sourceTree = "<group>"; };
 		2D8B98ED24BC61EB00D9F560 /* ActionTableViewCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionTableViewCellModel.swift; sourceTree = "<group>"; };
 		2D8B98EF24BC625F00D9F560 /* SectionHeaderViewSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderViewSetup.swift; sourceTree = "<group>"; };
 		2D8B98F024BC625F00D9F560 /* TableViewCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellType.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				CE69321724C5C6BD001825D4 /* UIColor */,
 				2D64CFB624A20EEE00C8B94A /* UITableView */,
 				2D64CFBE24A20EEE00C8B94A /* BRIck */,
+				2D751DB224C585A000C40122 /* AttributedString */,
 				2D64CFC324A20EEE00C8B94A /* String */,
 				2D64CFC624A20EEE00C8B94A /* KeyPathInitializable */,
 				2D64CFC924A20EEE00C8B94A /* UIStackView */,
@@ -1395,6 +1398,14 @@
 				2D501B4924B320A600C37DCB /* UIEdgeInsets+Extensions.swift */,
 			);
 			path = UIEdgeInsets;
+			sourceTree = "<group>";
+		};
+		2D751DB224C585A000C40122 /* AttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				2D751DB324C585C200C40122 /* NSAttribubtedString+.swift */,
+			);
+			path = AttributedString;
 			sourceTree = "<group>";
 		};
 		2D8B98FF24BC641B00D9F560 /* Components */ = {
@@ -1820,6 +1831,7 @@
 				2D751D4124C1382000C40122 /* ChatTableViewLocationCellModel.swift in Sources */,
 				2D501BD824B3222500C37DCB /* AutocompleteManagerDataSource.swift in Sources */,
 				CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */,
+				2D751DB424C585C200C40122 /* NSAttribubtedString+.swift in Sources */,
 				CECA0E3A24B627B70067D5B6 /* CollocutorInfoCellModel.swift in Sources */,
 				2D64CFE524A20EF000C8B94A /* UITableViewCell+.swift in Sources */,
 				2D501C3A24B5C4A400C37DCB /* ChatListInteractor.swift in Sources */,
@@ -2032,6 +2044,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Chats/Chats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L3QAWRZFYR;
 				INFOPLIST_FILE = "$(SRCROOT)/Chats/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2039,7 +2052,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pradaEnt.Chats-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chi.ballTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2056,6 +2069,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Chats/Chats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L3QAWRZFYR;
 				INFOPLIST_FILE = "$(SRCROOT)/Chats/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2063,7 +2077,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pradaEnt.Chats-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chi.ballTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;

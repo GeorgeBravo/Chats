@@ -67,14 +67,10 @@ final class LocationMessageCell: MessageContentCell {
                 self.activityIndicator.stopAnimating()
             }
             guard let snapshot = snapshot, error == nil else {
-                //show an error image?
                 return
             }
             
-//            guard let annotationView = annotationView else {
-//                self.mapSnapshotImageView.image = snapshot.image
-//                return
-//            }
+
             
             UIGraphicsBeginImageContextWithOptions(snapshotOptions.size, true, 0)
             
@@ -92,16 +88,15 @@ final class LocationMessageCell: MessageContentCell {
             
             UIGraphicsEndImageContext()
             self.mapSnapshotImageView.image = composedImage
-//            animationBlock?(self.imageView)
         }
     }
-    
 }
 
 // MARK: - Setup Views
 extension LocationMessageCell: TableViewCellSetup {
     private func setupViews() {
         selectionStyle = .none
+        self.horizontalStackViewContainerView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         
         messageContainerView.addSubview(mapSnapshotImageView) {
             $0.size([\.width: 240, \.height: 240])

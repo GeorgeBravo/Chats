@@ -88,11 +88,4 @@ internal extension NSAttributedString {
         ns.append(rhs)
         lhs = ns
     }
-    
-    static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
-        let ns = NSMutableAttributedString(attributedString: lhs)
-        ns.append(rhs)
-        return NSAttributedString(attributedString: ns)
-    }
-    
 }

@@ -11,10 +11,7 @@ import UIKit
 
 final class TypingIndicatorView: UIView {
     
-    /// This view's content size is equal to the main stack.
-    override var intrinsicContentSize: CGSize {
-        stack.intrinsicContentSize
-    }
+    
     
     private enum Constants {
         /// The width of each ellipsis dot.
@@ -27,9 +24,21 @@ final class TypingIndicatorView: UIView {
         static let delayBetweenRepeats: Double = 0.9
     }
     
+    private let chatType: ChatType
+    
+    init(frame: CGRect, chatType: ChatType) {
+        self.chatType = chatType
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     // MARK: - Views
     
-    private lazy var stack = UIStackView
+    private lazy var horizontalStackView = UIStackView
         .create {
             $0.axis = .horizontal
             $0.alignment = .center
@@ -43,21 +52,8 @@ final class TypingIndicatorView: UIView {
     
     private lazy var typingLabel = UILabel
         .create {
-            $0.text = "typing"
-            $0.font = UIFont.systemFont(ofSize: 13)
             $0.textAlignment = .left
-            $0.textColor = UIColor(named: .steel)
     }
-    
-    init(frame: CGRect, collocutor: Collocutor) {
-        super.init(frame: frame)
-        setupViews(with: collocutor)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -111,33 +107,53 @@ final class TypingIndicatorView: UIView {
     }
     
     private func makeDots() -> UIView {
-        // Create a stack view to hold the dots.
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.alignment = .bottom
-        stack.spacing = 5
+        // Create a horizontalStackView view to hold the dots.
+        let horizontalStackView = UIStackView()
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.alignment = .bottom
+        horizontalStackView.spacing = 5
         
-        stack.heightAnchor.constraint(equalToConstant: Constants.width).isActive = true
+        horizontalStackView.heightAnchor.constraint(equalToConstant: Constants.width).isActive = true
         
         let dots = (0..<3).map { i in
             // Delay the start of each subseqent dot scale animation by 0.3 seconds.
             makeDot(animationDelay: Double(i) * 0.3)
         }
-        dots.forEach(stack.addArrangedSubview)
-        return stack
+        dots.forEach(horizontalStackView.addArrangedSubview)
+        return horizontalStackView
     }
 }
 
 // MARK: - Setup Views
 extension TypingIndicatorView {
-    private func setupViews(with collocutor: Collocutor) {
+    public func update(with profileImage: UIImage?, typingPeopleCount: Int) {
+        collocutorImageView.image = profileImage
+        switch chatType {
+        case .oneToOne:
+            typingLabel.font = UIFont.helveticaNeueFontOfSize(size: 13, style: .regular)
+            typingLabel.textColor = UIColor(named: .steel)
+            typingLabel.text = "typing"
+        case .group:
+            let peopleCountAttrString = "+\(typingPeopleCount) others".withAttributes([
+                .font: UIFont.helveticaNeueFontOfSize(size: 13, style: .medium),
+                .foregroundColor: UIColor.black
+            ])
+            let typingAttrString = " are typing".withAttributes([
+                .font: UIFont.helveticaNeueFontOfSize(size: 13, style: .regular),
+                .foregroundColor:  UIColor(named: .steel)
+            ])
+            
+            typingLabel.attributedText = peopleCountAttrString + typingAttrString
+        }
+    }
+    
+    private func setupViews() {
         let dots = makeDots()
-        collocutorImageView.image = collocutor.collocutorImage
         
-        stack.addArrangedSubview(collocutorImageView)
-        stack.addArrangedSubview(dots)
-        stack.addArrangedSubview(typingLabel)
+        horizontalStackView.addArrangedSubview(collocutorImageView)
+        horizontalStackView.addArrangedSubview(dots)
+        horizontalStackView.addArrangedSubview(typingLabel)
         
         
         addSubview(collocutorImageView) {
@@ -146,24 +162,15 @@ extension TypingIndicatorView {
             $0.top == topAnchor + 10
             $0.height == collocutorImageView.widthAnchor
         }
-
+        
         addSubview(typingLabel) {
             $0.leading == collocutorImageView.trailingAnchor + 10
             $0.centerY == collocutorImageView.centerYAnchor
         }
-
+        
         addSubview(dots) {
             $0.leading == typingLabel.trailingAnchor + 5
-//            $0.bottom == bottomAnchor
-//            $0.top == topAnchor
             $0.centerY == typingLabel.centerYAnchor
         }
-        
-//        addSubview(stack) {
-//            $0.leading == leadingAnchor + 15
-//            $0.trailing == trailingAnchor
-//            $0.bottom == bottomAnchor
-//            $0.top == topAnchor
-//        }
     }
 }
