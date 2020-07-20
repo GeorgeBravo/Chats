@@ -9,7 +9,7 @@
 import UIKit
 
 private struct Constants {
-    static let longPressDuration: TimeInterval = 1.0
+    static let longPressDuration: TimeInterval = 0.4
 }
 
 public class MessageContentCell: UITableViewCell {
@@ -178,6 +178,7 @@ extension MessageContentCell {
 extension MessageContentCell {
     @objc func longPress(_ gesture: UIGestureRecognizer) {
         guard gesture.state == .began else { return }
-        messageModel?.messageSelected()
+        guard let cellNewFrame = superview?.convert(frame, to: nil) else { return }
+//        messageModel?.messageSelected(cellNewFrame: cellNewFrame)
     }
 }

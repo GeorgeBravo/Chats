@@ -12,8 +12,10 @@ protocol ChatRouting: ViewableRouting {
 
     func showUser(with profile: Collocutor)
     func showGroupProfile()
+    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues)
     func hideUser()
     func hideGroup()
+    func hideMessageManipulation()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -65,6 +67,10 @@ extension ChatInteractor: ChatInteractable {
         router?.hideGroup()
     }
     
+    func hideMessageManipulation() {
+        router?.hideMessageManipulation()
+    }
+    
 }
 
 extension ChatInteractor: ChatPresentableListener {
@@ -79,5 +85,9 @@ extension ChatInteractor: ChatPresentableListener {
     
     func hideChat() {
         listener?.hideChat()
+    }
+    
+    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+        router?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: cellNewFrame)
     }
 }

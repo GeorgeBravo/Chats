@@ -49,7 +49,12 @@ class CollocutorProfileNavigationView: UIView {
         return label
     }()
     
-    private var separatorView = UIView()
+    private lazy var separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: .blackColor)
+        view.alpha = 0.1
+        return view
+    }()
     
     // MARK: - Inits
     init() {
@@ -101,7 +106,6 @@ extension CollocutorProfileNavigationView {
             $0.leading >= backButton.trailingAnchor + Constants.horizontalLabelSpacing
         }
         
-        separatorView.backgroundColor = UIColor(named: .separatorColor)
         separatorView.isHidden = true
         addSubview(separatorView) {
             $0.bottom == bottomAnchor

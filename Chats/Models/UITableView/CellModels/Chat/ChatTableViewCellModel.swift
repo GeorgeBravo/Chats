@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias MessageSelection = ((ChatTableViewCellModel) -> Void)
+typealias MessageSelection = ((_ cellModel: ChatTableViewCellModel, _ cellNewFrame: CGRect) -> Void)
 
 protocol ChatTableViewCellModel: TableViewCellModel {
     
@@ -24,11 +24,11 @@ protocol ChatTableViewCellModel: TableViewCellModel {
     var profileImage: UIImage? { get }
     
     // MARK: - Logic
-    func messageSelected()
+    func messageSelected(cellNewFrame: CGRect)
 }
 
 extension ChatTableViewCellModel {
-    func messageSelected() {
-        messageSelection?(self)
+    func messageSelected(cellNewFrame: CGRect) {
+        messageSelection?(self, cellNewFrame)
     }
 }

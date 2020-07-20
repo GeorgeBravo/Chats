@@ -10,6 +10,13 @@ import UIKit
 import MapKit
 import BRIck
 
+struct FrameValues {
+    var xPositionValue: CGFloat
+    var yPositionValue: CGFloat
+    var heightValue: CGFloat
+    var widthValue: CGFloat
+}
+
 protocol ChatPresentableListener: class {
     
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
@@ -17,6 +24,7 @@ protocol ChatPresentableListener: class {
     func showUser(with profile: Collocutor)
     func showGroupProfile()
     func hideChat()
+    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues)
 }
 
 final class ChatViewController: UIViewController {
@@ -225,19 +233,18 @@ final class ChatViewController: UIViewController {
             $0.compactMap { item in
                 guard let mockMessage = item as? MockMessage else { return nil }
                 var model = mockMessage.tableViewCellViewModel()
-                model.messageSelection = { [weak self] chatTableViewCellModel in
-                    self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel)
+                model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
+                    self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
                 }
                 return model
             }
         }
     }
     
-    func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel) {
+    func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: CGRect) {
         resignFirstResponder()
-        guard let currentWindow = UIApplication.shared.keyWindow else { return }
-        messageManipulationView.frame = currentWindow.bounds
-        currentWindow.addSubview(messageManipulationView)
+        let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
+        listener?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
 }
 
@@ -256,6 +263,7 @@ extension ChatViewController {
                 self.navigationController!.navigationBar.frame.height
             $0.height == 100 - height
         }
+        
         view.addSubview(tableView) {
             $0.top == underneathView.bottomAnchor
             $0.leading == view.leadingAnchor

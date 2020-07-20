@@ -11,7 +11,7 @@ private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 16.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
 }
 
 class DescriptionTableViewCell: UITableViewCell, TableViewCellSetup {

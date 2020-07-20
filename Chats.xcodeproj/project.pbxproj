@@ -198,12 +198,17 @@
 		CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */; };
 		CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */; };
 		CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */; };
+		CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */; };
+		CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */; };
+		CE69321324C584FD001825D4 /* MessageManipulationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320F24C584FD001825D4 /* MessageManipulationBuilder.swift */; };
+		CE69321424C584FD001825D4 /* MessageManipulationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */; };
+		CE69321624C58519001825D4 /* ChatComponent+MessageManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321524C58519001825D4 /* ChatComponent+MessageManipulation.swift */; };
+		CE69321924C5C6CF001825D4 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321824C5C6CF001825D4 /* UIColor+Extension.swift */; };
 		CE71CFCA24B4B3F900862A73 /* ColorsPalette.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */; };
 		CE71CFCD24B4B47900862A73 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFCF24B4B47900862A73 /* Localizable.strings */; };
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
 		CE71CFD324B4B58000862A73 /* LocalizationDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */; };
 		CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D4924C1382F00C40122 /* UserTableViewCellModel.swift */; };
-		CE88617124C1E52800B837C6 /* MessageManipulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE88617024C1E52800B837C6 /* MessageManipulationView.swift */; };
 		CE99B9E924B45F3100F4CEB6 /* EditButtonSettupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */; };
 		CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */; };
 		CECA0E3524B627680067D5B6 /* CollocutorProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */; };
@@ -420,11 +425,16 @@
 		CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+GroupProfile.swift"; sourceTree = "<group>"; };
 		CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWithCameraPreview.swift; sourceTree = "<group>"; };
+		CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationRouter.swift; sourceTree = "<group>"; };
+		CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationViewController.swift; sourceTree = "<group>"; };
+		CE69320F24C584FD001825D4 /* MessageManipulationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationBuilder.swift; sourceTree = "<group>"; };
+		CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationInteractor.swift; sourceTree = "<group>"; };
+		CE69321524C58519001825D4 /* ChatComponent+MessageManipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+MessageManipulation.swift"; sourceTree = "<group>"; };
+		CE69321824C5C6CF001825D4 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ColorsPalette.txt; sourceTree = "<group>"; };
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationDictionary.swift; sourceTree = "<group>"; };
-		CE88617024C1E52800B837C6 /* MessageManipulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationView.swift; sourceTree = "<group>"; };
 		CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonSettupable.swift; sourceTree = "<group>"; };
 		CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSectionHeaderView.swift; sourceTree = "<group>"; };
 		CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollocutorProfileInteractor.swift; sourceTree = "<group>"; };
@@ -968,7 +978,6 @@
 				CEFA663724B865C00034E802 /* CollocutorNavigationView */,
 				2D1C4D1424AB3F810087449A /* СollocutorView */,
 				2D1C4D1124AB39AF0087449A /* BackButtonUnreadMessages */,
-				CE88616F24C1E50500B837C6 /* MessageManipulationView */,
 				2D64CF8E24A20EE300C8B94A /* UITableViewCells */,
 			);
 			path = CustomViews;
@@ -1001,6 +1010,7 @@
 				2D64CFAD24A20EEE00C8B94A /* UIView */,
 				2D64CFB024A20EEE00C8B94A /* UIFont */,
 				2D64CFB124A20EEE00C8B94A /* UICollectionView */,
+				CE69321724C5C6BD001825D4 /* UIColor */,
 				2D64CFB624A20EEE00C8B94A /* UITableView */,
 				2D64CFBE24A20EEE00C8B94A /* BRIck */,
 				2D64CFC324A20EEE00C8B94A /* String */,
@@ -1431,8 +1441,9 @@
 		CE26469024B3545800EE7241 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
-				CE4E425A24BC8AD500BCA9F8 /* GroupProfile */,
 				CE26468F24B3540A00EE7241 /* CollocutorProfile */,
+				CE4E425A24BC8AD500BCA9F8 /* GroupProfile */,
+				CE69320C24C584E0001825D4 /* MessageManipulation */,
 			);
 			path = Submodules;
 			sourceTree = "<group>";
@@ -1443,6 +1454,7 @@
 				2D501B4124B3207C00C37DCB /* ChatViewController+Keyboard.swift */,
 				CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */,
 				CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */,
+				CE69321524C58519001825D4 /* ChatComponent+MessageManipulation.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1459,6 +1471,25 @@
 			path = GroupProfile;
 			sourceTree = "<group>";
 		};
+		CE69320C24C584E0001825D4 /* MessageManipulation */ = {
+			isa = PBXGroup;
+			children = (
+				CE69320F24C584FD001825D4 /* MessageManipulationBuilder.swift */,
+				CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */,
+				CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */,
+				CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */,
+			);
+			path = MessageManipulation;
+			sourceTree = "<group>";
+		};
+		CE69321724C5C6BD001825D4 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				CE69321824C5C6CF001825D4 /* UIColor+Extension.swift */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
 		CE71CFC824B4B3C900862A73 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -1466,14 +1497,6 @@
 				CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */,
 			);
 			path = Generated;
-			sourceTree = "<group>";
-		};
-		CE88616F24C1E50500B837C6 /* MessageManipulationView */ = {
-			isa = PBXGroup;
-			children = (
-				CE88617024C1E52800B837C6 /* MessageManipulationView.swift */,
-			);
-			path = MessageManipulationView;
 			sourceTree = "<group>";
 		};
 		CE8EE11A24BCAAFE00A07F6E /* CollocutorManipulationsButtonsStackView */ = {
@@ -1714,6 +1737,7 @@
 				CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */,
 				2D501C1F24B3293D00C37DCB /* ChatType.swift in Sources */,
 				2D501BD924B3222500C37DCB /* AutocompleteManagerDelegate.swift in Sources */,
+				CE69321324C584FD001825D4 /* MessageManipulationBuilder.swift in Sources */,
 				2D501BDD24B3223400C37DCB /* KeyboardNotification.swift in Sources */,
 				2D501BFB24B322B600C37DCB /* InputPlugin.swift in Sources */,
 				2DB6987D24A362660075737F /* ChatInteractor.swift in Sources */,
@@ -1724,6 +1748,7 @@
 				1279D5E424BDA9EA0012467B /* ChatTableViewFileCellModel.swift in Sources */,
 				2D501BDF24B3223400C37DCB /* KeyboardEvent.swift in Sources */,
 				2D64CF8A24A20E5400C8B94A /* RootRouter.swift in Sources */,
+				CE69321924C5C6CF001825D4 /* UIColor+Extension.swift in Sources */,
 				2D751D5124C139D300C40122 /* FileMessageCell.swift in Sources */,
 				2D64CF8924A20E5400C8B94A /* RootViewController.swift in Sources */,
 				2D65C20124AE1A3F00C64534 /* Location.swift in Sources */,
@@ -1747,6 +1772,7 @@
 				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D751D4324C1382000C40122 /* ChatListTableViewCellModel.swift in Sources */,
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
+				CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */,
 				1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */,
 				1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */,
 				1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */,
@@ -1767,6 +1793,7 @@
 				2D65C21324AE1A3F00C64534 /* UIViewController+Extensions.swift in Sources */,
 				2D501BA424B3210900C37DCB /* LocationMessageCell.swift in Sources */,
 				2D751D4524C1382000C40122 /* ChatTableViewTextMessageCellModel.swift in Sources */,
+				CE69321424C584FD001825D4 /* MessageManipulationInteractor.swift in Sources */,
 				120E17CA24C1C7BC007FADA0 /* PHAsset+Extensions.swift in Sources */,
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */,
@@ -1785,6 +1812,7 @@
 				CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */,
 				2DCA29FD24B753630060913C /* UITableView+Scrolll.swift in Sources */,
 				2D501BAA24B3210900C37DCB /* TextMessageCell.swift in Sources */,
+				CE69321624C58519001825D4 /* ChatComponent+MessageManipulation.swift in Sources */,
 				2D501BE724B3228100C37DCB /* UIView+AutoLayout.swift in Sources */,
 				2D8B98EE24BC61EB00D9F560 /* ActionTableViewCellModel.swift in Sources */,
 				2D65C20B24AE1A3F00C64534 /* ItemWithImage.swift in Sources */,
@@ -1826,7 +1854,7 @@
 				2D65C21E24AE1A3F00C64534 /* Common+Extensions.swift in Sources */,
 				2D65C18F24ADF86600C64534 /* Date+.swift in Sources */,
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,
-				CE88617124C1E52800B837C6 /* MessageManipulationView.swift in Sources */,
+				CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */,
 				2D65C20524AE1A3F00C64534 /* Contacts.swift in Sources */,
 				2D65C21C24AE1A3F00C64534 /* UIAlertController+Extensions.swift in Sources */,
 				2D65C21224AE1A3F00C64534 /* UIImageView+Extensions.swift in Sources */,

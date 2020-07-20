@@ -12,7 +12,7 @@ private struct Constants {
     static let leadingOffset: CGFloat = 20.0
     static let topOffset: CGFloat = 6.0
     static let profileImageHeight: CGFloat = 40.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
     static let bigFontSize: CGFloat = 18.0
 }
 

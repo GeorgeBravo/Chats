@@ -13,7 +13,7 @@ private struct Constants {
     static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 20.0
     static let profileImageHeight: CGFloat = 48.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
     static let bigFontSize: CGFloat = 18.0
     static let stackViewItemsSpacing: CGFloat = 0.0
     static let mediumFontSize: CGFloat = 14.0
