@@ -10,6 +10,7 @@ class PhotoLayout: UICollectionViewLayout {
     weak var delegate: PhotoLayoutDelegate!
     
     public var lineSpacing: CGFloat = 6
+    public var expanded: Bool = false
     
     fileprivate var previousAttributes = [UICollectionViewLayoutAttributes]()
     fileprivate var currentAttributes = [UICollectionViewLayoutAttributes]()
@@ -53,13 +54,27 @@ class PhotoLayout: UICollectionViewLayout {
         var xOffset: CGFloat = 0
         let yOffset: CGFloat = 0
         
-        let height: CGFloat = collectionView.bounds.height - (inset.top + inset.bottom)
+        var height: CGFloat = collectionView.bounds.height - (inset.top + inset.bottom)
+        var width = CGFloat()
         
         for item in 0 ..< numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             let photoWidth: CGFloat = delegate.collectionView(collectionView, sizeForPhotoAtIndexPath: indexPath).width
+            let halfWidth = photoWidth / 2
+            if indexPath.row == 0 && expanded {
+                width = 0
+                height = 0
+            } else {
+                height = collectionView.bounds.height - (inset.top + inset.bottom)
+                width = photoWidth
+            }
+            if indexPath.row == 1 && expanded {
+                width += photoWidth
+            }
             
-            let width: CGFloat = photoWidth
+//            if indexPath.row > 1 && expanded {
+//                width += photoWidth / CGFloat(numberOfItems(inSection: 0))
+//            }
             
             let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
             
@@ -113,11 +128,12 @@ class PhotoLayout: UICollectionViewLayout {
             let itemLeft = itemFrame.origin.x
             let itemRight = itemLeft + itemFrame.size.width
             
-            if itemRight > contentRight {
-                finalContentOffset = CGPoint(x: contentLeft + (itemRight - contentRight) + lineSpacing, y: -inset.top)
-            } else if itemLeft < contentLeft {
-                finalContentOffset = CGPoint(x: contentLeft - (contentLeft - itemLeft) - lineSpacing, y: -inset.top)
-            }
+            finalContentOffset = CGPoint(x: ((itemFrame.minX + (itemFrame.width / 2)) - UIScreen.main.bounds.width / 2), y: -inset.top)
+//            if itemRight > contentRight {
+//                finalContentOffset = CGPoint(x: contentLeft + (itemRight - contentRight) + lineSpacing, y: -inset.top)
+//            } else if itemLeft < contentLeft {
+//                finalContentOffset = CGPoint(x: contentLeft - (contentLeft - itemLeft) - lineSpacing, y: -inset.top)
+//            }
             Log(finalContentOffset)
         }
         return finalContentOffset

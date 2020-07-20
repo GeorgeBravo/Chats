@@ -225,18 +225,35 @@ final class PhotoLibraryPickerViewController: UIViewController {
         }
     }
     
+    
+    func changeActionTitle() {
+        guard let actions = alertController?.actions else { return }
+        for action in actions {
+            if action.title != "Cancel" {
+                if !selectedCells.isEmpty {
+                    action.isEnabled = true
+                    action.setValue("Send \(selectedCells.count) photos", forKeyPath: "title")
+                } else {
+                    action.isEnabled = false
+                     action.setValue("Add", forKeyPath: "title")
+                }
+            }
+        }
+    }
     func handleSelection(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? ItemWithImage else { return }
         if selectedCells.contains(indexPath) {
             selectedCells = selectedCells.filter {$0 != indexPath}
             collectionView.deselectItem(at: indexPath, animated: true)
             collectionView.reloadItems(at: selectedCells)
+            changeActionTitle()
         } else {
             selectedCells.append(indexPath)
             if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
                 //use index
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
                 cell.selectedPoint.text = "\(index + 1)"
+                changeActionTitle()
             }
         }
     }
@@ -297,6 +314,7 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
         default: break }
         
         if selectedCells.isEmpty {
+            changeActionTitle()
             collectionView.reloadItems(at: [indexPath])
         } else {
             collectionView.reloadItems(at: selectedCells)
