@@ -33,6 +33,8 @@ final class ChatViewController: UIViewController {
         }
     }
     
+    var tableViewSectionHeaders: Set<UIView?> = []
+    
     public var additionalBottomInset: CGFloat = 0 {
         didSet {
             let delta = additionalBottomInset - oldValue
@@ -92,7 +94,8 @@ final class ChatViewController: UIViewController {
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
                 UIView.animate(withDuration: 0.1, animations: {
-                     self?.tableView.tableFooterView?.isHidden = false
+                    self?.typingIndicatorView.update(with: self?.collocutor.collocutorImage, typingPeopleCount: 10)
+                    self?.tableView.tableFooterView?.isHidden = false
                 }, completion: nil)
                 
         }.onNewMessage { [weak self] message in
@@ -112,9 +115,9 @@ final class ChatViewController: UIViewController {
         super.viewDidDisappear(animated)
         isMessagesControllerBeingDismissed = false
     }
-
+    
     private var isFirstLayout: Bool = true
-
+    
     public override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
@@ -124,7 +127,7 @@ final class ChatViewController: UIViewController {
         }
         adjustScrollViewTopInset()
     }
-
+    
     public override func viewSafeAreaInsetsDidChange() {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
@@ -138,7 +141,7 @@ final class ChatViewController: UIViewController {
     
     // MARK: - Views
     
-    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), collocutor: self.collocutor)
+    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), chatType: .group)
     
     private var typingIndicatorHeightConstraint: NSLayoutConstraint?
     
@@ -162,6 +165,8 @@ final class ChatViewController: UIViewController {
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
+        
+        
         
         return tableView
     }()
@@ -262,7 +267,7 @@ extension ChatViewController {
     @objc
     private func onCollocutorViewTapped() {
         listener?.showUser(with: collocutor)
-//        listener?.showGroupProfile()
+        //        listener?.showGroupProfile()
     }
 }
 
@@ -278,7 +283,7 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        //        return 1
         guard let numberOfRowsInSection = sections?[section].cellModels.count else { return 0 }
         return numberOfRowsInSection
     }
@@ -286,8 +291,8 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
-        guard let models = sections?[section].cellModels else { return UITableViewCell() }
-        guard let cellModel = sections?[section].cellModels[models.count - 1] else { return UITableViewCell() }
+        //        guard let models = sections?[section].cellModels else { return UITableViewCell() }
+        guard let cellModel = sections?[section].cellModels[row] else { return UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(of: cellModel.cellType.classType)
         if let cell = cell as? TableViewCellSetup {
@@ -296,6 +301,8 @@ extension ChatViewController: UITableViewDataSource {
         return cell
     }
     
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionModel = sections?[section],
             let classType = sectionModel.headerViewType.classType else { return nil }
@@ -303,7 +310,10 @@ extension ChatViewController: UITableViewDataSource {
         if let view = view as? SectionHeaderViewSetup {
             view.setup(with: sectionModel)
         }
+        
         view.tintColor = UIColor.clear
+        tableViewSectionHeaders.insert(view)
+        
         return view
     }
 }
@@ -322,7 +332,7 @@ extension ChatViewController {
         messageInputBar.inputTextView.tintColor = .black
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-
+        
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -382,6 +392,14 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let mockTextMessage = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
         messageList.append(mockTextMessage)
+    }
+}
+
+// MARK: - Scroll view delegate
+
+extension ChatViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
     }
 }
 
