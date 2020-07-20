@@ -105,6 +105,8 @@ final class ItemWithPhoto: UICollectionViewCell {
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        layoutIfNeeded()
+        UIView.animate(withDuration: 0.1) {
+            self.layoutIfNeeded()
+        }
     }
 }

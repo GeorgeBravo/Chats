@@ -32,7 +32,7 @@ final class TelegramPickerViewController: UIViewController {
     var buttons: [ButtonType] {
         return selectedAssets.count == 0
             ? [.photoOrVideo, .location, .contact, .file]
-            : [.sendPhotos]
+            : [.sendPhotos, .sendAsFile]
     }
     
     enum ButtonType {
@@ -51,7 +51,7 @@ final class TelegramPickerViewController: UIViewController {
         static let insets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         static let minimumInteritemSpacing: CGFloat = 6
         static let minimumLineSpacing: CGFloat = 6
-        static let maxHeight: CGFloat = UIScreen.main.bounds.width / 2
+        static let maxHeight: CGFloat = UIScreen.main.bounds.width / 1.5
         static let multiplier: CGFloat = 2
         static let animationDuration: TimeInterval = 0.3
     }
@@ -80,7 +80,7 @@ final class TelegramPickerViewController: UIViewController {
     func sizeFor(asset: PHAsset) -> CGSize {
         let height: CGFloat = UI.maxHeight
         let width: CGFloat = CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
-        return CGSize(width: 200, height: 200)
+        return CGSize(width: width, height: height)
     }
     
     func sizeForItem(asset: PHAsset) -> CGSize {
@@ -137,15 +137,23 @@ final class TelegramPickerViewController: UIViewController {
     lazy var assets = [PHAsset]()
     lazy var selectedAssets = [PHAsset]()
     lazy var selectedCells: [IndexPath] = []
+    lazy var needReload: Bool = false
     
     var selection: TelegramSelection?
     
     private var videoDataOutput: AVCaptureVideoDataOutput!
     private var videoDataOutputQueue: DispatchQueue!
+    private var imagePickerWindow: UIWindow? = nil
     private var captureDevice: AVCaptureDevice!
     private let session = AVCaptureSession()
     private var hasCamera: Bool = false
     private var needShowCameraPreviewCell = true
+    private var heightHasChanged: Bool = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    private var oldHeight: CGFloat?
     
     // MARK: Initialize
     
@@ -205,6 +213,14 @@ final class TelegramPickerViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+    }
+    
+    func getAssetInfoForFile() -> FileAsset? {
+        guard let asset = self.selectedAssets.first else { return nil}
+        let image = asset.image
+        let data = image.pngData()
+        let fileName = asset.originalFilename
+        return FileAsset(fileName: fileName, data: data, size: nil, image: image)
     }
     
     func checkStatus(completionHandler: @escaping ([PHAsset]) -> ()) {
@@ -276,22 +292,23 @@ final class TelegramPickerViewController: UIViewController {
             assets.removeFirst()
             collectionView.deleteItems(at: [IndexPath(item: 0, section: 0)])
             needShowCameraPreviewCell = false
+            needReload = true
         }
 
         if hasCamera && previousCount != 0 && currentCount == 0 {
             assets.insert(PHAsset(), at: 0)
             needShowCameraPreviewCell = true
             collectionView.insertItems(at: [IndexPath(item: 0, section: 0)])
+            needReload = true
         }
         
         if (previousCount == 0 && currentCount > 0) || (previousCount > 0 && currentCount == 0) {
-            UIView.animate(withDuration: 0.25, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.layout.invalidateLayout()
             }) { finished in self.layoutSubviews() }
         } else {
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
         }
-        tableView.reloadData()
     }
     
     func action(for button: ButtonType) {
@@ -324,8 +341,9 @@ final class TelegramPickerViewController: UIViewController {
             }
             
         case .sendAsFile:
-            
-            break
+            alertController?.dismiss(animated: true) { [unowned self] in
+                self.selection?(TelegramSelectionType.file(self.getAssetInfoForFile()))
+            }
         }
     }
     
@@ -337,23 +355,30 @@ final class TelegramPickerViewController: UIViewController {
         pickerController.mediaTypes = ["public.image", "public.movie"]
         pickerController.sourceType = .camera
         
-        let imagePickerWindow = UIWindow(frame: UIScreen.main.bounds)
-        imagePickerWindow.rootViewController = UIViewController()
-        imagePickerWindow.windowLevel = UIWindow.Level.alert + 1
-        imagePickerWindow.makeKeyAndVisible()
+        imagePickerWindow = UIWindow(frame: UIScreen.main.bounds)
+        imagePickerWindow?.rootViewController = UIViewController()
+        imagePickerWindow?.windowLevel = UIWindow.Level.alert + 1
+        imagePickerWindow?.makeKeyAndVisible()
         
-        imagePickerWindow.rootViewController?.present(pickerController, animated: true, completion: nil)
+        imagePickerWindow?.rootViewController?.present(pickerController, animated: true, completion: nil)
     }
+    
 }
 
 // MARK: - TableViewDelegate
 extension TelegramPickerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = collectionView.cellForItem(at: indexPath) as? ItemWithPhoto else { return }
+        guard let item = collectionView.cellForItem(at: indexPath) as? ItemWithPhoto else {
+            if let _ = collectionView.cellForItem(at: indexPath) as? ItemWithCameraPreview {
+                collectionView.deselectItem(at: indexPath, animated: false)
+                action(withAsset: assets[indexPath.item], at: indexPath)
+            }
+            return
+        }
+        
         layout.selectedCellIndexPath = layout.selectedCellIndexPath == indexPath ? nil : indexPath
         action(withAsset: assets[indexPath.item], at: indexPath)
-        if hasCamera && needShowCameraPreviewCell && indexPath.item == 0 { return }
         if selectedCells.contains(indexPath) {
             selectedCells = selectedCells.filter() { $0 != indexPath }
         } else {
@@ -364,16 +389,20 @@ extension TelegramPickerViewController: UICollectionViewDelegate {
             //use index
             item.selectedPoint.text = "\(index + 1)"
         }
+        if needReload {
+            selectedCells.removeAll()
+            selectedCells.append(IndexPath(row: 0, section: 0))
+            collectionView.reloadItems(at: selectedCells)
+            needReload = false
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         action(withAsset: assets[indexPath.item], at: indexPath)
-        if hasCamera && needShowCameraPreviewCell && indexPath.item == 0 { return }
         if selectedCells.contains(indexPath) {
             selectedCells = selectedCells.filter(){$0 != indexPath}
-            collectionView.reloadItems(at: [indexPath])
         }
-        
+        if hasCamera && needShowCameraPreviewCell && indexPath.item == 0 { return }
         if selectedCells.isEmpty {
             collectionView.reloadItems(at: [indexPath])
         } else {
@@ -415,7 +444,7 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
         
         if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
             //use index
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .bottom)
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
             item.selectedPoint.text = "\(index + 1)"
         } else {
             collectionView.deselectItem(at: indexPath, animated: true)
@@ -431,7 +460,18 @@ extension TelegramPickerViewController: PhotoLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, sizeForPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
         let size: CGSize = sizeForItem(asset: assets[indexPath.item])
-        //Log("size = \(size)")
+        if let height = oldHeight {
+            if height == size.height {
+                 heightHasChanged = false
+            } else {
+                heightHasChanged = true
+                oldHeight = size.height
+            }
+        } else {
+            heightHasChanged = true
+            oldHeight = size.height
+        }
+        print("size = \(size.height)")
         return size
     }
 }
@@ -535,12 +575,14 @@ extension TelegramPickerViewController: UIImagePickerControllerDelegate, UINavig
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.startCamera()
         picker.dismiss(animated: true) { [unowned self] in
+             self.imagePickerWindow = nil
             self.selection?(TelegramSelectionType.newPhoto(nil))
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
+         self.imagePickerWindow = nil
         if let image = info[.editedImage] as? UIImage {
             selection?(TelegramSelectionType.newPhoto(image))
         } else if let videoURL = info[.mediaURL] as? URL {
