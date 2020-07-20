@@ -49,6 +49,11 @@ public class MessageContentCell: UITableViewCell {
     private lazy var readMessageImageContainerView = UIView
         .create { _ in }
     
+    public lazy var horizontalStackViewContainerView = UIView
+    .create {
+        $0.backgroundColor = UIColor.clear
+    }
+    
     private lazy var messageReactionImageVIew = UIImageView
         .create {
         $0.image = UIImage(named: "smiley")
@@ -88,6 +93,7 @@ public class MessageContentCell: UITableViewCell {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        horizontalStackViewContainerView.cornerRadius = horizontalStackViewContainerView.frame.height / 2
     }
     
     func setup(with viewModel: TableViewCellModel) {
@@ -147,6 +153,22 @@ extension MessageContentCell {
             $0.top == contentView.topAnchor + 5
             $0.bottom == contentView.bottomAnchor - 5
         }
+
+        horizontalStackViewContainerView.addSubview(horizontalStackView) {
+            $0.centerX == horizontalStackViewContainerView.centerXAnchor
+            $0.centerY == horizontalStackViewContainerView.centerYAnchor
+            $0.leading == horizontalStackViewContainerView.leadingAnchor + 5
+            $0.trailing == horizontalStackViewContainerView.trailingAnchor - 5
+            $0.top == horizontalStackViewContainerView.topAnchor + 5
+            $0.bottom == horizontalStackViewContainerView.bottomAnchor - 5
+            $0.height == 8
+        }
+        
+        messageContainerView.addSubview(horizontalStackViewContainerView) {
+            $0.bottom == messageContainerView.bottomAnchor - 7
+            $0.trailing == messageContainerView.trailingAnchor - 10
+//            $0.height == 8
+        }
         
         readMessageImageContainerView.addSubview(readMessageImageView) {
             $0.centerX == readMessageImageContainerView.centerXAnchor
@@ -156,12 +178,6 @@ extension MessageContentCell {
             $0.top <= readMessageImageContainerView.topAnchor
             $0.bottom <= readMessageImageContainerView.bottomAnchor
             $0.width == 15
-        }
-        
-        messageContainerView.addSubview(horizontalStackView) {
-            $0.bottom == messageContainerView.bottomAnchor - 7
-            $0.trailing == messageContainerView.trailingAnchor - 10
-            $0.height == 8
         }
     }
 }
