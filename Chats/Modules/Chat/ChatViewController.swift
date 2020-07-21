@@ -70,7 +70,9 @@ final class ChatViewController: UIViewController {
         didSet { messageListDidChange() }
     }
     private var currentlyHiddenMessageId: String? {
-        didSet { messageListDidChange() }
+        didSet {
+            if currentlyHiddenMessageId != nil { messageListDidChange() }
+        }
     }
     
     private var sections: [TableViewSectionModel]? {
@@ -221,9 +223,10 @@ final class ChatViewController: UIViewController {
                     mockMessage.needHideMessage = currentlyHiddenMessageId == mockMessage.messageId
                 }
                 var model = mockMessage.tableViewCellViewModel()
-                model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
-                    self?.currentlyHiddenMessageId = mockMessage.messageId
+                model.messageSelection = { [weak self] chatTableViewCellModel,
+                    cellNewFrame in
                     self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                    self?.currentlyHiddenMessageId = mockMessage.messageId
                 }
                 return model
             }
@@ -337,6 +340,14 @@ extension ChatViewController: UITableViewDataSource {
 extension ChatViewController: ChatPresentable {
     func showAllMessages() {
         currentlyHiddenMessageId = nil
+        messageList = messageList.map { message -> MockMessage in
+            message.needHideMessage = false
+            return message
+        }
+    }
+    
+    func execute(messageManipulationType: MessageManipulationType) {
+        UIAlertController.showAlert(viewController: self, title: LocalizationKeys.action.localized(), message: messageManipulationType.stringDescription, actions: [UIAlertAction.okAction()])
     }
 }
 

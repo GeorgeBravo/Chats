@@ -111,7 +111,7 @@ public class MessageContentCell: UITableViewCell {
     func setup(with viewModel: TableViewCellModel) {
         guard let viewModel = viewModel as? ChatTableViewCellModel else { return }
         messageModel = viewModel
-        if viewModel.needHideMessage { contentView.isHidden = true }
+        contentView.isHidden = viewModel.needHideMessage
         readMessageImageContainerView.isHidden = viewModel.isIncomingMessage
         
         messageTimestampLabel.textColor = !viewModel.isIncomingMessage ? UIColor(named: .white50) : UIColor.black.withAlphaComponent(0.5)
