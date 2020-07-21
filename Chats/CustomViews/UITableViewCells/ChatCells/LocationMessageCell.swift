@@ -96,7 +96,6 @@ final class LocationMessageCell: MessageContentCell {
 extension LocationMessageCell: TableViewCellSetup {
     private func setupViews() {
         selectionStyle = .none
-        self.horizontalStackViewContainerView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         
         messageContainerView.addSubview(mapSnapshotImageView) {
             $0.size([\.width: 240, \.height: 240])

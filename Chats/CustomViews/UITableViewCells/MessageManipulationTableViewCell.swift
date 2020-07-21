@@ -58,6 +58,7 @@ class MessageManipulationTableViewCell: UITableViewCell, TableViewCellSetup {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        setupGestureGecognizer()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,10 +123,20 @@ class MessageManipulationTableViewCell: UITableViewCell, TableViewCellSetup {
         }
     }
     
+    private func setupGestureGecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(messageManipulationTapped))
+        alertCellBodyView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
     func setup(with model: TableViewCellModel) {
         guard let model = model as? MessageManipulationTableViewCellModel else { return }
         self.model = model
         manipulationDescriptionLabel.text = model.manipulationType.stringDescription
         manipulationIconImageView.image = model.manipulationType.image
+    }
+    
+    // MARK: - Selector
+    @objc private func messageManipulationTapped() {
+        model?.messageManipulationTapped()
     }
 }

@@ -114,9 +114,7 @@ class PhotoLayout: UICollectionViewLayout {
     }
 
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        Log(selectedCellIndexPath)
         guard let selectedCellIndexPath = selectedCellIndexPath else { return proposedContentOffset }
-        Log(selectedCellIndexPath)
         var finalContentOffset = proposedContentOffset
         
         if let itemFrame = layoutAttributesForItem(at: selectedCellIndexPath)?.frame {
@@ -134,7 +132,6 @@ class PhotoLayout: UICollectionViewLayout {
 //            } else if itemLeft < contentLeft {
 //                finalContentOffset = CGPoint(x: contentLeft - (contentLeft - itemLeft) - lineSpacing, y: -inset.top)
 //            }
-            Log(finalContentOffset)
         }
         return finalContentOffset
     }

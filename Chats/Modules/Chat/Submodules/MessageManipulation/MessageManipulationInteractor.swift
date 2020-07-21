@@ -18,13 +18,12 @@ protocol MessageManipulationPresentable: Presentable {
     var listener: MessageManipulationPresentableListener? { get set }
     
     func update()
-    func showActionAlert(with description: String)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
 protocol MessageManipulationListener: class {
 
-    func hideMessageManipulation()
+    func hideMessageManipulation(_ manipulationType: MessageManipulationType?)
     // TODO: Declare methods the interactor can invoke to communicate with other BRIcks.
 }
 
@@ -41,7 +40,7 @@ final class MessageManipulationInteractor: PresentableInteractor<MessageManipula
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
-    init(presenter: MessageManipulationPresentable, chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+    init(presenter: MessageManipulationPresentable, chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         self.cellNewFrame = cellNewFrame
         super.init(presenter: presenter)
         presenter.listener = self
@@ -68,7 +67,7 @@ extension MessageManipulationInteractor: MessageManipulationInteractable {}
 
 extension MessageManipulationInteractor: MessageManipulationPresentableListener {
     func hideMessageManipulation() {
-        listener?.hideMessageManipulation()
+        listener?.hideMessageManipulation(nil)
     }
     
     func numberOfSections() -> Int {
@@ -102,12 +101,22 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
         
         let moreOption = MessageManipulationTableViewCellModel(messageManipulationType: .more, isLastOption: true)
         let secondOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: [moreOption], widthConstant: 240.0, heightConstant: 4.0, fillColorName: .messageManipulationSeparator)
-        sectionModels.append([firstOptionSection, secondOptionSection])
+        let sectionsArray = [firstOptionSection, secondOptionSection]
+        sectionModels.append(sectionsArray)
+        sectionsArray.forEach {
+            $0.cellModels.forEach { [weak self] cellModel in
+                guard let cellModel = cellModel as? MessageManipulationTableViewCellModel else { return }
+                cellModel.manipulationAction = { [weak self] manipulationType in
+                    self?.listener?.hideMessageManipulation(manipulationType)
+                }
+            }
+        }
     }
     
-    func didTapCell(at indexPath: IndexPath) {
-        guard let cellModel = sectionModels[indexPath.section].cellModels[indexPath.row] as? MessageManipulationTableViewCellModel else { return }
-        presenter.showActionAlert(with: cellModel.manipulationType.stringDescription)
+    func lastItemIndexPath() -> IndexPath {
+        let lastSectionIndex = sectionModels.count - 1
+        let lastCellIndex = sectionModels[lastSectionIndex].cellModels.count - 1
+        return IndexPath(row: lastCellIndex, section: lastSectionIndex)
     }
     
 }

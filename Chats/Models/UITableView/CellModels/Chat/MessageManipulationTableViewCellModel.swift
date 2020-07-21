@@ -38,6 +38,7 @@ enum MessageManipulationType {
     }
 }
 
+typealias MessageManipulationAction = ((MessageManipulationType) -> ())
 class MessageManipulationTableViewCellModel: TableViewCellModel {
 
     // MARK: - Variables
@@ -46,11 +47,19 @@ class MessageManipulationTableViewCellModel: TableViewCellModel {
     var manipulationType: MessageManipulationType
     var isFirstOption: Bool
     var isLastOption: Bool
+    var manipulationAction: MessageManipulationAction?
 
     // MARK: - Init
-    init(messageManipulationType: MessageManipulationType, isFirstOption: Bool = false, isLastOption: Bool = false) {
+    init(messageManipulationType: MessageManipulationType,
+         isFirstOption: Bool = false,
+         isLastOption: Bool = false) {
         manipulationType = messageManipulationType
         self.isFirstOption = isFirstOption
         self.isLastOption = isLastOption
+    }
+    
+    // MARK: - Logic
+    func messageManipulationTapped() {
+        manipulationAction?(manipulationType)
     }
 }

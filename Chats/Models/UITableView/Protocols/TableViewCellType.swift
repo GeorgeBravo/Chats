@@ -22,6 +22,7 @@ enum TableViewCellType: CaseIterable {
     case addContacts
     case contact
     case messageManipulation
+    case userChatEntry
 }
 
 extension TableViewCellType {
@@ -43,6 +44,7 @@ extension TableViewCellType {
         case .file: return FileMessageCell.self
         case .contact: return ContactMessageCell.self
         case .messageManipulation: return MessageManipulationTableViewCell.self
+        case .userChatEntry: return UserChatEntryTableViewCell.self
         }
     }
 }

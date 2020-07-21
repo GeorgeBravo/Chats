@@ -15,6 +15,7 @@ protocol ChatInteractable: Interactable, CollocutorProfileListener, GroupProfile
 
 protocol ChatViewControllable: ViewControllable {
 
+    
     // TODO: Declare methods the router invokes to manipulate the view hierarchy.
 }
 
@@ -66,7 +67,7 @@ extension ChatRouter: ChatRouting {
         presentModally(groupProfileRouter, animated: true, embedInNavigationController: true)
     }
     
-    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         let messageManipulationRouter = messageManipulationBuilder.build(withListener: interactor, chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
         self.messageManipulationRouter = messageManipulationRouter
         
@@ -90,11 +91,13 @@ extension ChatRouter: ChatRouting {
         self.groupProfileRouter = nil
     }
     
-    func hideMessageManipulation() {
+    func hideMessageManipulation(completion: @escaping () -> Void) {
         guard let messageManipulationRouter = messageManipulationRouter else { return }
         
         detach(messageManipulationRouter)
-        messageManipulationRouter.dismiss(animated: false)
+        messageManipulationRouter.dismiss(animated: false) {
+            completion()
+        }
         self.messageManipulationRouter = nil
     }
     

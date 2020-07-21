@@ -22,7 +22,7 @@ protocol MessageManipulationPresentableListener: class {
     func sectionModel(for section: Int) -> TableViewSectionModel
     func cellOffsetFrame() -> FrameValues
     func addOptions()
-    func didTapCell(at indexPath: IndexPath)
+    func lastItemIndexPath() -> IndexPath
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -51,6 +51,7 @@ final class MessageManipulationViewController: UIViewController {
         tableView.allowsMultipleSelection = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.tableFooterView = UIView()
+        tableView.isScrollEnabled = false
         tableView.register(TextMessageCell.self)
         tableView.register(MessageContentCell.self)
         tableView.register(LocationMessageCell.self)
@@ -75,25 +76,20 @@ final class MessageManipulationViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         listener?.addOptions()
-        checkOffsets()
     }
 }
 
 extension MessageManipulationViewController: MessageManipulationPresentable {
     
     func update() {
-        messageManipulationTableView.reloadData()
-    }
-    
-    func showActionAlert(with description: String) {
-        let okAction = UIAlertAction.okAction(handler: { [weak self] _ in
-            self?.listener?.hideMessageManipulation()
-        })
-        UIAlertController.showAlert(viewController: self,
-                                    title: LocalizationKeys.action.localized(),
-                                    message: description,
-                                    actions: [okAction])
-        messageManipulationTableView.isHidden = true
+        DispatchQueue.main.async { [weak self] in
+            CATransaction.begin()
+            CATransaction.setCompletionBlock { [weak self] in
+                self?.checkOffsets()
+            }
+            self?.messageManipulationTableView.reloadData()
+            CATransaction.commit()
+        }
     }
     
 }
@@ -117,6 +113,11 @@ extension MessageManipulationViewController {
         if let cellOffsetFrame = listener?.cellOffsetFrame() {
             messageManipulationTableView.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: cellOffsetFrame.widthValue, height: cellOffsetFrame.yPositionValue))
         }
+        var safeAreaBottomInset: CGFloat = 0.0
+        if let inset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom {
+            safeAreaBottomInset = inset
+        }
+        messageManipulationTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: safeAreaBottomInset, right: 0.0)
         
         view.addSubview(messageManipulationTableView) {
             $0.top == view.topAnchor
@@ -129,12 +130,26 @@ extension MessageManipulationViewController {
     func setupGestureRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(blurViewTapped))
         tapGestureRecognizer.cancelsTouchesInView = false
-        tapGestureRecognizer.delegate = self
         messageManipulationTableView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    // MARK: - Animation logic
     func checkOffsets() {
-        
+        guard let lastCellIndexPath = listener?.lastItemIndexPath() else { return }
+        guard let cell = messageManipulationTableView.cellForRow(at: lastCellIndexPath) else {
+            scrollToCell(at: lastCellIndexPath)
+            return
+        }
+        if cell.frame.maxY > view.safeAreaLayoutGuide.layoutFrame.maxY {
+            scrollToCell(at: lastCellIndexPath)
+        }
+    }
+    
+    func scrollToCell(at indexPath: IndexPath) {
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.5)
+        messageManipulationTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        CATransaction.commit()
     }
 
 }
@@ -181,18 +196,5 @@ extension MessageManipulationViewController: UITableViewDataSource {
             view.setup(with: sectionModel)
         }
         return view
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listener?.didTapCell(at: indexPath)
-    }
-}
-
-extension MessageManipulationViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.superview?.isKind(of: MessageManipulationTableViewCell.self) ?? false {
-            return false
-        }
-        return true
     }
 }

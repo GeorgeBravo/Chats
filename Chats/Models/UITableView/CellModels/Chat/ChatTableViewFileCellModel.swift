@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ChatTableViewFileCellModel: ChatTableViewCellModel {
+struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
 
     var cellType: TableViewCellType! { return .file }
     
@@ -22,12 +22,19 @@ struct ChatTableViewFileCellModel: ChatTableViewCellModel {
     var isMessageEdited: Bool
 
     var messageSelection: MessageSelection?
+    var needHideMessage: Bool
     
     var chatType: ChatType
 
     // MARK: - Init
-    
-    init(fileItem: FileItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool, chatType: ChatType) {
+    init(fileItem: FileItem,
+         timestamp: Date,
+         profileImage: UIImage?,
+         isMessageRead: Bool,
+         isIncomingMessage: Bool,
+         isMessageEdited: Bool,
+         chatType: ChatType,
+         needHideMessage: Bool) {
         self.file = fileItem
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -35,5 +42,6 @@ struct ChatTableViewFileCellModel: ChatTableViewCellModel {
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
         self.chatType = chatType
+        self.needHideMessage = needHideMessage
     }
 }
