@@ -106,6 +106,7 @@ extension MessageManipulationViewController {
         view.isOpaque = false
         view.backgroundColor = .clear
         view.tintColor = .clear
+        
         view.addSubview(blurView) {
             $0.top == view.topAnchor
             $0.bottom == view.bottomAnchor
@@ -185,7 +186,6 @@ extension MessageManipulationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         listener?.didTapCell(at: indexPath)
     }
-    
 }
 
 extension MessageManipulationViewController: UIGestureRecognizerDelegate {

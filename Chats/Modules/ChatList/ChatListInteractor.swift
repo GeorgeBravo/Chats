@@ -10,8 +10,9 @@ import BRIck
 import Foundation
 
 protocol ChatListRouting: ViewableRouting {
-    func showChat()
+    func showChat(of type: ChatType)
     func hideChat()
+    
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -19,6 +20,7 @@ protocol ChatListPresentable: Presentable {
     var listener: ChatListPresentableListener? { get set }
     func update()
     func setupNoChatsView()
+    
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -31,6 +33,7 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     
     weak var router: ChatListRouting?
     weak var listener: ChatListListener?
+    
     private var sections: [TableViewSectionModel] = [TableViewSectionModel]() {
         didSet {
             presenter.update()
@@ -71,17 +74,21 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
      }
     
     private func setupChatContent() {
-        favoriteChatListModels = [ChatListTableViewCellModel(title: "", collocutorName: "Georgiy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 2, id: 0, isGroupChat: true, lastSender: "You"),
-                                  ChatListTableViewCellModel(title: "", collocutorName: "Sava T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 66, id: 1)]
+        favoriteChatListModels = [
+            ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
+            ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 66, id: 1)
+        ]
         
-        chatListModels = [ChatListTableViewCellModel(title: "", collocutorName: "Misha T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 23, id: 0, isGroupChat: true, lastSender: "Sava"),
-                          ChatListTableViewCellModel(title: "", collocutorName: "Lena T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 5, id: 2),
-                          ChatListTableViewCellModel(title: "", collocutorName: "Natalia T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 7, id: 3),
-                          ChatListTableViewCellModel(title: "", collocutorName: "Dmitriy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 55, id: 4, isGroupChat: true, lastSender: "Mishalaka"),
-                          ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 99, id: 5, isGroupChat: true, lastSender: "Lisa"),
-                          ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 1, id: 6)]
-        
+        chatListModels = [
+            ChatListTableViewCellModel(title: "", collocutorName: "Misha T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 23, id: 0, isGroupChat: true, lastSender: "Sava"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Lena T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 5, id: 2),
+            ChatListTableViewCellModel(title: "", collocutorName: "Natalia T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 7, id: 3),
+            ChatListTableViewCellModel(title: "", collocutorName: "Dmitriy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 55, id: 4, isGroupChat: true, lastSender: "Mishalaka"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 99, id: 5, isGroupChat: true, lastSender: "Lisa"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 1, id: 6)
+        ]
     }
+    
     private func deleteChatsList(chatIds: [Int]) {
          var modelToDelete: ChatListTableViewCellModel?
          for id in chatIds {
@@ -100,9 +107,10 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
 
 extension ChatListInteractor: ChatListInteractable {
     
-    func showChat() {
-        router?.showChat()
+    func showChat(of type: ChatType) {
+        router?.showChat(of: type)
     }
+    
     // MARK: - Chat Listener
     func hideChat() {
         router?.hideChat()

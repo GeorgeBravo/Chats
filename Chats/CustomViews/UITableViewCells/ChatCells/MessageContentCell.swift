@@ -38,8 +38,8 @@ public class MessageContentCell: UITableViewCell {
     
     private lazy var messageTimestampLabel = UILabel
         .create {
-        $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        $0.textAlignment = .left
+            $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            $0.textAlignment = .left
     }
     
     private lazy var editedMessageLabel = UILabel
@@ -47,28 +47,28 @@ public class MessageContentCell: UITableViewCell {
             $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
             $0.textAlignment = .left
             $0.text = "edited"
-        }
+    }
     
     private lazy var readMessageImageView = UIImageView
         .create {
-        $0.image = UIImage(named: "doubleCheck")?.withRenderingMode(.alwaysTemplate)
-        $0.tintColor = UIColor.white
-        $0.contentMode = .scaleAspectFit
-
+            $0.image = UIImage(named: "doubleCheck")?.withRenderingMode(.alwaysTemplate)
+            $0.tintColor = UIColor.white
+            $0.contentMode = .scaleAspectFit
+            
     }
     
     private lazy var readMessageImageContainerView = UIView
         .create { _ in }
     
     public lazy var horizontalStackViewContainerView = UIView
-    .create {
-        $0.backgroundColor = UIColor.clear
+        .create {
+            $0.backgroundColor = UIColor.clear
     }
     
     private lazy var messageReactionImageVIew = UIImageView
         .create {
-        $0.image = UIImage(named: "smiley")
-        $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "smiley")
+            $0.contentMode = .scaleAspectFit
     }
     
     private lazy var profileImageView = UIImageView
@@ -108,6 +108,7 @@ public class MessageContentCell: UITableViewCell {
     }
     
     func setup(with viewModel: TableViewCellModel) {
+        
         guard let viewModel = viewModel as? ChatTableViewCellModel else { return }
         messageModel = viewModel
         readMessageImageContainerView.isHidden = viewModel.isIncomingMessage
@@ -127,7 +128,7 @@ public class MessageContentCell: UITableViewCell {
             trailingConstraint = messageContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
             trailingConstraint?.isActive = true
         } else {
-            if let profileImage = viewModel.profileImage {
+            if let profileImage = viewModel.profileImage, viewModel.chatType == .group {
                 profileImageView.image = profileImage
                 
                 contentView.addSubview(profileImageView) {
@@ -161,7 +162,7 @@ extension MessageContentCell {
             $0.top == contentView.topAnchor + 5
             $0.bottom == contentView.bottomAnchor - 5
         }
-
+        
         horizontalStackViewContainerView.addSubview(horizontalStackView) {
             $0.centerX == horizontalStackViewContainerView.centerXAnchor
             $0.centerY == horizontalStackViewContainerView.centerYAnchor
@@ -175,7 +176,6 @@ extension MessageContentCell {
         messageContainerView.addSubview(horizontalStackViewContainerView) {
             $0.bottom == messageContainerView.bottomAnchor - 7
             $0.trailing == messageContainerView.trailingAnchor - 10
-//            $0.height == 8
         }
         
         readMessageImageContainerView.addSubview(readMessageImageView) {
@@ -198,3 +198,5 @@ extension MessageContentCell {
         messageModel?.messageSelected(cellNewFrame: cellNewFrame)
     }
 }
+
+extension MessageContentCell {}

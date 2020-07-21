@@ -9,7 +9,7 @@
 import BRIck
 import UIKit
 
-protocol RootInteractable: Interactable, ChatListener, ChatListListener {
+protocol RootInteractable: Interactable, ChatListListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -23,9 +23,7 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
 
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
-         _ chatBuildable: ChatBuildable,
          _ chatListBuildable: ChatListBuildable) {
-        self.chatBuildable = chatBuildable
         self.chatListBuildable = chatListBuildable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
@@ -37,11 +35,6 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
             detach(oldRouter)
         }
     }
-
-    // MARK: - Single Chat
-
-    var chatBuildable: ChatBuildable
-    
     // MARK: - Chat List
     
     var chatListBuildable: ChatListBuildable
@@ -61,17 +54,6 @@ extension RootRouter: RootRouting {
 
         replace(chatListRouter, animated: false, embedInNavigationController: true)
         currentRouter = chatListRouter
-    }
-    
-    // MARK: - Single Chat
-
-    func showSingleChat() {
-        let charRouter = chatBuildable.build(withListener: self.interactor)
-
-        attach(charRouter)
-
-        replace(charRouter, animated: false, embedInNavigationController: true)
-        currentRouter = charRouter
     }
 }
 
