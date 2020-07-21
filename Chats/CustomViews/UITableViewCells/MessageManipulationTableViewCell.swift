@@ -25,7 +25,7 @@ class MessageManipulationTableViewCell: UITableViewCell, TableViewCellSetup {
     private var model: MessageManipulationTableViewCellModel?
     
     // MARK: - UI Variables
-    lazy var alertCellBodyView: UIView = {
+    private lazy var alertCellBodyView: UIView = {
         let view = UIView(frame: .zero)
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -136,7 +136,7 @@ class MessageManipulationTableViewCell: UITableViewCell, TableViewCellSetup {
     }
     
     // MARK: - Selector
-    @objc func messageManipulationTapped() {
+    @objc private func messageManipulationTapped() {
         model?.messageManipulationTapped()
     }
 }

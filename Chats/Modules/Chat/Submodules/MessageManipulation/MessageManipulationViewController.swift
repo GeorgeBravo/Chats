@@ -51,6 +51,7 @@ final class MessageManipulationViewController: UIViewController {
         tableView.allowsMultipleSelection = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.tableFooterView = UIView()
+        tableView.isScrollEnabled = false
         tableView.register(TextMessageCell.self)
         tableView.register(MessageContentCell.self)
         tableView.register(LocationMessageCell.self)
