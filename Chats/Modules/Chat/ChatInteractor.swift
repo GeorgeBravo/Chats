@@ -22,6 +22,7 @@ protocol ChatRouting: ViewableRouting {
 protocol ChatPresentable: Presentable {
     var listener: ChatPresentableListener? { get set }
 
+    func showAllMessages()
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -68,6 +69,7 @@ extension ChatInteractor: ChatInteractable {
     }
     
     func hideMessageManipulation() {
+        presenter.showAllMessages()
         router?.hideMessageManipulation()
     }
     

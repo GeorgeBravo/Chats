@@ -23,6 +23,7 @@ protocol MessageManipulationPresentableListener: class {
     func cellOffsetFrame() -> FrameValues
     func addOptions()
     func didTapCell(at indexPath: IndexPath)
+    func lastItemIndexPath() -> IndexPath
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -74,15 +75,24 @@ final class MessageManipulationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        listener?.addOptions()
-        checkOffsets()
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.listener?.addOptions()
+        }
+        
     }
 }
 
 extension MessageManipulationViewController: MessageManipulationPresentable {
     
     func update() {
-        messageManipulationTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            CATransaction.begin()
+            CATransaction.setCompletionBlock { [weak self] in
+                self?.checkOffsets()
+            }
+            self?.messageManipulationTableView.reloadData()
+            CATransaction.commit()
+        }
     }
     
     func showActionAlert(with description: String) {
@@ -133,8 +143,23 @@ extension MessageManipulationViewController {
         messageManipulationTableView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    // MARK: - Animation logic
     func checkOffsets() {
-        
+        guard let lastCellIndexPath = listener?.lastItemIndexPath() else { return }
+        guard let cell = messageManipulationTableView.cellForRow(at: lastCellIndexPath) else {
+            scrollToCell(at: lastCellIndexPath)
+            return
+        }
+        if cell.frame.maxY > view.safeAreaLayoutGuide.layoutFrame.maxY {
+            scrollToCell(at: lastCellIndexPath)
+        }
+    }
+    
+    func scrollToCell(at indexPath: IndexPath) {
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.5)
+        messageManipulationTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        CATransaction.commit()
     }
 
 }

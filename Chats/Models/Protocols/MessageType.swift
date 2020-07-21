@@ -41,4 +41,6 @@ public protocol MessageType {
     var kind: MessageKind { get }
     
     var chatType: ChatType { get }
+    
+    var needHideMessage: Bool { get set }
 }

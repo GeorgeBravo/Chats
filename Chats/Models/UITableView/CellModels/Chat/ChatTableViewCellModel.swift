@@ -22,6 +22,7 @@ protocol ChatTableViewCellModel: TableViewCellModel {
     
     var timestamp: Date { get }
     var profileImage: UIImage? { get }
+    var needHideMessage: Bool { get set }
     
     var chatType: ChatType { get }
     

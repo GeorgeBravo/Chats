@@ -110,4 +110,10 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
         presenter.showActionAlert(with: cellModel.manipulationType.stringDescription)
     }
     
+    func lastItemIndexPath() -> IndexPath {
+        let lastSectionIndex = sectionModels.count - 1
+        let lastCellIndex = sectionModels[lastSectionIndex].cellModels.count - 1
+        return IndexPath(row: lastCellIndex, section: lastSectionIndex)
+    }
+    
 }
