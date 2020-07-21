@@ -25,7 +25,7 @@
 		2D17D71C24AC8DBB009B2E16 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F324AC8DBB009B2E16 /* InputBarAccessoryView.swift */; };
 		2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D0924AB36350087449A /* BackButtonSettupable.swift */; };
 		2D1C4D1324AB3AA70087449A /* UnreadMessagesBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D1224AB3AA70087449A /* UnreadMessagesBackButton.swift */; };
-		2D1C4D1724AB41BF0087449A /* CollocutorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D1624AB41BF0087449A /* CollocutorView.swift */; };
+		2D1C4D1724AB41BF0087449A /* CollocutorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D1624AB41BF0087449A /* CollocutorStatusView.swift */; };
 		2D1C4D1A24AB4ACA0087449A /* GradientCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D1924AB4ACA0087449A /* GradientCircleView.swift */; };
 		2D1C4D1D24AB90AB0087449A /* CollocutorNavBarSettupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D1C24AB90AA0087449A /* CollocutorNavBarSettupable.swift */; };
 		2D1C4D2224AB97440087449A /* Collocutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C4D2124AB97440087449A /* Collocutor.swift */; };
@@ -190,6 +190,9 @@
 		2DB6987D24A362660075737F /* ChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB6987924A362660075737F /* ChatInteractor.swift */; };
 		2DCA29FB24B734810060913C /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCA29FA24B734800060913C /* TypingIndicatorView.swift */; };
 		2DCA29FD24B753630060913C /* UITableView+Scrolll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCA29FC24B753630060913C /* UITableView+Scrolll.swift */; };
+		2DCF831F24C6E42400003669 /* ChatNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF831E24C6E42400003669 /* ChatNavigationBarView.swift */; };
+		2DCF832124C6EF6C00003669 /* GroupChatViewStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCF832024C6EF6C00003669 /* GroupChatViewStatusView.swift */; };
+		2DDFA49924C6F68A007101C7 /* Int+DecimalFormatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDFA49824C6F68A007101C7 /* Int+DecimalFormatted.swift */; };
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */; };
@@ -254,7 +257,7 @@
 		2D17D6F324AC8DBB009B2E16 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
 		2D1C4D0924AB36350087449A /* BackButtonSettupable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButtonSettupable.swift; sourceTree = "<group>"; };
 		2D1C4D1224AB3AA70087449A /* UnreadMessagesBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesBackButton.swift; sourceTree = "<group>"; };
-		2D1C4D1624AB41BF0087449A /* CollocutorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorView.swift; sourceTree = "<group>"; };
+		2D1C4D1624AB41BF0087449A /* CollocutorStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorStatusView.swift; sourceTree = "<group>"; };
 		2D1C4D1924AB4ACA0087449A /* GradientCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientCircleView.swift; sourceTree = "<group>"; };
 		2D1C4D1C24AB90AA0087449A /* CollocutorNavBarSettupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorNavBarSettupable.swift; sourceTree = "<group>"; };
 		2D1C4D2124AB97440087449A /* Collocutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collocutor.swift; sourceTree = "<group>"; };
@@ -421,6 +424,9 @@
 		2DB6987924A362660075737F /* ChatInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInteractor.swift; sourceTree = "<group>"; };
 		2DCA29FA24B734800060913C /* TypingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
 		2DCA29FC24B753630060913C /* UITableView+Scrolll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Scrolll.swift"; sourceTree = "<group>"; };
+		2DCF831E24C6E42400003669 /* ChatNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavigationBarView.swift; sourceTree = "<group>"; };
+		2DCF832024C6EF6C00003669 /* GroupChatViewStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatViewStatusView.swift; sourceTree = "<group>"; };
+		2DDFA49824C6F68A007101C7 /* Int+DecimalFormatted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+DecimalFormatted.swift"; sourceTree = "<group>"; };
 		455760A4044106F48F993A05 /* Pods_Chats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
@@ -728,12 +734,14 @@
 			path = BackButtonUnreadMessages;
 			sourceTree = "<group>";
 		};
-		2D1C4D1424AB3F810087449A /* СollocutorView */ = {
+		2D1C4D1424AB3F810087449A /* ChatNavigationBarViews */ = {
 			isa = PBXGroup;
 			children = (
-				2D1C4D1624AB41BF0087449A /* CollocutorView.swift */,
+				2D1C4D1624AB41BF0087449A /* CollocutorStatusView.swift */,
+				2DCF831E24C6E42400003669 /* ChatNavigationBarView.swift */,
+				2DCF832024C6EF6C00003669 /* GroupChatViewStatusView.swift */,
 			);
-			path = "СollocutorView";
+			path = ChatNavigationBarViews;
 			sourceTree = "<group>";
 		};
 		2D1C4D1824AB4AAC0087449A /* GradientCircleView */ = {
@@ -988,7 +996,7 @@
 				2D1C4D1824AB4AAC0087449A /* GradientCircleView */,
 				CE8EE11A24BCAAFE00A07F6E /* CollocutorManipulationsButtonsStackView */,
 				CEFA663724B865C00034E802 /* CollocutorNavigationView */,
-				2D1C4D1424AB3F810087449A /* СollocutorView */,
+				2D1C4D1424AB3F810087449A /* ChatNavigationBarViews */,
 				2D1C4D1124AB39AF0087449A /* BackButtonUnreadMessages */,
 				2D64CF8E24A20EE300C8B94A /* UITableViewCells */,
 			);
@@ -1013,6 +1021,7 @@
 		2D64CFA124A20EEE00C8B94A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2DDFA49724C6F67C007101C7 /* Int */,
 				120E17C824C1C798007FADA0 /* PHAsset */,
 				2D751D3824C0B0FE00C40122 /* UIEdgeInsets */,
 				2D751D3724C0B09400C40122 /* CGRect */,
@@ -1365,10 +1374,10 @@
 		2D751D3124C086D700C40122 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */,
 				2D751D3D24C1382000C40122 /* ChatListTableViewCellModel.swift */,
-				2D751D3A24C1382000C40122 /* ChatTableViewAssetCellModel.swift */,
 				2D751D3C24C1382000C40122 /* ChatTableViewCellModel.swift */,
+				1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */,
+				2D751D3A24C1382000C40122 /* ChatTableViewAssetCellModel.swift */,
 				2D751D3E24C1382000C40122 /* ChatTableViewContactCellModel.swift */,
 				2D751D3B24C1382000C40122 /* ChatTableViewLocationCellModel.swift */,
 				2D751D3F24C1382000C40122 /* ChatTableViewTextMessageCellModel.swift */,
@@ -1441,6 +1450,14 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		2DDFA49724C6F67C007101C7 /* Int */ = {
+			isa = PBXGroup;
+			children = (
+				2DDFA49824C6F68A007101C7 /* Int+DecimalFormatted.swift */,
+			);
+			path = Int;
+			sourceTree = "<group>";
+		};
 		BBA296A30C95258C30A67D6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1497,10 +1514,10 @@
 		CE69320C24C584E0001825D4 /* MessageManipulation */ = {
 			isa = PBXGroup;
 			children = (
-				CE69320F24C584FD001825D4 /* MessageManipulationBuilder.swift */,
-				CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */,
 				CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */,
 				CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */,
+				CE69320F24C584FD001825D4 /* MessageManipulationBuilder.swift */,
+				CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */,
 			);
 			path = MessageManipulation;
 			sourceTree = "<group>";
@@ -1728,6 +1745,7 @@
 				2D501B9224B320D500C37DCB /* AudioItem.swift in Sources */,
 				2D501BA924B3210900C37DCB /* ContactMessageCell.swift in Sources */,
 				2D501C1724B3263700C37DCB /* CGSize+UniformKeyPathInitializable.swift in Sources */,
+				2DCF832124C6EF6C00003669 /* GroupChatViewStatusView.swift in Sources */,
 				2D65C20F24AE1A3F00C64534 /* LikeButtonCell.swift in Sources */,
 				2D64CFF224A20EF000C8B94A /* CGPoint+UniformKeyPathInitializable.swift in Sources */,
 				2D65C20724AE1A3F00C64534 /* ContactCell.swift in Sources */,
@@ -1853,6 +1871,7 @@
 				2D501BEB24B3228F00C37DCB /* InputBarButtonItem.swift in Sources */,
 				1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */,
 				2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */,
+				2DCF831F24C6E42400003669 /* ChatNavigationBarView.swift in Sources */,
 				2D501C1924B3263700C37DCB /* UniformKeyPathInitializable+Init.swift in Sources */,
 				CE69321D24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift in Sources */,
 				2D501B9124B320D500C37DCB /* LocationItem.swift in Sources */,
@@ -1881,6 +1900,7 @@
 				2D65C21424AE1A3F00C64534 /* UIView+Extension.swift in Sources */,
 				2D65C21E24AE1A3F00C64534 /* Common+Extensions.swift in Sources */,
 				2D65C18F24ADF86600C64534 /* Date+.swift in Sources */,
+				2DDFA49924C6F68A007101C7 /* Int+DecimalFormatted.swift in Sources */,
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,
 				CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */,
 				2D65C20524AE1A3F00C64534 /* Contacts.swift in Sources */,
@@ -1900,7 +1920,7 @@
 				CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */,
 				2DB6987C24A362660075737F /* ChatBuilder.swift in Sources */,
 				2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */,
-				2D1C4D1724AB41BF0087449A /* CollocutorView.swift in Sources */,
+				2D1C4D1724AB41BF0087449A /* CollocutorStatusView.swift in Sources */,
 				2D65C21F24AE1A3F00C64534 /* Locale+Extensions.swift in Sources */,
 				2D6A76CE24BC5E7C0075A8C8 /* OptionsTableViewSectionModel.swift in Sources */,
 				2D1C4D2E24ABC7D50087449A /* MockSocket.swift in Sources */,

@@ -21,4 +21,6 @@ struct ChatListTableViewCellModel: TableViewCellModel {
     var id: Int?
     var isGroupChat: Bool?
     var lastSender: String?
+    var membersCount: Int?
+    var membersOnline: Int?
 }

@@ -27,7 +27,7 @@ import CoreLocation
 import AVFoundation
 import UIKit
 
-final  class SampleData {
+final class SampleData {
 
     static let shared = SampleData()
 
@@ -60,7 +60,8 @@ final  class SampleData {
 
     var now = Date()
     
-    let messageImages: [UIImage] = [#imageLiteral(resourceName: "img1"), #imageLiteral(resourceName: "img2")]
+    public var chatType: ChatType = .oneToOne
+    
     let emojis = [
         "👍",
         "😂😂😂",
@@ -160,30 +161,30 @@ final  class SampleData {
         switch randomMessageType() {
         case .Text:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
         case .AttributedText:
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
-            return MockMessage(attributedText: attributedText, user: user, messageId: uniqueID, date: date)
+            return MockMessage(attributedText: attributedText, user: user, messageId: uniqueID, date: date, chatType: chatType)
         case .Audio:
             let randomNumberSound = Int(arc4random_uniform(UInt32(sounds.count)))
             let soundURL = sounds[randomNumberSound]
-            return MockMessage(audioURL: soundURL, user: user, messageId: uniqueID, date: date)
+            return MockMessage(audioURL: soundURL, user: user, messageId: uniqueID, date: date, chatType: chatType)
         case .Emoji:
             let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
-            return MockMessage(emoji: emojis[randomNumberEmoji], user: user, messageId: uniqueID, date: date)
+            return MockMessage(emoji: emojis[randomNumberEmoji], user: user, messageId: uniqueID, date: date, chatType: chatType)
         case .Location:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
         case .Url:
-            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
         case .Phone:
-            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
         case .Custom:
-            return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date)
+            return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date, chatType: chatType)
         default:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
         }
     }
     // swiftlint:enable cyclomatic_complexity
@@ -197,7 +198,7 @@ final  class SampleData {
             let user = senders.random()!
             let date = dateAddingRandomTime()
             let randomSentence = Lorem.sentence()
-            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
             messages.append(message)
         }
         completion(messages)
@@ -214,7 +215,8 @@ final  class SampleData {
         completion(messages)
     }
     
-    func getMessages(count: Int, allowedSenders: [MockUser], completion: ([MockMessage]) -> Void) {
+    func getMessages(count: Int, allowedSenders: [MockUser], chatType: ChatType, completion: ([MockMessage]) -> Void) {
+        self.chatType = chatType
         var messages: [MockMessage] = []
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
@@ -223,7 +225,7 @@ final  class SampleData {
             let user = senders.random()!
             let date = dateAddingRandomTime()
             let randomSentence = Lorem.sentence()
-            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0)
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
             messages.append(message)
         }
         completion(messages)
