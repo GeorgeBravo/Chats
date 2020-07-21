@@ -37,7 +37,7 @@ class AddContactsTableViewCell: UITableViewCell, TableViewCellSetup {
     
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: .separatorColor)
+        view.backgroundColor = UIColor(named: .coolGrey)
         return view
     }()
     

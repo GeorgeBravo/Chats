@@ -205,6 +205,8 @@
 		CE69321424C584FD001825D4 /* MessageManipulationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */; };
 		CE69321624C58519001825D4 /* ChatComponent+MessageManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321524C58519001825D4 /* ChatComponent+MessageManipulation.swift */; };
 		CE69321924C5C6CF001825D4 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321824C5C6CF001825D4 /* UIColor+Extension.swift */; };
+		CE69321B24C5D46D001825D4 /* MessageManipulationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321A24C5D46D001825D4 /* MessageManipulationTableViewCell.swift */; };
+		CE69321D24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69321C24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift */; };
 		CE71CFCA24B4B3F900862A73 /* ColorsPalette.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */; };
 		CE71CFCD24B4B47900862A73 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE71CFCF24B4B47900862A73 /* Localizable.strings */; };
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
@@ -227,6 +229,8 @@
 		CEDC1FF124BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */; };
 		CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */; };
 		CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */; };
+		CEEB02CB24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB02CA24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift */; };
+		CEEB02CD24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB02CC24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift */; };
 		CEFA663924B866250034E802 /* CollocutorNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA663824B866250034E802 /* CollocutorNavigationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -433,6 +437,8 @@
 		CE69321024C584FD001825D4 /* MessageManipulationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationInteractor.swift; sourceTree = "<group>"; };
 		CE69321524C58519001825D4 /* ChatComponent+MessageManipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+MessageManipulation.swift"; sourceTree = "<group>"; };
 		CE69321824C5C6CF001825D4 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		CE69321A24C5D46D001825D4 /* MessageManipulationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationTableViewCell.swift; sourceTree = "<group>"; };
+		CE69321C24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationTableViewCellModel.swift; sourceTree = "<group>"; };
 		CE71CFC924B4B3F900862A73 /* ColorsPalette.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ColorsPalette.txt; sourceTree = "<group>"; };
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -454,6 +460,8 @@
 		CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
 		CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCell.swift; sourceTree = "<group>"; };
+		CEEB02CA24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationTableViewSectionModel.swift; sourceTree = "<group>"; };
+		CEEB02CC24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationSectionHeaderView.swift; sourceTree = "<group>"; };
 		CEFA663824B866250034E802 /* CollocutorNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorNavigationView.swift; sourceTree = "<group>"; };
 		DEBDC9E49B3DBE427E91D8E6 /* Pods-Chats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.debug.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -827,9 +835,10 @@
 		2D501C2F24B5BB1C00C37DCB /* UITableViewHeaderFooterView */ = {
 			isa = PBXGroup;
 			children = (
-				CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */,
 				2D501C3024B5BB7400C37DCB /* ChatSectionHeaderView.swift */,
 				1279D5D424B61C0A0012467B /* ChatListSectionHeaderView.swift */,
+				CEEB02CC24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift */,
+				CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */,
 			);
 			path = UITableViewHeaderFooterView;
 			sourceTree = "<group>";
@@ -863,6 +872,7 @@
 				1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */,
 				2D6A76CB24BC5E7B0075A8C8 /* ChatTableViewSectionModel.swift */,
 				2D6A76CC24BC5E7C0075A8C8 /* OptionsTableViewSectionModel.swift */,
+				CEEB02CA24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift */,
 			);
 			path = SectionModels;
 			sourceTree = "<group>";
@@ -994,6 +1004,7 @@
 				CECA0E3B24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift */,
 				CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */,
 				CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */,
+				CE69321A24C5D46D001825D4 /* MessageManipulationTableViewCell.swift */,
 				CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */,
 			);
 			path = UITableViewCells;
@@ -1361,6 +1372,7 @@
 				2D751D3E24C1382000C40122 /* ChatTableViewContactCellModel.swift */,
 				2D751D3B24C1382000C40122 /* ChatTableViewLocationCellModel.swift */,
 				2D751D3F24C1382000C40122 /* ChatTableViewTextMessageCellModel.swift */,
+				CE69321C24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1836,16 +1848,20 @@
 				2D64CFE524A20EF000C8B94A /* UITableViewCell+.swift in Sources */,
 				2D501C3A24B5C4A400C37DCB /* ChatListInteractor.swift in Sources */,
 				2D501BD024B3221000C37DCB /* AutocompleteSession.swift in Sources */,
+				CEEB02CD24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift in Sources */,
+				CE69321B24C5D46D001825D4 /* MessageManipulationTableViewCell.swift in Sources */,
 				2D501BEB24B3228F00C37DCB /* InputBarButtonItem.swift in Sources */,
 				1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */,
 				2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */,
 				2D501C1924B3263700C37DCB /* UniformKeyPathInitializable+Init.swift in Sources */,
+				CE69321D24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift in Sources */,
 				2D501B9124B320D500C37DCB /* LocationItem.swift in Sources */,
 				2D501C3924B5C4A400C37DCB /* ChatListBuilder.swift in Sources */,
 				2D65C21824AE1A3F00C64534 /* UIColor++.swift in Sources */,
 				CECA0E4324B62B6C0067D5B6 /* UIAlertController+Extension.swift in Sources */,
 				2D8B98FB24BC626000D9F560 /* TableViewCellModel.swift in Sources */,
 				2D65C1F024AE1A3F00C64534 /* Button.swift in Sources */,
+				CEEB02CB24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift in Sources */,
 				2D751D4024C1382000C40122 /* ChatTableViewAssetCellModel.swift in Sources */,
 				2D64CFF524A20EF000C8B94A /* Create.swift in Sources */,
 				2D1C4D2F24ABC7D50087449A /* MockMessage.swift in Sources */,

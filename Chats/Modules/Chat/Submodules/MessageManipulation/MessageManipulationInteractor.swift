@@ -18,6 +18,7 @@ protocol MessageManipulationPresentable: Presentable {
     var listener: MessageManipulationPresentableListener? { get set }
     
     func update()
+    func showActionAlert(with description: String)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -32,7 +33,7 @@ final class MessageManipulationInteractor: PresentableInteractor<MessageManipula
     weak var router: MessageManipulationRouting?
     weak var listener: MessageManipulationListener?
     private var cellNewFrame: FrameValues
-    private var cellModels: [TableViewCellModel] = [TableViewCellModel]() {
+    private var sectionModels: [TableViewSectionModel] = [TableViewSectionModel]() {
         didSet {
             presenter.update()
         }
@@ -44,7 +45,10 @@ final class MessageManipulationInteractor: PresentableInteractor<MessageManipula
         self.cellNewFrame = cellNewFrame
         super.init(presenter: presenter)
         presenter.listener = self
-        cellModels.append(chatTableViewCellModel)
+        var newChatTableViewCellModel = chatTableViewCellModel
+        newChatTableViewCellModel.messageSelection = nil
+        let section = MessageManipulationTableViewSectionModel(title: "", cellModels: [newChatTableViewCellModel], widthConstant: 0.0, heightConstant: 0.0, fillColorName: nil)
+        sectionModels.append(section)
     }
 
     override func didBecomeActive() {
@@ -67,15 +71,43 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
         listener?.hideMessageManipulation()
     }
     
-    func numberOfRows() -> Int {
-        return cellModels.count
+    func numberOfSections() -> Int {
+        return sectionModels.count
+    }
+    
+    func numberOfRows(in section: Int) -> Int {
+        return sectionModels[section].cellModels.count
     }
     
     func cellModelForRow(at indexPath: IndexPath) -> TableViewCellModel {
-        return cellModels[indexPath.row]
+        return sectionModels[indexPath.section].cellModels[indexPath.row]
+    }
+    
+    func sectionModel(for section: Int) -> TableViewSectionModel {
+        return sectionModels[section]
     }
     
     func cellOffsetFrame() -> FrameValues {
         return cellNewFrame
     }
+    
+    func addOptions() {
+        let answerOption = MessageManipulationTableViewCellModel(messageManipulationType: .answer, isFirstOption: true)
+        let copyOption = MessageManipulationTableViewCellModel(messageManipulationType: .copy)
+        let changeOption = MessageManipulationTableViewCellModel(messageManipulationType: .change)
+        let pinOption = MessageManipulationTableViewCellModel(messageManipulationType: .pin)
+        let forwardOption = MessageManipulationTableViewCellModel(messageManipulationType: .forward)
+        let replyOption = MessageManipulationTableViewCellModel(messageManipulationType: .reply)
+        let firstOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: [answerOption, copyOption, changeOption, pinOption, forwardOption, replyOption], widthConstant: 240.0, heightConstant: 2.0, fillColorName: nil)
+        
+        let moreOption = MessageManipulationTableViewCellModel(messageManipulationType: .more, isLastOption: true)
+        let secondOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: [moreOption], widthConstant: 240.0, heightConstant: 4.0, fillColorName: .messageManipulationSeparator)
+        sectionModels.append([firstOptionSection, secondOptionSection])
+    }
+    
+    func didTapCell(at indexPath: IndexPath) {
+        guard let cellModel = sectionModels[indexPath.section].cellModels[indexPath.row] as? MessageManipulationTableViewCellModel else { return }
+        presenter.showActionAlert(with: cellModel.manipulationType.stringDescription)
+    }
+    
 }

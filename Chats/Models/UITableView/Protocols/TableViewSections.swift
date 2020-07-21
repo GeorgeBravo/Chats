@@ -13,6 +13,7 @@ enum TableViewSectionType {
     case collocutorProfile
     case messagesTimestamp
     case chatList
+    case messageManipulation
     
     var classType: UITableViewHeaderFooterView.Type? {
         switch self {
@@ -20,6 +21,7 @@ enum TableViewSectionType {
         case .collocutorProfile: return OptionSectionHeaderView.self
         case .chatList: return ChatListSectionHeaderView.self
         case .messagesTimestamp: return ChatSectionHeaderView.self
+        case .messageManipulation: return MessageManipulationSectionHeaderView.self
         }
     }
 }

@@ -71,7 +71,7 @@ extension ChatRouter: ChatRouting {
         self.messageManipulationRouter = messageManipulationRouter
         
         attach(messageManipulationRouter)
-        present(messageManipulationRouter, animated: false, embedInNavigationController: false)
+        present(messageManipulationRouter, animated: false, embedInNavigationController: false, modalPresentationStyle: .overCurrentContext)
     }
     
     func hideUser() {

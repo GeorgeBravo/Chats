@@ -195,6 +195,6 @@ extension MessageContentCell {
     @objc func longPress(_ gesture: UIGestureRecognizer) {
         guard gesture.state == .began else { return }
         guard let cellNewFrame = superview?.convert(frame, to: nil) else { return }
-//        messageModel?.messageSelected(cellNewFrame: cellNewFrame)
+        messageModel?.messageSelected(cellNewFrame: cellNewFrame)
     }
 }

@@ -239,7 +239,6 @@ final class ChatViewController: UIViewController {
     }
     
     func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: CGRect) {
-        resignFirstResponder()
         let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
         listener?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
