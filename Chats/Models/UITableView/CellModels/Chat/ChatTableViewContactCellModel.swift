@@ -20,13 +20,16 @@ struct ChatTableViewContactCellModel: ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+    
+    var chatType: ChatType
 
-    init(contact: ContactItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
+    init(contact: ContactItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool, chatType: ChatType) {
         self.contact = contact
         self.timestamp = timestamp
         self.profileImage = profileImage
         self.isMessageRead = isMessageRead
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
+        self.chatType = chatType
     }
 }

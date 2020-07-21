@@ -18,4 +18,6 @@ protocol ChatTableViewCellModel: TableViewCellModel {
     
     var timestamp: Date { get }
     var profileImage: UIImage? { get }
+    
+    var chatType: ChatType { get }
 }

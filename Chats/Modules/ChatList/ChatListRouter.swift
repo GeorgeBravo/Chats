@@ -37,13 +37,12 @@ final class ChatListRouter: ViewableRouter<ChatListInteractable, ChatListViewCon
 }
 
 extension ChatListRouter: ChatListRouting {
-    func showChat() {
-        let chatRouter = chatBuilder.build(withListener: interactor)
+    func showChat(of type: ChatType) {
+        let chatRouter = chatBuilder.build(withListener: interactor, of: type)
         self.chatRouter = chatRouter
 
         attach(chatRouter)
         present(chatRouter, animated: true, embedInNavigationController: true, completion: nil)
-//        pushRouter(chatRouter, animated: true)
     }
     
     func hideChat() {
@@ -53,7 +52,6 @@ extension ChatListRouter: ChatListRouting {
 
         detach(chatRouter)
         chatRouter.dismiss(animated: true)
-//        chatRouter.popRouter(animated: true)
         self.chatRouter = nil
     }
 }

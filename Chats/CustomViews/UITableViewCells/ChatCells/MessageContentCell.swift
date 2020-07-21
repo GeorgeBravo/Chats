@@ -116,7 +116,7 @@ public class MessageContentCell: UITableViewCell {
                 trailingConstraint = messageContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
                 trailingConstraint?.isActive = true
             } else {
-                if let profileImage = viewModel.profileImage {
+                if let profileImage = viewModel.profileImage, viewModel.chatType == .group {
                     profileImageView.image = profileImage
                     
                     contentView.addSubview(profileImageView) {
@@ -167,7 +167,6 @@ extension MessageContentCell {
         messageContainerView.addSubview(horizontalStackViewContainerView) {
             $0.bottom == messageContainerView.bottomAnchor - 7
             $0.trailing == messageContainerView.trailingAnchor - 10
-//            $0.height == 8
         }
         
         readMessageImageContainerView.addSubview(readMessageImageView) {
@@ -183,6 +182,4 @@ extension MessageContentCell {
 }
 
 //MARK: - Actions
-extension MessageContentCell {
-    
-}
+extension MessageContentCell {}

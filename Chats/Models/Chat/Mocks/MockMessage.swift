@@ -66,21 +66,21 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
     var tableViewCellViewModel: ChatTableViewCellModel {
         switch self.kind {
         case let .text(message):
-            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         case let .location(locationItem):
-            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         case let .asset(assets):
-            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         case let .fileItem(fileItem):
-            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         case let .contact(contact):
-            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         default:
-            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType)
         }
     }
     
-    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool = false) {
+    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool = false, chatType: ChatType) {
         self.kind = kind
         self.user = user
         self.messageId = messageId
@@ -88,40 +88,40 @@ struct MockMessage: MessageType, ChatScreenDisplayingItems {
         self.isIncomingMessage = isIncomingMessage
     }
     
-    init(custom: Any?, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
+    init(custom: Any?, user: MockUser, messageId: String, date: Date, chatType: ChatType) {
+        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(text: String, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .text(text), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
+    init(text: String, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool, chatType: ChatType) {
+        self.init(kind: .text(text), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage, chatType: chatType)
     }
     
-    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
+    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date, chatType: ChatType) {
+        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(assets: AssetMediaItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .asset(assets), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
+    init(assets: AssetMediaItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool, chatType: ChatType) {
+        self.init(kind: .asset(assets), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage, chatType: chatType)
     }
     
-    init(location: LocationItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .location(location), user: user, messageId: messageId, date: date)
+    init(location: LocationItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool, chatType: ChatType) {
+        self.init(kind: .location(location), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(emoji: String, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .emoji(emoji), user: user, messageId: messageId, date: date)
+    init(emoji: String, user: MockUser, messageId: String, date: Date, chatType: ChatType) {
+        self.init(kind: .emoji(emoji), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(audioURL: URL, user: MockUser, messageId: String, date: Date) {
+    init(audioURL: URL, user: MockUser, messageId: String, date: Date, chatType: ChatType) {
         let audioItem = MockAudiotem(url: audioURL)
-        self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
+        self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(contact: ContactItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    init(contact: ContactItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool, chatType: ChatType) {
+        self.init(kind: .contact(contact), user: user, messageId: messageId, date: date, chatType: chatType)
     }
     
-    init(fileItem: FileItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .fileItem(fileItem), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
+    init(fileItem: FileItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool, chatType: ChatType) {
+        self.init(kind: .fileItem(fileItem), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage, chatType: chatType)
     }
 }

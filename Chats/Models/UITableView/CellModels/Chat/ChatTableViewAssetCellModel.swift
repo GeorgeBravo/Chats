@@ -19,13 +19,16 @@ struct ChatTableViewAssetCellModel: ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+    
+    var chatType: ChatType
 
-    init(assets: MediaItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
+    init(assets: MediaItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool, chatType: ChatType) {
         self.assets = assets
         self.timestamp = timestamp
         self.profileImage = profileImage
         self.isMessageRead = isMessageRead
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
+        self.chatType = chatType
     }
 }

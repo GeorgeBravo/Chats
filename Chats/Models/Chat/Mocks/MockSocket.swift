@@ -22,10 +22,13 @@ final class MockSocket {
     
     private var connectedUsers: [MockUser] = []
     
+    private var chatType: ChatType = .oneToOne
+    
     private init() {}
     
     @discardableResult
-    func connect(with senders: [MockUser]) -> Self {
+    func connect(with senders: [MockUser], chatType: ChatType) -> Self {
+        self.chatType = chatType
         disconnect()
         connectedUsers = senders
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
@@ -60,7 +63,7 @@ final class MockSocket {
             queuedMessage = nil
         } else {
             let sender = arc4random_uniform(1) % 2 == 0 ? connectedUsers.first! : connectedUsers.last!
-            SampleData.shared.getMessages(count: 1, allowedSenders: [sender]) { (message) in
+            SampleData.shared.getMessages(count: 1, allowedSenders: [sender], chatType: chatType) { (message) in
                 queuedMessage = message.first
             }
             onTypingStatusCode?()

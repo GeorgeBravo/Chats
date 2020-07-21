@@ -99,6 +99,11 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        userAvatar.cornerRadius = userAvatar.frame.height / 2
+    }
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         #warning("weird subview appears in editing style .none while editing mode")
@@ -242,6 +247,9 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         }
         if let id = model.id {
             chatId = id
+        }
+        if let image = model.imageLink {
+            userAvatar.image = UIImage(named: image)
         }
     }
 }

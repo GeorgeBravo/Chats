@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct ChatTableViewFileCellModel : ChatTableViewCellModel {
+struct ChatTableViewFileCellModel: ChatTableViewCellModel {
     var cellType: TableViewCellType! { return .file }
     
     var timestamp: Date
@@ -21,12 +21,15 @@ struct ChatTableViewFileCellModel : ChatTableViewCellModel {
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
     
-    init(fileItem: FileItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
+    var chatType: ChatType
+    
+    init(fileItem: FileItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool, chatType: ChatType) {
         self.file = fileItem
         self.timestamp = timestamp
         self.profileImage = profileImage
         self.isMessageRead = isMessageRead
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
+        self.chatType = chatType
     }
 }

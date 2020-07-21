@@ -22,43 +22,44 @@ protocol ChatPresentableListener: class {
 final class ChatViewController: UIViewController {
     
     weak var listener: ChatPresentableListener?
-    internal var isMessagesControllerBeingDismissed: Bool = false
-    var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
-    var scrollsToBottomOnKeyboardBeginsEditing: Bool = true
-    var maintainPositionOnKeyboardFrameChanged: Bool = true
-    internal var messageCollectionViewBottomInset: CGFloat = 0 {
+    
+    private var isFirstLayout: Bool = true
+    
+    public var chatTableViewBottomInset: CGFloat = 0 {
         didSet {
-            tableView.contentInset.bottom = messageCollectionViewBottomInset
-            tableView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            tableView.contentInset.bottom = chatTableViewBottomInset
+            tableView.scrollIndicatorInsets.bottom = chatTableViewBottomInset
         }
     }
-    
-    var tableViewSectionHeaders: Set<UIView?> = []
     
     public var additionalBottomInset: CGFloat = 0 {
         didSet {
             let delta = additionalBottomInset - oldValue
-            messageCollectionViewBottomInset += delta
+            chatTableViewBottomInset += delta
         }
     }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    //MARK: - Private
-    
-    private var unreadMessagesCount: Int = 24
-    private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
     override var inputAccessoryView: UIView? {
         return messageInputBar
     }
     
-    lazy var messageInputBar = InputBarAccessoryView()
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
-    var messageList: [MockMessage] = [] {
+    //MARK: - Private
+    
+    private let chatType: ChatType
+    
+    private var unreadMessagesCount: Int = 24
+    
+    private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
+    
+    private let groupInfoModel = ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210)
+    
+    // MARK: - Data Source
+    private var messageList: [MockMessage] = [] {
         didSet {
-            messageInputBar.inputTextView.text = ""
             messageListDidChange()
         }
     }
@@ -72,26 +73,26 @@ final class ChatViewController: UIViewController {
     
     //MARK: - Lifecycle
     
+    lazy var messageInputBar = InputBarAccessoryView()
+    
+    init(with chatType: ChatType) {
+        self.chatType = chatType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupGroupButton()
-    }
-    
-    private func setupGroupButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Group Info", style: .plain, target: self, action: #selector(setupGroupButtonTapped))
-    }
-    
-    @objc private func setupGroupButtonTapped() {
-        listener?.showGroupProfile()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        isMessagesControllerBeingDismissed = false
-        
-        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
+        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu], chatType: chatType)
             .onTypingStatus { [weak self] in
                 UIView.animate(withDuration: 0.1, animations: {
                     self?.typingIndicatorView.update(with: self?.collocutor.collocutorImage, typingPeopleCount: 10)
@@ -106,25 +107,14 @@ final class ChatViewController: UIViewController {
         }
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        isMessagesControllerBeingDismissed = true
-    }
-    
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        isMessagesControllerBeingDismissed = false
-    }
-    
-    private var isFirstLayout: Bool = true
-    
     public override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+            chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
         }
+        
         adjustScrollViewTopInset()
     }
     
@@ -132,7 +122,7 @@ final class ChatViewController: UIViewController {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
         }
-        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+        chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
     }
     
     deinit {
@@ -141,9 +131,7 @@ final class ChatViewController: UIViewController {
     
     // MARK: - Views
     
-    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), chatType: .group)
-    
-    private var typingIndicatorHeightConstraint: NSLayoutConstraint?
+    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), chatType: self.chatType)
     
     public lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -165,8 +153,6 @@ final class ChatViewController: UIViewController {
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
-        
-        
         
         return tableView
     }()
@@ -221,6 +207,7 @@ final class ChatViewController: UIViewController {
         }
         
         return groups.compactMap { $0.compactMap { $0.tableViewCellViewModel }
+            
         }
     }
 }
@@ -240,6 +227,7 @@ extension ChatViewController {
                 self.navigationController!.navigationBar.frame.height
             $0.height == 100 - height
         }
+        
         view.addSubview(tableView) {
             $0.top == underneathView.bottomAnchor
             $0.leading == view.leadingAnchor
@@ -249,7 +237,13 @@ extension ChatViewController {
         
         unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
         
-        setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
+        switch chatType {
+        case .oneToOne:
+            setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
+        case .group:
+            setupNavBar(with: groupInfoModel, target: self, action: #selector(onGroupInfoViewTapped))
+        }
+        
         configureMessageInputBar()
         
         typingIndicatorView.isHidden = true
@@ -267,7 +261,11 @@ extension ChatViewController {
     @objc
     private func onCollocutorViewTapped() {
         listener?.showUser(with: collocutor)
-        //        listener?.showGroupProfile()
+    }
+    
+    @objc
+    private func onGroupInfoViewTapped() {
+        listener?.showGroupProfile()
     }
 }
 
@@ -301,8 +299,6 @@ extension ChatViewController: UITableViewDataSource {
         return cell
     }
     
-    
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionModel = sections?[section],
             let classType = sectionModel.headerViewType.classType else { return nil }
@@ -312,7 +308,6 @@ extension ChatViewController: UITableViewDataSource {
         }
         
         view.tintColor = UIColor.clear
-        tableViewSectionHeaders.insert(view)
         
         return view
     }
@@ -357,31 +352,32 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: photoData, videoURL: nil)
-                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockImageMessage)
             case .newVideo(let videoURL):
                 guard let videoURL = videoURL else { return }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: nil, videoURL: videoURL)
-                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockImageMessage)
             case .photo(let assets):
                 let assets = AssetMediaItem(assets: assets)
-                let mockAssetMessage = MockMessage(assets: assets, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                let mockAssetMessage = MockMessage(assets: assets, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockAssetMessage)
             case .contact(let contact):
                 guard let contact = contact else { return }
-                let mockContactMessage = MockMessage(contact: contact, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                let mockContactMessage = MockMessage(contact: contact, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockContactMessage)
             case .location(let location):
                 guard let location = location else { return }
-                let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+                let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockLocationMessage)
             case .file(let file):
                 guard let file = file else { return }
-                let mockFileMessage = MockMessage(fileItem: file, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: true)
+                let mockFileMessage = MockMessage(fileItem: file, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: true, chatType: self.chatType)
                 self.messageList.append(mockFileMessage)
             }
+            self.messageInputBar.inputTextView.text = ""
         }
         alert.addAction(title: "Cancel", style: .cancel)
         self.present(alert, animated: true, completion: nil)
@@ -390,18 +386,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let mockTextMessage = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false)
+        let mockTextMessage = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: chatType)
         messageList.append(mockTextMessage)
     }
 }
-
-// MARK: - Scroll view delegate
-
-extension ChatViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-    }
-}
-
 
 
