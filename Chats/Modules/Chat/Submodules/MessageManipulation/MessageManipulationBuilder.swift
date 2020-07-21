@@ -21,7 +21,7 @@ final class MessageManipulationComponent: Component<MessageManipulationDependenc
 // MARK: - Builder
 
 protocol MessageManipulationBuildable: Buildable {
-    func build(withListener: MessageManipulationListener, chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) -> MessageManipulationRouting
+    func build(withListener: MessageManipulationListener, chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) -> MessageManipulationRouting
 }
 
 final class MessageManipulationBuilder: Builder<MessageManipulationDependency> {
@@ -33,7 +33,7 @@ final class MessageManipulationBuilder: Builder<MessageManipulationDependency> {
 
 extension MessageManipulationBuilder: MessageManipulationBuildable {
 
-    func build(withListener listener: MessageManipulationListener, chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) -> MessageManipulationRouting {
+    func build(withListener listener: MessageManipulationListener, chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) -> MessageManipulationRouting {
         let component = MessageManipulationComponent(dependency: dependency)
         let viewController = MessageManipulationViewController()
         let interactor = MessageManipulationInteractor(presenter: viewController, chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)

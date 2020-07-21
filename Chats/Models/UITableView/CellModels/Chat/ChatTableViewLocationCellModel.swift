@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ChatTableViewLocationCellModel: ChatTableViewCellModel {
+struct ChatTableViewLocationCellModel: ChatContentTableViewCellModel {
     
     // MARK: - Variables
     var cellType: TableViewCellType! { return .location }

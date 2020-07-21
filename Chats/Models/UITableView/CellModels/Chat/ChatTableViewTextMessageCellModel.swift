@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ChatTableViewTextMessageCellModel: ChatTableViewCellModel {
+struct ChatTableViewTextMessageCellModel: ChatContentTableViewCellModel {
     
     // MARK: - Variables
     var cellType: TableViewCellType! { return .textMessage }

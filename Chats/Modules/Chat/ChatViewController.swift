@@ -24,7 +24,7 @@ protocol ChatPresentableListener: class {
     func showUser(with profile: Collocutor)
     func showGroupProfile()
     func hideChat()
-    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues)
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues)
 }
 
 final class ChatViewController: UIViewController {
@@ -100,7 +100,7 @@ final class ChatViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu], chatType: chatType)
+        MockSocket.shared.connect(with: chatType)
             .onTypingStatus { [weak self] in
                 UIView.animate(withDuration: 0.1, animations: {
                     self?.typingIndicatorView.update(with: self?.collocutor.collocutorImage, typingPeopleCount: 10)
@@ -113,6 +113,11 @@ final class ChatViewController: UIViewController {
                 self?.tableView.tableFooterView?.isHidden = true
             }, completion: nil)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MockSocket.shared.disconnect()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -158,6 +163,7 @@ final class ChatViewController: UIViewController {
         tableView.register(MediaMessageCell.self)
         tableView.register(FileMessageCell.self)
         tableView.register(ContactMessageCell.self)
+        tableView.register(UserChatEntryTableViewCell.self)
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
@@ -217,17 +223,21 @@ final class ChatViewController: UIViewController {
         return groups.compactMap {
             $0.compactMap { item in
                 guard let mockMessage = item as? MockMessage else { return nil }
-                var model = mockMessage.tableViewCellViewModel()
-                model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
-                    self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                
+                if var model = mockMessage.tableViewCellViewModel as? ChatContentTableViewCellModel {
+                    model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
+                        self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                    }
+                    return model
+                } else {
+                    return mockMessage.tableViewCellViewModel
                 }
-                return model
             }
 
         }
     }
     
-    func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: CGRect) {
+    func showSelectedMessageOptions(chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: CGRect) {
         let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
         listener?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
@@ -372,29 +382,29 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: photoData, videoURL: nil)
-                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockImageMessage)
             case .newVideo(let videoURL):
                 guard let videoURL = videoURL else { return }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: nil, videoURL: videoURL)
-                let mockImageMessage = MockMessage(assets: asset, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockImageMessage)
             case .photo(let assets):
                 let assets = AssetMediaItem(assets: assets)
-                let mockAssetMessage = MockMessage(assets: assets, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockAssetMessage = MockMessage(assets: assets, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockAssetMessage)
             case .contact(let contact):
                 guard let contact = contact else { return }
-                let mockContactMessage = MockMessage(contact: contact, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockContactMessage = MockMessage(contact: contact, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockContactMessage)
             case .location(let location):
                 guard let location = location else { return }
-                let mockLocationMessage = MockMessage(location: location, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockLocationMessage = MockMessage(location: location, date: Date(), isIncomingMessage: false, chatType: self.chatType)
                 self.messageList.append(mockLocationMessage)
             case .file(let file):
                 guard let file = file else { return }
-                let mockFileMessage = MockMessage(fileItem: file, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: true, chatType: self.chatType)
+                let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType)
                 self.messageList.append(mockFileMessage)
             }
             self.messageInputBar.inputTextView.text = ""
@@ -406,7 +416,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let mockTextMessage = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date(), isIncomingMessage: false, chatType: chatType)
+        let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType)
         messageList.append(mockTextMessage)
     }
 }

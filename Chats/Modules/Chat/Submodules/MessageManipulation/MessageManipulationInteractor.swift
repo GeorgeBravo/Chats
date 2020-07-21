@@ -41,7 +41,7 @@ final class MessageManipulationInteractor: PresentableInteractor<MessageManipula
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
-    init(presenter: MessageManipulationPresentable, chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+    init(presenter: MessageManipulationPresentable, chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         self.cellNewFrame = cellNewFrame
         super.init(presenter: presenter)
         presenter.listener = self

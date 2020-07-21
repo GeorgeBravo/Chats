@@ -66,7 +66,7 @@ extension ChatRouter: ChatRouting {
         presentModally(groupProfileRouter, animated: true, embedInNavigationController: true)
     }
     
-    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         let messageManipulationRouter = messageManipulationBuilder.build(withListener: interactor, chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
         self.messageManipulationRouter = messageManipulationRouter
         

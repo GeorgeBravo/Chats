@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ChatTableViewAssetCellModel: ChatTableViewCellModel {
+struct ChatTableViewAssetCellModel: ChatContentTableViewCellModel {
     
     // MARK: - Variables
     var cellType: TableViewCellType! { return .assets }

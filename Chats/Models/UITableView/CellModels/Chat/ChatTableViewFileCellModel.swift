@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ChatTableViewFileCellModel: ChatTableViewCellModel {
+struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
 
     var cellType: TableViewCellType! { return .file }
     

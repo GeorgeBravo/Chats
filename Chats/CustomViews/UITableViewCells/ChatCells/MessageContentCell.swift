@@ -15,14 +15,11 @@ private struct Constants {
 public class MessageContentCell: UITableViewCell {
     
     // MARK: - Variables
-    private var messageModel: ChatTableViewCellModel?
+    private var messageModel: ChatContentTableViewCellModel?
     
     // MARK: - Inits
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-        longPressGestureRecognizer.minimumPressDuration = Constants.longPressDuration
-        addGestureRecognizer(longPressGestureRecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -62,7 +59,7 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackViewContainerView = UIView
         .create {
-            $0.backgroundColor = UIColor.clear
+            $0.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
     }
     
     private lazy var messageReactionImageVIew = UIImageView
@@ -109,7 +106,12 @@ public class MessageContentCell: UITableViewCell {
     
     func setup(with viewModel: TableViewCellModel) {
         
-        guard let viewModel = viewModel as? ChatTableViewCellModel else { return }
+        guard let viewModel = viewModel as? ChatContentTableViewCellModel else { return }
+        
+        if viewModel is ChatTableViewTextMessageCellModel {
+            self.horizontalStackViewContainerView.backgroundColor = UIColor.clear
+        }
+        
         messageModel = viewModel
         readMessageImageContainerView.isHidden = viewModel.isIncomingMessage
         
@@ -156,6 +158,7 @@ public class MessageContentCell: UITableViewCell {
 //MARK: - Setup views
 extension MessageContentCell {
     func setupSubviews() {
+        setupGesture()
         backgroundColor = UIColor.clear
         
         contentView.addSubview(messageContainerView) {
@@ -188,15 +191,20 @@ extension MessageContentCell {
             $0.width == 15
         }
     }
+    
+    private func setupGesture() {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+        longPressGestureRecognizer.minimumPressDuration = Constants.longPressDuration
+        addGestureRecognizer(longPressGestureRecognizer)
+    }
 }
 
 //MARK: - Actions
 extension MessageContentCell {
-    @objc func longPress(_ gesture: UIGestureRecognizer) {
+    @objc
+    private func longPress(_ gesture: UIGestureRecognizer) {
         guard gesture.state == .began else { return }
         guard let cellNewFrame = superview?.convert(frame, to: nil) else { return }
         messageModel?.messageSelected(cellNewFrame: cellNewFrame)
     }
 }
-
-extension MessageContentCell {}

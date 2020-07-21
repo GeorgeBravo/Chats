@@ -12,7 +12,7 @@ protocol ChatRouting: ViewableRouting {
 
     func showUser(with profile: Collocutor)
     func showGroupProfile()
-    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues)
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues)
     func hideUser()
     func hideGroup()
     func hideMessageManipulation()
@@ -87,7 +87,7 @@ extension ChatInteractor: ChatPresentableListener {
         listener?.hideChat()
     }
     
-    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues) {
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         router?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: cellNewFrame)
     }
 }
