@@ -96,6 +96,7 @@ public class MessageContentCell: UITableViewCell {
         messageTimestampLabel.text = nil
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
+        contentView.isHidden = false
         super.prepareForReuse()
     }
     
@@ -107,12 +108,14 @@ public class MessageContentCell: UITableViewCell {
     func setup(with viewModel: TableViewCellModel) {
         
         guard let viewModel = viewModel as? ChatContentTableViewCellModel else { return }
+        messageModel = viewModel
         
         if viewModel is ChatTableViewTextMessageCellModel {
             self.horizontalStackViewContainerView.backgroundColor = UIColor.clear
         }
         
-        messageModel = viewModel
+        contentView.isHidden = viewModel.needHideMessage
+        
         readMessageImageContainerView.isHidden = viewModel.isIncomingMessage
         
         messageTimestampLabel.textColor = !viewModel.isIncomingMessage ? UIColor(named: .white50) : UIColor.black.withAlphaComponent(0.5)

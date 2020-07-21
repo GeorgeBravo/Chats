@@ -15,13 +15,15 @@ protocol ChatRouting: ViewableRouting {
     func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues)
     func hideUser()
     func hideGroup()
-    func hideMessageManipulation()
+    func hideMessageManipulation(completion: @escaping () -> Void)
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
 protocol ChatPresentable: Presentable {
     var listener: ChatPresentableListener? { get set }
 
+    func showAllMessages()
+    func execute(messageManipulationType: MessageManipulationType)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -67,8 +69,13 @@ extension ChatInteractor: ChatInteractable {
         router?.hideGroup()
     }
     
-    func hideMessageManipulation() {
-        router?.hideMessageManipulation()
+    func hideMessageManipulation(_ manipulationType: MessageManipulationType?) {
+        presenter.showAllMessages()
+        router?.hideMessageManipulation { [weak self] in
+            if let self = self, let manipulationType = manipulationType {
+                self.presenter.execute(messageManipulationType: manipulationType)
+            }
+        }
     }
     
 }

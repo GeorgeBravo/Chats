@@ -25,10 +25,17 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
     var chatType: ChatType
 
     var messageSelection: MessageSelection?
+    var needHideMessage: Bool
     
     // MARK: - Init
-
-    init(contact: ContactItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool, chatType: ChatType) {
+    init(contact: ContactItem,
+         timestamp: Date,
+         profileImage: UIImage?,
+         isMessageRead: Bool,
+         isIncomingMessage: Bool,
+         isMessageEdited: Bool,
+         chatType: ChatType,
+         needHideMessage: Bool) {
         self.contact = contact
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -36,5 +43,6 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
         self.chatType = chatType
+        self.needHideMessage = needHideMessage
     }
 }

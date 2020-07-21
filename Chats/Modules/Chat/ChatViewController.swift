@@ -67,8 +67,11 @@ final class ChatViewController: UIViewController {
     
     // MARK: - Data Source
     private var messageList: [MockMessage] = [] {
+        didSet { messageListDidChange() }
+    }
+    private var currentlyHiddenMessageId: String? {
         didSet {
-            messageListDidChange()
+            if currentlyHiddenMessageId != nil { messageListDidChange() }
         }
     }
     
@@ -177,7 +180,6 @@ final class ChatViewController: UIViewController {
     // MARK: - Private
     
     private func messageListDidChange() {
-        
         let sortedViewModels = groupSort(items: messageList, isAscending: true)
         
         let sections: [TableViewSectionModel] = sortedViewModels.map {
@@ -221,19 +223,25 @@ final class ChatViewController: UIViewController {
         }
         
         return groups.compactMap {
-            $0.compactMap { item in
-                guard let mockMessage = item as? MockMessage else { return nil }
+            $0.compactMap { [weak self] item in
+                guard let self = self, var mockMessage = item as? MockMessage else { return nil }
+                
+                if let currentlyHiddenMessageId = self.currentlyHiddenMessageId {
+                    mockMessage.setNeedHideMessage(currentlyHiddenMessageId == mockMessage.messageId)
+                }
                 
                 if var model = mockMessage.tableViewCellViewModel as? ChatContentTableViewCellModel {
                     model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
                         self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                        self?.currentlyHiddenMessageId = mockMessage.messageId
                     }
                     return model
                 } else {
                     return mockMessage.tableViewCellViewModel
+                    
                 }
             }
-
+            
         }
     }
     
@@ -311,16 +319,12 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        return 1
         guard let numberOfRowsInSection = sections?[section].cellModels.count else { return 0 }
         return numberOfRowsInSection
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = indexPath.section
-        let row = indexPath.row
-        //        guard let models = sections?[section].cellModels else { return UITableViewCell() }
-        guard let cellModel = sections?[section].cellModels[row] else { return UITableViewCell() }
+        guard let cellModel = sections?[indexPath.section].cellModels[indexPath.row] else { return UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(of: cellModel.cellType.classType)
         if let cell = cell as? TableViewCellSetup {
@@ -343,9 +347,27 @@ extension ChatViewController: UITableViewDataSource {
     }
 }
 
-extension ChatViewController: ChatPresentable {}
+// MARK: - ChatPresentable
+extension ChatViewController: ChatPresentable {
+    func showAllMessages() {
+        currentlyHiddenMessageId = nil
+        for (index, item) in messageList.enumerated() {
+            messageList[index].setNeedHideMessage(false)
+        }
+    }
+    
+    func execute(messageManipulationType: MessageManipulationType) {
+        UIAlertController.showAlert(viewController: self, title: LocalizationKeys.action.localized(), message: messageManipulationType.stringDescription, actions: [UIAlertAction.okAction()])
+    }
+}
+
+// MARK: - ChatViewControllable
 extension ChatViewController: ChatViewControllable {}
+
+// MARK: - BackButtonSettupable
 extension ChatViewController: BackButtonSettupable {}
+
+// MARK: - CollocutorNavBarSettupable
 extension ChatViewController: CollocutorNavBarSettupable {}
 
 extension ChatViewController {

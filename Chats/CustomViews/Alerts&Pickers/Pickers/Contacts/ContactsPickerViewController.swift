@@ -93,7 +93,6 @@ final class ContactsPickerViewController: UIViewController {
     deinit {
         // http://stackoverflow.com/questions/32675001/uisearchcontroller-warning-attempting-to-load-the-view-of-a-view-controller/
         let _ = searchController.view
-        Log("has deinitialized")
     }
     
     override func loadView() {
@@ -128,7 +127,6 @@ final class ContactsPickerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         preferredContentSize.height = tableView.contentSize.height
-        Log("preferredContentSize.height = \(preferredContentSize.height), tableView.contentSize.height = \(tableView.contentSize.height)")
     }
     
     func updateContacts() {
@@ -149,7 +147,6 @@ final class ContactsPickerViewController: UIViewController {
     }
     
     func checkStatus(completionHandler: @escaping ([String: [CNContact]]) -> ()) {
-        Log("status = \(CNContactStore.authorizationStatus(for: .contacts))")
         switch CNContactStore.authorizationStatus(for: .contacts) {
             
         case .notDetermined:
@@ -188,7 +185,6 @@ final class ContactsPickerViewController: UIViewController {
                 completionHandler(orderedContacts)
                 
             case .error(let error):
-                Log("------ error")
                 let alert = UIAlertController(style: .alert, title: "Error", message: error.localizedDescription)
                 alert.addAction(title: "OK") { [unowned self] action in
                     self.alertController?.dismiss(animated: true)
@@ -243,7 +239,6 @@ extension ContactsPickerViewController: UISearchResultsUpdating {
                     self.filteredContacts = contacts
                     self.tableView.reloadData()
                 case .error(let error):
-                    Log(error.localizedDescription)
                     self.tableView.reloadData()
                 }
             }
@@ -252,7 +247,6 @@ extension ContactsPickerViewController: UISearchResultsUpdating {
         }
         
         guard let selectedIndexPath = indexPathOfSelectedContact() else { return }
-        Log("selectedIndexPath = \(selectedIndexPath)")
         tableView.selectRow(at: selectedIndexPath, animated: false, scrollPosition: .none)
     }
 }
@@ -273,7 +267,6 @@ extension ContactsPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let contact = contact(at: indexPath) else { return }
         selectedContact = contact
-        Log(selectedContact?.displayName)
         selection?(selectedContact)
     }
 }
@@ -318,7 +311,6 @@ extension ContactsPickerViewController: UITableViewDataSource {
         
         if let selectedContact = selectedContact, selectedContact.value == contact.value {
             cell.setSelected(true, animated: true)
-            Log("indexPath = \(indexPath) is selected - \(contact.displayName) = \(cell.isSelected)")
             //cell.isSelected = true
         }
         

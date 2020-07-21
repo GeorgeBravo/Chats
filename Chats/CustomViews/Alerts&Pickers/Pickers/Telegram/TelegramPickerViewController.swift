@@ -165,11 +165,7 @@ final class TelegramPickerViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        Log("has deinitialized")
-    }
-    
+
     override func loadView() {
         view = tableView
     }
@@ -224,7 +220,6 @@ final class TelegramPickerViewController: UIViewController {
     }
     
     func checkStatus(completionHandler: @escaping ([PHAsset]) -> ()) {
-        Log("status = \(PHPhotoLibrary.authorizationStatus())")
         switch PHPhotoLibrary.authorizationStatus() {
             
         case .notDetermined:
@@ -263,7 +258,6 @@ final class TelegramPickerViewController: UIViewController {
                 completionHandler(assets)
                 
             case .error(let error):
-                Log("------ error")
                 let alert = UIAlertController(style: .alert, title: "Error", message: error.localizedDescription)
                 alert.addAction(title: "OK") { [unowned self] action in
                     self.alertController?.dismiss(animated: true)
@@ -481,7 +475,6 @@ extension TelegramPickerViewController: PhotoLayoutDelegate {
 extension TelegramPickerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Log("indexPath = \(indexPath)")
         DispatchQueue.main.async {
             self.action(for: self.buttons[indexPath.row])
         }

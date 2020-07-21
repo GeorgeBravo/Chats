@@ -157,7 +157,6 @@
 		2D65C21B24AE1A3F00C64534 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1E624AE1A3E00C64534 /* UIApplication+Extensions.swift */; };
 		2D65C21C24AE1A3F00C64534 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1E724AE1A3E00C64534 /* UIAlertController+Extensions.swift */; };
 		2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1E824AE1A3E00C64534 /* Optional+Extensions.swift */; };
-		2D65C21E24AE1A3F00C64534 /* Common+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1E924AE1A3E00C64534 /* Common+Extensions.swift */; };
 		2D65C21F24AE1A3F00C64534 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1EA24AE1A3E00C64534 /* Locale+Extensions.swift */; };
 		2D65C22024AE1A3F00C64534 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65C1EB24AE1A3E00C64534 /* UITextField+Extensions.swift */; };
 		2D6A76CD24BC5E7C0075A8C8 /* ChatTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A76CB24BC5E7B0075A8C8 /* ChatTableViewSectionModel.swift */; };
@@ -390,7 +389,6 @@
 		2D65C1E624AE1A3E00C64534 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C1E724AE1A3E00C64534 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C1E824AE1A3E00C64534 /* Optional+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
-		2D65C1E924AE1A3E00C64534 /* Common+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Common+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C1EA24AE1A3E00C64534 /* Locale+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
 		2D65C1EB24AE1A3E00C64534 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		2D6A76CB24BC5E7B0075A8C8 /* ChatTableViewSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewSectionModel.swift; sourceTree = "<group>"; };
@@ -1311,7 +1309,6 @@
 				2D65C1E624AE1A3E00C64534 /* UIApplication+Extensions.swift */,
 				2D65C1E724AE1A3E00C64534 /* UIAlertController+Extensions.swift */,
 				2D65C1E824AE1A3E00C64534 /* Optional+Extensions.swift */,
-				2D65C1E924AE1A3E00C64534 /* Common+Extensions.swift */,
 				2D65C1EA24AE1A3E00C64534 /* Locale+Extensions.swift */,
 				2D65C1EB24AE1A3E00C64534 /* UITextField+Extensions.swift */,
 			);
@@ -1889,7 +1886,6 @@
 				2D64CFE024A20EF000C8B94A /* DateFormatter+.swift in Sources */,
 				2D501BC124B321CF00C37DCB /* AttachmentManager.swift in Sources */,
 				2D65C21424AE1A3F00C64534 /* UIView+Extension.swift in Sources */,
-				2D65C21E24AE1A3F00C64534 /* Common+Extensions.swift in Sources */,
 				2D65C18F24ADF86600C64534 /* Date+.swift in Sources */,
 				2DDFA49924C6F68A007101C7 /* Int+DecimalFormatted.swift in Sources */,
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,

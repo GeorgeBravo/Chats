@@ -15,7 +15,8 @@ struct UserChatEntryTableViewCellModel: ChatTableViewCellModel {
     
     var timestamp: Date
     
-    init(userInviteModel: UserInviteModel, timestamp: Date) {
+    init(userInviteModel: UserInviteModel,
+         timestamp: Date) {
         self.userInviteModel = userInviteModel
         self.timestamp = timestamp
     }

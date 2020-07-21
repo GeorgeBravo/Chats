@@ -25,13 +25,13 @@ final class UserChatEntryTableViewCell: UITableViewCell {
     
     // MARK: - Views
     
-    fileprivate let titleLabel = UILabel
+    fileprivate lazy var titleLabel = UILabel
         .create {
             $0.font = UIFont.helveticaNeueFontOfSize(size: 12, style: .regular)
             $0.textColor = UIColor.white
     }
     
-    fileprivate let titleLabelContainerView = UIView
+    fileprivate lazy var titleLabelContainerView = UIView
         .create {
             $0.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
     }
@@ -40,6 +40,8 @@ final class UserChatEntryTableViewCell: UITableViewCell {
 // MARK: - Setup Views
 extension UserChatEntryTableViewCell: TableViewCellSetup {
     private func setupViews() {
+        selectionStyle = .none
+        
         addSubview(titleLabelContainerView) {
             $0.centerX == centerXAnchor
             $0.centerY == centerYAnchor
