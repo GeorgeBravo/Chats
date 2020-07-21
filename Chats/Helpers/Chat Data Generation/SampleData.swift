@@ -60,14 +60,14 @@ extension SampleData {
         
         if chatType == .group && shouldAddUserToChat {
             let userInviteModel = UserInviteModel(inviteeUserName: "Жорка", inviterUserName: arc4random_uniform(2) == 0 ? "Не Жорка" : nil)
-            let message = MockMessage(model: userInviteModel, date: dateAddingRandomTime, chatType: chatType)
-             messages.append(message)
-             shouldAddUserToChat = false
+            let message = MockMessage(model: userInviteModel, date: dateAddingRandomTime, chatType: chatType, messageId: UUID().uuidString)
+            messages.append(message)
+            shouldAddUserToChat = false
         } else {
             for _ in 0..<count {
                 let date = dateAddingRandomTime
                 let randomSentence = Lorem.sentence()
-                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType)
+                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType, messageId: UUID().uuidString)
                 messages.append(message)
             }
         }

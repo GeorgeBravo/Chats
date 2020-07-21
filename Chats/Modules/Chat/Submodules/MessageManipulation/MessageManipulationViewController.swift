@@ -11,6 +11,7 @@ import BRIck
 
 private struct Constants {
     static let estimatedCellHeigth: CGFloat = 100.0
+    static let tableViewBootomInset: CGFloat = 20.0
 }
 
 protocol MessageManipulationPresentableListener: class {
@@ -115,7 +116,7 @@ extension MessageManipulationViewController {
         }
         var safeAreaBottomInset: CGFloat = 0.0
         if let inset = UIApplication.shared.keyWindow?.safeAreaInsets.bottom {
-            safeAreaBottomInset = inset
+            safeAreaBottomInset = inset + Constants.tableViewBootomInset
         }
         messageManipulationTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: safeAreaBottomInset, right: 0.0)
         

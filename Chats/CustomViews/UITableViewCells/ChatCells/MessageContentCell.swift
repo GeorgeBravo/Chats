@@ -96,7 +96,6 @@ public class MessageContentCell: UITableViewCell {
         messageTimestampLabel.text = nil
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
-        contentView.isHidden = false
         super.prepareForReuse()
     }
     

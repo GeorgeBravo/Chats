@@ -60,9 +60,7 @@ struct MockMessage: ChatScreenDisplayingItems {
     
     var needHideMessage: Bool = false
     
-    var messageId: String {
-        UUID().uuidString
-    }
+    var messageId: String
     
     var tableViewCellViewModel: ChatTableViewCellModel {
         switch self.kind {
@@ -90,41 +88,42 @@ struct MockMessage: ChatScreenDisplayingItems {
     }
     
     // MARK: - Initialization
-    private init(kind: MessageKind, date: Date, isIncomingMessage: Bool = false, chatType: ChatType, needHideMessage: Bool = false) {
+    private init(kind: MessageKind, date: Date, isIncomingMessage: Bool = false, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
         self.kind = kind
         self.sentDate = date
         self.isIncomingMessage = isIncomingMessage
         self.needHideMessage = needHideMessage
         self.chatType = chatType
+        self.messageId = messageId
     }
 
-    init(text: String, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .text(text), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage)
+    init(text: String, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .text(text), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(assets: AssetMediaItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .asset(assets), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage)
+    init(assets: AssetMediaItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .asset(assets), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(location: LocationItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .location(location), date: date, chatType: chatType, needHideMessage: needHideMessage)
+    init(location: LocationItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .location(location), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(audioURL: URL, date: Date, chatType: ChatType, needHideMessage: Bool = false) {
+    init(audioURL: URL, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
         let audioItem = MockAudiotem(url: audioURL)
-        self.init(kind: .audio(audioItem), date: date, chatType: chatType, needHideMessage: needHideMessage)
+        self.init(kind: .audio(audioItem), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(contact: ContactItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .contact(contact), date: date, chatType: chatType, needHideMessage: needHideMessage)
+    init(contact: ContactItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .contact(contact), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(fileItem: FileItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .fileItem(fileItem), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage)
+    init(fileItem: FileItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .fileItem(fileItem), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(model: UserInviteModel, date: Date, chatType: ChatType, needHideMessage: Bool = false) {
-        self.init(kind: .addUserToChat(model), date: date, chatType: chatType, needHideMessage: needHideMessage)
+    init(model: UserInviteModel, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .addUserToChat(model), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
 }

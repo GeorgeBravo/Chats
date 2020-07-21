@@ -329,29 +329,29 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: photoData, videoURL: nil)
-                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockImageMessage)
             case .newVideo(let videoURL):
                 guard let videoURL = videoURL else { return }
                 alert.dismiss(animated: true, completion: nil)
                 let asset = AssetMediaItem(assets: nil, imageData: nil, videoURL: videoURL)
-                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockImageMessage = MockMessage(assets: asset, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockImageMessage)
             case .photo(let assets):
                 let assets = AssetMediaItem(assets: assets)
-                let mockAssetMessage = MockMessage(assets: assets, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockAssetMessage = MockMessage(assets: assets, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockAssetMessage)
             case .contact(let contact):
                 guard let contact = contact else { return }
-                let mockContactMessage = MockMessage(contact: contact, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockContactMessage = MockMessage(contact: contact, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockContactMessage)
             case .location(let location):
                 guard let location = location else { return }
-                let mockLocationMessage = MockMessage(location: location, date: Date(), isIncomingMessage: false, chatType: self.chatType)
+                let mockLocationMessage = MockMessage(location: location, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockLocationMessage)
             case .file(let file):
                 guard let file = file else { return }
-                let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType)
+                let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockFileMessage)
             }
             self.messageInputBar.inputTextView.text = ""
@@ -363,7 +363,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType)
+        let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
         listener?.messageList.append(mockTextMessage)
     }
 }
