@@ -6,7 +6,6 @@
 #optionsRedColor: #ed1c24
 #whiteColor: #ffffff
 #separatorColor: #a2a9b6
-#descriptionGrayColor: #a5aab1
 #blackColor: #000000
 #coolGreyTwo: #a5aab1
 #slateGrey: #60676f
@@ -21,4 +20,4 @@
 #steel: #8e8e92
 #greyish: #b7b7b7
 #white50: #fcfcfc
-
+#messageManipulationSeparator: #d2d5d8

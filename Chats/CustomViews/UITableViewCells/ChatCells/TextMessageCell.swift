@@ -44,7 +44,7 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         
         textView.backgroundColor = UIColor.clear
         textView.textAlignment = .left
-        
+        textView.isUserInteractionEnabled = false
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.showsVerticalScrollIndicator =  false

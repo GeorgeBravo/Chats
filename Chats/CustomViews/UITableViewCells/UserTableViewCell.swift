@@ -13,7 +13,7 @@ private struct Constants {
     static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 20.0
     static let profileImageHeight: CGFloat = 48.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
     static let bigFontSize: CGFloat = 18.0
     static let stackViewItemsSpacing: CGFloat = 0.0
     static let mediumFontSize: CGFloat = 14.0
@@ -52,7 +52,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
         let label = UILabel()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.textColor = UIColor(named: .descriptionGrayColor)
+        label.textColor = UIColor(named: .coolGreyTwo)
         label.font = UIFont.helveticaNeueFontOfSize(size: Constants.smallFontSize, style: .regular)
         label.text = LocalizationKeys.author.localized()
         return label
@@ -60,7 +60,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
     
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: .separatorColor)
+        view.backgroundColor = UIColor(named: .coolGrey)
         return view
     }()
     

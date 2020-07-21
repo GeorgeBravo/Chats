@@ -41,6 +41,7 @@ extension ChatBuilder: ChatBuildable {
 
         let collocutorProfileBuilder = CollocutorProfileBuilder(dependency: component)
         let groupProfileBuilder = GroupProfileBuilder(dependency: component)
-        return ChatRouter(interactor: interactor, viewController: viewController, collocutorProfileBuilder, groupProfileBuilder)
+        let messageManipulationBuilder = MessageManipulationBuilder(dependency: component)
+        return ChatRouter(interactor: interactor, viewController: viewController, collocutorProfileBuilder, groupProfileBuilder, messageManipulationBuilder)
     }
 }

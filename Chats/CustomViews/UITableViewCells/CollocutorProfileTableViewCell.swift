@@ -12,7 +12,7 @@ private struct Constants {
     static let profileImageHeight: CGFloat = 100.0
     static let nameLabelTopSpacing: CGFloat = 8.0
     static let labelTopSpacing: CGFloat = 2.0
-    static let separatorHeight: CGFloat = 0.4
+    static let separatorHeight: CGFloat = 0.5
     static let lastSeenLabelFontSize: CGFloat = 16.0
     static let buttonStackLeadingOffset: CGFloat = 32.0
     static let buttonStackTopOffset: CGFloat = 24.0
@@ -57,7 +57,7 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: .blackColor)
-        view.alpha = 0.5
+        view.alpha = 0.1
         return view
     }()
     
@@ -129,8 +129,13 @@ extension CollocutorProfileTableViewCell {
     }
     
     func update(with offset: CGFloat) {
-        let fontSize = collocutorNameLabelFontSize(with: offset)
-        collocutorNameLabel.font = UIFont.helveticaNeueFontOfSize(size: fontSize, style: .bold)
+        let previousFontSize = collocutorNameLabel.font.pointSize
+        let newFontSize = collocutorNameLabelFontSize(with: offset)
+        collocutorNameLabel.layer.removeAllAnimations()
+        let scale = newFontSize / previousFontSize
+        UIView.animate(withDuration: 1.25) { [weak self] in
+            self?.collocutorNameLabel.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
     }
     
     func collocutorNameLabelFontSize(with offset: CGFloat) -> CGFloat {

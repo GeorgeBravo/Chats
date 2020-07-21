@@ -10,6 +10,13 @@ import UIKit
 import MapKit
 import BRIck
 
+struct FrameValues {
+    var xPositionValue: CGFloat
+    var yPositionValue: CGFloat
+    var heightValue: CGFloat
+    var widthValue: CGFloat
+}
+
 protocol ChatPresentableListener: class {
     
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
@@ -17,6 +24,7 @@ protocol ChatPresentableListener: class {
     func showUser(with profile: Collocutor)
     func showGroupProfile()
     func hideChat()
+    func showMessageManipulation(with chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: FrameValues)
 }
 
 final class ChatViewController: UIViewController {
@@ -166,8 +174,6 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
         
-        
-        
         return tableView
     }()
     
@@ -220,8 +226,21 @@ final class ChatViewController: UIViewController {
             }
         }
         
-        return groups.compactMap { $0.compactMap { $0.tableViewCellViewModel }
+        return groups.compactMap {
+            $0.compactMap { item in
+                guard let mockMessage = item as? MockMessage else { return nil }
+                var model = mockMessage.tableViewCellViewModel()
+                model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
+                    self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                }
+                return model
+            }
         }
+    }
+    
+    func showSelectedMessageOptions(chatTableViewCellModel: ChatTableViewCellModel, cellNewFrame: CGRect) {
+        let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
+        listener?.showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
 }
 
@@ -240,6 +259,7 @@ extension ChatViewController {
                 self.navigationController!.navigationBar.frame.height
             $0.height == 100 - height
         }
+        
         view.addSubview(tableView) {
             $0.top == underneathView.bottomAnchor
             $0.leading == view.leadingAnchor
@@ -259,15 +279,14 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @objc
-    private func onBackButtonTapped() {
+    @objc private func onBackButtonTapped() {
         listener?.hideChat()
     }
     
     @objc
     private func onCollocutorViewTapped() {
         listener?.showUser(with: collocutor)
-        //        listener?.showGroupProfile()
+//        listener?.showGroupProfile()
     }
 }
 
@@ -402,6 +421,3 @@ extension ChatViewController: UIScrollViewDelegate {
         
     }
 }
-
-
-

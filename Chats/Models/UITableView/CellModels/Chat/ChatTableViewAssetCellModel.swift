@@ -9,6 +9,8 @@
 import UIKit
 
 struct ChatTableViewAssetCellModel: ChatTableViewCellModel {
+    
+    // MARK: - Variables
     var cellType: TableViewCellType! { return .assets }
     
     var timestamp: Date
@@ -19,7 +21,9 @@ struct ChatTableViewAssetCellModel: ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+    var messageSelection: MessageSelection?
 
+    // MARK: - Init
     init(assets: MediaItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
         self.assets = assets
         self.timestamp = timestamp
@@ -28,4 +32,5 @@ struct ChatTableViewAssetCellModel: ChatTableViewCellModel {
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
     }
+    
 }
