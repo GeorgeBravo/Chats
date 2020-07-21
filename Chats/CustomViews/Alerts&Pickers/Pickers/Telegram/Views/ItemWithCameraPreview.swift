@@ -71,8 +71,7 @@ class ItemWithCameraPreview: UICollectionViewCell {
         cameraPreviewLayer.contentsRect = bounds
         cameraPreviewLayer.cornerRadius = 12.0
         cameraPreviewLayer.masksToBounds = true
-        imageLayer.frame = CGRect(bounds.width * 0.25, bounds.height * 0.25, bounds.width * 0.5, bounds.height * 0.5)
-        
+        imageLayer.frame = CGRect(x: bounds.midX - (bounds.width * 0.344 / 2), y: bounds.midY - (bounds.height * 0.304 / 2), width: bounds.width * 0.344, height: bounds.height * 0.304)
     }
     
 }
