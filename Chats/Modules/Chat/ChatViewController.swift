@@ -220,7 +220,61 @@ extension ChatViewController {
 }
 
 //MARK: - UITableViewDelegate
-extension ChatViewController: UITableViewDelegate {}
+extension ChatViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == tableView else { return }
+        showHeader()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == tableView else { return }
+        showOrHideHeader()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView == tableView else { return }
+        showOrHideHeader()
+    }
+    
+    private func showOrHideHeader(hideDuration: Double = 1.0) {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        let needToShowHeader: Bool = firstVisibleCellIndexPath.row == 0 ? true : false
+        
+        switch needToShowHeader {
+        case true:
+            showHeader()
+        case false:
+            hideHeader(with: hideDuration)
+        }
+    }
+    
+    private func showHeader() {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        guard let header = tableView.headerView(forSection: firstVisibleCellIndexPath.section) else { return }
+        let headerAlpha: CGFloat = 1.0
+        
+        header.isHidden = false
+        UIView.animate(withDuration: 0.1) {
+            header.alpha = headerAlpha
+        }
+    }
+    
+    private func hideHeader(with duration: Double =  1.0) {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        guard let header = tableView.headerView(forSection: firstVisibleCellIndexPath.section) else { return }
+        let headerAlpha: CGFloat = 0.0
+        
+        UIView.animate(withDuration: duration) {
+            header.alpha = headerAlpha
+        }
+    }
+}
 
 //MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
@@ -264,7 +318,9 @@ extension ChatViewController: ChatPresentable {
     #warning("Change logic to section reload.")
     func reloadTableView() {
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.tableView.reloadData() { [weak self] in
+                self?.showOrHideHeader(hideDuration: 0.0)
+            }
         }
     }
     
@@ -300,11 +356,13 @@ extension ChatViewController {
         messageInputBar.delegate = self
         
         messageInputBar.isTranslucent = true
+
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .black
+
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        
+
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -354,8 +412,8 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockFileMessage)
             }
-            self.messageInputBar.inputTextView.text = ""
         }
+        
         alert.addAction(title: "Cancel", style: .cancel)
         self.present(alert, animated: true, completion: nil)
     }
@@ -364,6 +422,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
+        self.messageInputBar.inputTextView.text = ""
         listener?.messageList.append(mockTextMessage)
     }
 }
