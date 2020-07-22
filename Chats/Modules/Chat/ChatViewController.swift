@@ -233,7 +233,61 @@ extension ChatViewController {
 }
 
 //MARK: - UITableViewDelegate
-extension ChatViewController: UITableViewDelegate {}
+extension ChatViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == tableView else { return }
+        showHeader()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == tableView else { return }
+        showOrHideHeader()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView == tableView else { return }
+        showOrHideHeader()
+    }
+    
+    private func showOrHideHeader(hideDuration: Double = 1.0) {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        let needToShowHeader: Bool = firstVisibleCellIndexPath.row == 0 ? true : false
+        
+        switch needToShowHeader {
+        case true:
+            showHeader()
+        case false:
+            hideHeader(with: hideDuration)
+        }
+    }
+    
+    private func showHeader() {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        guard let header = tableView.headerView(forSection: firstVisibleCellIndexPath.section) else { return }
+        let headerAlpha: CGFloat = 1.0
+        
+        header.isHidden = false
+        UIView.animate(withDuration: 0.1) {
+            header.alpha = headerAlpha
+        }
+    }
+    
+    private func hideHeader(with duration: Double =  1.0) {
+        guard let firstVisibleCell = tableView.visibleCells.first else { return }
+        guard let firstVisibleCellIndexPath = tableView.indexPath(for: firstVisibleCell) else { return }
+        
+        guard let header = tableView.headerView(forSection: firstVisibleCellIndexPath.section) else { return }
+        let headerAlpha: CGFloat = 0.0
+        
+        UIView.animate(withDuration: duration) {
+            header.alpha = headerAlpha
+        }
+    }
+}
 
 //MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
@@ -277,7 +331,9 @@ extension ChatViewController: ChatPresentable {
     #warning("Change logic to section reload.")
     func reloadTableView() {
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.tableView.reloadData() { [weak self] in
+                self?.showOrHideHeader(hideDuration: 0.0)
+            }
         }
     }
     
