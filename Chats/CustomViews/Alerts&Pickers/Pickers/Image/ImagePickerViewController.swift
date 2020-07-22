@@ -108,10 +108,6 @@ final class ImagePickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        Log("has deinitialized")
-    }
-    
     override func loadView() {
         view = collectionView
     }
@@ -173,7 +169,6 @@ extension ImagePickerViewController: UICollectionViewDataSource {
 extension ImagePickerViewController: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        Log("view size = \(view.bounds), collectionView = \(collectionView.size), itemSize = \(itemSize)")
         return itemSize
     }
 }

@@ -61,7 +61,7 @@ enum CollocutorOptionType: Int {
     var buttonTextColorName: ColorName {
         switch self.cellAppearance {
         case .arrowCell: return ColorName.optionsBlackColor
-        case .destructive: return ColorName.optionsRedColor
+        case .destructive: return ColorName.pinkishRedTwo
         case .standard: return ColorName.optionsBlueColor
         }
     }

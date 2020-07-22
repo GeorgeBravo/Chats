@@ -37,7 +37,7 @@ protocol ChatListPresentableListener: class {
     func deleteChats(chatIds: [Int])
     func setupContent()
     
-    func showChat()
+    func showChat(of type: ChatType)
 }
 
 final class ChatListViewController: UITableViewController {
@@ -347,6 +347,17 @@ extension ChatListViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listener?.showChat()
+        
+        
+        if indexPath.section == 0 {
+            switch indexPath.row {
+            case 0:
+                listener?.showChat(of: .group)
+            case 1:
+                listener?.showChat(of: .oneToOne)
+            default:
+                break
+            }
+        }
     }
 }

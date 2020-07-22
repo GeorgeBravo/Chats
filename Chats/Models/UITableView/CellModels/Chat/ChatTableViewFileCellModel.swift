@@ -6,10 +6,10 @@
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-struct ChatTableViewFileCellModel : ChatTableViewCellModel {
+struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
+
     var cellType: TableViewCellType! { return .file }
     
     var timestamp: Date
@@ -20,13 +20,28 @@ struct ChatTableViewFileCellModel : ChatTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+
+    var messageSelection: MessageSelection?
+    var needHideMessage: Bool
     
-    init(fileItem: FileItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
+    var chatType: ChatType
+
+    // MARK: - Init
+    init(fileItem: FileItem,
+         timestamp: Date,
+         profileImage: UIImage?,
+         isMessageRead: Bool,
+         isIncomingMessage: Bool,
+         isMessageEdited: Bool,
+         chatType: ChatType,
+         needHideMessage: Bool) {
         self.file = fileItem
         self.timestamp = timestamp
         self.profileImage = profileImage
         self.isMessageRead = isMessageRead
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
+        self.chatType = chatType
+        self.needHideMessage = needHideMessage
     }
 }

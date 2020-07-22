@@ -69,6 +69,7 @@ final class GroupProfileViewController: UIViewController {
 extension GroupProfileViewController {
     private func setupViews() {
         navigationController?.setNavigationBarAppearance(true, bigFont: false)
+        navigationController?.navigationBar.shadowImage = UIColor.black.as1ptImage()
         navigationItem.title = LocalizationKeys.groupInfo.localized()
         setupBackButton(target: self, action: #selector(backButtonTapped))
         setupEditButton(target: self, action: #selector(editButtonPressed))

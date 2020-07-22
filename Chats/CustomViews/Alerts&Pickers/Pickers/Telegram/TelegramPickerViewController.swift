@@ -132,8 +132,9 @@ final class TelegramPickerViewController: UIViewController {
     }
     
     // MARK: Properties
+
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
-    
+
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
         $0.delegate = self
@@ -204,11 +205,7 @@ final class TelegramPickerViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        Log("has deinitialized")
-    }
-    
+
     override func loadView() {
         view = tableView
     }
@@ -270,7 +267,6 @@ final class TelegramPickerViewController: UIViewController {
     }
     
     func checkStatus(completionHandler: @escaping ([PHAsset]) -> ()) {
-        Log("status = \(PHPhotoLibrary.authorizationStatus())")
         switch PHPhotoLibrary.authorizationStatus() {
             
         case .notDetermined:
@@ -309,7 +305,6 @@ final class TelegramPickerViewController: UIViewController {
                 completionHandler(assets)
                 
             case .error(let error):
-                Log("------ error")
                 let alert = UIAlertController(style: .alert, title: "Error", message: error.localizedDescription)
                 alert.addAction(title: "OK") { [unowned self] action in
                     self.alertController?.dismiss(animated: true)
@@ -348,6 +343,7 @@ final class TelegramPickerViewController: UIViewController {
         
         if (previousCount == 0 && currentCount > 0) || (previousCount > 0 && currentCount == 0) {
             self.view.layoutIfNeeded()
+
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.layoutIfNeeded()
                 self.layout.invalidateLayout()
@@ -552,7 +548,6 @@ extension TelegramPickerViewController: PhotoLayoutDelegate {
 extension TelegramPickerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Log("indexPath = \(indexPath)")
         DispatchQueue.main.async {
             self.action(for: self.buttons[indexPath.row])
         }

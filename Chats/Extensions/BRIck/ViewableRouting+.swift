@@ -14,6 +14,7 @@ extension ViewableRouting {
     func present(_ routerToParent: ViewableRouting,
                  animated flag: Bool,
                  embedInNavigationController: Bool = false,
+                 modalPresentationStyle: UIModalPresentationStyle = .fullScreen,
                  completion: (() -> Void)? = nil) {
         let vc: UIViewController
         if embedInNavigationController {
@@ -22,7 +23,7 @@ extension ViewableRouting {
             vc = routerToParent.viewControllable
         }
 
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = modalPresentationStyle
 
         viewControllable.present(vc, animated: flag, completion: completion)
     }
@@ -40,7 +41,6 @@ extension ViewableRouting {
         }
         
         viewControllable.modalPresentationStyle = modalPresentationStyle
-        
         viewControllable.present(vc, animated: flag, completion: completion)
     }
 

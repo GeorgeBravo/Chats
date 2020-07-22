@@ -41,12 +41,10 @@ extension RootBuilder: RootBuildable {
         let component = RootComponent(dependency: dependency, rootViewController: viewController)
         let interactor = RootInteractor(presenter: viewController)
         
-        let chatBuilder = ChatBuilder(dependency: component)
         let chatListBuilder = ChatListBuilder(dependency: component)
 
         return RootRouter(interactor: interactor,
                           viewController: viewController,
-                          chatBuilder,
                           chatListBuilder)
     }
 }

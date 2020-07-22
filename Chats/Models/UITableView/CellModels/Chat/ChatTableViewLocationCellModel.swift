@@ -8,7 +8,9 @@
 
 import UIKit
 
-struct ChatTableViewLocationCellModel: ChatTableViewCellModel {
+struct ChatTableViewLocationCellModel: ChatContentTableViewCellModel {
+    
+    // MARK: - Variables
     var cellType: TableViewCellType! { return .location }
     
     var timestamp: Date
@@ -20,13 +22,29 @@ struct ChatTableViewLocationCellModel: ChatTableViewCellModel {
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
     
-    init(locationItem: LocationItem, timestamp: Date, profileImage: UIImage?, isMessageRead: Bool, isIncomingMessage: Bool, isMessageEdited: Bool) {
+    var messageSelection: MessageSelection?
+    var needHideMessage: Bool
+    
+    var chatType: ChatType
+    
+
+    // MARK: - Init
+    init(locationItem: LocationItem,
+         timestamp: Date,
+         profileImage: UIImage?,
+         isMessageRead: Bool,
+         isIncomingMessage: Bool,
+         isMessageEdited: Bool,
+         chatType: ChatType,
+         needHideMessage: Bool) {
         self.locationItem = locationItem
         self.timestamp = timestamp
         self.profileImage = profileImage
         self.isMessageRead = isMessageRead
         self.isIncomingMessage = isIncomingMessage
         self.isMessageEdited = isMessageEdited
+        self.chatType = chatType
+        self.needHideMessage = needHideMessage
     }
 }
 

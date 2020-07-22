@@ -94,24 +94,10 @@ extension ContactMessageCell {
         
         messageContainerView.addSubview(stackView) {
             $0.top == messageContainerView.topAnchor + 10
-            $0.bottom == messageContainerView.bottomAnchor - 20
+            $0.bottom == horizontalStackViewContainerView.topAnchor
             $0.leading == contactImageView.trailingAnchor + 10
             $0.trailing == messageContainerView.trailingAnchor - 10
             $0.width == UIScreen.main.bounds.width * 0.4
         }
-        
-//        messageContainerView.addSubview(displayNameLabel) {
-//            $0.top == messageContainerView.topAnchor + 10
-//            $0.leading == contactImageView.trailingAnchor + 10
-//            $0.trailing == messageContainerView.trailingAnchor - 10
-//            $0.width == UIScreen.main.bounds.width * 0.4
-//        }
-//
-//        messageContainerView.addSubview(phoneNumberLabel) {
-//            $0.top == displayNameLabel.bottomAnchor + 2
-//            $0.bottom == messageContainerView.bottomAnchor - 20
-//            $0.leading == contactImageView.trailingAnchor + 10
-//            $0.trailing == messageContainerView.trailingAnchor - 10
-//        }
     }
 }

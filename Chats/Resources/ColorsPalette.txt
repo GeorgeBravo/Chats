@@ -3,15 +3,11 @@
 
 #optionsBlackColor: #262626
 #optionsBlueColor: #504eeb
-#optionsRedColor: #ed1c24
 #whiteColor: #ffffff
-#separatorColor: #a2a9b6
-#descriptionGrayColor: #a5aab1
 #blackColor: #000000
 #coolGreyTwo: #a5aab1
 #slateGrey: #60676f
 #coolGrey: #a2a9b6
-#presenceDescriptionColor: #8e8e92
 #pinkishRedTwo: #ed1c24
 #electricBlue: #0048ff
 #brightCyan: #40ddf3
@@ -21,4 +17,4 @@
 #steel: #8e8e92
 #greyish: #b7b7b7
 #white50: #fcfcfc
-
+#messageManipulationSeparator: #d2d5d8
