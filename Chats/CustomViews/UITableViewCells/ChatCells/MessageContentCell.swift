@@ -62,7 +62,7 @@ public class MessageContentCell: UITableViewCell {
             $0.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
     }
     
-    private lazy var messageReactionImageVIew = UIImageView
+    private lazy var messageReactionImageView = UIImageView
         .create {
             $0.image = UIImage(named: "smiley")
             $0.contentMode = .scaleAspectFit
@@ -91,7 +91,7 @@ public class MessageContentCell: UITableViewCell {
     
     public override func prepareForReuse() {
         profileImageView.removeFromSuperview()
-        messageReactionImageVIew.removeFromSuperview()
+        messageReactionImageView.removeFromSuperview()
         readMessageImageView.image = nil
         messageTimestampLabel.text = nil
         trailingConstraint?.isActive = false
@@ -148,7 +148,7 @@ public class MessageContentCell: UITableViewCell {
             
             leadingConstraint?.isActive = true
             
-            contentView.addSubview(messageReactionImageVIew) {
+            contentView.addSubview(messageReactionImageView) {
                 $0.size([\.all: 20])
                 $0.leading == messageContainerView.trailingAnchor + 10
                 $0.top == messageContainerView.topAnchor + 5

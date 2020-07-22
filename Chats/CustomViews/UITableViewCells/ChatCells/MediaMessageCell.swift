@@ -47,7 +47,7 @@ final class MediaMessageCell: MessageContentCell {
             self.assetImageView.image = image
             playButtonView.isHidden = true
         }
-        if let videoURl = model.assets.videoURL {
+        if let _ = model.assets.videoURL {
             self.assetImageView.backgroundColor = .black
             playButtonView.isHidden = false
         }

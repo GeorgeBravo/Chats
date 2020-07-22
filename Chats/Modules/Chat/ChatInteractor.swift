@@ -96,7 +96,7 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
         }
     }
     
-    private func showSelectedMessageOptions(chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: CGRect) {
+    private func showSelectedMessageManipulations(chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: CGRect) {
         let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
         showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
@@ -157,7 +157,7 @@ extension ChatInteractor {
                 
                 if var model = mockMessage.tableViewCellViewModel as? ChatContentTableViewCellModel {
                     model.messageSelection = { [weak self] chatTableViewCellModel, cellNewFrame in
-                        self?.showSelectedMessageOptions(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+                        self?.showSelectedMessageManipulations(chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
                         self?.currentlyHiddenMessageId = mockMessage.messageId
                     }
                     return model

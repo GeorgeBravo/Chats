@@ -119,4 +119,11 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
         return IndexPath(row: lastCellIndex, section: lastSectionIndex)
     }
     
+    func firstItemIndexPath() -> IndexPath? {
+        if sectionModels.count > 0 && sectionModels[0].cellModels.count > 0 {
+            return IndexPath(row: 0, section: 0)
+        }
+        return nil
+    }
+    
 }
