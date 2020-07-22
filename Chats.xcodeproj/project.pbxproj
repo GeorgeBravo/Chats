@@ -1588,6 +1588,7 @@
 				2D64CF4724A1FE7400C8B94A /* Frameworks */,
 				2D64CF4824A1FE7400C8B94A /* Resources */,
 				CE71CFC724B4B20B00862A73 /* SwiftGen */,
+				CE97E3D424C7BC6A00DB8737 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -1692,6 +1693,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT\"/SwiftGen/bin/swiftgen config run --config swiftgen.yml\n\n";
+		};
+		CE97E3D424C7BC6A00DB8737 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
