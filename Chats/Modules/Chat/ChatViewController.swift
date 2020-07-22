@@ -152,10 +152,15 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
         
+        tableView.showsHorizontalScrollIndicator = false
+        
         return tableView
     }()
     
     private lazy var underneathView = UnderneathView
+        .create { _ in }
+    
+    private lazy var chatScrollDownView = ChatScrollDownView
         .create { _ in }
     
     // MARK: - Private
@@ -186,6 +191,11 @@ extension ChatViewController {
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
         }
         
+        view.addSubview(chatScrollDownView) {
+            $0.trailing == view.trailingAnchor - 10
+            $0.bottom == view.bottomAnchor - chatTableViewBottomInset
+        }
+        
         unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
         
         switch chatType {
@@ -198,6 +208,9 @@ extension ChatViewController {
         configureMessageInputBar()
         
         typingIndicatorView.isHidden = true
+        
+        
+        
     }
 }
 
@@ -282,6 +295,8 @@ extension ChatViewController: ChatPresentable {
     func onNewMessage() {
         UIView.animate(withDuration: 0.1, animations: {
             self.tableView.tableFooterView?.isHidden = true
+            
+//            if self.tableView.scrollview
         }, completion: nil)
     }
 }
