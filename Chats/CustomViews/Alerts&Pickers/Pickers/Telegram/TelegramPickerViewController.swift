@@ -95,6 +95,7 @@ final class TelegramPickerViewController: UIViewController {
     }
     
     // MARK: Properties
+    var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
     
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
@@ -182,6 +183,7 @@ final class TelegramPickerViewController: UIViewController {
             preferredContentSize.width = UIScreen.main.bounds.width * 0.5
         }
         
+        setupGesture()
         checkCameraAuthorizationStatus()
         updatePhotos()
     }
@@ -195,6 +197,12 @@ final class TelegramPickerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         layoutSubviews()
     }
+    
+    func setupGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(dissmisTelegramWithSwipe))
+        self.view.addGestureRecognizer(panGesture)
+    }
+    
     
     func layoutSubviews() {
         tableView.tableHeaderView?.height = preferredHeight
@@ -303,7 +311,7 @@ final class TelegramPickerViewController: UIViewController {
         
         if (previousCount == 0 && currentCount > 0) || (previousCount > 0 && currentCount == 0) {
             self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.view.layoutIfNeeded()
                 self.layout.invalidateLayout()
             }) { finished in
@@ -368,6 +376,17 @@ final class TelegramPickerViewController: UIViewController {
         imagePickerWindow?.rootViewController?.present(pickerController, animated: true, completion: nil)
     }
     
+    @objc func dissmisTelegramWithSwipe(_ sender: UIPanGestureRecognizer) {
+        let touchPoint = sender.location(in: self.view?.window)
+        
+        if sender.state == UIGestureRecognizer.State.began {
+            initialTouchPoint = touchPoint
+        } else if sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled {
+            if touchPoint.y - initialTouchPoint.y > 100 {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
 }
 
 // MARK: - TableViewDelegate
