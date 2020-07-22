@@ -7,5 +7,16 @@
 //
 
 import Foundation
+import UIKit
 
-//extension UIView: Creatable {}
+extension UIView: Creatable {}
+
+extension Creatable where Self: UIView {
+    @discardableResult
+    static func create( configure: (Self) -> Void = { _ in }) -> Self {
+        let view = Self()
+        configure(view)
+
+        return view
+    }
+}

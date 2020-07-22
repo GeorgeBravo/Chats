@@ -8,9 +8,6 @@
 
 import UIKit
 
-extension UIView: Configure {}
-extension UIView: Create {}
-
 public extension UIView {
     var borderColor: UIColor? {
         get {

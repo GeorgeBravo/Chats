@@ -300,11 +300,13 @@ extension ChatViewController {
         messageInputBar.delegate = self
         
         messageInputBar.isTranslucent = true
+
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .black
+
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        
+
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -354,8 +356,8 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockFileMessage)
             }
-            self.messageInputBar.inputTextView.text = ""
         }
+        
         alert.addAction(title: "Cancel", style: .cancel)
         self.present(alert, animated: true, completion: nil)
     }
@@ -364,6 +366,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
+        self.messageInputBar.inputTextView.text = ""
         listener?.messageList.append(mockTextMessage)
     }
 }
