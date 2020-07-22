@@ -51,8 +51,8 @@ extension ChatSectionHeaderView {
         }
         
         containerView.addSubview(titleLabel) {
-            $0.centerX == centerXAnchor
-            $0.centerY == centerYAnchor
+//            $0.centerX == centerXAnchor
+//            $0.centerY == centerYAnchor
             $0.top == containerView.topAnchor + 5
             $0.leading == containerView.leadingAnchor + 10
             $0.bottom == containerView.bottomAnchor - 5

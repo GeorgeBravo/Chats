@@ -107,17 +107,17 @@ final class ChatViewController: UIViewController {
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-            chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
+//            chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
         }
         
-        adjustScrollViewTopInset()
+//        adjustScrollViewTopInset()
     }
     
     public override func viewSafeAreaInsetsDidChange() {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
         }
-        chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
+//        chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
     }
     
     deinit {
@@ -152,7 +152,7 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true
         
-        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
         
         return tableView
     }()
@@ -161,11 +161,26 @@ final class ChatViewController: UIViewController {
         .create { _ in }
     
     private lazy var chatScrollDownView = ChatScrollDownView
-        .create { _ in }
+        .create {
+            $0.isHidden = true
+            $0.onArrowDidTap = { [unowned self] in
+                self.tableView.scrollToLastItem()
+            }
+    }
     
     // MARK: - Private
     
-    
+    private func showChatScrollDownViewIfNeeded() {
+        guard let lastVisibleCell = tableView.visibleCells.last,
+            let lastVisibleCellIndexPath = tableView.indexPath(for: lastVisibleCell),
+            let numberOfRowsInSection = listener?.numberOfRows(in: lastVisibleCellIndexPath.section) else { return }
+        
+        if numberOfRowsInSection - 1 >= lastVisibleCellIndexPath.row + 1 {
+            chatScrollDownView.isHidden = false
+        } else {
+            chatScrollDownView.isHidden = true
+        }
+    }
 }
 
 //MARK: - Setup subviews
@@ -193,7 +208,7 @@ extension ChatViewController {
         
         view.addSubview(chatScrollDownView) {
             $0.trailing == view.trailingAnchor - 10
-            $0.bottom == view.bottomAnchor - chatTableViewBottomInset
+            $0.bottom == view.bottomAnchor - 100
         }
         
         unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
@@ -208,9 +223,6 @@ extension ChatViewController {
         configureMessageInputBar()
         
         typingIndicatorView.isHidden = true
-        
-        
-        
     }
 }
 
@@ -236,6 +248,8 @@ extension ChatViewController {
 extension ChatViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == tableView else { return }
+        
+        showChatScrollDownViewIfNeeded()
         showHeader()
     }
     
@@ -311,6 +325,20 @@ extension ChatViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        showChatScrollDownViewIfNeeded()
+//                let section = indexPath.section
+//
+//                if let lastCellRowIndex = tableView.indexPathsForVisibleRows?.last?.row,
+//                    let numberOfRowsInSection = listener?.numberOfRows(in: section) {
+//                    if numberOfRowsInSection - 1 >= lastCellRowIndex {
+//                        chatScrollDownView.isHidden = false
+//                    } else {
+//                        chatScrollDownView.isHidden = true
+//                    }
+//                }
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionModel = listener?.sectionModel(for: section),
             let classType = sectionModel.headerViewType.classType else { return nil }
@@ -348,11 +376,21 @@ extension ChatViewController: ChatPresentable {
         }, completion: nil)
     }
     
-    func onNewMessage() {
+    func onNewMessage(_ message: MockMessage) {
         UIView.animate(withDuration: 0.1, animations: {
             self.tableView.tableFooterView?.isHidden = true
             
-//            if self.tableView.scrollview
+            if case .addUserToChat = message.messageKind { return }
+            
+            if !message.isIncomingMessage {
+                self.tableView.scrollToLastItem()
+            } else {
+                if self.chatScrollDownView.isHidden {
+                    self.tableView.scrollToLastItem()
+                } else {
+                    self.chatScrollDownView.unreadMessageCount += 1
+                }
+            }
         }, completion: nil)
     }
 }
@@ -371,13 +409,13 @@ extension ChatViewController {
         messageInputBar.delegate = self
         
         messageInputBar.isTranslucent = true
-
+        
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .black
-
+        
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-
+        
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -436,8 +474,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
+        var mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
         self.messageInputBar.inputTextView.text = ""
         listener?.messageList.append(mockTextMessage)
+        onNewMessage(mockTextMessage)
     }
 }

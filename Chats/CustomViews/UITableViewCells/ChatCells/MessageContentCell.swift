@@ -80,9 +80,6 @@ public class MessageContentCell: UITableViewCell {
         stackView.distribution = .fillProportionally
         stackView.spacing = 6
         
-        stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.red.cgColor
-        
         return stackView
     }()
     

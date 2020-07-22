@@ -25,7 +25,7 @@ protocol ChatPresentable: Presentable {
 
     func execute(messageManipulationType: MessageManipulationType)
     
-    func onNewMessage()
+    func onNewMessage(_ message: MockMessage)
     func onTypingStatus()
     
     func reloadTableView()
@@ -213,7 +213,7 @@ extension ChatInteractor: ChatPresentableListener {
         }.onNewMessage { [weak self] message in
             UIView.animate(withDuration: 0.1, animations: {
                 self?.messageList.append(message)
-                self?.presenter.onNewMessage()
+                self?.presenter.onNewMessage(message)
             }, completion: nil)
         }
     }

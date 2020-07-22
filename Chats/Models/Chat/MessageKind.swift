@@ -1,7 +1,6 @@
 
 import Foundation
 
-/// An enum representing the kind of message and its underlying kind.
 public enum MessageKind {
 
     case text(String)
@@ -22,7 +21,5 @@ public enum MessageKind {
     case fileItem(FileItem)
     
     /// Add user
-    
     case addUserToChat(UserInviteModel)
-
 }
