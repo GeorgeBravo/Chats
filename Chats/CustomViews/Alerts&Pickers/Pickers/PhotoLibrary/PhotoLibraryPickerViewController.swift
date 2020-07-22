@@ -232,7 +232,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
             if action.title != "Cancel" {
                 if !selectedCells.isEmpty {
                     action.isEnabled = true
-                    action.setValue("Send \(selectedCells.count) photos", forKeyPath: "title")
+                    action.setValue(changeTitleForButton(), forKeyPath: "title")
                 } else {
                     action.isEnabled = false
                      action.setValue("Add", forKeyPath: "title")
@@ -240,6 +240,40 @@ final class PhotoLibraryPickerViewController: UIViewController {
             }
         }
     }
+    
+    func changeTitleForButton() -> String {
+        var hasImage: Bool = false
+        var hasVideo: Bool = false
+        for asset in selectedAssets {
+            if asset.mediaType == .video {
+                hasVideo = true
+            }
+            if asset.mediaType == .image {
+                hasImage = true
+            }
+        }
+        if selectedAssets.count > 1 {
+            if hasImage && hasVideo {
+                return "Send \(selectedAssets.count) Items"
+            }
+            if hasImage && !hasVideo {
+                return "Send \(selectedAssets.count) Photos"
+            }
+            if !hasImage && hasVideo {
+                return "Send \(selectedAssets.count) Videos"
+            }
+        }
+        if selectedAssets.count == 1 {
+            if hasImage {
+                return "Send 1 Photo"
+            }
+            if hasVideo {
+                return "Send 1 Video"
+            }
+        }
+        return ""
+    }
+    
     func handleSelection(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? ItemWithImage else { return }
         if selectedCells.contains(indexPath) {
@@ -258,6 +292,13 @@ final class PhotoLibraryPickerViewController: UIViewController {
         }
     }
     
+    func stringFromTimeInterval(interval: TimeInterval) -> String {
+        let time = NSInteger(interval)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        
+        return String(format: "%0.2d:%0.2d",minutes,seconds)
+    }
     @objc func handleLongPress(longPressGR: UILongPressGestureRecognizer) {
         if longPressGR.state == .ended {
             previousSelectedCell = IndexPath(row: 1, section: 1)
@@ -270,6 +311,10 @@ final class PhotoLibraryPickerViewController: UIViewController {
         if let indexPath = indexPath {
             if indexPath != previousSelectedCell {
                 previousSelectedCell = indexPath
+                let asset = assets[indexPath.item]
+                selectedAssets.contains(asset)
+                    ? selectedAssets.remove(asset)
+                    : selectedAssets.append(asset)
                 handleSelection(indexPath: indexPath)
             } else {
                 return
@@ -286,7 +331,6 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let asset = assets[indexPath.item]
-        handleSelection(indexPath: indexPath)
         
         switch selection {
             
@@ -300,10 +344,10 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
             action?(selectedAssets)
             
         case .none: break }
+        handleSelection(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        handleSelection(indexPath: indexPath)
         let asset = assets[indexPath.item]
         switch selection {
         case .multiple(let action)?:
@@ -313,6 +357,7 @@ extension PhotoLibraryPickerViewController: UICollectionViewDelegate {
             action?(selectedAssets)
         default: break }
         
+        handleSelection(indexPath: indexPath)
         if selectedCells.isEmpty {
             changeActionTitle()
             collectionView.reloadItems(at: [indexPath])
@@ -338,6 +383,14 @@ extension PhotoLibraryPickerViewController: UICollectionViewDataSource {
         guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithImage.self), for: indexPath) as? ItemWithImage else { return UICollectionViewCell() }
         let asset = assets[indexPath.item]
         Assets.resolve(asset: asset, size: item.bounds.size) { new in
+            if asset.mediaType == .video {
+                item.videoImageVIew.isHidden = false
+                item.videoDurationLabel.text = self.stringFromTimeInterval(interval: asset.duration)
+            }
+            if asset.mediaType == .image {
+                item.videoImageVIew.isHidden = true
+                item.videoDurationLabel.text = nil
+            }
             item.imageView.image = new
         }
         

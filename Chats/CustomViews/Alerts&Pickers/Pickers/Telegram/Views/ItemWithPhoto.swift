@@ -34,6 +34,22 @@ final class ItemWithPhoto: UICollectionViewCell {
         return $0
     }(UILabel())
     
+    lazy var videoImageVIew: UIImageView = {
+        $0.backgroundColor = .clear
+        $0.contentMode = .scaleAspectFill
+        $0.maskToBounds = true
+        $0.image = UIImage(named: "videoAsset")
+        $0.isHidden = true
+        return $0
+    }(UIImageView())
+    
+    lazy var videoDurationLabel: UILabel = {
+        $0.textColor = UIColor.white
+        $0.textAlignment = .center
+        $0.backgroundColor = UIColor.clear
+        return $0
+    }(UILabel())
+    
     
     fileprivate let inset: CGFloat = 6
     
@@ -81,6 +97,17 @@ final class ItemWithPhoto: UICollectionViewCell {
         updateAppearance(forCircle: unselectedCircle)
         updateAppearance(forCircle: selectedCircle)
         updateAppearance(forPoint: selectedPoint)
+        imageView.addSubview(videoImageVIew) {
+                   $0.leading == imageView.leadingAnchor + 10
+                   $0.bottom == imageView.bottomAnchor - 5
+                          $0.width == 25
+                          $0.height == 15
+                      }
+        imageView.addSubview(videoDurationLabel) {
+            $0.trailing == imageView.trailingAnchor - 10
+            $0.bottom == imageView.bottomAnchor - 5
+            $0.height == 15
+        }
     }
     
     func updateAppearance(forCircle view: UIView) {

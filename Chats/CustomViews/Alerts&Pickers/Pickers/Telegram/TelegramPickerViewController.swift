@@ -62,9 +62,43 @@ final class TelegramPickerViewController: UIViewController {
         case .file: return "File"
         case .location: return "Location"
         case .contact: return "Contact"
-        case .sendPhotos: return "Send \(selectedAssets.count) \(selectedAssets.count == 1 ? "Photo" : "Photos")"
+        case .sendPhotos:
+        return changeTitleForButton()
         case .sendAsFile: return "Send as File"
         }
+    }
+    
+    func changeTitleForButton() -> String {
+        var hasImage: Bool = false
+        var hasVideo: Bool = false
+        for asset in selectedAssets {
+            if asset.mediaType == .video {
+                hasVideo = true
+            }
+            if asset.mediaType == .image {
+                hasImage = true
+            }
+        }
+        if selectedAssets.count > 1 {
+            if hasImage && hasVideo {
+                return "Send \(selectedAssets.count) Items"
+            }
+            if hasImage && !hasVideo {
+                return "Send \(selectedAssets.count) Photos"
+            }
+            if !hasImage && hasVideo {
+                return "Send \(selectedAssets.count) Videos"
+            }
+        }
+        if selectedAssets.count == 1 {
+            if hasImage {
+                return "Send 1 Photo"
+            }
+            if hasVideo {
+                return "Send 1 Video"
+            }
+        }
+        return ""
     }
     
     func font(for button: ButtonType) -> UIFont {
@@ -79,7 +113,10 @@ final class TelegramPickerViewController: UIViewController {
     
     func sizeFor(asset: PHAsset) -> CGSize {
         let height: CGFloat = UI.maxHeight
-        let width: CGFloat =   CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
+        var width: CGFloat =   CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
+        if width > UIScreen.main.bounds.width * 0.6 {
+            width = height / 1.5
+        }
         //        CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
         return CGSize(width: width, height: height)
     }
@@ -376,6 +413,16 @@ final class TelegramPickerViewController: UIViewController {
         imagePickerWindow?.rootViewController?.present(pickerController, animated: true, completion: nil)
     }
     
+    func stringFromTimeInterval(interval: TimeInterval) -> String {
+        
+        let time = NSInteger(interval)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        
+        return String(format: "%0.2d:%0.2d",minutes,seconds)
+        
+    }
+    
     @objc func dissmisTelegramWithSwipe(_ sender: UIPanGestureRecognizer) {
         let touchPoint = sender.location(in: self.view?.window)
         
@@ -455,9 +502,16 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
         let size = sizeFor(asset: asset)
         
         DispatchQueue.main.async {
-            Assets.resolve(asset: asset, size: size) { new in
-                item.imageView.image = new
-            }
+                Assets.resolve(asset: asset, size: size) { new in
+                    if asset.mediaType == .video {
+                        item.videoImageVIew.isHidden = false
+                        item.videoDurationLabel.text = self.stringFromTimeInterval(interval: asset.duration)
+                    } else if asset.mediaType == .image {
+                        item.videoImageVIew.isHidden = true
+                        item.videoDurationLabel.text = nil
+                    }
+                    item.imageView.image = new
+                }
         }
         
         if let index = selectedCells.firstIndex(where: { $0.row == indexPath.row }) {
