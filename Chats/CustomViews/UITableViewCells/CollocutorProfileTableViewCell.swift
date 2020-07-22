@@ -45,7 +45,7 @@ class CollocutorProfileTableViewCell: UITableViewCell, TableViewCellSetup {
         let label = UILabel()
         label.numberOfLines = 1
         label.font = UIFont.helveticaNeueFontOfSize(size: Constants.lastSeenLabelFontSize, style: .regular)
-        label.textColor = UIColor(named: .presenceDescriptionColor)
+        label.textColor = UIColor(named: .steel)
         return label
     }()
     

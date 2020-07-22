@@ -137,6 +137,10 @@ class MessageManipulationTableViewCell: UITableViewCell, TableViewCellSetup {
     
     // MARK: - Selector
     @objc private func messageManipulationTapped() {
-        model?.messageManipulationTapped()
+        alertCellBodyView.backgroundColor = UIColor(named: .coolGrey)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.model?.messageManipulationTapped()
+        }
     }
+    
 }

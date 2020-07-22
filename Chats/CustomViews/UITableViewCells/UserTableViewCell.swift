@@ -130,7 +130,7 @@ class UserTableViewCell: UITableViewCell, TableViewCellSetup {
         if let imageName = model.imageName { image = UIImage(named: imageName) }
         userImageView.image = image
         userNameLabel.text = model.userNameText
-        lastPrescenceTimeLabel.textColor = UIColor(named: model.isOnline ? .optionsBlueColor : .presenceDescriptionColor)
+        lastPrescenceTimeLabel.textColor = UIColor(named: model.isOnline ? .optionsBlueColor : .steel)
         lastPrescenceTimeLabel.text = model.lastPresenceText
         authorLabel.isHidden = !model.isAuthor
     }

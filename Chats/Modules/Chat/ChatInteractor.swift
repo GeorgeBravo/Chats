@@ -163,7 +163,6 @@ extension ChatInteractor {
                     return model
                 } else {
                     return mockMessage.tableViewCellViewModel
-                    
                 }
             }
             
