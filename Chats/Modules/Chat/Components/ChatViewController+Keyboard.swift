@@ -15,25 +15,13 @@ extension ChatViewController {
     
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleKeyboardDidChangeState(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.handleTextViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.adjustScrollViewTopInset), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UITextView.textDidBeginEditingNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     // MARK: - Notification Handlers
-    
-    @objc
-    private func handleTextViewDidBeginEditing(_ notification: Notification) {
-        guard let inputTextView = notification.object as? InputTextView,
-            inputTextView === messageInputBar.inputTextView else { return }
-        
-        tableView.scrollToLastItem()
-    }
     
     @objc
     private func handleKeyboardDidChangeState(_ notification: Notification) {
@@ -80,21 +68,6 @@ extension ChatViewController {
         chatTableViewBottomInset = newBottomInset
     }
     
-    // MARK: - Inset Computation
-    
-    @objc
-    func adjustScrollViewTopInset() {
-        if #available(iOS 11.0, *) {
-            // No need to add to the top contentInset
-        } else {
-            let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
-            let statusBarInset: CGFloat = UIApplication.shared.isStatusBarHidden ? 0 : 20
-            let topInset = navigationBarInset + statusBarInset
-            tableView.contentInset.top = topInset
-            tableView.scrollIndicatorInsets.top = topInset
-        }
-    }
-    
     private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
         // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
@@ -107,11 +80,6 @@ extension ChatViewController {
         } else {
             return max(0, intersection.height + additionalBottomInset - automaticallyAddedBottomInset)
         }
-    }
-    
-    func requiredInitialScrollViewBottomInset() -> CGFloat {
-        let inputAccessoryViewHeight = inputAccessoryView?.frame.height ?? 0
-        return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }
     
     /// iOS 11's UIScrollView can automatically add safe area insets to its contentInset,
