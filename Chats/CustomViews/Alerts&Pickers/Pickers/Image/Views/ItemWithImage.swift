@@ -32,6 +32,22 @@ class ItemWithImage: UICollectionViewCell {
         return $0
     }(UILabel())
     
+    lazy var videoImageVIew: UIImageView = {
+         $0.backgroundColor = .clear
+         $0.contentMode = .scaleAspectFill
+         $0.maskToBounds = true
+         $0.image = UIImage(named: "videoAsset")
+         $0.isHidden = true
+         return $0
+     }(UIImageView())
+     
+     lazy var videoDurationLabel: UILabel = {
+         $0.textColor = UIColor.white
+         $0.textAlignment = .center
+         $0.backgroundColor = UIColor.clear
+         return $0
+     }(UILabel())
+    
     fileprivate let inset: CGFloat = 8
     
     public required init?(coder aDecoder: NSCoder) {
@@ -65,6 +81,18 @@ class ItemWithImage: UICollectionViewCell {
         unselected.addSubview(unselectedCircle)
         unselected.addSubview(selectedCircle)
         unselected.addSubview(selectedPoint)
+        imageView.addSubview(videoImageVIew) {
+            $0.leading == imageView.leadingAnchor
+            $0.bottom == imageView.bottomAnchor
+            $0.width == 20
+            $0.height == 15
+        }
+        imageView.addSubview(videoDurationLabel) {
+            $0.trailing == imageView.trailingAnchor - 5
+            $0.bottom == imageView.bottomAnchor - 2
+            $0.height == 15
+        }
+        
         backgroundView = unselected
         
         selectedCircle.isHidden = true
