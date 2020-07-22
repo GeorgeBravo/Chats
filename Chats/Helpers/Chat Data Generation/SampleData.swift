@@ -67,7 +67,7 @@ extension SampleData {
             for _ in 0..<count {
                 let date = dateAddingRandomTime
                 let randomSentence = Lorem.sentence()
-                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: arc4random_uniform(2) == 0, chatType: chatType, messageId: UUID().uuidString)
+                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString)
                 messages.append(message)
             }
         }

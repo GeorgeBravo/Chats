@@ -32,6 +32,7 @@ internal struct ColorName {
   internal static let pinkishRedTwo = ColorName(rgbValue: 0xed1c24)
   internal static let slateGrey = ColorName(rgbValue: 0x60676f)
   internal static let steel = ColorName(rgbValue: 0x8e8e92)
+  internal static let summersky = ColorName(rgbValue: 0x40a7e3)
   internal static let sunflowerYellowTwo = ColorName(rgbValue: 0xffd100)
   internal static let violetPink = ColorName(rgbValue: 0xff3aea)
   internal static let white50 = ColorName(rgbValue: 0xfcfcfc)

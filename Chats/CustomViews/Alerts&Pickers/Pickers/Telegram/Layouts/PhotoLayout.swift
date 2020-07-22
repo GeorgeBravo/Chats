@@ -60,7 +60,6 @@ class PhotoLayout: UICollectionViewLayout {
         for item in 0 ..< numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             let photoWidth: CGFloat = delegate.collectionView(collectionView, sizeForPhotoAtIndexPath: indexPath).width
-            let halfWidth = photoWidth / 2
             if indexPath.row == 0 && expanded {
                 width = 0
                 height = 0
@@ -68,13 +67,11 @@ class PhotoLayout: UICollectionViewLayout {
                 height = collectionView.bounds.height - (inset.top + inset.bottom)
                 width = photoWidth
             }
-            if indexPath.row == 1 && expanded {
-                width += photoWidth
-            }
-            
-//            if indexPath.row > 1 && expanded {
-//                width += photoWidth / CGFloat(numberOfItems(inSection: 0))
+
+//            if indexPath.row == 1 && expanded {
+//                width += photoWidth * 0.5
 //            }
+
             
             let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
             

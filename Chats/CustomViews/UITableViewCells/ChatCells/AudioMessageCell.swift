@@ -134,7 +134,7 @@
 //
 //        displayDelegate.configureAudioCell(self, message: message)
 //
-//        if case let .audio(audioItem) = message.kind {
+//        if case let .audio(audioItem) = message.messageKind {
 //            durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
 //        }
 //    }
