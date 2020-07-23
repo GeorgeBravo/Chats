@@ -69,9 +69,9 @@ final class ChatListViewController: UITableViewController {
     //MARK: - VC Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         tableView = UITableView(frame: .zero, style: .grouped)
         self.view.backgroundColor = UIColor.white
-        setupNavigationBar()
         tableView.separatorColor = UIColor.clear
         tableView.estimatedRowHeight = Constants.estimatedCellHeigth
         tableView.rowHeight = UITableView.automaticDimension
@@ -86,8 +86,16 @@ final class ChatListViewController: UITableViewController {
         setupView()
         listener?.combineChatListSections()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        setupCreateNewButton()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        createNewChatButton.removeFromSuperview()
     }
 }
 
@@ -196,6 +204,10 @@ extension ChatListViewController {
             [NSAttributedString.Key.foregroundColor: UIColor.black]
         
         // Initial setup for image for Large NavBar state since the the screen always has Large NavBar once it gets opened
+        setupSearch()
+    }
+    
+    private func setupCreateNewButton() {
         guard let navigationBar = self.navigationController?.navigationBar else { return }
         navigationBar.addSubview(createNewChatButton)
         createNewChatButton.translatesAutoresizingMaskIntoConstraints = false
@@ -205,7 +217,7 @@ extension ChatListViewController {
             createNewChatButton.heightAnchor.constraint(equalToConstant: Constants.ImageSizeForLargeState),
             createNewChatButton.widthAnchor.constraint(equalTo: createNewChatButton.heightAnchor)
         ])
-        setupSearch()
+        
     }
     
     private func setupSearch() {
@@ -355,6 +367,11 @@ extension ChatListViewController {
                 listener?.showChat(of: .oneToOne)
             default:
                 break
+            }
+            self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+                self.navigationItem.largeTitleDisplayMode = .never
             }
         }
     }

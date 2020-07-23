@@ -42,7 +42,7 @@ extension ChatListRouter: ChatListRouting {
         self.chatRouter = chatRouter
 
         attach(chatRouter)
-        present(chatRouter, animated: true, embedInNavigationController: true, completion: nil)
+        pushRouter(chatRouter, animated: true)
     }
     
     func hideChat() {
