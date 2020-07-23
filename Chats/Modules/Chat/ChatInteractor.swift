@@ -23,7 +23,9 @@ protocol ChatRouting: ViewableRouting {
 protocol ChatPresentable: Presentable {
     var listener: ChatPresentableListener? { get set }
 
-    func execute(messageManipulationType: MessageManipulationType)
+    func execute(messageManipulationType: MessageManipulationType, chatTableViewCellModel: ChatContentTableViewCellModel)
+    func showPinnedMessage(mockMessage: MockMessage)
+    func hidePinnedMessage()
     
     func onNewMessage(_ message: MockMessage)
     func onTypingStatus()
@@ -80,11 +82,16 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
     
     // MARK: - Private
     
-    func hideMessageManipulation(_ manipulationType: MessageManipulationType?) {
+    func hideMessageManipulation(_ manipulationType: MessageManipulationType?, chatTableViewCellModel: ChatContentTableViewCellModel?) {
         showAllMessages()
         router?.hideMessageManipulation { [weak self] in
-            if let self = self, let manipulationType = manipulationType {
-                self.presenter.execute(messageManipulationType: manipulationType)
+            if let self = self, let manipulationType = manipulationType, let chatTVCellModel = chatTableViewCellModel {
+                switch manipulationType {
+                case .pin, .unpin:
+                    self.showHidePinnedMessageView(chatTVCellModel: chatTVCellModel)
+                default:
+                    self.presenter.execute(messageManipulationType: manipulationType, chatTableViewCellModel: chatTVCellModel)
+                }
             }
         }
     }
@@ -99,6 +106,21 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
     private func showSelectedMessageManipulations(chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: CGRect) {
         let frameValues = FrameValues(xPositionValue: cellNewFrame.minX, yPositionValue: cellNewFrame.minY, heightValue: cellNewFrame.height, widthValue: cellNewFrame.width)
         showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
+    }
+    
+    private func showHidePinnedMessageView(chatTVCellModel: ChatContentTableViewCellModel) {
+        for (index, item) in self.messageList.enumerated() {
+            if item.messageId == chatTVCellModel.messageId {
+                self.messageList[index].isPinned = !self.messageList[index].isPinned
+                if self.messageList[index].isPinned {
+                    self.presenter.showPinnedMessage(mockMessage: item)
+                } else {
+                    self.presenter.hidePinnedMessage()
+                }
+            } else {
+                self.messageList[index].isPinned = false
+            }
+        }
     }
 }
 
@@ -202,6 +224,22 @@ extension ChatInteractor: ChatPresentableListener {
     func sectionModel(for number: Int) -> TableViewSectionModel {
         return sections[number]
     }
+    
+    func getIndexPath(for message: MockMessage) -> IndexPath? {
+        var sectionIndex = 0
+        for section in sections {
+            var msgRow = 0
+            for msg in section.cellModels {
+                if message.messageId == (msg as? ChatContentTableViewCellModel)?.messageId {
+                    let destinationIndexPath = IndexPath(row: msgRow, section: sectionIndex)
+                    return destinationIndexPath
+                }
+                msgRow += 1
+            }
+            sectionIndex += 1
+        }
+        return nil
+    }
 
     // MARK: - Mock Socket
     
@@ -234,6 +272,12 @@ extension ChatInteractor: ChatPresentableListener {
     
     func hideChat() {
         listener?.hideChat()
+    }
+    
+    func unpinnedAllMessages() {
+        for (index, _) in self.messageList.enumerated() {
+            self.messageList[index].isPinned = false
+        }
     }
     
     func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
