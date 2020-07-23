@@ -347,8 +347,6 @@ extension ChatListViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:

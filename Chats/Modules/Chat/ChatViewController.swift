@@ -153,6 +153,13 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView?.isHidden = true
         
         tableView.showsVerticalScrollIndicator = false
+        tableView.keyboardDismissMode = .interactive
+        
+        let tapGesuture = UITapGestureRecognizer(target: self, action: #selector(onTableViewDidTap))
+        tapGesuture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesuture)
+        tableView.isUserInteractionEnabled = true
+
         
         return tableView
     }()
@@ -229,7 +236,13 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @objc private func onBackButtonTapped() {
+    @objc
+    private func onTableViewDidTap() {
+        messageInputBar.inputTextView.resignFirstResponder()
+    }
+    
+    @objc
+    private func onBackButtonTapped() {
         listener?.hideChat()
     }
     
@@ -246,6 +259,7 @@ extension ChatViewController {
 
 //MARK: - UITableViewDelegate
 extension ChatViewController: UITableViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == tableView else { return }
         
