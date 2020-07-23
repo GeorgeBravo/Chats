@@ -73,7 +73,9 @@ final class ChatViewController: UIViewController {
     
     private let chatType: ChatType
     
-    private var unreadMessagesCount: Int = 24
+    private var unreadMessagesCount: Int {
+        return chatType != .oneToOne ? 0 : 24
+    }
     
     private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
@@ -158,6 +160,13 @@ final class ChatViewController: UIViewController {
         tableView.tableFooterView?.isHidden = true
         
         tableView.showsVerticalScrollIndicator = false
+        tableView.keyboardDismissMode = .interactive
+        
+        let tapGesuture = UITapGestureRecognizer(target: self, action: #selector(onTableViewDidTap))
+        tapGesuture.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tapGesuture)
+        tableView.isUserInteractionEnabled = true
+
         
         return tableView
     }()
@@ -203,7 +212,7 @@ final class ChatViewController: UIViewController {
 //MARK: - Setup subviews
 extension ChatViewController {
     private func setupViews() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = .white
         
@@ -211,9 +220,7 @@ extension ChatViewController {
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
-            let height = UIApplication.shared.statusBarFrame.height +
-                self.navigationController!.navigationBar.frame.height
-            $0.height == 100 - height
+            $0.height == 10
         }
         
         view.addSubview(pinnedMeaasgeView) {
@@ -253,7 +260,13 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @objc private func onBackButtonTapped() {
+    @objc
+    private func onTableViewDidTap() {
+        messageInputBar.inputTextView.resignFirstResponder()
+    }
+    
+    @objc
+    private func onBackButtonTapped() {
         listener?.hideChat()
     }
     
@@ -270,6 +283,7 @@ extension ChatViewController {
 
 //MARK: - UITableViewDelegate
 extension ChatViewController: UITableViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView == tableView else { return }
         

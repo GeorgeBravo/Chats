@@ -25,7 +25,10 @@ extension CollocutorNavBarSettupable where Self: UIViewController  {
         
         let barButton = UIBarButtonItem(customView: groupChatStatusView)
         
-        navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
+        if navigationItem.leftBarButtonItems == nil {
+            navigationItem.leftBarButtonItems = []
+        }
+    
         navigationItem.leftBarButtonItems?.append(barButton)
 
         navigationController?.navigationBar.barTintColor = UIColor.white
@@ -44,7 +47,7 @@ extension CollocutorNavBarSettupable where Self: UIViewController  {
         
         let barButton = UIBarButtonItem(customView: collocutorView)
         
-        navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
+//        navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
         navigationItem.leftBarButtonItems?.append(barButton)
 
         navigationController?.navigationBar.barTintColor = UIColor.white
