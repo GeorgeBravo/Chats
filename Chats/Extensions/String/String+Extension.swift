@@ -18,4 +18,8 @@ extension String {
     func withAttributes(_ attributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
         return NSAttributedString(string: self, attributes: attributes)
     }
+    
+    func mutableStringWithAttributes(_ attributes: [NSAttributedString.Key : Any]) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: self, attributes: attributes)
+    }
 }

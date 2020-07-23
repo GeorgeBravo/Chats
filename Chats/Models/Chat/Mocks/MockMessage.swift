@@ -39,89 +39,91 @@ private struct MockAudiotem: AudioItem {
 }
 
 protocol ChatScreenDisplayingItems {
-    
-    var tableViewCellViewModel: ChatTableViewCellModel { get }
-    
     var sentDate: Date { get set }
+    var kind: MessageKind { get }
+    
+    var chatType: ChatType { get }
+    
+    var messageId: String { get }
 }
 
-struct MockMessage: MessageType, ChatScreenDisplayingItems {
-    
-    var messageId: String
-    var sender: SenderType {
-        return user
-    }
-    
+
+struct MockMessage: ChatScreenDisplayingItems {
+
+    // MARK: Internal variables
     var sentDate: Date
     var kind: MessageKind
     
-    var user: MockUser
-    
     var isIncomingMessage: Bool
     
-    var chatType: ChatType {
-        return .oneToOne
-    }
+    var chatType: ChatType = .oneToOne
+    
+    var needHideMessage: Bool = false
+    
+    var messageId: String
     
     var tableViewCellViewModel: ChatTableViewCellModel {
         switch self.kind {
         case let .text(message):
-            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
         case let .location(locationItem):
-            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
         case let .asset(assets):
-            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
         case let .fileItem(fileItem):
-            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
         case let .contact(contact):
-            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
+        case let .addUserToChat(model):
+            return UserChatEntryTableViewCellModel(userInviteModel: model, timestamp: Date())
         default:
-            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0)
+            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage)
         }
     }
     
-    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool = false) {
+    // MARK: Public
+    
+    public mutating func setNeedHideMessage(_ needHideMessage: Bool) {
+        self.needHideMessage = needHideMessage
+    }
+    
+    // MARK: - Initialization
+    private init(kind: MessageKind, date: Date, isIncomingMessage: Bool = false, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
         self.kind = kind
-        self.user = user
-        self.messageId = messageId
         self.sentDate = date
         self.isIncomingMessage = isIncomingMessage
+        self.needHideMessage = needHideMessage
+        self.chatType = chatType
+        self.messageId = messageId
+    }
+
+    init(text: String, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .text(text), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(custom: Any?, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
+    init(assets: AssetMediaItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .asset(assets), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(text: String, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .text(text), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
+    init(location: LocationItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .location(location), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
-    }
-    
-    init(assets: AssetMediaItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .asset(assets), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
-    }
-    
-    init(location: LocationItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .location(location), user: user, messageId: messageId, date: date)
-    }
-    
-    init(emoji: String, user: MockUser, messageId: String, date: Date) {
-        self.init(kind: .emoji(emoji), user: user, messageId: messageId, date: date)
-    }
-    
-    init(audioURL: URL, user: MockUser, messageId: String, date: Date) {
+    init(audioURL: URL, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
         let audioItem = MockAudiotem(url: audioURL)
-        self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
+        self.init(kind: .audio(audioItem), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(contact: ContactItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    init(contact: ContactItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .contact(contact), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
-    init(fileItem: FileItem, user: MockUser, messageId: String, date: Date, isIncomingMessage: Bool) {
-        self.init(kind: .fileItem(fileItem), user: user, messageId: messageId, date: date, isIncomingMessage: isIncomingMessage)
+    init(fileItem: FileItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .fileItem(fileItem), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
+    
+    init(model: UserInviteModel, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(kind: .addUserToChat(model), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
+    }
+    
 }

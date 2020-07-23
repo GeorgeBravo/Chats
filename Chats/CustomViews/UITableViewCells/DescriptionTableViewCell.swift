@@ -11,7 +11,7 @@ private struct Constants {
     static let leadingOffset: CGFloat = 16.0
     static let topOffset: CGFloat = 8.0
     static let descriptionFontSize: CGFloat = 16.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
 }
 
 class DescriptionTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -30,7 +30,7 @@ class DescriptionTableViewCell: UITableViewCell, TableViewCellSetup {
     
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: .separatorColor)
+        view.backgroundColor = UIColor(named: .coolGrey)
         return view
     }()
     

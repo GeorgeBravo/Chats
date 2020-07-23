@@ -8,13 +8,14 @@
 
 import BRIck
 
-protocol ChatInteractable: Interactable, CollocutorProfileListener, GroupProfileListener {
+protocol ChatInteractable: Interactable, CollocutorProfileListener, GroupProfileListener, MessageManipulationListener {
     var router: ChatRouting? { get set }
     var listener: ChatListener? { get set }
 }
 
 protocol ChatViewControllable: ViewControllable {
 
+    
     // TODO: Declare methods the router invokes to manipulate the view hierarchy.
 }
 
@@ -25,9 +26,11 @@ final class ChatRouter: ViewableRouter<ChatInteractable, ChatViewControllable> {
     init(interactor: ChatInteractable,
          viewController: ChatViewControllable,
          _ collocutorProfileBuilder: CollocutorProfileBuildable,
-         _ groupProfileBuilder: GroupProfileBuildable) {
+         _ groupProfileBuilder: GroupProfileBuildable,
+         _ messageManipulationBuilder: MessageManipulationBuildable) {
         self.collocutorProfileBuilder = collocutorProfileBuilder
         self.groupProfileBuilder = groupProfileBuilder
+        self.messageManipulationBuilder = messageManipulationBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -39,6 +42,10 @@ final class ChatRouter: ViewableRouter<ChatInteractable, ChatViewControllable> {
     // MARK: - Group Profile
     private var groupProfileBuilder: GroupProfileBuildable
     private var groupProfileRouter: ViewableRouting?
+    
+    // MARK: - Message Manipulation
+    private var messageManipulationBuilder: MessageManipulationBuildable
+    private var messageManipulationRouter: ViewableRouting?
 }
 
 extension ChatRouter: ChatRouting {
@@ -60,6 +67,14 @@ extension ChatRouter: ChatRouting {
         presentModally(groupProfileRouter, animated: true, embedInNavigationController: true)
     }
     
+    func showMessageManipulation(with chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
+        let messageManipulationRouter = messageManipulationBuilder.build(withListener: interactor, chatTableViewCellModel: chatTableViewCellModel, cellNewFrame: cellNewFrame)
+        self.messageManipulationRouter = messageManipulationRouter
+        
+        attach(messageManipulationRouter)
+        present(messageManipulationRouter, animated: false, embedInNavigationController: false, modalPresentationStyle: .overCurrentContext)
+    }
+    
     func hideUser() {
         guard let collocutorProfileRouter = collocutorProfileRouter else { return }
 
@@ -74,6 +89,16 @@ extension ChatRouter: ChatRouting {
         detach(groupProfileRouter)
         groupProfileRouter.dismiss(animated: true)
         self.groupProfileRouter = nil
+    }
+    
+    func hideMessageManipulation(completion: @escaping () -> Void) {
+        guard let messageManipulationRouter = messageManipulationRouter else { return }
+        
+        detach(messageManipulationRouter)
+        messageManipulationRouter.dismiss(animated: false) {
+            completion()
+        }
+        self.messageManipulationRouter = nil
     }
     
 }

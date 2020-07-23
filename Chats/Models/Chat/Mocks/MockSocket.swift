@@ -1,5 +1,5 @@
 //
-//  ChatTableViewCellModel.swift
+//  MockSocket.swift
 //  MockSocket
 //
 //  Created by Касилов Георгий on 08.07.2020.
@@ -20,20 +20,22 @@ final class MockSocket {
     
     private var onTypingStatusCode: (() -> Void)?
     
-    private var connectedUsers: [MockUser] = []
+    private var chatType: ChatType = .oneToOne
     
     private init() {}
     
     @discardableResult
-    func connect(with senders: [MockUser]) -> Self {
+    func connect(with chatType: ChatType) -> Self {
+        self.chatType = chatType
         disconnect()
-        connectedUsers = senders
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
+        SampleData.shared.startTimer()
         return self
     }
     
     @discardableResult
     func disconnect() -> Self {
+        SampleData.shared.stopTimer()
         timer?.invalidate()
         timer = nil
         onTypingStatusCode = nil
@@ -59,12 +61,10 @@ final class MockSocket {
             onNewMessageCode?(message)
             queuedMessage = nil
         } else {
-            let sender = arc4random_uniform(1) % 2 == 0 ? connectedUsers.first! : connectedUsers.last!
-            SampleData.shared.getMessages(count: 1, allowedSenders: [sender]) { (message) in
+            SampleData.shared.getMessages(count: 1, chatType: chatType) { (message) in
                 queuedMessage = message.first
             }
             onTypingStatusCode?()
         }
     }
-    
 }

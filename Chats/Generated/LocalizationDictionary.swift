@@ -18,14 +18,24 @@ public enum LocalizationKeys {
   public static let addToContacts: String = "AddToContacts"
   /// Add to Groups
   public static let addToGroups: String = "AddToGroups"
+  /// Answer
+  public static let answer: String = "Answer"
   /// author
   public static let author: String = "Author"
   /// Block User
   public static let blockUser: String = "BlockUser"
   /// Call
   public static let call: String = "Call"
+  /// Change
+  public static let change: String = "Change"
+  /// Copy
+  public static let copy: String = "Copy"
+  /// Delete
+  public static let delete: String = "Delete"
   /// Edit
   public static let edit: String = "Edit"
+  /// Forward
+  public static let forward: String = "Forward"
   /// Group Info
   public static let groupInfo: String = "GroupInfo"
   /// Groups In Common
@@ -36,12 +46,18 @@ public enum LocalizationKeys {
   public static let leaveGroup: String = "LeaveGroup"
   /// More
   public static let more: String = "More"
+  /// More...
+  public static let moreManipulations: String = "MoreManipulations"
   /// Mute
   public static let mute: String = "Mute"
   /// Notifications
   public static let notifications: String = "Notifications"
   /// Ok
   public static let ok: String = "Ok"
+  /// Pin
+  public static let pin: String = "Pin"
+  /// Reply
+  public static let reply: String = "Reply"
   /// Search
   public static let search: String = "Search"
   /// Send Message

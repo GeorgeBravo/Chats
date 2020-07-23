@@ -15,7 +15,7 @@ private struct Constants {
     static let fontSize: CGFloat = 18.0
     static let descriptionFontSize: CGFloat = 17.0
     static let spacingOffset: CGFloat = 12.0
-    static let separatorHeight: CGFloat = 1.0
+    static let separatorHeight: CGFloat = 0.5
 }
 
 class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -40,13 +40,13 @@ class ActionTableViewCell: UITableViewCell, TableViewCellSetup {
         let label = UILabel()
         label.numberOfLines = 1
         label.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionFontSize, style: .regular)
-        label.textColor = UIColor(named: .descriptionGrayColor)
+        label.textColor = UIColor(named: .coolGreyTwo)
         return label
     }()
     
     private lazy var separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: .separatorColor)
+        view.backgroundColor = UIColor(named: .coolGrey)
         return view
     }()
     

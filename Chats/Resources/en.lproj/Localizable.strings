@@ -30,3 +30,13 @@
 "shortcut" = "shortcut";
 "Author" = "author";
 "AddContacts" = "Add Contacts";
+
+// MARK: - Message Manipulation
+"Answer" = "Answer";
+"Copy" = "Copy";
+"Change" = "Change";
+"Pin" = "Pin";
+"Forward" = "Forward";
+"Reply" = "Reply";
+"Delete" = "Delete";
+"MoreManipulations" = "More...";

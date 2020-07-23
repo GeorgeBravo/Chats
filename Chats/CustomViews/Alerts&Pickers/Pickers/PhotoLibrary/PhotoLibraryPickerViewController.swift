@@ -150,10 +150,6 @@ final class PhotoLibraryPickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        Log("has deinitialized")
-    }
-    
     override func loadView() {
         view = collectionView
     }
@@ -240,7 +236,7 @@ final class PhotoLibraryPickerViewController: UIViewController {
             }
         }
     }
-    
+
     func changeTitleForButton() -> String {
         var hasImage: Bool = false
         var hasVideo: Bool = false
