@@ -69,6 +69,7 @@ final class ChatListViewController: UITableViewController {
     //MARK: - VC Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .always
         setupNavigationBar()
         tableView = UITableView(frame: .zero, style: .grouped)
         self.view.backgroundColor = UIColor.white
@@ -90,8 +91,9 @@ final class ChatListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
+        
         setupCreateNewButton()
+        setupSearch()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -204,7 +206,7 @@ extension ChatListViewController {
             [NSAttributedString.Key.foregroundColor: UIColor.black]
         
         // Initial setup for image for Large NavBar state since the the screen always has Large NavBar once it gets opened
-        setupSearch()
+        
     }
     
     private func setupCreateNewButton() {
@@ -370,8 +372,8 @@ extension ChatListViewController {
             }
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-                self.navigationItem.largeTitleDisplayMode = .never
+//                self.view.layoutIfNeeded()
+//                self.navigationItem.largeTitleDisplayMode = .never
             }
         }
     }

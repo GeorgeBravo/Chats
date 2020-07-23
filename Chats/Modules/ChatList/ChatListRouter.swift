@@ -51,7 +51,7 @@ extension ChatListRouter: ChatListRouting {
         }
 
         detach(chatRouter)
-        chatRouter.dismiss(animated: true)
+        chatRouter.popRouter(animated: true)
         self.chatRouter = nil
     }
 }

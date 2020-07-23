@@ -195,7 +195,7 @@ final class ChatViewController: UIViewController {
 //MARK: - Setup subviews
 extension ChatViewController {
     private func setupViews() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = .white
         
