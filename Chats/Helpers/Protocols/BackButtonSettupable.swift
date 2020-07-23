@@ -19,14 +19,20 @@ extension BackButtonSettupable where Self: UIViewController {
         
         let button = UIButton(type: .custom)
         let buttonImage = UIImage(named: "backBarButton")
-
+        
         button.setImage(buttonImage, for: .normal)
         button.addTarget(target, action: action, for: .touchUpInside)
-
+        
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        
+        if navigationItem.leftBarButtonItems == nil {
+            navigationItem.leftBarButtonItems = []
+        }
+        
+        navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: button))
+        navigationItem.leftBarButtonItems?.append(UIBarButtonItem(customView: UIView(frame: CGRect(x: 0, y: 0, width: 10, height: (navigationController?.navigationBar.frame.height)!))))
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
@@ -34,25 +40,15 @@ extension BackButtonSettupable where Self: UIViewController {
         self.navigationItem.leftBarButtonItem = nil
         
         let backButtonView = UnreadMessagesBackButton()
-        backButtonView.isUserInteractionEnabled = false
+        backButtonView.isUserInteractionEnabled = true
         backButtonView.unreadMessages = unreadMessages
         
-        let button = UIButton(type: .custom)
-        let buttonImage = UIImage(named: "backBarButton")
-        
-        button.setImage(buttonImage, for: .normal)
-        button.addTarget(target, action: action, for: .touchUpInside)
-        
-        button.addSubview(backButtonView) {
-            $0.centerY == button.topAnchor
-            $0.height == 20
-            $0.leading == button.centerXAnchor
-        }
+        backButtonView.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
         
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonView)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }

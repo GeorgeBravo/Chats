@@ -68,7 +68,9 @@ final class ChatViewController: UIViewController {
     
     private let chatType: ChatType
     
-    private var unreadMessagesCount: Int = 24
+    private var unreadMessagesCount: Int {
+        return chatType != .oneToOne ? 0 : 24
+    }
     
     private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
@@ -201,9 +203,7 @@ extension ChatViewController {
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
-            let height = UIApplication.shared.statusBarFrame.height +
-                self.navigationController!.navigationBar.frame.height
-            $0.height == 100 - height
+            $0.height == 10
         }
         
         view.addSubview(tableView) {

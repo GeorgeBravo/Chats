@@ -10,14 +10,6 @@ import Foundation
 import UIKit
 
 extension UITableView {
-    public func scrollToBottom(animated: Bool = false) {
-        performBatchUpdates(nil) { [weak self] _ in
-            guard let self = self else { return }
-            let tableViewContentHeight = self.contentSize.height
-            self.scrollRectToVisible(CGRect(0.0, tableViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
-        }
-    }
-    
     public func scrollToLastItem(at pos: UITableView.ScrollPosition = .bottom, animated: Bool = true) {
         guard numberOfSections > 0 else { return }
         
