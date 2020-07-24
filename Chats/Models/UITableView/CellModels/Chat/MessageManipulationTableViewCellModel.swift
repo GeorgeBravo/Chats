@@ -13,6 +13,7 @@ enum MessageManipulationType {
     case copy
     case change
     case pin
+    case unpin
     case forward
     case reply
     case delete
@@ -24,6 +25,7 @@ enum MessageManipulationType {
         case .copy: return LocalizationKeys.copy.localized()
         case .change: return LocalizationKeys.change.localized()
         case .pin: return LocalizationKeys.pin.localized()
+        case .unpin: return LocalizationKeys.unpin.localized()
         case .forward: return LocalizationKeys.forward.localized()
         case .reply: return LocalizationKeys.reply.localized()
         case .delete: return LocalizationKeys.delete.localized()

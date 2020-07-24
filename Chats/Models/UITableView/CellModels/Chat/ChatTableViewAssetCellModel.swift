@@ -25,6 +25,8 @@ struct ChatTableViewAssetCellModel: ChatContentTableViewCellModel {
     var messageSelection: MessageSelection?
     var chatType: ChatType
     var needHideMessage: Bool
+    var isPinned: Bool
+    var messageId: String
     
     // MARK: - Init
     init(assets: MediaItem,
@@ -34,7 +36,9 @@ struct ChatTableViewAssetCellModel: ChatContentTableViewCellModel {
          isIncomingMessage: Bool,
          isMessageEdited: Bool,
          chatType: ChatType,
-         needHideMessage: Bool) {
+         needHideMessage: Bool,
+         isPinned: Bool = false,
+         messageId: String) {
         self.assets = assets
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -43,5 +47,7 @@ struct ChatTableViewAssetCellModel: ChatContentTableViewCellModel {
         self.isMessageEdited = isMessageEdited
         self.chatType = chatType
         self.needHideMessage = needHideMessage
+        self.isPinned = isPinned
+        self.messageId = messageId
     }
 }

@@ -30,6 +30,8 @@ protocol ChatPresentableListener: class {
     func showUser(with profile: Collocutor)
     func showGroupProfile()
     func hideChat()
+    func unpinnedAllMessages()
+    func getIndexPath(for message: MockMessage) -> IndexPath?
     
     var messageList: [MockMessage] { get set }
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
@@ -64,11 +66,16 @@ final class ChatViewController: UIViewController {
         return true
     }
     
+    var editHeightConstraint: NSLayoutConstraint?
+    var pinnedMockMessage: MockMessage?
+    
     //MARK: - Private
     
     private let chatType: ChatType
     
-    private var unreadMessagesCount: Int = 24
+    private var unreadMessagesCount: Int {
+        return chatType != .oneToOne ? 0 : 24
+    }
     
     private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
@@ -167,6 +174,18 @@ final class ChatViewController: UIViewController {
     private lazy var underneathView = UnderneathView
         .create { _ in }
     
+    private lazy var pinnedMeaasgeView = PinnedMessageView
+        .create {
+            $0.isHidden = true
+            $0.onCloseButtonDidTap = { [weak self] in
+                self?.listener?.unpinnedAllMessages()
+                self?.hidePinnedMessageView()
+            }
+            $0.onViewDidTap = { [weak self] in
+                self?.scrollTableViewTopinnedMockMessage()
+            }
+    }
+    
     private lazy var chatScrollDownView = ChatScrollDownView
         .create {
             $0.isHidden = true
@@ -193,7 +212,7 @@ final class ChatViewController: UIViewController {
 //MARK: - Setup subviews
 extension ChatViewController {
     private func setupViews() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = .white
         
@@ -201,13 +220,18 @@ extension ChatViewController {
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
-            let height = UIApplication.shared.statusBarFrame.height +
-                self.navigationController!.navigationBar.frame.height
-            $0.height == 100 - height
+            $0.height == 10
+        }
+        
+        view.addSubview(pinnedMeaasgeView) {
+            $0.top == underneathView.bottomAnchor
+            $0.leading == view.leadingAnchor
+            $0.trailing == view.trailingAnchor
+            editHeightConstraint = $0.height == 0
         }
         
         view.addSubview(tableView) {
-            $0.top == underneathView.bottomAnchor
+            $0.top == pinnedMeaasgeView.bottomAnchor
             $0.leading == view.leadingAnchor
             $0.trailing == view.trailingAnchor
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
@@ -315,6 +339,22 @@ extension ChatViewController: UITableViewDelegate {
             header.alpha = headerAlpha
         }
     }
+    
+    private func scrollTableViewTopinnedMockMessage() {
+        guard let pinnedMessage = self.pinnedMockMessage else { return }
+        guard let indexPath = listener?.getIndexPath(for: pinnedMessage) else { return }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        }) { (bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                guard let cell = self.tableView.cellForRow(at: indexPath) else { return }
+                cell.backgroundColor = UIColor.red.withAlphaComponent(0.4)
+                UIView.animate(withDuration: 1.0) {
+                    cell.backgroundColor = UIColor.white
+                }
+            }
+        }
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -379,8 +419,18 @@ extension ChatViewController: ChatPresentable {
         }
     }
     
-    func execute(messageManipulationType: MessageManipulationType) {
+    func execute(messageManipulationType: MessageManipulationType, chatTableViewCellModel: ChatContentTableViewCellModel) {
         UIAlertController.showAlert(viewController: self, title: LocalizationKeys.action.localized(), message: messageManipulationType.stringDescription, actions: [UIAlertAction.okAction()])
+    }
+    
+    func showPinnedMessage(mockMessage: MockMessage) {
+        self.pinnedMockMessage = mockMessage
+        showPinnedMessageView(mockMessage: mockMessage)
+    }
+    
+    func hidePinnedMessage() {
+        self.pinnedMockMessage = nil
+        hidePinnedMessageView()
     }
     
     func onTypingStatus() {
@@ -492,5 +542,23 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         self.messageInputBar.inputTextView.text = ""
         listener?.messageList.append(mockTextMessage)
         onNewMessage(mockTextMessage)
+    }
+}
+
+// MARK: - pinned Message View actions
+extension ChatViewController {
+    func showPinnedMessageView(mockMessage: MockMessage) {
+        UIView.animate(withDuration: 0.3) {
+            self.editHeightConstraint?.constant = 60
+            self.pinnedMeaasgeView.isHidden = false
+            self.pinnedMeaasgeView.setupPinnedMessageView(mockMessage: mockMessage)
+        }
+    }
+    
+    func hidePinnedMessageView() {
+        UIView.animate(withDuration: 0.3) {
+            self.editHeightConstraint?.constant = 0
+            self.pinnedMeaasgeView.isHidden = true
+        }
     }
 }

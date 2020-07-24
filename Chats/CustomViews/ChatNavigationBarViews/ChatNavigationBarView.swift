@@ -76,7 +76,6 @@ extension ChatNavigationBarView {
             $0.leading == leadingAnchor
             $0.top == topAnchor
             $0.bottom == bottomAnchor
-//            $0.height == 44
             $0.width == containerView.heightAnchor
         }
 

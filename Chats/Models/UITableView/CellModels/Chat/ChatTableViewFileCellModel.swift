@@ -23,6 +23,8 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
 
     var messageSelection: MessageSelection?
     var needHideMessage: Bool
+    var isPinned: Bool
+    var messageId: String
     
     var chatType: ChatType
 
@@ -34,7 +36,9 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
          isIncomingMessage: Bool,
          isMessageEdited: Bool,
          chatType: ChatType,
-         needHideMessage: Bool) {
+         needHideMessage: Bool,
+         isPinned: Bool = false,
+         messageId: String) {
         self.file = fileItem
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -43,5 +47,7 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
         self.isMessageEdited = isMessageEdited
         self.chatType = chatType
         self.needHideMessage = needHideMessage
+        self.isPinned = isPinned
+        self.messageId = messageId
     }
 }

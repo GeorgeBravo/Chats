@@ -66,6 +66,8 @@ public enum LocalizationKeys {
   public static let sharedMedia: String = "SharedMedia"
   /// shortcut
   public static let shortcut: String = "shortcut"
+  /// Unpin
+  public static let unpin: String = "Unpin"
   /// @username
   public static let username: String = "Username"
 }

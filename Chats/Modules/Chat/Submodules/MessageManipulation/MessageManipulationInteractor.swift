@@ -23,7 +23,7 @@ protocol MessageManipulationPresentable: Presentable {
 
 protocol MessageManipulationListener: class {
 
-    func hideMessageManipulation(_ manipulationType: MessageManipulationType?)
+    func hideMessageManipulation(_ manipulationType: MessageManipulationType?, chatTableViewCellModel: ChatContentTableViewCellModel?)
     // TODO: Declare methods the interactor can invoke to communicate with other BRIcks.
 }
 
@@ -37,11 +37,13 @@ final class MessageManipulationInteractor: PresentableInteractor<MessageManipula
             presenter.update()
         }
     }
+    private var rootChatTableViewCellModel: ChatContentTableViewCellModel
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
     init(presenter: MessageManipulationPresentable, chatTableViewCellModel: ChatContentTableViewCellModel, cellNewFrame: FrameValues) {
         self.cellNewFrame = cellNewFrame
+        self.rootChatTableViewCellModel = chatTableViewCellModel
         super.init(presenter: presenter)
         presenter.listener = self
         var newChatTableViewCellModel = chatTableViewCellModel
@@ -67,7 +69,7 @@ extension MessageManipulationInteractor: MessageManipulationInteractable {}
 
 extension MessageManipulationInteractor: MessageManipulationPresentableListener {
     func hideMessageManipulation() {
-        listener?.hideMessageManipulation(nil)
+        listener?.hideMessageManipulation(nil, chatTableViewCellModel: nil)
     }
     
     func numberOfSections() -> Int {
@@ -95,9 +97,17 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
         let copyOption = MessageManipulationTableViewCellModel(messageManipulationType: .copy)
         let changeOption = MessageManipulationTableViewCellModel(messageManipulationType: .change)
         let pinOption = MessageManipulationTableViewCellModel(messageManipulationType: .pin)
+        let unpinOption = MessageManipulationTableViewCellModel(messageManipulationType: .unpin)
         let forwardOption = MessageManipulationTableViewCellModel(messageManipulationType: .forward)
         let replyOption = MessageManipulationTableViewCellModel(messageManipulationType: .reply)
-        let firstOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: [answerOption, copyOption, changeOption, pinOption, forwardOption, replyOption], widthConstant: 240.0, heightConstant: 2.0, fillColorName: nil)
+        var cellModels = [MessageManipulationTableViewCellModel]()
+        switch rootChatTableViewCellModel.isPinned {
+        case true:
+            cellModels = [answerOption, copyOption, changeOption, unpinOption, forwardOption, replyOption]
+        case false:
+            cellModels = [answerOption, copyOption, changeOption, pinOption, forwardOption, replyOption]
+        }
+        let firstOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: cellModels, widthConstant: 240.0, heightConstant: 2.0, fillColorName: nil)
         
         let moreOption = MessageManipulationTableViewCellModel(messageManipulationType: .more, isLastOption: true)
         let secondOptionSection = MessageManipulationTableViewSectionModel(title: "", cellModels: [moreOption], widthConstant: 240.0, heightConstant: 4.0, fillColorName: .messageManipulationSeparator)
@@ -107,7 +117,7 @@ extension MessageManipulationInteractor: MessageManipulationPresentableListener 
             $0.cellModels.forEach { [weak self] cellModel in
                 guard let cellModel = cellModel as? MessageManipulationTableViewCellModel else { return }
                 cellModel.manipulationAction = { [weak self] manipulationType in
-                    self?.listener?.hideMessageManipulation(manipulationType)
+                    self?.listener?.hideMessageManipulation(manipulationType, chatTableViewCellModel: self?.rootChatTableViewCellModel)
                 }
             }
         }

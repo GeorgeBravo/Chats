@@ -200,6 +200,7 @@
 		CE4E426224BC8AFD00BCA9F8 /* GroupProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */; };
 		CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */; };
 		CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */; };
+		CE5ECC4624C8DA36004A2539 /* PinnedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */; };
 		CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */; };
 		CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */; };
 		CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */; };
@@ -434,6 +435,7 @@
 		CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileInteractor.swift; sourceTree = "<group>"; };
 		CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+GroupProfile.swift"; sourceTree = "<group>"; };
 		CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedMessageView.swift; sourceTree = "<group>"; };
 		CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWithCameraPreview.swift; sourceTree = "<group>"; };
 		CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationRouter.swift; sourceTree = "<group>"; };
 		CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationViewController.swift; sourceTree = "<group>"; };
@@ -973,6 +975,7 @@
 			children = (
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
+				CE5ECC4424C8DA03004A2539 /* PinnedMessageView */,
 				2DEAAC8C24C8562F00A95F49 /* ChatScrollDownView */,
 				2D65C19124AE0DE100C64534 /* Alerts&Pickers */,
 				2D17D6CD24AC8DBB009B2E16 /* InputBarAccessoryView */,
@@ -1508,6 +1511,14 @@
 			path = GroupProfile;
 			sourceTree = "<group>";
 		};
+		CE5ECC4424C8DA03004A2539 /* PinnedMessageView */ = {
+			isa = PBXGroup;
+			children = (
+				CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */,
+			);
+			path = PinnedMessageView;
+			sourceTree = "<group>";
+		};
 		CE69320C24C584E0001825D4 /* MessageManipulation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1796,6 +1807,7 @@
 				2D64CFF124A20EF000C8B94A /* UIEdgeInsets+KeyPathInitializable.swift in Sources */,
 				2D501C1D24B3263700C37DCB /* UniformKeyPathInitializable.swift in Sources */,
 				2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */,
+				CE5ECC4624C8DA36004A2539 /* PinnedMessageView.swift in Sources */,
 				CECA0E3C24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift in Sources */,
 				2DDFA49F24C71DD3007101C7 /* ChatContentTableViewCellModel.swift in Sources */,
 				2DDFA49B24C71BB4007101C7 /* UserChatEntryTableViewCell.swift in Sources */,
