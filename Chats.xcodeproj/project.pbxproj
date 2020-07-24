@@ -194,6 +194,7 @@
 		2DEAAC8E24C8566300A95F49 /* ChatScrollDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAAC8D24C8566200A95F49 /* ChatScrollDownView.swift */; };
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
+		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
 		CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */; };
 		CE4E426024BC8AFD00BCA9F8 /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */; };
 		CE4E426124BC8AFD00BCA9F8 /* GroupProfileBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */; };
@@ -429,6 +430,7 @@
 		455760A4044106F48F993A05 /* Pods_Chats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
+		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
 		CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileRouter.swift; sourceTree = "<group>"; };
 		CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
 		CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileBuilder.swift; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 			isa = PBXGroup;
 			children = (
 				2D64CFAC24A20EEE00C8B94A /* DateFormatter+.swift */,
+				CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */,
 			);
 			path = DateFormatter;
 			sourceTree = "<group>";
@@ -1821,6 +1824,7 @@
 				2D501C1C24B3263700C37DCB /* LayoutProxy.swift in Sources */,
 				2D501BF424B322AC00C37DCB /* SeparatorLine.swift in Sources */,
 				CECA0E3624B627680067D5B6 /* CollocutorProfileBuilder.swift in Sources */,
+				CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */,
 				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D751D4324C1382000C40122 /* ChatListTableViewCellModel.swift in Sources */,
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,

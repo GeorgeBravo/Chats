@@ -238,9 +238,10 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
                 messageLabel.text = message
             }
         }
-        if let sentTime = model.timeSent {
-            timeSent.text = sentTime
-        }
+        
+        timeSent.text = model.timeText() ?? model.timeSent ?? " "
+        timeSent.textColor = UIColor(named: model.isWeekendDate() ? .pinkishRedTwo : .slateGrey)
+        
         if let messCount = model.messageCount {
             messageCount.text = String(messCount)
             changeCountView(count: messCount)

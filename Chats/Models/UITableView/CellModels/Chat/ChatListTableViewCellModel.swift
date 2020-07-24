@@ -9,11 +9,14 @@
 import Foundation
 
 struct ChatListTableViewCellModel: TableViewCellModel {
+    
+    // MARK: - Variables
     var cellType: TableViewCellType! { return .chatList }
     var title: String?
     var collocutorName: String?
     var message: String?
     var timeSent: String?
+    var sentDate: Date?
     var imageLink: String?
     var isSelected: Bool?
     var messageCount: Int?
@@ -23,4 +26,15 @@ struct ChatListTableViewCellModel: TableViewCellModel {
     var lastSender: String?
     var membersCount: Int?
     var membersOnline: Int?
+    
+    // MARK: - Logic
+    func timeText() -> String? {
+        guard let sentDate = sentDate else { return nil }
+        return sentDate.createdDateText().dateText
+    }
+    
+    func isWeekendDate() -> Bool {
+        guard let sentDate = sentDate else { return false }
+        return sentDate.createdDateText().isWeekend
+    }
 }
