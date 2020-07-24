@@ -186,7 +186,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         
         mainView.addSubview(timeSent) {
             $0.top == mainView.topAnchor + 16.5
-            $0.trailing == mainView.trailingAnchor - 21
+            $0.trailing == contentView.trailingAnchor - 10
             $0.height == 10
         }
         
@@ -199,7 +199,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         
         mainView.addSubview(messageCount) {
             $0.bottom == mainView.bottomAnchor - 10
-            $0.trailing == mainView.trailingAnchor - 21
+            $0.trailing == contentView.trailingAnchor - 10
             $0.height == 21.7
             countViewWidthConstraint = $0.width == 21.7
             
