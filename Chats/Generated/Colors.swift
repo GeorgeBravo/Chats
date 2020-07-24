@@ -21,6 +21,7 @@ internal struct ColorName {
 
   internal static let blackColor = ColorName(rgbValue: 0x000000)
   internal static let brightCyan = ColorName(rgbValue: 0x40ddf3)
+  internal static let coolGray235 = ColorName(rgbValue: 0xebebeb)
   internal static let coolGrey = ColorName(rgbValue: 0xa2a9b6)
   internal static let coolGreyTwo = ColorName(rgbValue: 0xa5aab1)
   internal static let electricBlue = ColorName(rgbValue: 0x0048ff)

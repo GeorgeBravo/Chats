@@ -21,6 +21,8 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
     var isMessageRead: Bool
     var isIncomingMessage: Bool
     var isMessageEdited: Bool
+    var isPinned: Bool
+    var messageId: String
     
     var chatType: ChatType
 
@@ -35,7 +37,9 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
          isIncomingMessage: Bool,
          isMessageEdited: Bool,
          chatType: ChatType,
-         needHideMessage: Bool) {
+         needHideMessage: Bool,
+         isPinned: Bool = false,
+         messageId: String) {
         self.contact = contact
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -44,5 +48,7 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
         self.isMessageEdited = isMessageEdited
         self.chatType = chatType
         self.needHideMessage = needHideMessage
+        self.isPinned = isPinned
+        self.messageId = messageId
     }
 }

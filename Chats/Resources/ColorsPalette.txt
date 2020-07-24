@@ -19,3 +19,4 @@
 #white50: #fcfcfc
 #messageManipulationSeparator: #d2d5d8
 #summersky: #40A7E3
+#coolGray235: #ebebeb
