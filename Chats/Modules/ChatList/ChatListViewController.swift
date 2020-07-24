@@ -66,6 +66,23 @@ final class ChatListViewController: UITableViewController {
         return button
     }()
     
+    private lazy var editingView: ChatListEditingModeView = {
+        let view = ChatListEditingModeView()
+        view.delegate = self
+        return view
+    }()
+    
+    private lazy var editButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Edit", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16.7, weight: .regular)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.addTarget(self, action: #selector(showEditing), for: .touchUpInside)
+        return button
+    }()
+    
     //MARK: - VC Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,9 +138,9 @@ extension ChatListViewController: ChatListViewControllable {}
 extension ChatListViewController {
     func setupView() {
         //        let largeView = ChatListLargeTitleView(frame: CGRect(x: 0, y: 20, width: self.view.bounds.width, height: 200))
-        let editingView = ChatListEditingModeView()
+//        let editingView = ChatListEditingModeView()
         //        largeView.delegate = self
-        editingView.delegate = self
+//        editingView.delegate = self
         //        self.view.addSubview(largeView)
         
         view.addSubview(editingView) {
@@ -145,6 +162,7 @@ extension ChatListViewController {
         tableView.setEditing(!tableView.isEditing, animated: true)
         selectedCheckMarks.removeAll()
         if tableView.isEditing {
+            editButton.setTitle("Done", for: .normal)
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.editListViewHeightConstraint?.constant = 81
@@ -152,9 +170,11 @@ extension ChatListViewController {
                 self.view.layoutIfNeeded()
             }
         } else {
+            editButton.setTitle("Edit", for: .normal)
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.editListViewHeightConstraint?.constant = 0
+                self.editingView.setupStateForButton(selectedChekmarks: 0)
                 self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self.view.layoutIfNeeded()
             }
@@ -183,23 +203,22 @@ extension ChatListViewController {
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.isHidden = false
         title = "Chats"
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.helveticaNeueFontOfSize(size: 20, style: .bold)]
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.barTintColor = UIColor.white
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.view.backgroundColor = UIColor.white
+        let visualEffectView   = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        visualEffectView.isUserInteractionEnabled = false
+        visualEffectView.frame =  (self.navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -40).offsetBy(dx: 0, dy: -40))!
+        self.navigationController?.navigationBar.isTranslucent = true
         
-        let editButton: UIButton = {
-            let button = UIButton()
-            button.setTitle("Edit", for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.titleLabel?.textAlignment = .left
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 16.7, weight: .regular)
-            button.addTarget(self, action: #selector(showEditing), for: .touchUpInside)
-            return button
-        }()
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+                self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.addSubview(visualEffectView)
+        self.navigationController?.navigationBar.sendSubviewToBack(visualEffectView)
+        visualEffectView.layer.zPosition = -1
+        self.navigationController?.view.backgroundColor = UIColor.white
         
         let editButButtonItem = UIBarButtonItem(customView: editButton)
         self.navigationItem.leftBarButtonItem = editButButtonItem
@@ -298,10 +317,12 @@ extension ChatListViewController: ChatListTableViewCellDelegate {
             }
             return false
         }
+        editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
     
     func checkMarkSelected(chatId: Int) {
         selectedCheckMarks.append(chatId)
+        editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
 }
 
