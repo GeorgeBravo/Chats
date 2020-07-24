@@ -213,6 +213,7 @@ extension ChatListViewController {
         search.searchResultsUpdater = self
         search.searchBar.placeholder = "Search for messages or users"
         search.searchBar.backgroundImage = UIImage()
+        search.searchBar.setImage(UIImage(), for: .search, state: .normal)
         let offset = UIOffset(horizontal: 50, vertical: 0)
         search.searchBar.setPositionAdjustment(offset, for: .search)
         if let searchField = search.searchBar.value(forKey: "searchField") as? UITextField {
