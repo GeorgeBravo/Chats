@@ -6,7 +6,7 @@
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum CollocutorOptionCellAppearance {
     case standard
@@ -63,6 +63,16 @@ enum CollocutorOptionType: Int {
         case .arrowCell: return ColorName.optionsBlackColor
         case .destructive: return ColorName.pinkishRedTwo
         case .standard: return ColorName.optionsBlueColor
+        }
+    }
+    
+    var optionImage: UIImage? {
+        switch self {
+        case .call: return #imageLiteral(resourceName: "call")
+        case .search: return #imageLiteral(resourceName: "search")
+        case .mute: return #imageLiteral(resourceName: "mute")
+        case .more: return #imageLiteral(resourceName: "more")
+        default: return nil
         }
     }
 }

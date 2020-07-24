@@ -195,6 +195,7 @@
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
+		CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */; };
 		CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */; };
 		CE4E426024BC8AFD00BCA9F8 /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */; };
 		CE4E426124BC8AFD00BCA9F8 /* GroupProfileBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */; };
@@ -431,6 +432,7 @@
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
 		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
+		CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelStackView.swift; sourceTree = "<group>"; };
 		CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileRouter.swift; sourceTree = "<group>"; };
 		CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
 		CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileBuilder.swift; sourceTree = "<group>"; };
@@ -975,6 +977,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
 				CE5ECC4424C8DA03004A2539 /* PinnedMessageView */,
@@ -1502,6 +1505,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		CE2C50A924CB371300731904 /* ButtonLabelStackView */ = {
+			isa = PBXGroup;
+			children = (
+				CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */,
+			);
+			path = ButtonLabelStackView;
+			sourceTree = "<group>";
+		};
 		CE4E425A24BC8AD500BCA9F8 /* GroupProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1756,6 +1767,7 @@
 				2D501BA924B3210900C37DCB /* ContactMessageCell.swift in Sources */,
 				2D501C1724B3263700C37DCB /* CGSize+UniformKeyPathInitializable.swift in Sources */,
 				2DCF832124C6EF6C00003669 /* GroupChatViewStatusView.swift in Sources */,
+				CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */,
 				2D65C20F24AE1A3F00C64534 /* LikeButtonCell.swift in Sources */,
 				2D64CFF224A20EF000C8B94A /* CGPoint+UniformKeyPathInitializable.swift in Sources */,
 				2D65C20724AE1A3F00C64534 /* ContactCell.swift in Sources */,
