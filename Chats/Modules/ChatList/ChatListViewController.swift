@@ -17,7 +17,7 @@ private struct Constants {
     /// Margin from right anchor of safe area to right anchor of Image
     static let ImageRightMargin: CGFloat = 16
     /// Margin from bottom anchor of NavBar to bottom anchor of Image for Large NavBar state
-    static let ImageBottomMarginForLargeState: CGFloat = 12
+    static let ImageBottomMarginForLargeState: CGFloat = 6
     /// Margin from bottom anchor of NavBar to bottom anchor of Image for Small NavBar state
     static let ImageBottomMarginForSmallState: CGFloat = 6
     /// Image height/width for Small NavBar state
@@ -69,7 +69,7 @@ final class ChatListViewController: UITableViewController {
     //MARK: - VC Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.largeTitleDisplayMode = .never
         setupNavigationBar()
         tableView = UITableView(frame: .zero, style: .grouped)
         self.view.backgroundColor = UIColor.white
@@ -90,7 +90,7 @@ final class ChatListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         
         setupCreateNewButton()
         setupSearch()
@@ -187,7 +187,8 @@ extension ChatListViewController {
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.view.backgroundColor = UIColor.white
         
         let editButton: UIButton = {
@@ -235,7 +236,6 @@ extension ChatListViewController {
             searchField.textAlignment = .center
             searchField.font = UIFont(name: "HelveticaNeue", size: 16.7)
         }
-        
         tableView.tableHeaderView = search.searchBar
     }
     
@@ -315,7 +315,7 @@ extension ChatListViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let height = navigationController?.navigationBar.frame.height else { return }
-        moveAndResizeImage(for: height)
+//        moveAndResizeImage(for: height)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

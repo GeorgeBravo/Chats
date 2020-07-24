@@ -129,7 +129,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         }
         if count >= 10 && count <= 99 {
             countViewWidthConstraint?.constant = 31.7
-            messageCount.backgroundColor = UIColor.black
+            messageCount.backgroundColor = UIColor(named: ColorName.aquamarine)
         }
     }
     
