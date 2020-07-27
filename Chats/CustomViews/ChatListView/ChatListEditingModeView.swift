@@ -48,6 +48,7 @@ class ChatListEditingModeView: UIView {
         button.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .disabled)
         button.titleLabel?.textAlignment = .left
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.7, weight: .medium)
+        button.isEnabled = false
         return button
     }()
     
@@ -58,9 +59,22 @@ class ChatListEditingModeView: UIView {
         button.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .disabled)
         button.titleLabel?.textAlignment = .left
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.7, weight: .medium)
+        button.isEnabled = false
         return button
     }()
     
+    //MARK: - Public Functions
+    func setupStateForButton(selectedChekmarks: Int) {
+        if selectedChekmarks > 0 {
+            readAllButton.setTitle("Read", for: .normal)
+            archiveButton.isEnabled = true
+            deleteButton.isEnabled = true
+        } else {
+            readAllButton.setTitle("Read All", for: .normal)
+            archiveButton.isEnabled = false
+            deleteButton.isEnabled = false
+        }
+    }
     //MARK: - Private Functions
     private func addActions() {
         readAllButton.addTarget(self, action: #selector(readAllButtonTapped), for: .touchUpInside)
