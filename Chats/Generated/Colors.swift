@@ -19,7 +19,9 @@ internal struct ColorName {
   internal let rgbValue: UInt32
   internal var color: Color { return Color(named: self) }
 
+  internal static let aquamarine = ColorName(rgbValue: 0x06d6c1)
   internal static let blackColor = ColorName(rgbValue: 0x000000)
+  internal static let blueGray = ColorName(rgbValue: 0x97a3b2)
   internal static let brightCyan = ColorName(rgbValue: 0x40ddf3)
   internal static let coolGray235 = ColorName(rgbValue: 0xebebeb)
   internal static let coolGrey = ColorName(rgbValue: 0xa2a9b6)
@@ -29,6 +31,7 @@ internal struct ColorName {
   internal static let messageManipulationSeparator = ColorName(rgbValue: 0xd2d5d8)
   internal static let optionsBlackColor = ColorName(rgbValue: 0x262626)
   internal static let optionsBlueColor = ColorName(rgbValue: 0x504eeb)
+  internal static let paleGray = ColorName(rgbValue: 0xeff4fb)
   internal static let paleGrey = ColorName(rgbValue: 0xf5f5f6)
   internal static let pinkishRedTwo = ColorName(rgbValue: 0xed1c24)
   internal static let slateGrey = ColorName(rgbValue: 0x60676f)

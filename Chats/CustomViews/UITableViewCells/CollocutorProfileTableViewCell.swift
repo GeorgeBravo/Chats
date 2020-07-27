@@ -15,7 +15,8 @@ private struct Constants {
     static let separatorHeight: CGFloat = 0.5
     static let lastSeenLabelFontSize: CGFloat = 16.0
     static let buttonStackLeadingOffset: CGFloat = 32.0
-    static let buttonStackTopOffset: CGFloat = 24.0
+    static let buttonStackTopOffset: CGFloat = 40.0
+    static let buttonStackBottomOffset: CGFloat = 32.0
     static let fontSize: CGFloat = 28.0
     static let minFontSize: CGFloat = 20.0
 }
@@ -105,7 +106,7 @@ extension CollocutorProfileTableViewCell {
         
         addSubview(buttonsStackView) {
             $0.top == lastSeenLabel.bottomAnchor + Constants.buttonStackTopOffset
-            $0.bottom == bottomAnchor - Constants.buttonStackLeadingOffset
+            $0.bottom == bottomAnchor - Constants.buttonStackBottomOffset
             $0.leading == leadingAnchor + Constants.buttonStackLeadingOffset
             $0.trailing == trailingAnchor - Constants.buttonStackLeadingOffset
         }

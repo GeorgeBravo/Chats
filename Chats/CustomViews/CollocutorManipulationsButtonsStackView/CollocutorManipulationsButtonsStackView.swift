@@ -9,8 +9,8 @@
 import UIKit
 
 private struct Constants {
-    static let height: CGFloat = 28.0
-    static let buttonFrame: CGRect = CGRect(0.0, 0.0, height, height)
+//    static let height: CGFloat = 56
+//    static let buttonFrame: CGRect = CGRect(0.0, 0.0, height, height)
 }
 
 protocol CollocutorManipulationsButtonsStackViewDelegate: class {
@@ -22,40 +22,28 @@ class CollocutorManipulationsButtonsStackView: UIStackView {
     // MARK: - Variables
     weak var delegate: CollocutorManipulationsButtonsStackViewDelegate?
     
-    private lazy var callButton: UIButton = {
-        let button = UIButton(type: .custom)
-        let image = #imageLiteral(resourceName: "call")
-        button.backgroundColor = .clear
-        button.setBackgroundImage(image, for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
+    private lazy var callButtonLabelStackView: ButtonLabelStackView = {
+        let buttonLabelStackView = ButtonLabelStackView()
+        buttonLabelStackView.clipsToBounds = true
+        return buttonLabelStackView
     }()
     
-    private lazy var searchButton: UIButton = {
-        let button = UIButton(type: .custom)
-        let image = #imageLiteral(resourceName: "search")
-        button.backgroundColor = .clear
-        button.setBackgroundImage(image, for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
+    private lazy var searchButtonLabelStackView: ButtonLabelStackView = {
+        let buttonLabelStackView = ButtonLabelStackView()
+        buttonLabelStackView.clipsToBounds = true
+        return buttonLabelStackView
     }()
     
-    private lazy var muteButton: UIButton = {
-        let button = UIButton()
-        let image = #imageLiteral(resourceName: "mute")
-        button.backgroundColor = .clear
-        button.setBackgroundImage(image, for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
+    private lazy var muteButtonLabelStackView: ButtonLabelStackView = {
+        let buttonLabelStackView = ButtonLabelStackView()
+        buttonLabelStackView.clipsToBounds = true
+        return buttonLabelStackView
     }()
     
-    private lazy var moreOptionsButton: UIButton = {
-        let button = UIButton()
-        let image = #imageLiteral(resourceName: "more")
-        button.backgroundColor = .clear
-        button.setBackgroundImage(image, for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        return button
+    private lazy var moreOptionsButtonLabelStackView: ButtonLabelStackView = {
+        let buttonLabelStackView = ButtonLabelStackView()
+        buttonLabelStackView.clipsToBounds = true
+        return buttonLabelStackView
     }()
     
     // MARK: - Inits
@@ -72,27 +60,24 @@ class CollocutorManipulationsButtonsStackView: UIStackView {
 
 extension CollocutorManipulationsButtonsStackView {
     func setupViews() {
-        heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
         axis = .horizontal
         alignment = .center
         distribution = .equalSpacing
         var tag = 0
-        [callButton, searchButton, muteButton, moreOptionsButton].forEach {
-            $0.tag = tag
-            addSubview($0) {
-                $0.width == Constants.height
-                $0.height == Constants.height
-            }
+        
+        [callButtonLabelStackView, searchButtonLabelStackView, muteButtonLabelStackView, moreOptionsButtonLabelStackView].forEach {
+            addSubview($0)
+            $0.setupWith(manipulation: CollocutorOptionType(rawValue: tag) ?? .addToContacts)
+            $0.delegate = self
             tag += 1
             addArrangedSubview($0)
         }
     }
 }
 
-// MARK: - Selectors
-extension CollocutorManipulationsButtonsStackView {
-    @objc func buttonPressed(_ sender: UIButton) {
-        guard let manipulation = CollocutorOptionType(rawValue: sender.tag) else { return }
-        delegate?.buttonPressed(with: manipulation)
+// MARK: - ButtonLabelStackViewDelegate
+extension CollocutorManipulationsButtonsStackView: ButtonLabelStackViewDelegate {
+    func buttonPressed(with option: CollocutorOptionType) {
+        delegate?.buttonPressed(with: option)
     }
 }

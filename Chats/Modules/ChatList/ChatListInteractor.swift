@@ -75,17 +75,17 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     
     private func setupChatContent() {
         favoriteChatListModels = [
-            ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
-            ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 66, id: 1)
+            ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date(), imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
+            ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore, imageLink: nil, messageCount: 66, id: 1)
         ]
         
         chatListModels = [
-            ChatListTableViewCellModel(title: "", collocutorName: "Misha T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 23, id: 0, isGroupChat: true, lastSender: "Sava"),
-            ChatListTableViewCellModel(title: "", collocutorName: "Lena T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 5, id: 2),
-            ChatListTableViewCellModel(title: "", collocutorName: "Natalia T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 7, id: 3),
-            ChatListTableViewCellModel(title: "", collocutorName: "Dmitriy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 55, id: 4, isGroupChat: true, lastSender: "Mishalaka"),
-            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 99, id: 5, isGroupChat: true, lastSender: "Lisa"),
-            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: nil, messageCount: 1, id: 6)
+            ChatListTableViewCellModel(title: "", collocutorName: "Misha T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore, imageLink: nil, messageCount: 23, id: 0, isGroupChat: true, lastSender: "Sava"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Lena T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 5, id: 2),
+            ChatListTableViewCellModel(title: "", collocutorName: "Natalia T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 7, id: 3),
+            ChatListTableViewCellModel(title: "", collocutorName: "Dmitriy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 55, id: 4, isGroupChat: true, lastSender: "Mishalaka"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 5, isGroupChat: true, lastSender: "Lisa"),
+            ChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 1, id: 6)
         ]
     }
     
