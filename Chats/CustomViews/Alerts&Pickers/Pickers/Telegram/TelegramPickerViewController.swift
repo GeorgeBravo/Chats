@@ -134,7 +134,16 @@ final class TelegramPickerViewController: UIViewController {
     // MARK: Properties
 
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
-
+    private var videoCell: ItemWithCameraPreview? {
+        didSet {
+            if !self.session.isRunning {
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.05, execute: { [unowned self] in
+                    self.startCamera()
+                })
+            }
+        }
+    }
+    
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
         $0.delegate = self
@@ -486,11 +495,16 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithCameraPreview.self), for: indexPath) as? ItemWithCameraPreview else { return UICollectionViewCell() }
-            item.delegate = self
-            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            item.setup(with: previewLayer)
-            return item
+            if let videoCell = self.videoCell {
+                return videoCell
+            } else {
+                self.videoCell = item
+                self.videoCell?.delegate = self
+                let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.videoCell?.setup(with: previewLayer)
+            }
+            return videoCell ?? item
         }
         guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithPhoto.self), for: indexPath) as? ItemWithPhoto else { return UICollectionViewCell() }
         
