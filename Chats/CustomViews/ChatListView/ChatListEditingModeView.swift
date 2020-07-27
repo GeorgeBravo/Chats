@@ -29,6 +29,7 @@ class ChatListEditingModeView: UIView {
     
     //MARK: - Properites
     var delegate: ChatListEditingModeViewProtocol?
+    var isReadButtonEnabled: Bool = true
     
     //MARK: - Views
     
@@ -70,6 +71,7 @@ class ChatListEditingModeView: UIView {
             archiveButton.isEnabled = true
             deleteButton.isEnabled = true
         } else {
+            readAllButton.isEnabled = isReadButtonEnabled
             readAllButton.setTitle("Read All", for: .normal)
             archiveButton.isEnabled = false
             deleteButton.isEnabled = false

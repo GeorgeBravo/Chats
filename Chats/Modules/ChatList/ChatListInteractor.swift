@@ -20,6 +20,7 @@ protocol ChatListPresentable: Presentable {
     var listener: ChatListPresentableListener? { get set }
     func update()
     func setupNoChatsView()
+    func readAllButtonDisabled(isReadEnabled: Bool)
     
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
@@ -36,6 +37,7 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     
     private var sections: [TableViewSectionModel] = [TableViewSectionModel]() {
         didSet {
+            presenter.readAllButtonDisabled(isReadEnabled: isReadAllEnabled())
             presenter.update()
         }
     }
@@ -59,19 +61,19 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     
     //MARK: - Private Functions
     private func deleteFavorite(chatIds: [Int]) {
-         var modelToDelete: ChatListTableViewCellModel?
-         for id in chatIds {
-             if favoriteChatListModels.contains(where: { (model) -> Bool in
-                 if model.id == id {
-                     modelToDelete = model
-                     return true
-                 }
-                 return false
-             }) {
-                 favoriteChatListModels.removeAll{ $0.id == modelToDelete?.id }
-             }
-         }
-     }
+        var modelToDelete: ChatListTableViewCellModel?
+        for id in chatIds {
+            if favoriteChatListModels.contains(where: { (model) -> Bool in
+                if model.id == id {
+                    modelToDelete = model
+                    return true
+                }
+                return false
+            }) {
+                favoriteChatListModels.removeAll{ $0.id == modelToDelete?.id }
+            }
+        }
+    }
     
     private func setupChatContent() {
         favoriteChatListModels = [
@@ -103,6 +105,43 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
              }
          }
      }
+    private func isReadAllEnabled() -> Bool {
+        var isReadEnabled = false
+        let chatListReadable = chatListModels.contains(where: { (model) -> Bool in
+            if model.messageCount > 0 {
+                return true
+            }
+            return false
+        })
+        let favoritesReadable = favoriteChatListModels.contains(where: { (model) -> Bool in
+            if model.messageCount > 0 {
+                return true
+            }
+            return false
+        })
+        isReadEnabled = chatListReadable || favoritesReadable
+        return isReadEnabled
+    }
+    
+    private func readAllChats() {
+        for (index, _) in favoriteChatListModels.enumerated() {
+            favoriteChatListModels[index].messageCount = 0
+        }
+        for (index, _) in chatListModels.enumerated() {
+            chatListModels[index].messageCount = 0
+        }
+    }
+    
+    private func readMessagesForChats(chatIds: [Int]) {
+        for id in chatIds {
+            if let row = self.favoriteChatListModels.firstIndex(where: {$0.id == id}) {
+                favoriteChatListModels[row].messageCount = 0
+            }
+            if let row = self.chatListModels.firstIndex(where: {$0.id == id}) {
+                chatListModels[row].messageCount = 0
+            }
+        }
+    }
 }
 
 extension ChatListInteractor: ChatListInteractable {
@@ -118,6 +157,15 @@ extension ChatListInteractor: ChatListInteractable {
 }
 
 extension ChatListInteractor: ChatListPresentableListener {
+    func readChats(chatIds: [Int]) {
+        if chatIds.count > 0 {
+            readMessagesForChats(chatIds: chatIds)
+        } else {
+            readAllChats()
+        }
+        combineChatListSections()
+    }
+    
     func setupContent() {
         setupChatContent()
     }
@@ -132,7 +180,6 @@ extension ChatListInteractor: ChatListPresentableListener {
     }
     
     func combineChatListSections() {
-        
         if favoriteChatListModels.isEmpty && !chatListModels.isEmpty {
             let secondSection = ChatListTableViewSectionModel(headerViewType: .chatList, title: "CHATS", cellModels: chatListModels)
             sections = [secondSection]

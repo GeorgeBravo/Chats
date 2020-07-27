@@ -35,6 +35,7 @@ protocol ChatListPresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
+    func readChats(chatIds: [Int])
     func setupContent()
     
     func showChat(of type: ChatType)
@@ -120,6 +121,10 @@ final class ChatListViewController: UITableViewController {
 
 //MARK: - Extensions
 extension ChatListViewController: ChatListPresentable {
+    func readAllButtonDisabled(isReadEnabled: Bool) {
+        editingView.isReadButtonEnabled = isReadEnabled
+    }
+    
     func setupNoChatsView() {
         let statusView = StatusView(logo: UIImage(named: "noChats"), title: "Where’s the party?", placeholder: nil, buttonTitle: nil, textAlignment: nil, placeholderAlignment: nil, style: .subtitled)
         statusView.frame = CGRect(x: 0, y: 0, width: view.width, height: UIScreen.main.bounds.height)
@@ -166,6 +171,7 @@ extension ChatListViewController {
             self.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.editListViewHeightConstraint?.constant = 81
+                self.editingView.setupStateForButton(selectedChekmarks: 0)
                 self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self.view.layoutIfNeeded()
             }
@@ -296,7 +302,8 @@ extension ChatListViewController: ChatListLargeTitleViewProtocol {
 
 extension ChatListViewController: ChatListEditingModeViewProtocol {
     func readAll() {
-        //
+        listener?.readChats(chatIds: selectedCheckMarks)
+        showEditing()
     }
     
     func archive() {
