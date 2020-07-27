@@ -1,0 +1,43 @@
+/*
+  Localizable.strings
+  Chats
+
+  Created by user on 7.07.2020.
+  Copyright © 2020 name. All rights reserved.
+*/
+
+// MARK: - Collocutor Profile Screen
+"SendMessage" = "Send Message";
+"AddToContacts" = "Add to Contacts";
+"AddToGroups" = "Add to Groups";
+"SharedMedia" = "Shared Media";
+"Notifications" = "Notifications";
+"GroupsInCommon" = "Groups In Common";
+"BlockUser" = "Block User";
+"Username" = "@username";
+"Ok" = "Ok";
+"Action" = "Action";
+"Edit" = "Edit";
+"LastSeenRecently" = "last seen recently";
+"Call" = "Call";
+"Search" = "Search";
+"Mute" = "Mute";
+"More" = "More";
+
+// MARK: - Group Profile
+"GroupInfo" = "Group Info";
+"LeaveGroup" = "Leave Group";
+"shortcut" = "shortcut";
+"Author" = "author";
+"AddContacts" = "Add Contacts";
+
+// MARK: - Message Manipulation
+"Answer" = "Answer";
+"Copy" = "Copy";
+"Change" = "Change";
+"Pin" = "Pin";
+"Forward" = "Forward";
+"Reply" = "Reply";
+"Delete" = "Delete";
+"MoreManipulations" = "More...";
+"Unpin" = "Unpin";
