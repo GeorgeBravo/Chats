@@ -88,7 +88,7 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
             if let self = self, let manipulationType = manipulationType, let chatTVCellModel = chatTableViewCellModel {
                 switch manipulationType {
                 case .pin, .unpin:
-                    self.showHidePinnedMessageView(chatTVCellModel: chatTVCellModel)
+                    self.askAboutPinUnpinMessage(chatTVCellModel: chatTVCellModel)
                 default:
                     self.presenter.execute(messageManipulationType: manipulationType, chatTableViewCellModel: chatTVCellModel)
                 }
@@ -108,15 +108,22 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
         showMessageManipulation(with: chatTableViewCellModel, cellNewFrame: frameValues)
     }
     
-    private func showHidePinnedMessageView(chatTVCellModel: ChatContentTableViewCellModel) {
-        for (index, item) in self.messageList.enumerated() {
-            if item.messageId == chatTVCellModel.messageId {
-                self.messageList[index].isPinned = !self.messageList[index].isPinned
-                if self.messageList[index].isPinned {
-                    self.presenter.showPinnedMessage(mockMessage: item)
-                } else {
-                    self.presenter.hidePinnedMessage()
+    private func askAboutPinUnpinMessage(chatTVCellModel: ChatContentTableViewCellModel) {
+            for (index, item) in self.messageList.enumerated() {
+                if item.messageId == chatTVCellModel.messageId {
+                    if !self.messageList[index].isPinned {
+                        self.presenter.showPinnedMessage(mockMessage: item)
+                    } else {
+                        self.presenter.hidePinnedMessage()
+                    }
                 }
+            }
+        }
+    
+    func updateMessageListAfterPinUnpin(mockMessage: MockMessage) {
+        for (index, item) in self.messageList.enumerated() {
+            if item.messageId == mockMessage.messageId {
+                self.messageList[index].isPinned = !self.messageList[index].isPinned
             } else {
                 self.messageList[index].isPinned = false
             }

@@ -54,6 +54,8 @@ public enum LocalizationKeys {
   public static let moreManipulations: String = "MoreManipulations"
   /// Mute
   public static let mute: String = "Mute"
+  /// No
+  public static let no: String = "No"
   /// Notifications
   public static let notifications: String = "Notifications"
   /// Ok
@@ -82,5 +84,7 @@ public enum LocalizationKeys {
   public static let unread: String = "Unread"
   /// @username
   public static let username: String = "Username"
+  /// Yes
+  public static let yes: String = "Yes"
 }
 

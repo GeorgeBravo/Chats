@@ -30,4 +30,19 @@ extension UIAlertAction {
         )
     }
     
+    static func yesAction(handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction.action(
+            title: LocalizationKeys.yes.localized(),
+            image: nil,
+            handler: handler
+        )
+    }
+    
+    static func noAction(handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction.action(
+            title: LocalizationKeys.no.localized(),
+            image: nil,
+            handler: handler
+        )
+    }
 }

@@ -30,6 +30,7 @@ protocol ChatPresentableListener: class {
     func showUser(with profile: Collocutor)
     func showGroupProfile()
     func hideChat()
+    func updateMessageListAfterPinUnpin(mockMessage: MockMessage)
     func unpinnedAllMessages()
     func getIndexPath(for message: MockMessage) -> IndexPath?
     
@@ -424,13 +425,21 @@ extension ChatViewController: ChatPresentable {
     }
     
     func showPinnedMessage(mockMessage: MockMessage) {
-        self.pinnedMockMessage = mockMessage
-        showPinnedMessageView(mockMessage: mockMessage)
+        let yesAction = UIAlertAction.yesAction { [weak self] (action) in
+            self?.pinnedMockMessage = mockMessage
+            self?.showPinnedMessageView(mockMessage: mockMessage)
+            self?.listener?.updateMessageListAfterPinUnpin(mockMessage: mockMessage)
+        }
+        UIAlertController.showAlert(viewController: self, title: "Pin message", message: "Are you sure?", actions: [yesAction, UIAlertAction.noAction()])
     }
     
     func hidePinnedMessage() {
-        self.pinnedMockMessage = nil
-        hidePinnedMessageView()
+        let yesAction = UIAlertAction.yesAction { [weak self] (action) in
+            self?.pinnedMockMessage = nil
+            self?.hidePinnedMessageView()
+            self?.listener?.unpinnedAllMessages()
+        }
+        UIAlertController.showAlert(viewController: self, title: "Unpin message", message: "Are you sure?", actions: [yesAction, UIAlertAction.noAction()])
     }
     
     func onTypingStatus() {
@@ -550,17 +559,19 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 // MARK: - pinned Message View actions
 extension ChatViewController {
     func showPinnedMessageView(mockMessage: MockMessage) {
+        self.editHeightConstraint?.constant = 60
+        self.pinnedMeaasgeView.isHidden = false
         UIView.animate(withDuration: 0.3) {
-            self.editHeightConstraint?.constant = 60
-            self.pinnedMeaasgeView.isHidden = false
+            self.view.layoutIfNeeded()
             self.pinnedMeaasgeView.setupPinnedMessageView(mockMessage: mockMessage)
         }
     }
     
     func hidePinnedMessageView() {
+        self.editHeightConstraint?.constant = 0
+        self.pinnedMeaasgeView.isHidden = true
         UIView.animate(withDuration: 0.3) {
-            self.editHeightConstraint?.constant = 0
-            self.pinnedMeaasgeView.isHidden = true
+            self.view.layoutIfNeeded()
         }
     }
 }

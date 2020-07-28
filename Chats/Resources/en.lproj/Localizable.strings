@@ -23,6 +23,8 @@
 "Search" = "Search";
 "Mute" = "Mute";
 "More" = "More";
+"Yes" = "Yes";
+"No" = "No";
 
 // MARK: - Group Profile
 "GroupInfo" = "Group Info";
