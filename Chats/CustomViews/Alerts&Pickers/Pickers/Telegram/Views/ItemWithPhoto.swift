@@ -36,7 +36,7 @@ final class ItemWithPhoto: UICollectionViewCell {
     
     lazy var videoImageVIew: UIImageView = {
         $0.backgroundColor = .clear
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.maskToBounds = true
         $0.image = UIImage(named: "videoAsset")
         $0.isHidden = true
@@ -45,7 +45,8 @@ final class ItemWithPhoto: UICollectionViewCell {
     
     lazy var videoDurationLabel: UILabel = {
         $0.textColor = UIColor.white
-        $0.textAlignment = .center
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 13, style: .regular)
+        $0.textAlignment = .left
         $0.backgroundColor = UIColor.clear
         return $0
     }(UILabel())
@@ -81,13 +82,12 @@ final class ItemWithPhoto: UICollectionViewCell {
         
         let unselected: UIView = UIView()
         unselected.addSubview(imageView)
-        unselected.addSubview(unselectedCircle)
-        unselected.addSubview(selectedCircle)
-        unselected.addSubview(selectedPoint)
         backgroundView = unselected
         
-        selectedCircle.isHidden = true
-        selectedPoint.isHidden = true
+        let selected: UIView = UIView()
+        selected.addSubview(selectedCircle)
+        selected.addSubview(selectedPoint)
+        selectedBackgroundView = selected
     }
     
     override public func layoutSubviews() {
@@ -98,15 +98,16 @@ final class ItemWithPhoto: UICollectionViewCell {
         updateAppearance(forCircle: selectedCircle)
         updateAppearance(forPoint: selectedPoint)
         imageView.addSubview(videoImageVIew) {
-                   $0.leading == imageView.leadingAnchor + 10
-                   $0.bottom == imageView.bottomAnchor - 5
-                          $0.width == 25
-                          $0.height == 15
-                      }
+            $0.leading == imageView.leadingAnchor + 8
+            $0.bottom == imageView.bottomAnchor - 8
+            $0.width == 15
+            $0.height == 9
+        }
         imageView.addSubview(videoDurationLabel) {
-            $0.trailing == imageView.trailingAnchor - 10
-            $0.bottom == imageView.bottomAnchor - 5
-            $0.height == 15
+            $0.trailing == imageView.trailingAnchor - 8
+            $0.bottom == imageView.bottomAnchor - 8
+            $0.height == 10
+            $0.leading >= videoImageVIew.trailingAnchor + 20
         }
     }
     

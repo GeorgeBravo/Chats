@@ -531,7 +531,9 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             }
         }
         
-        alert.addAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        cancelAction.setValue(UIColor.init(named: ColorName.blackTwo), forKey: "titleTextColor")
+        alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
     
