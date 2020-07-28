@@ -11,6 +11,7 @@ class PhotoLayout: UICollectionViewLayout {
     
     public var lineSpacing: CGFloat = 6
     public var expanded: Bool = false
+    public var hasCamera: Bool = false
     
     fileprivate var previousAttributes = [UICollectionViewLayoutAttributes]()
     fileprivate var currentAttributes = [UICollectionViewLayoutAttributes]()
@@ -121,7 +122,10 @@ class PhotoLayout: UICollectionViewLayout {
             let itemLeft = itemFrame.origin.x
             let itemRight = itemLeft + itemFrame.size.width
             
-            if selectedCellIndexPath.row == 1 {
+            if selectedCellIndexPath.row == 1  && hasCamera {
+                return proposedContentOffset
+            }
+            if selectedCellIndexPath.row == 0  && !hasCamera {
                 return proposedContentOffset
             }
             finalContentOffset = CGPoint(x: ((itemFrame.minX + (itemFrame.width / 2)) - UIScreen.main.bounds.width / 2), y: -inset.top)

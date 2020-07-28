@@ -619,6 +619,7 @@ extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDele
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
             AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
                 hasCamera = false
+                layout.hasCamera = false
                 return
         }
         session.sessionPreset = AVCaptureSession.Preset.medium
@@ -652,6 +653,7 @@ extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDele
             videoDataOutput.connection(with: .video)?.isEnabled = true
             
             hasCamera = true
+            layout.hasCamera = true
         } catch let error as NSError {
             deviceInput = nil
             print("error: \(error.localizedDescription)")
