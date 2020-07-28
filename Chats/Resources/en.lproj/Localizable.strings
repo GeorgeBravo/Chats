@@ -41,3 +41,8 @@
 "Delete" = "Delete";
 "MoreManipulations" = "More...";
 "Unpin" = "Unpin";
+"Unread" = "Unread";
+"Read" = "Read";
+"Unmute" = "Unmute";
+"Archive" = "Archive";
+"Unarchive" = "Unarchive";

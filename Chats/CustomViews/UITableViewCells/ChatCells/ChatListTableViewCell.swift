@@ -12,6 +12,7 @@ import UIKit
 protocol ChatListTableViewCellDelegate {
     func checkMarkSelected(chatId: Int)
     func checkMarkUnselected(chatId: Int)
+    func ifEditButtonPressed() -> Bool
 }
 
 class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -106,17 +107,13 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        #warning("weird subview appears in editing style .none while editing mode")
-        for subview in self.subviews {
-            if (subview.height == 1) && (subview.width == 24) {
-                subview.removeFromSuperview()
-            }
-        }
+        checkMarkButton.isHidden = delegate?.ifEditButtonPressed() ?? true ? false : true
+        layoutIfNeeded()
         if !editing {
-            self.layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) {
-                self.checkMarkButton.backgroundColor = UIColor.white
-                self.layoutIfNeeded()
+            layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.checkMarkButton.backgroundColor = UIColor.white
+                self?.layoutIfNeeded()
             }
         }
     }
@@ -251,6 +248,14 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         }
         if let image = model.imageLink {
             userAvatar.image = UIImage(named: image)
+        }
+    }
+    
+    override func willTransition(to state: UITableViewCell.StateMask) {
+        switch state {
+        case .showingDeleteConfirmation: print("showingDeleteConfirmation")
+        case .showingEditControl: print("showingDeleteConfirmation")
+        default: print("default")
         }
     }
 }

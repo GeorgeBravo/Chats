@@ -20,6 +20,8 @@ public enum LocalizationKeys {
   public static let addToGroups: String = "AddToGroups"
   /// Answer
   public static let answer: String = "Answer"
+  /// Archive
+  public static let archive: String = "Archive"
   /// author
   public static let author: String = "Author"
   /// Block User
@@ -56,6 +58,8 @@ public enum LocalizationKeys {
   public static let ok: String = "Ok"
   /// Pin
   public static let pin: String = "Pin"
+  /// Read
+  public static let read: String = "Read"
   /// Reply
   public static let reply: String = "Reply"
   /// Search
@@ -66,8 +70,14 @@ public enum LocalizationKeys {
   public static let sharedMedia: String = "SharedMedia"
   /// shortcut
   public static let shortcut: String = "shortcut"
+  /// Unarchive
+  public static let unarchive: String = "Unarchive"
+  /// Unmute
+  public static let unmute: String = "Unmute"
   /// Unpin
   public static let unpin: String = "Unpin"
+  /// Unread
+  public static let unread: String = "Unread"
   /// @username
   public static let username: String = "Username"
 }
