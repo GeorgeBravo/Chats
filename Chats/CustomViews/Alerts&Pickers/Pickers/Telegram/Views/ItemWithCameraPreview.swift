@@ -50,13 +50,10 @@ class ItemWithCameraPreview: UICollectionViewCell {
         } else {
             layer.addSublayer(cameraPreviewLayer)
         }
-        delegate?.startCamera()
     }
     
     // MARK: - Logic
     override func prepareForReuse() {
-        cameraPreviewLayer.removeFromSuperlayer()
-        delegate?.stopCamera()
     }
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

@@ -23,3 +23,4 @@
 #aquamarine: #06d6c1
 #paleGray: #eff4fb
 #blueGray: #97a3b2
+#blackTwo: #111111

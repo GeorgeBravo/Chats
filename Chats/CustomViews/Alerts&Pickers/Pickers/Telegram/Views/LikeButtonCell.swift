@@ -14,7 +14,7 @@ final class LikeButtonCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = nil
         contentView.backgroundColor = nil
-        textLabel?.textColor = UIColor(hex: 0x007AFF)
+        textLabel?.textColor = UIColor.init(named: ColorName.blackTwo)
     }
     
     required init?(coder aDecoder: NSCoder) {

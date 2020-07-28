@@ -11,6 +11,7 @@ class PhotoLayout: UICollectionViewLayout {
     
     public var lineSpacing: CGFloat = 6
     public var expanded: Bool = false
+    public var hasCamera: Bool = false
     
     fileprivate var previousAttributes = [UICollectionViewLayoutAttributes]()
     fileprivate var currentAttributes = [UICollectionViewLayoutAttributes]()
@@ -63,15 +64,13 @@ class PhotoLayout: UICollectionViewLayout {
             if indexPath.row == 0 && expanded {
                 width = 0
                 height = 0
+            } else if !expanded {
+                height = photoWidth
+                width = photoWidth
             } else {
                 height = collectionView.bounds.height - (inset.top + inset.bottom)
                 width = photoWidth
             }
-
-//            if indexPath.row == 1 && expanded {
-//                width += photoWidth * 0.5
-//            }
-
             
             let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
             
@@ -123,12 +122,13 @@ class PhotoLayout: UICollectionViewLayout {
             let itemLeft = itemFrame.origin.x
             let itemRight = itemLeft + itemFrame.size.width
             
+            if selectedCellIndexPath.row == 1  && hasCamera {
+                return proposedContentOffset
+            }
+            if selectedCellIndexPath.row == 0  && !hasCamera {
+                return proposedContentOffset
+            }
             finalContentOffset = CGPoint(x: ((itemFrame.minX + (itemFrame.width / 2)) - UIScreen.main.bounds.width / 2), y: -inset.top)
-//            if itemRight > contentRight {
-//                finalContentOffset = CGPoint(x: contentLeft + (itemRight - contentRight) + lineSpacing, y: -inset.top)
-//            } else if itemLeft < contentLeft {
-//                finalContentOffset = CGPoint(x: contentLeft - (contentLeft - itemLeft) - lineSpacing, y: -inset.top)
-//            }
         }
         return finalContentOffset
     }

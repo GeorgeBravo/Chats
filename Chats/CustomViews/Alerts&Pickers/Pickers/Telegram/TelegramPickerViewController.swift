@@ -48,11 +48,11 @@ final class TelegramPickerViewController: UIViewController {
     
     struct UI {
         static let rowHeight: CGFloat = 58
-        static let insets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        static let insets: UIEdgeInsets = UIEdgeInsets(top: 57, left: 8, bottom: 0, right: 8)
         static let minimumInteritemSpacing: CGFloat = 6
         static let minimumLineSpacing: CGFloat = 6
-        static let maxHeight: CGFloat = UIScreen.main.bounds.width / 1.5
-        static let multiplier: CGFloat = 2
+        static let maxHeight: CGFloat = 92
+        static let multiplier: CGFloat = 2.26
         static let animationDuration: TimeInterval = 0.3
     }
     
@@ -108,14 +108,14 @@ final class TelegramPickerViewController: UIViewController {
     }
     
     var preferredHeight: CGFloat {
-        return UI.maxHeight / (selectedAssets.count == 0 ? UI.multiplier : 1) + UI.insets.top + UI.insets.bottom
+        return UI.maxHeight * (selectedAssets.count == 0 ? 1 : UI.multiplier) + UI.insets.top + UI.insets.bottom
     }
     
     func sizeFor(asset: PHAsset) -> CGSize {
-        let height: CGFloat = UI.maxHeight
-        var width: CGFloat =   CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
+        let height: CGFloat = UI.maxHeight * UI.multiplier
+        var width: CGFloat = CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
         if width > UIScreen.main.bounds.width * 0.6 {
-            width = height / 1.5
+            width = height
         }
         //        CGFloat(Double(height) * Double(asset.pixelWidth) / Double(asset.pixelHeight))
         return CGSize(width: width, height: height)
@@ -124,7 +124,7 @@ final class TelegramPickerViewController: UIViewController {
     func sizeForItem(asset: PHAsset) -> CGSize {
         let size: CGSize = sizeFor(asset: asset)
         if selectedAssets.count == 0 {
-            let value: CGFloat = size.height / UI.multiplier
+            let value: CGFloat = 84
             return CGSize(width: value, height: value)
         } else {
             return size
@@ -134,7 +134,23 @@ final class TelegramPickerViewController: UIViewController {
     // MARK: Properties
 
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
-
+    private var videoCell: ItemWithCameraPreview? {
+        didSet {
+            if !self.session.isRunning {
+                DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 0.05, execute: { [unowned self] in
+                    self.startCamera()
+                })
+            }
+        }
+    }
+    fileprivate lazy var shareLabel: UILabel = { [unowned self] in
+        $0.text = "Share"
+        $0.textAlignment = .center
+        $0.textColor = Color.init(named: ColorName.aquamarine)
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 20, style: .bold)
+        return $0
+    }(UILabel())
+    
     fileprivate lazy var collectionView: UICollectionView = { [unowned self] in
         $0.dataSource = self
         $0.delegate = self
@@ -145,6 +161,10 @@ final class TelegramPickerViewController: UIViewController {
         $0.contentInsetAdjustmentBehavior = .never
         $0.contentInset = UI.insets
         $0.backgroundColor = .clear
+        $0.alwaysBounceVertical = false
+        $0.alwaysBounceHorizontal = false
+        $0.isDirectionalLockEnabled = true
+        $0.bounces = false
         $0.maskToBounds = false
         $0.clipsToBounds = false
         $0.register(ItemWithPhoto.self, forCellWithReuseIdentifier: String(describing: ItemWithPhoto.self))
@@ -217,6 +237,7 @@ final class TelegramPickerViewController: UIViewController {
             preferredContentSize.width = UIScreen.main.bounds.width * 0.5
         }
         
+        setupShareLabel()
         setupGesture()
         checkCameraAuthorizationStatus()
         updatePhotos()
@@ -237,11 +258,17 @@ final class TelegramPickerViewController: UIViewController {
         self.view.addGestureRecognizer(panGesture)
     }
     
+    func setupShareLabel() {
+        tableView.addSubview(shareLabel) {
+            $0.top == tableView.topAnchor + 20
+            $0.centerX == tableView.centerXAnchor
+            $0.height == 16
+        }
+    }
     
     func layoutSubviews() {
         tableView.tableHeaderView?.height = preferredHeight
         preferredContentSize.height = preferredHeight + (CGFloat(buttons.count) * UI.rowHeight)
-//                    .contentSize.height
     }
     
     func updatePhotos() {
@@ -325,7 +352,6 @@ final class TelegramPickerViewController: UIViewController {
         selectedAssets.contains(asset)
             ? selectedAssets.remove(asset)
             : selectedAssets.append(asset)
-        //        selection?(TelegramSelectionType.photo(selectedAssets))
         
         let currentCount = selectedAssets.count
         
@@ -415,7 +441,7 @@ final class TelegramPickerViewController: UIViewController {
         let seconds = time % 60
         let minutes = (time / 60) % 60
         
-        return String(format: "%0.2d:%0.2d",minutes,seconds)
+        return String(format: "%0.1d:%0.2d",minutes,seconds)
         
     }
     
@@ -484,13 +510,18 @@ extension TelegramPickerViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
+        if indexPath.item == 0 && hasCamera {
             guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithCameraPreview.self), for: indexPath) as? ItemWithCameraPreview else { return UICollectionViewCell() }
-            item.delegate = self
-            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            item.setup(with: previewLayer)
-            return item
+            if let videoCell = self.videoCell {
+                return videoCell
+            } else {
+                self.videoCell = item
+                self.videoCell?.delegate = self
+                let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.videoCell?.setup(with: previewLayer)
+            }
+            return videoCell ?? item
         }
         guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ItemWithPhoto.self), for: indexPath) as? ItemWithPhoto else { return UICollectionViewCell() }
         
@@ -588,6 +619,7 @@ extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDele
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
             AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
                 hasCamera = false
+                layout.hasCamera = false
                 return
         }
         session.sessionPreset = AVCaptureSession.Preset.medium
@@ -621,6 +653,7 @@ extension TelegramPickerViewController: AVCaptureVideoDataOutputSampleBufferDele
             videoDataOutput.connection(with: .video)?.isEnabled = true
             
             hasCamera = true
+            layout.hasCamera = true
         } catch let error as NSError {
             deviceInput = nil
             print("error: \(error.localizedDescription)")
