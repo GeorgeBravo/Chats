@@ -430,7 +430,7 @@ extension ChatViewController: ChatPresentable {
             self?.showPinnedMessageView(mockMessage: mockMessage)
             self?.listener?.updateMessageListAfterPinUnpin(mockMessage: mockMessage)
         }
-        UIAlertController.showAlert(viewController: self, title: "Pin message", message: "Are you sure?", actions: [yesAction, UIAlertAction.noAction()])
+        UIAlertController.showAlert(viewController: self, title: nil, message: "Would you like to pin this message?", actions: [yesAction, UIAlertAction.noAction()])
     }
     
     func hidePinnedMessage() {
@@ -439,7 +439,7 @@ extension ChatViewController: ChatPresentable {
             self?.hidePinnedMessageView()
             self?.listener?.unpinnedAllMessages()
         }
-        UIAlertController.showAlert(viewController: self, title: "Unpin message", message: "Are you sure?", actions: [yesAction, UIAlertAction.noAction()])
+        UIAlertController.showAlert(viewController: self, title: nil, message: "Would you like to unpin this message?", actions: [yesAction, UIAlertAction.noAction()])
     }
     
     func onTypingStatus() {
