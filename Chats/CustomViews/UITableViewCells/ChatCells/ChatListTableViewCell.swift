@@ -12,6 +12,7 @@ import UIKit
 protocol ChatListTableViewCellDelegate {
     func checkMarkSelected(chatId: Int)
     func checkMarkUnselected(chatId: Int)
+    func ifEditButtonPressed() -> Bool
 }
 
 class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
@@ -112,10 +113,13 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
                 subview.removeFromSuperview()
             }
         }
+        checkMarkButton.isHidden = delegate?.ifEditButtonPressed() ?? true ? false : true
+        layoutIfNeeded()
         if !editing {
             self.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.checkMarkButton.backgroundColor = UIColor.white
+                self.checkMarkButton.isSelected = false
                 self.layoutIfNeeded()
             }
         }
@@ -124,12 +128,19 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     //MARK: - Private Funcs
     private func changeCountView(count: Int) {
         if count <= 9 && count > 0 {
+            messageCount.text = String(count)
             countViewWidthConstraint?.constant = 21.7
             messageCount.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
         }
         if count >= 10 && count <= 99 {
+            messageCount.text = String(count)
             countViewWidthConstraint?.constant = 31.7
             messageCount.backgroundColor = UIColor(named: ColorName.aquamarine)
+        }
+        if count == 0 {
+            messageCount.text = ""
+            countViewWidthConstraint?.constant = 0
+            messageCount.backgroundColor = UIColor.clear
         }
     }
     
@@ -243,7 +254,6 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         timeSent.textColor = UIColor(named: model.isWeekendDate() ? .pinkishRedTwo : .slateGrey)
         
         if let messCount = model.messageCount {
-            messageCount.text = String(messCount)
             changeCountView(count: messCount)
         }
         if let id = model.id {

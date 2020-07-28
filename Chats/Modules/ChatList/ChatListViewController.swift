@@ -35,6 +35,8 @@ protocol ChatListPresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
+    func readChats(chatIds: [Int])
+    func canReadChat(chatIds: [Int])
     func setupContent()
     
     func showChat(of type: ChatType)
@@ -46,6 +48,7 @@ final class ChatListViewController: UITableViewController {
     weak var listener: ChatListPresentableListener?
     var selectedCheckMarks = [Int]()
     var editListViewHeightConstraint: NSLayoutConstraint?
+    private var editButtonPressed: Bool = false
     
     private lazy var chatListTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -120,6 +123,14 @@ final class ChatListViewController: UITableViewController {
 
 //MARK: - Extensions
 extension ChatListViewController: ChatListPresentable {
+    func readButtonEnabled(canReadChat: Bool) {
+        editingView.isReadButtonEnabled = canReadChat
+    }
+    
+    func readAllButtonDisabled(isReadEnabled: Bool) {
+        editingView.isReadAllButtonEnabled = isReadEnabled
+    }
+    
     func setupNoChatsView() {
         let statusView = StatusView(logo: UIImage(named: "noChats"), title: "Where’s the party?", placeholder: nil, buttonTitle: nil, textAlignment: nil, placeholderAlignment: nil, style: .subtitled)
         statusView.frame = CGRect(x: 0, y: 0, width: view.width, height: UIScreen.main.bounds.height)
@@ -137,48 +148,44 @@ extension ChatListViewController: ChatListViewControllable {}
 
 extension ChatListViewController {
     func setupView() {
-        //        let largeView = ChatListLargeTitleView(frame: CGRect(x: 0, y: 20, width: self.view.bounds.width, height: 200))
-//        let editingView = ChatListEditingModeView()
-        //        largeView.delegate = self
-//        editingView.delegate = self
-        //        self.view.addSubview(largeView)
-        
         view.addSubview(editingView) {
             editListViewHeightConstraint = $0.height == 0
             $0.leading == view.leadingAnchor
             $0.width == UIScreen.main.bounds.width
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor + 40
         }
-        
-        //        view.addSubview(chatListTableView) {
-        //            $0.top == view.safeAreaLayoutGuide.topAnchor
-        //            $0.leading == view.leadingAnchor
-        //            $0.trailing == view.trailingAnchor
-        //            $0.bottom == editingView.topAnchor
-        //        }
     }
     
     @objc func showEditing() {
-        tableView.setEditing(!tableView.isEditing, animated: true)
+        editButtonPressed = !editButtonPressed
+        if editButtonPressed && !tableView.isEditing {
+            tableView.setEditing(true, animated: true)
+        } else if editButtonPressed && tableView.isEditing {
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(0.3)
+            tableView.setEditing(false, animated: true)
+            CATransaction.commit()
+            tableView.setEditing(true, animated: true)
+        } else {
+            tableView.setEditing(false, animated: true)
+        }
         selectedCheckMarks.removeAll()
         if tableView.isEditing {
-            editButton.setTitle("Done", for: .normal)
-            self.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.editListViewHeightConstraint?.constant = 81
-                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                self.view.layoutIfNeeded()
+                self.editingView.setupStateForButton(selectedChekmarks: 0)
+                
             }
         } else {
-            editButton.setTitle("Edit", for: .normal)
-            self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) {
-                self.editListViewHeightConstraint?.constant = 0
-                self.editingView.setupStateForButton(selectedChekmarks: 0)
-                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.editListViewHeightConstraint?.constant = 0
+                self?.editingView.setupStateForButton(selectedChekmarks: 0)
             }
         }
+        editButton.setTitle(tableView.isEditing ? LocalizationKeys.done.localized() : LocalizationKeys.edit.localized(), for: .normal)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.layoutIfNeeded()
+        view.layoutIfNeeded()
     }
     
     @objc func setupNewChat() {
@@ -207,7 +214,7 @@ extension ChatListViewController {
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.barTintColor = UIColor.white
-        let visualEffectView   = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffectView.isUserInteractionEnabled = false
         visualEffectView.frame =  (self.navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -40).offsetBy(dx: 0, dy: -40))!
         self.navigationController?.navigationBar.isTranslucent = true
@@ -296,7 +303,8 @@ extension ChatListViewController: ChatListLargeTitleViewProtocol {
 
 extension ChatListViewController: ChatListEditingModeViewProtocol {
     func readAll() {
-        //
+        listener?.readChats(chatIds: selectedCheckMarks)
+        showEditing()
     }
     
     func archive() {
@@ -317,12 +325,18 @@ extension ChatListViewController: ChatListTableViewCellDelegate {
             }
             return false
         }
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
     
     func checkMarkSelected(chatId: Int) {
         selectedCheckMarks.append(chatId)
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
+    }
+    
+    func ifEditButtonPressed() -> Bool {
+        return editButtonPressed
     }
 }
 
@@ -361,7 +375,6 @@ extension ChatListViewController {
             } else {
                 model.isSelected = false
             }
-            model.isEditing = tableView.isEditing
             cell.setup(with: model)
         }
         return cell
@@ -393,10 +406,52 @@ extension ChatListViewController {
                 break
             }
             self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) {
-//                self.view.layoutIfNeeded()
-//                self.navigationItem.largeTitleDisplayMode = .never
+                UIView.animate(withDuration: 0.3) {
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let muteAction = UIContextualAction(style: .normal, title: LocalizationKeys.mute.localized()) { (action, view, completion) in
+            completion(true)
+        }
+        muteAction.image = #imageLiteral(resourceName: "geolocation")
+        muteAction.backgroundColor = UIColor.orange
+        
+        let deleteAction = UIContextualAction(style: .normal, title: LocalizationKeys.delete.localized()) { (action, view, completion) in
+            completion(true)
+        }
+        deleteAction.image = #imageLiteral(resourceName: "geolocation")
+        deleteAction.backgroundColor = UIColor.red
+
+        let archiveAction = UIContextualAction(style: .normal, title: LocalizationKeys.archive.localized()) { (action, view, completion) in
+            completion(true)
+        }
+        archiveAction.image = #imageLiteral(resourceName: "geolocation")
+        archiveAction.backgroundColor = UIColor.lightGray
+        
+        return UISwipeActionsConfiguration(actions: [muteAction, deleteAction, archiveAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let unreadAction = UIContextualAction(style: .normal, title: LocalizationKeys.unread.localized()) { (action, view, completion) in
+            completion(true)
+        }
+        unreadAction.image = #imageLiteral(resourceName: "geolocation")
+        unreadAction.backgroundColor = UIColor.blue
+
+        let pinAction = UIContextualAction(style: .normal, title: LocalizationKeys.pin.localized()) { (action, view, completion) in
+          completion(true)
+        }
+        pinAction.image = #imageLiteral(resourceName: "geolocation")
+        pinAction.backgroundColor = UIColor.green
+        
+        return UISwipeActionsConfiguration(actions: [unreadAction, pinAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        guard let indexPath = indexPath else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? ChatListTableViewCell else { return }
+        cell.setEditing(false, animated: true)
     }
 }
