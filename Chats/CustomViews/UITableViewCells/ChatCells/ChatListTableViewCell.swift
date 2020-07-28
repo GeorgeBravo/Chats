@@ -107,13 +107,20 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        #warning("weird subview appears in editing style .none while editing mode")
+        for subview in self.subviews {
+            if (subview.height == 1) && (subview.width == 24) {
+                subview.removeFromSuperview()
+            }
+        }
         checkMarkButton.isHidden = delegate?.ifEditButtonPressed() ?? true ? false : true
         layoutIfNeeded()
         if !editing {
-            layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.checkMarkButton.backgroundColor = UIColor.white
-                self?.layoutIfNeeded()
+            self.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) {
+                self.checkMarkButton.backgroundColor = UIColor.white
+                self.checkMarkButton.isSelected = false
+                self.layoutIfNeeded()
             }
         }
     }
@@ -121,12 +128,19 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     //MARK: - Private Funcs
     private func changeCountView(count: Int) {
         if count <= 9 && count > 0 {
+            messageCount.text = String(count)
             countViewWidthConstraint?.constant = 21.7
             messageCount.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
         }
         if count >= 10 && count <= 99 {
+            messageCount.text = String(count)
             countViewWidthConstraint?.constant = 31.7
             messageCount.backgroundColor = UIColor(named: ColorName.aquamarine)
+        }
+        if count == 0 {
+            messageCount.text = ""
+            countViewWidthConstraint?.constant = 0
+            messageCount.backgroundColor = UIColor.clear
         }
     }
     
@@ -240,7 +254,6 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         timeSent.textColor = UIColor(named: model.isWeekendDate() ? .pinkishRedTwo : .slateGrey)
         
         if let messCount = model.messageCount {
-            messageCount.text = String(messCount)
             changeCountView(count: messCount)
         }
         if let id = model.id {

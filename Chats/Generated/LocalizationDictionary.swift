@@ -34,6 +34,8 @@ public enum LocalizationKeys {
   public static let copy: String = "Copy"
   /// Delete
   public static let delete: String = "Delete"
+  /// Done
+  public static let done: String = "Done"
   /// Edit
   public static let edit: String = "Edit"
   /// Forward

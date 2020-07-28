@@ -35,6 +35,8 @@ protocol ChatListPresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
+    func readChats(chatIds: [Int])
+    func canReadChat(chatIds: [Int])
     func setupContent()
     
     func showChat(of type: ChatType)
@@ -121,6 +123,14 @@ final class ChatListViewController: UITableViewController {
 
 //MARK: - Extensions
 extension ChatListViewController: ChatListPresentable {
+    func readButtonEnabled(canReadChat: Bool) {
+        editingView.isReadButtonEnabled = canReadChat
+    }
+    
+    func readAllButtonDisabled(isReadEnabled: Bool) {
+        editingView.isReadAllButtonEnabled = isReadEnabled
+    }
+    
     func setupNoChatsView() {
         let statusView = StatusView(logo: UIImage(named: "noChats"), title: "Where’s the party?", placeholder: nil, buttonTitle: nil, textAlignment: nil, placeholderAlignment: nil, style: .subtitled)
         statusView.frame = CGRect(x: 0, y: 0, width: view.width, height: UIScreen.main.bounds.height)
@@ -161,19 +171,19 @@ extension ChatListViewController {
         }
         selectedCheckMarks.removeAll()
         if tableView.isEditing {
-            editButton.setTitle("Done", for: .normal)
-            view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self.editListViewHeightConstraint?.constant = 81
+                self.editingView.setupStateForButton(selectedChekmarks: 0)
+                
             }
         } else {
-            editButton.setTitle("Edit", for: .normal)
-            view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) {
-                self.editListViewHeightConstraint?.constant = 0
-                self.editingView.setupStateForButton(selectedChekmarks: 0)
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.editListViewHeightConstraint?.constant = 0
+                self?.editingView.setupStateForButton(selectedChekmarks: 0)
             }
         }
+        editButton.setTitle(tableView.isEditing ? LocalizationKeys.done.localized() : LocalizationKeys.edit.localized(), for: .normal)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.layoutIfNeeded()
         view.layoutIfNeeded()
     }
@@ -293,7 +303,8 @@ extension ChatListViewController: ChatListLargeTitleViewProtocol {
 
 extension ChatListViewController: ChatListEditingModeViewProtocol {
     func readAll() {
-        //
+        listener?.readChats(chatIds: selectedCheckMarks)
+        showEditing()
     }
     
     func archive() {
@@ -314,11 +325,13 @@ extension ChatListViewController: ChatListTableViewCellDelegate {
             }
             return false
         }
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
     
     func checkMarkSelected(chatId: Int) {
         selectedCheckMarks.append(chatId)
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
     

@@ -40,9 +40,13 @@
 "Reply" = "Reply";
 "Delete" = "Delete";
 "MoreManipulations" = "More...";
+
+// MARK: - Chat List Screen
 "Unpin" = "Unpin";
 "Unread" = "Unread";
 "Read" = "Read";
 "Unmute" = "Unmute";
 "Archive" = "Archive";
 "Unarchive" = "Unarchive";
+"Done" = "Done";
+"Edit" = "Edit";
