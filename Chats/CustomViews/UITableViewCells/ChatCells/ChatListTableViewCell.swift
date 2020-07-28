@@ -250,12 +250,4 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             userAvatar.image = UIImage(named: image)
         }
     }
-    
-    override func willTransition(to state: UITableViewCell.StateMask) {
-        switch state {
-        case .showingDeleteConfirmation: print("showingDeleteConfirmation")
-        case .showingEditControl: print("showingDeleteConfirmation")
-        default: print("default")
-        }
-    }
 }
