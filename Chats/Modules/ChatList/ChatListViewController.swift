@@ -36,6 +36,7 @@ protocol ChatListPresentableListener: class {
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
     func readChats(chatIds: [Int])
+    func canReadChat(chatIds: [Int])
     func setupContent()
     
     func showChat(of type: ChatType)
@@ -121,8 +122,12 @@ final class ChatListViewController: UITableViewController {
 
 //MARK: - Extensions
 extension ChatListViewController: ChatListPresentable {
+    func readButtonEnabled(canReadChat: Bool) {
+        editingView.isReadButtonEnabled = canReadChat
+    }
+    
     func readAllButtonDisabled(isReadEnabled: Bool) {
-        editingView.isReadButtonEnabled = isReadEnabled
+        editingView.isReadAllButtonEnabled = isReadEnabled
     }
     
     func setupNoChatsView() {
@@ -324,11 +329,13 @@ extension ChatListViewController: ChatListTableViewCellDelegate {
             }
             return false
         }
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
     
     func checkMarkSelected(chatId: Int) {
         selectedCheckMarks.append(chatId)
+        listener?.canReadChat(chatIds: selectedCheckMarks)
         editingView.setupStateForButton(selectedChekmarks: selectedCheckMarks.count)
     }
 }

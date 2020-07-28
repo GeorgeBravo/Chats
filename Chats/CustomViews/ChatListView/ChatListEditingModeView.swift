@@ -29,6 +29,7 @@ class ChatListEditingModeView: UIView {
     
     //MARK: - Properites
     var delegate: ChatListEditingModeViewProtocol?
+    var isReadAllButtonEnabled: Bool = true
     var isReadButtonEnabled: Bool = true
     
     //MARK: - Views
@@ -68,10 +69,11 @@ class ChatListEditingModeView: UIView {
     func setupStateForButton(selectedChekmarks: Int) {
         if selectedChekmarks > 0 {
             readAllButton.setTitle("Read", for: .normal)
+            readAllButton.isEnabled = isReadButtonEnabled
             archiveButton.isEnabled = true
             deleteButton.isEnabled = true
         } else {
-            readAllButton.isEnabled = isReadButtonEnabled
+            readAllButton.isEnabled = isReadAllButtonEnabled
             readAllButton.setTitle("Read All", for: .normal)
             archiveButton.isEnabled = false
             deleteButton.isEnabled = false

@@ -21,6 +21,7 @@ protocol ChatListPresentable: Presentable {
     func update()
     func setupNoChatsView()
     func readAllButtonDisabled(isReadEnabled: Bool)
+    func readButtonEnabled(canReadChat: Bool)
     
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
@@ -77,7 +78,7 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     
     private func setupChatContent() {
         favoriteChatListModels = [
-            ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date(), imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
+            ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date(), imageLink: "img2", messageCount: 2, id: 7, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
             ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore, imageLink: nil, messageCount: 66, id: 1)
         ]
         
@@ -106,7 +107,7 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
          }
      }
     private func isReadAllEnabled() -> Bool {
-        var isReadEnabled = false
+        var isReadAllEnabled = false
         let chatListReadable = chatListModels.contains(where: { (model) -> Bool in
             if model.messageCount > 0 {
                 return true
@@ -119,7 +120,27 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
             }
             return false
         })
-        isReadEnabled = chatListReadable || favoritesReadable
+        isReadAllEnabled = chatListReadable || favoritesReadable
+        return isReadAllEnabled
+    }
+    
+    private func isReadEnabled(chatsIds: [Int]) -> Bool {
+        var isReadEnabled = false
+        var isReadEnabledForFarvorites = false
+        var isReadEnabledForChats = false
+        for id in chatsIds {
+            if let row = self.favoriteChatListModels.firstIndex(where: {$0.id == id}) {
+                if favoriteChatListModels[row].messageCount > 0 {
+                    isReadEnabledForFarvorites = true
+                }
+            }
+            if let row = self.chatListModels.firstIndex(where: {$0.id == id}) {
+                if chatListModels[row].messageCount > 0 {
+                    isReadEnabledForChats = true
+                }
+            }
+        }
+        isReadEnabled = isReadEnabledForFarvorites || isReadEnabledForChats
         return isReadEnabled
     }
     
@@ -157,6 +178,10 @@ extension ChatListInteractor: ChatListInteractable {
 }
 
 extension ChatListInteractor: ChatListPresentableListener {
+    func canReadChat(chatIds: [Int]) {
+        presenter.readButtonEnabled(canReadChat: isReadEnabled(chatsIds: chatIds))
+    }
+    
     func readChats(chatIds: [Int]) {
         if chatIds.count > 0 {
             readMessagesForChats(chatIds: chatIds)
