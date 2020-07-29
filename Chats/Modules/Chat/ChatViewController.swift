@@ -129,7 +129,7 @@ final class ChatViewController: UIViewController {
     // MARK: - Views
     public lazy var messageInputBar = InputBarAccessoryView()
     
-    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), chatType: self.chatType)
+    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 42), chatType: self.chatType)
     
     public lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)

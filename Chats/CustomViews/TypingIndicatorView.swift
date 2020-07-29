@@ -11,11 +11,9 @@ import UIKit
 
 final class TypingIndicatorView: UIView {
     
-    
-    
     private enum Constants {
         /// The width of each ellipsis dot.
-        static let width: CGFloat = 3
+        static let width: CGFloat = 6.0
         /// How long should the dot scaling animation last.
         static let scaleDuration: Double = 0.4
         /// How much should the dots scale as a multiplier of their original scale.
@@ -55,9 +53,22 @@ final class TypingIndicatorView: UIView {
             $0.textAlignment = .left
     }
     
+    private lazy var dotsContainerView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private var collocutorImageViewLeadingConstraint = NSLayoutConstraint()
+    private var typingLabelLeadingConstraint = NSLayoutConstraint()
+    private var dotsLeadingConstraint = NSLayoutConstraint()
+    private var dotsCustomLeadingConstraint = NSLayoutConstraint()
+    private var dotsContainerViewLeadingConstraint = NSLayoutConstraint()
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         collocutorImageView.cornerRadius = collocutorImageView.frame.width / 2
+        dotsContainerView.cornerRadius = dotsContainerView.frame.height / 2
     }
     
     func makeDot(animationDelay: Double) -> UIView {
@@ -70,16 +81,15 @@ final class TypingIndicatorView: UIView {
         
         let circle = CAShapeLayer()
         // Create a circular path
-        let path = UIBezierPath(
-            arcCenter: .zero,
-            radius: Constants.width / 2,
-            startAngle: 0,
-            endAngle: 2 * .pi,
-            clockwise: true)
+        let path = UIBezierPath(arcCenter: .zero,
+                                radius: Constants.width / 2,
+                                startAngle: 0,
+                                endAngle: 2 * .pi,
+                                clockwise: true)
         circle.path = path.cgPath
         
         circle.frame = view.bounds
-        circle.fillColor = UIColor.gray.cgColor
+        circle.fillColor = UIColor(named: .slateGreyThree).cgColor
         
         view.layer.addSublayer(circle)
         
@@ -112,7 +122,7 @@ final class TypingIndicatorView: UIView {
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         horizontalStackView.axis = .horizontal
         horizontalStackView.alignment = .bottom
-        horizontalStackView.spacing = 5
+        horizontalStackView.spacing = 6
         
         horizontalStackView.heightAnchor.constraint(equalToConstant: Constants.width).isActive = true
         
@@ -136,7 +146,11 @@ extension TypingIndicatorView {
             typingLabel.text = "typing"
             collocutorImageView.isHidden = true
             typingLabel.isHidden = true
+            
+            dotsContainerView.backgroundColor = UIColor(named: .paleGreyTwo)
+            dotsContainerViewLeadingConstraint.isActive = true
         case .group:
+            dotsContainerView.backgroundColor = .clear
             let peopleCountAttrString = "+\(typingPeopleCount) others".withAttributes([
                 .font: UIFont.helveticaNeueFontOfSize(size: 13, style: .medium),
                 .foregroundColor: UIColor.black
@@ -145,6 +159,8 @@ extension TypingIndicatorView {
                 .font: UIFont.helveticaNeueFontOfSize(size: 13, style: .regular),
                 .foregroundColor:  UIColor(named: .steel)
             ])
+            
+            dotsContainerViewLeadingConstraint.isActive = false
             
             typingLabel.attributedText = peopleCountAttrString + typingAttrString
         }
@@ -169,9 +185,18 @@ extension TypingIndicatorView {
             $0.centerY == collocutorImageView.centerYAnchor
         }
         
-        addSubview(dots) {
-            $0.leading == typingLabel.trailingAnchor + 5
-            $0.centerY == typingLabel.centerYAnchor
+        addSubview(dotsContainerView) {
+            $0.bottom == bottomAnchor
+            $0.top == topAnchor + 8.0
+            $0.leading == typingLabel.trailingAnchor + 6.0
+            dotsContainerViewLeadingConstraint = $0.leading == leadingAnchor + 8.0
+            dotsContainerViewLeadingConstraint.isActive = false
+        }
+        
+        dotsContainerView.addSubview(dots) {
+            $0.leading == dotsContainerView.leadingAnchor + 16.0
+            $0.trailing == dotsContainerView.trailingAnchor - 10.0
+            $0.centerY == dotsContainerView.centerYAnchor
         }
     }
 }
