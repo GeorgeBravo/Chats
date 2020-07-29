@@ -41,7 +41,7 @@ open class InputBarAccessoryView: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 13, *) {
-            view.backgroundColor = .systemBackground
+            view.backgroundColor = .white
         } else {
             view.backgroundColor = .white
         }
@@ -151,6 +151,7 @@ open class InputBarAccessoryView: UIView {
         let inputTextView = InputTextView()
         inputTextView.translatesAutoresizingMaskIntoConstraints = false
         inputTextView.inputBarAccessoryView = self
+        inputTextView.backgroundColor = .white
         return inputTextView
     }()
     

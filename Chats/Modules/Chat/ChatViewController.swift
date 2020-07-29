@@ -455,8 +455,7 @@ extension ChatViewController {
     private func configureMessageInputBar() {
         messageInputBar.delegate = self
         
-        messageInputBar.isTranslucent = true
-        
+        messageInputBar.isTranslucent = false
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .black
         
@@ -465,10 +464,13 @@ extension ChatViewController {
         
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
-        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        messageInputBar.inputTextView.shadowColor = UIColor.black
+        messageInputBar.inputTextView.shadowOpacity = 0.2
+        messageInputBar.inputTextView.shadowRadius = 16.0
+        messageInputBar.inputTextView.clipsToBounds = true
+        messageInputBar.inputTextView.layer.masksToBounds = false
     }
 }
 
