@@ -19,24 +19,18 @@ class CollocutorStatusView: ChatNavigationBarView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Views
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        collocutorImageView.cornerRadius = collocutorImageView.frame.height / 2
+    }
     
+    //MARK: - Views
     private var collocutorImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.image = UIImage(named: "roflan")
         return imageView
-    }()
-    
-    private lazy var gradientView: GradientCircleView = {
-        let view = GradientCircleView()
-        view.colors = [UIColor(named: .sunflowerYellowTwo).cgColor,
-                       UIColor(named: .violetPink).cgColor,
-                       UIColor(named: .brightCyan).cgColor]
-        view.isCustomViewRounded = true
-        view.customView = collocutorImageView
-        
-        return view
     }()
 }
 
@@ -46,7 +40,7 @@ class CollocutorStatusView: ChatNavigationBarView {
 extension CollocutorStatusView {
     private func setupViews() {
         backgroundColor = UIColor.clear
-        containerView = gradientView
+        containerView = collocutorImageView
         super.setupSubviews()
     }
     
@@ -55,14 +49,8 @@ extension CollocutorStatusView {
             self.titleLabelText = collocutor.name
             self.collocutorImageView.image = collocutor.collocutorImage
             
-            switch collocutor.status {
-            case .online:
-                self.statusLabelTextColor = UIColor(named: .electricBlue)
-                self.statusLabelText = "Online"
-            case .offline:
-                self.statusLabelTextColor = UIColor.lightGray
-                self.statusLabelText = "Offline"
-            }
+            self.statusLabelTextColor = collocutor.status.labelColor
+            self.statusLabelText = collocutor.status.stringDescription
         }
     }
 }

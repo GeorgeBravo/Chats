@@ -86,5 +86,8 @@ extension UnreadMessagesBackButton {
             $0.leading == unreadMessagesLabelContainerView.leadingAnchor + 6
             $0.trailing == unreadMessagesLabelContainerView.trailingAnchor - 6
         }
+        unreadMessagesLabelContainerView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000.0), for: .horizontal)
+        unreadMessagesLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000.0), for: .horizontal)
+        backButtonImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000.0), for: .horizontal)
     }
 }
