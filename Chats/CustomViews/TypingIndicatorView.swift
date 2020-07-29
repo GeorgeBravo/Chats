@@ -134,6 +134,8 @@ extension TypingIndicatorView {
             typingLabel.font = UIFont.helveticaNeueFontOfSize(size: 13, style: .regular)
             typingLabel.textColor = UIColor(named: .steel)
             typingLabel.text = "typing"
+            collocutorImageView.isHidden = true
+            typingLabel.isHidden = true
         case .group:
             let peopleCountAttrString = "+\(typingPeopleCount) others".withAttributes([
                 .font: UIFont.helveticaNeueFontOfSize(size: 13, style: .medium),
@@ -154,7 +156,6 @@ extension TypingIndicatorView {
         horizontalStackView.addArrangedSubview(collocutorImageView)
         horizontalStackView.addArrangedSubview(dots)
         horizontalStackView.addArrangedSubview(typingLabel)
-        
         
         addSubview(collocutorImageView) {
             $0.leading == leadingAnchor + 15

@@ -122,7 +122,7 @@ public class MessageContentCell: UITableViewCell {
         
         messageTimestampLabel.text = viewModel.timestamp.shortDate
         
-        messageContainerView.backgroundColor = viewModel.isIncomingMessage ? UIColor(named: .paleGrey) : UIColor(named: .coolGrey)
+        messageContainerView.backgroundColor = viewModel.isIncomingMessage ? UIColor(named: .paleGreyTwo) : UIColor(named: .coolGrey)
         editedMessageLabel.isHidden = !viewModel.isMessageEdited
         
         if !viewModel.isIncomingMessage {

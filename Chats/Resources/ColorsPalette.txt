@@ -24,3 +24,5 @@
 #paleGray: #eff4fb
 #blueGray: #97a3b2
 #blackTwo: #111111
+#slateGreyThree: #636b7b
+#paleGreyTwo: #f5f6f9

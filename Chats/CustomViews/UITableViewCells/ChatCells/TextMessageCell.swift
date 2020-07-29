@@ -11,7 +11,6 @@ import UIKit
 final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     
     //MARK: Lifecycle
-    
     private var observer: NSKeyValueObservation?
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,7 +31,6 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     }
     
     // MARK: - Views
-    
     private lazy var messageTextView: UITextView = {
         let textView = UITextView()
         
@@ -96,19 +94,6 @@ extension TextMessageCell {
     }
     
     func layoutTextViewIfNeeded() {
-        //        messageTextView.layoutManager.ensureLayout(for: messageTextView.textContainer)
-
-        //        guard let pos2 = messageTextView.position(from: messageTextView.endOfDocument, offset: 0), let pos1 = messageTextView.position(from: messageTextView.endOfDocument, offset: -1) ,let range = messageTextView.textRange(from: pos1, to: pos2) else { return }
-        //
-        //        let lastCharRect = messageTextView.firstRect(for: range)
-        //        let freeSpace = messageTextView.frame.size.width - lastCharRect.origin.x - lastCharRect.size.width
-        //
-        //        if freeSpace < horizontalStackView.frame.width - 10 {
-        //            messageTextView.text.append(contentsOf: "\n")
-        ////            print("sosi")
-        //            return
-        //        }
-
         heightConstraint?.constant = 100
         
         let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: messageTextView.text.count - 1)
