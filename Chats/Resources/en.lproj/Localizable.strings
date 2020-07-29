@@ -52,3 +52,17 @@
 "Unarchive" = "Unarchive";
 "Done" = "Done";
 "Edit" = "Edit";
+"Cancel" = "Cancel";
+"DeleteAll" = "Delete All";
+"Warning" = "Warning!";
+"WarningForChat" = "This will delete all messeges in this chat for both participants";
+"WarningForGroupChat" = "This will delete all messages in this chat";
+
+// MARK: - DeleteChat HeaderView
+"DeleteChatWith" = "Are you sure you want to delete the chat with %@?";
+"LeaveChat" = "Are you sure you want to leave %@?";
+
+// MARK: - DeleteChatAlertVC
+"DeleteForMeAnd" = "Delete for me and %@";
+"ClearHistory" = "Clear History";
+"DeleteJustForMe" = "Delete just for me";
