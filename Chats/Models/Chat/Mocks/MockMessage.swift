@@ -78,6 +78,8 @@ struct MockMessage: ChatScreenDisplayingItems {
             return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
         case let .addUserToChat(model):
             return UserChatEntryTableViewCellModel(userInviteModel: model, timestamp: Date())
+        case let .unreadMessage(model):
+            return UnreadMessagesCellModel(unreadMessagesModel: model, timestamp: Date())
         default:
             return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
         }
@@ -126,6 +128,10 @@ struct MockMessage: ChatScreenDisplayingItems {
     
     init(model: UserInviteModel, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
         self.init(messageKind: .addUserToChat(model), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
+    }
+    
+    init(unreadModel: UnreadMessagesModel, date: Date, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+        self.init(messageKind: .unreadMessage(unreadModel), date: date, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
     }
     
 }
