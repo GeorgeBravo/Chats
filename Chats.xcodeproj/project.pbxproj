@@ -19,6 +19,8 @@
 		1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E124BDA7EA0012467B /* FileItem.swift */; };
 		1279D5E424BDA9EA0012467B /* ChatTableViewFileCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */; };
 		1279D5E924BDB3CE0012467B /* FileAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5E824BDB3CE0012467B /* FileAsset.swift */; };
+		1299C79A24D18EBE0034696A /* DeleteChatAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1299C79924D18EBE0034696A /* DeleteChatAlertViewController.swift */; };
+		1299C79C24D1A2C20034696A /* DeleteChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1299C79B24D1A2C20034696A /* DeleteChatHeaderView.swift */; };
 		2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */; };
 		2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */; };
 		2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */; };
@@ -256,6 +258,8 @@
 		1279D5E124BDA7EA0012467B /* FileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileItem.swift; sourceTree = "<group>"; };
 		1279D5E324BDA9EA0012467B /* ChatTableViewFileCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewFileCellModel.swift; sourceTree = "<group>"; };
 		1279D5E824BDB3CE0012467B /* FileAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAsset.swift; sourceTree = "<group>"; };
+		1299C79924D18EBE0034696A /* DeleteChatAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteChatAlertViewController.swift; sourceTree = "<group>"; };
+		1299C79B24D1A2C20034696A /* DeleteChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteChatHeaderView.swift; sourceTree = "<group>"; };
 		2D17D6EE24AC8DBB009B2E16 /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F024AC8DBB009B2E16 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		2D17D6F124AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -544,6 +548,15 @@
 				1279D5E824BDB3CE0012467B /* FileAsset.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		1299C79824D18E9D0034696A /* DeleteChat */ = {
+			isa = PBXGroup;
+			children = (
+				1299C79924D18EBE0034696A /* DeleteChatAlertViewController.swift */,
+				1299C79B24D1A2C20034696A /* DeleteChatHeaderView.swift */,
+			);
+			path = DeleteChat;
 			sourceTree = "<group>";
 		};
 		2D17D6CD24AC8DBB009B2E16 /* InputBarAccessoryView */ = {
@@ -1175,6 +1188,7 @@
 		2D65C1A624AE1A3E00C64534 /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
+				1299C79824D18E9D0034696A /* DeleteChat */,
 				1279D5DD24BC73CB0012467B /* File */,
 				2D65C1B524AE1A3E00C64534 /* PhotoLibrary */,
 				2D65C1B924AE1A3E00C64534 /* Location */,
@@ -1811,6 +1825,7 @@
 				2D501C1F24B3293D00C37DCB /* ChatType.swift in Sources */,
 				2D501BD924B3222500C37DCB /* AutocompleteManagerDelegate.swift in Sources */,
 				CE69321324C584FD001825D4 /* MessageManipulationBuilder.swift in Sources */,
+				1299C79A24D18EBE0034696A /* DeleteChatAlertViewController.swift in Sources */,
 				2D501BDD24B3223400C37DCB /* KeyboardNotification.swift in Sources */,
 				2D501BFB24B322B600C37DCB /* InputPlugin.swift in Sources */,
 				2DB6987D24A362660075737F /* ChatInteractor.swift in Sources */,
@@ -1832,6 +1847,7 @@
 				2D64CFF124A20EF000C8B94A /* UIEdgeInsets+KeyPathInitializable.swift in Sources */,
 				2D501C1D24B3263700C37DCB /* UniformKeyPathInitializable.swift in Sources */,
 				2D17D71A24AC8DBB009B2E16 /* NSMutableAttributedString+Extensions.swift in Sources */,
+				1299C79C24D1A2C20034696A /* DeleteChatHeaderView.swift in Sources */,
 				CE5ECC4624C8DA36004A2539 /* PinnedMessageView.swift in Sources */,
 				CECA0E3C24B627E90067D5B6 /* CollocutorProfileTableViewCell.swift in Sources */,
 				2DDFA49F24C71DD3007101C7 /* ChatContentTableViewCellModel.swift in Sources */,

@@ -163,6 +163,19 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
             }
         }
     }
+    
+    private func clearHistoryForChat(id: Int) {
+        if let row = self.favoriteChatListModels.firstIndex(where: {$0.id == id}) {
+            favoriteChatListModels[row].messageCount = 0
+            favoriteChatListModels[row].message = ""
+            favoriteChatListModels[row].lastSender = ""
+        }
+        if let row = self.chatListModels.firstIndex(where: {$0.id == id}) {
+            chatListModels[row].messageCount = 0
+            chatListModels[row].message = ""
+            chatListModels[row].lastSender = ""
+        }
+    }
 }
 
 extension ChatListInteractor: ChatListInteractable {
@@ -178,6 +191,11 @@ extension ChatListInteractor: ChatListInteractable {
 }
 
 extension ChatListInteractor: ChatListPresentableListener {
+    func clearHistoryForChat(chatId: Int) {
+        clearHistoryForChat(id: chatId)
+        combineChatListSections()
+    }
+    
     func canReadChat(chatIds: [Int]) {
         presenter.readButtonEnabled(canReadChat: isReadEnabled(chatsIds: chatIds))
     }
