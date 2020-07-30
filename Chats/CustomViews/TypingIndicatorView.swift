@@ -35,7 +35,6 @@ final class TypingIndicatorView: UIView {
     }
     
     // MARK: - Views
-    
     private lazy var horizontalStackView = UIStackView
         .create {
             $0.axis = .horizontal
@@ -64,6 +63,7 @@ final class TypingIndicatorView: UIView {
     private var dotsLeadingConstraint = NSLayoutConstraint()
     private var dotsCustomLeadingConstraint = NSLayoutConstraint()
     private var dotsContainerViewLeadingConstraint = NSLayoutConstraint()
+    private var dotsContainerViewCenterConstraint = NSLayoutConstraint()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -148,6 +148,7 @@ extension TypingIndicatorView {
             typingLabel.isHidden = true
             
             dotsContainerView.backgroundColor = UIColor(named: .paleGreyTwo)
+            dotsContainerViewCenterConstraint.constant = -2.0
             dotsContainerViewLeadingConstraint.isActive = true
         case .group:
             dotsContainerView.backgroundColor = .clear
@@ -196,7 +197,8 @@ extension TypingIndicatorView {
         dotsContainerView.addSubview(dots) {
             $0.leading == dotsContainerView.leadingAnchor + 16.0
             $0.trailing == dotsContainerView.trailingAnchor - 10.0
-            $0.centerY == dotsContainerView.centerYAnchor
+            dotsContainerViewCenterConstraint = $0.centerY == dotsContainerView.centerYAnchor
+            dotsContainerViewCenterConstraint.isActive = true
         }
     }
 }
