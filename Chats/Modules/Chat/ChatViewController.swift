@@ -71,7 +71,6 @@ final class ChatViewController: UIViewController {
     var pinnedMockMessage: MockMessage?
     
     //MARK: - Private
-    
     private let chatType: ChatType
     
     private var unreadMessagesCount: Int {
@@ -102,7 +101,6 @@ final class ChatViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         listener?.connectMockSocket(with: chatType)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,17 +113,13 @@ final class ChatViewController: UIViewController {
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-//            chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
         }
-        
-//        adjustScrollViewTopInset()
     }
     
     public override func viewSafeAreaInsetsDidChange() {
         if #available(iOS 11.0, *) {
             super.viewSafeAreaInsetsDidChange()
         }
-//        chatTableViewBottomInset = requiredInitialScrollViewBottomInset()
     }
     
     deinit {
@@ -133,10 +127,9 @@ final class ChatViewController: UIViewController {
     }
     
     // MARK: - Views
-    
     public lazy var messageInputBar = InputBarAccessoryView()
     
-    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30), chatType: self.chatType)
+    private lazy var typingIndicatorView = TypingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 42), chatType: self.chatType)
     
     public lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -168,7 +161,6 @@ final class ChatViewController: UIViewController {
         tableView.addGestureRecognizer(tapGesuture)
         tableView.isUserInteractionEnabled = true
 
-        
         return tableView
     }()
     
@@ -261,23 +253,19 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @objc
-    private func onTableViewDidTap() {
+    @objc private func onTableViewDidTap() {
         messageInputBar.inputTextView.resignFirstResponder()
     }
     
-    @objc
-    private func onBackButtonTapped() {
+    @objc private func onBackButtonTapped() {
         listener?.hideChat()
     }
     
-    @objc
-    private func onCollocutorViewTapped() {
+    @objc private func onCollocutorViewTapped() {
         listener?.showUser(with: collocutor)
     }
     
-    @objc
-    private func onGroupInfoViewTapped() {
+    @objc private func onGroupInfoViewTapped() {
         listener?.showGroupProfile()
     }
 }
@@ -380,20 +368,6 @@ extension ChatViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        showChatScrollDownViewIfNeeded()
-//                let section = indexPath.section
-//
-//                if let lastCellRowIndex = tableView.indexPathsForVisibleRows?.last?.row,
-//                    let numberOfRowsInSection = listener?.numberOfRows(in: section) {
-//                    if numberOfRowsInSection - 1 >= lastCellRowIndex {
-//                        chatScrollDownView.isHidden = false
-//                    } else {
-//                        chatScrollDownView.isHidden = true
-//                    }
-//                }
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionModel = listener?.sectionModel(for: section),
             let classType = sectionModel.headerViewType.classType else { return nil }
@@ -481,8 +455,7 @@ extension ChatViewController {
     private func configureMessageInputBar() {
         messageInputBar.delegate = self
         
-        messageInputBar.isTranslucent = true
-        
+        messageInputBar.isTranslucent = false
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.tintColor = .black
         
@@ -491,10 +464,13 @@ extension ChatViewController {
         
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-        messageInputBar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        messageInputBar.inputTextView.layer.borderWidth = 1.0
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
-        messageInputBar.inputTextView.layer.masksToBounds = true
+        messageInputBar.inputTextView.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        messageInputBar.inputTextView.shadowColor = UIColor.black
+        messageInputBar.inputTextView.shadowOpacity = 0.2
+        messageInputBar.inputTextView.shadowRadius = 16.0
+        messageInputBar.inputTextView.clipsToBounds = true
+        messageInputBar.inputTextView.layer.masksToBounds = false
     }
 }
 
@@ -549,7 +525,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     func didTapAudioButton(_ inputBar: InputBarAccessoryView) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        var mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
+        let mockTextMessage = MockMessage(text: text, date: Date(), isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString)
         self.messageInputBar.inputTextView.text = ""
         listener?.messageList.append(mockTextMessage)
         onNewMessage(mockTextMessage)

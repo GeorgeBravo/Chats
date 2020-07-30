@@ -37,7 +37,7 @@ class ChatNavigationBarView: UIView {
     }
     
     // MARK: - Views
-    
+    var spacingConstraint: NSLayoutConstraint?
     public lazy var containerView = UIView
         .create { _ in }
     
@@ -46,7 +46,7 @@ class ChatNavigationBarView: UIView {
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = UIColor.darkText
         label.numberOfLines = 1
-
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
 
@@ -54,7 +54,7 @@ class ChatNavigationBarView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.numberOfLines = 1
-
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -72,18 +72,25 @@ class ChatNavigationBarView: UIView {
 // MARK: - Setup Views
 extension ChatNavigationBarView {
     public func setupSubviews() {
-        addSubview(containerView) {
+        addSubview(stackView) {
             $0.leading == leadingAnchor
             $0.top == topAnchor
             $0.bottom == bottomAnchor
-            $0.width == containerView.heightAnchor
         }
-
-        addSubview(stackView) {
-            $0.leading == containerView.trailingAnchor + 8
-            $0.top == topAnchor
-            $0.bottom == bottomAnchor
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751.0), for: .horizontal)
+        statusLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 752.0), for: .horizontal)
+        stackView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 753.0), for: .horizontal)
+        containerView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 754.0), for: .horizontal)
+        
+        addSubview(containerView) {
+            spacingConstraint = $0.leading == stackView.trailingAnchor + 180
+            spacingConstraint?.priority = UILayoutPriority(rawValue: 749)
+            $0.leading >= stackView.trailingAnchor + 8.0
+            $0.height == heightAnchor
+            $0.centerY == centerYAnchor
             $0.trailing == trailingAnchor
+            $0.width == heightAnchor
         }
     }
+    
 }

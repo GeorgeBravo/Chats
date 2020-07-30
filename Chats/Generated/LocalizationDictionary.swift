@@ -58,8 +58,12 @@ public enum LocalizationKeys {
   public static let no: String = "No"
   /// Notifications
   public static let notifications: String = "Notifications"
+  /// Offline
+  public static let offline: String = "Offline"
   /// Ok
   public static let ok: String = "Ok"
+  /// Online
+  public static let online: String = "Online"
   /// Pin
   public static let pin: String = "Pin"
   /// Read
