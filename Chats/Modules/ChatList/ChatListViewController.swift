@@ -302,6 +302,21 @@ extension ChatListViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func setupDeleteAlertForEditing(chatIds: [Int]) {
+        let moreThanOne = chatIds.count > 1
+        let deleteAlert = UIAlertController(style: .actionSheet)
+        let cancelAction = UIAlertAction(title: LocalizationKeys.cancel.localized(), style: .cancel)
+        cancelAction.setValue(UIColor.init(named: ColorName.blackTwo), forKey: "titleTextColor")
+        let deleteAction = UIAlertAction(title: moreThanOne ? String(format: LocalizationKeys.deleteMoreThanOne.localized(), chatIds.count) : LocalizationKeys.delete.localized(), style: .default) { [unowned self] (action) in
+            self.listener?.deleteChats(chatIds: chatIds)
+            self.showEditing()
+        }
+        deleteAction.setValue(UIColor.init(named: ColorName.pinkishRedTwo), forKey: "titleTextColor")
+        deleteAlert.addAction(cancelAction)
+        deleteAlert.addAction(deleteAction)
+        self.present(deleteAlert, animated: true, completion: nil)
+    }
+    
     private func moveAndResizeImage(for height: CGFloat) {
         let coeff: CGFloat = {
             let delta = height - Constants.NavBarHeightSmallState
@@ -349,8 +364,7 @@ extension ChatListViewController: ChatListEditingModeViewProtocol {
     }
     
     func delete() {
-        listener?.deleteChats(chatIds: selectedCheckMarks)
-        showEditing()
+        setupDeleteAlertForEditing(chatIds: selectedCheckMarks)
     }
 }
 

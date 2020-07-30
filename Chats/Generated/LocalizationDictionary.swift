@@ -46,6 +46,8 @@ public enum LocalizationKeys {
   public static let deleteForMeAnd: String = "DeleteForMeAnd"
   /// Delete just for me
   public static let deleteJustForMe: String = "DeleteJustForMe"
+  /// Delete %d Chats
+  public static let deleteMoreThanOne: String = "DeleteMoreThanOne"
   /// Done
   public static let done: String = "Done"
   /// Edit
