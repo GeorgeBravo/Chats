@@ -53,6 +53,8 @@
 "Done" = "Done";
 "Edit" = "Edit";
 "Cancel" = "Cancel";
+"Online" = "Online";
+"Offline" = "Offline";
 "DeleteAll" = "Delete All";
 "Warning" = "Warning!";
 "WarningForChat" = "This will delete all messeges in this chat for both participants";

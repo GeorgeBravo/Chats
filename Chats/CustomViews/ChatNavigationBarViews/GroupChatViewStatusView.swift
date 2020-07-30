@@ -51,7 +51,7 @@ extension GroupChatViewStatusView {
                 self.groupImageView.image = UIImage(named: imageLink)
             }
             
-            self.statusLabelTextColor = UIColor.lightGray
+            self.statusLabelTextColor = UIColor(named: .steel)
             if let membersCount = groupInfo.membersCount, let membersOnline = groupInfo.membersOnline {
                 self.statusLabelText = "\(membersCount.decimalFormatted) members; \(membersOnline) online"
             }

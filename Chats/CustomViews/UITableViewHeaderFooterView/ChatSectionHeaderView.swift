@@ -51,8 +51,6 @@ extension ChatSectionHeaderView {
         }
         
         containerView.addSubview(titleLabel) {
-//            $0.centerX == centerXAnchor
-//            $0.centerY == centerYAnchor
             $0.top == containerView.topAnchor + 5
             $0.leading == containerView.leadingAnchor + 10
             $0.bottom == containerView.bottomAnchor - 5
@@ -70,7 +68,7 @@ extension ChatSectionHeaderView {
                 containerView.backgroundColor = UIColor.clear
             case .bubble:
                 titleLabel.textColor = UIColor.white
-                containerView.backgroundColor = UIColor(named: .greyish)
+                containerView.backgroundColor = UIColor(named: .slateGreyThree)
             }
         }
     }
