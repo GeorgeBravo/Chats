@@ -28,12 +28,26 @@ public enum LocalizationKeys {
   public static let blockUser: String = "BlockUser"
   /// Call
   public static let call: String = "Call"
+  /// Cancel
+  public static let cancel: String = "Cancel"
   /// Change
   public static let change: String = "Change"
+  /// Clear History
+  public static let clearHistory: String = "ClearHistory"
   /// Copy
   public static let copy: String = "Copy"
   /// Delete
   public static let delete: String = "Delete"
+  /// Delete All
+  public static let deleteAll: String = "DeleteAll"
+  /// Are you sure you want to delete the chat with %@?
+  public static let deleteChatWith: String = "DeleteChatWith"
+  /// Delete for me and %@
+  public static let deleteForMeAnd: String = "DeleteForMeAnd"
+  /// Delete just for me
+  public static let deleteJustForMe: String = "DeleteJustForMe"
+  /// Delete %d Chats
+  public static let deleteMoreThanOne: String = "DeleteMoreThanOne"
   /// Done
   public static let done: String = "Done"
   /// Edit
@@ -46,6 +60,8 @@ public enum LocalizationKeys {
   public static let groupsInCommon: String = "GroupsInCommon"
   /// last seen recently
   public static let lastSeenRecently: String = "LastSeenRecently"
+  /// Are you sure you want to leave %@?
+  public static let leaveChat: String = "LeaveChat"
   /// Leave Group
   public static let leaveGroup: String = "LeaveGroup"
   /// More
@@ -88,6 +104,12 @@ public enum LocalizationKeys {
   public static let unread: String = "Unread"
   /// @username
   public static let username: String = "Username"
+  /// Warning!
+  public static let warning: String = "Warning"
+  /// This will delete all messeges in this chat for both participants
+  public static let warningForChat: String = "WarningForChat"
+  /// This will delete all messages in this chat
+  public static let warningForGroupChat: String = "WarningForGroupChat"
   /// Yes
   public static let yes: String = "Yes"
 }

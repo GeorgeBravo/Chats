@@ -35,6 +35,7 @@ protocol ChatListPresentableListener: class {
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
     func deleteChats(chatIds: [Int])
+    func clearHistoryForChat(chatId: Int)
     func readChats(chatIds: [Int])
     func canReadChat(chatIds: [Int])
     func setupContent()
@@ -265,6 +266,57 @@ extension ChatListViewController {
         tableView.tableHeaderView = search.searchBar
     }
     
+    private func setupWarningForDelete(chatId: Int?, isGroup: Bool) {
+        let deleteAlert = UIAlertController(style: .alert)
+        let cancelAction = UIAlertAction(title: LocalizationKeys.cancel.localized(), style: .cancel)
+        cancelAction.setValue(UIColor.init(named: ColorName.blackTwo), forKey: "titleTextColor")
+        let deleteAction = UIAlertAction(title: LocalizationKeys.deleteAll.localized(), style: .default) { (action) in
+            isGroup ? self.listener?.clearHistoryForChat(chatId: chatId ?? 0) : self.listener?.deleteChats(chatIds: [chatId ?? 0])
+        }
+        deleteAction.setValue(UIColor.init(named: ColorName.pinkishRedTwo), forKey: "titleTextColor")
+        deleteAlert.title = LocalizationKeys.warning.localized()
+        deleteAlert.message = isGroup ? LocalizationKeys.warningForGroupChat.localized() : LocalizationKeys.warningForChat.localized()
+        deleteAlert.addAction(cancelAction)
+        deleteAlert.addAction(deleteAction)
+        self.present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    private func setupAlerForDelete(indexPath: IndexPath) {
+        guard let cellModel = self.listener?.cellForRow(at: indexPath) else { return }
+        guard let model = cellModel as? ChatListTableViewCellModel else { return }
+        let alert = UIAlertController(style: .actionSheet)
+        let cancelAction = UIAlertAction(title: LocalizationKeys.cancel.localized(), style: .cancel)
+        cancelAction.setValue(UIColor.init(named: ColorName.blackTwo), forKey: "titleTextColor")
+        alert.addDeleteChatViewController(interlocutor: model.collocutorName, isGroup: model.isGroupChat) { [unowned self]  (action) in
+            alert.dismiss(animated: true, completion: nil)
+            switch action {
+            case .deleteForYourselfAndInterlocutor:
+                self.setupWarningForDelete(chatId: model.id, isGroup: false)
+            case .deleteForYourself:
+                self.listener?.deleteChats(chatIds: [model.id ?? 0])
+            case .clearHistory:
+                self.setupWarningForDelete(chatId: model.id, isGroup: true)
+            }
+        }
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func setupDeleteAlertForEditing(chatIds: [Int]) {
+        let moreThanOne = chatIds.count > 1
+        let deleteAlert = UIAlertController(style: .actionSheet)
+        let cancelAction = UIAlertAction(title: LocalizationKeys.cancel.localized(), style: .cancel)
+        cancelAction.setValue(UIColor.init(named: ColorName.blackTwo), forKey: "titleTextColor")
+        let deleteAction = UIAlertAction(title: moreThanOne ? String(format: LocalizationKeys.deleteMoreThanOne.localized(), chatIds.count) : LocalizationKeys.delete.localized(), style: .default) { [unowned self] (action) in
+            self.listener?.deleteChats(chatIds: chatIds)
+            self.showEditing()
+        }
+        deleteAction.setValue(UIColor.init(named: ColorName.pinkishRedTwo), forKey: "titleTextColor")
+        deleteAlert.addAction(cancelAction)
+        deleteAlert.addAction(deleteAction)
+        self.present(deleteAlert, animated: true, completion: nil)
+    }
+    
     private func moveAndResizeImage(for height: CGFloat) {
         let coeff: CGFloat = {
             let delta = height - Constants.NavBarHeightSmallState
@@ -312,8 +364,7 @@ extension ChatListViewController: ChatListEditingModeViewProtocol {
     }
     
     func delete() {
-        listener?.deleteChats(chatIds: selectedCheckMarks)
-        showEditing()
+        setupDeleteAlertForEditing(chatIds: selectedCheckMarks)
     }
 }
 
@@ -418,10 +469,11 @@ extension ChatListViewController {
         muteAction.image = #imageLiteral(resourceName: "geolocation")
         muteAction.backgroundColor = UIColor.orange
         
-        let deleteAction = UIContextualAction(style: .normal, title: LocalizationKeys.delete.localized()) { (action, view, completion) in
+        let deleteAction = UIContextualAction(style: .normal, title: LocalizationKeys.delete.localized()) { [unowned self] (action, view, completion) in
+            self.setupAlerForDelete(indexPath: indexPath)
             completion(true)
         }
-        deleteAction.image = #imageLiteral(resourceName: "geolocation")
+        deleteAction.image = #imageLiteral(resourceName: "trahsBin")
         deleteAction.backgroundColor = UIColor.red
 
         let archiveAction = UIContextualAction(style: .normal, title: LocalizationKeys.archive.localized()) { (action, view, completion) in
