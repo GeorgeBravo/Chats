@@ -17,7 +17,7 @@ final class TypingIndicatorView: UIView {
         /// How long should the dot scaling animation last.
         static let scaleDuration: Double = 0.4
         /// How much should the dots scale as a multiplier of their original scale.
-        static let scaleAmount: Double = 1.6
+        static let scaleAmount: Double = 1.45
         /// How much time should pass between each dot scale animation.
         static let delayBetweenRepeats: Double = 0.9
     }
@@ -148,7 +148,7 @@ extension TypingIndicatorView {
             typingLabel.isHidden = true
             
             dotsContainerView.backgroundColor = UIColor(named: .paleGreyTwo)
-            dotsContainerViewCenterConstraint.constant = -2.0
+            dotsContainerViewCenterConstraint.constant = -3.0
             dotsContainerViewLeadingConstraint.isActive = true
         case .group:
             dotsContainerView.backgroundColor = .clear
