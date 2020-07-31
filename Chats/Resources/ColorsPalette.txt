@@ -26,3 +26,4 @@
 #blackTwo: #111111
 #slateGreyThree: #636b7b
 #paleGreyTwo: #f5f6f9
+#deepSkyBlue: 1079fb

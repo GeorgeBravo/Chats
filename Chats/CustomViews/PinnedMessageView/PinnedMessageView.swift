@@ -29,12 +29,20 @@ class PinnedMessageView: UIView {
         super.layoutSubviews()
         closeButton.circleCorner = true
         leftVerticalView.circleCorner = true
+        cloudMainView.circleCorner = true
     }
     
     // MARK: - Views
+    private lazy var cloudMainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: ColorName.paleGray)
+
+        return view
+    }()
+    
     private lazy var leftVerticalView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: ColorName.coolGrey)
+        view.backgroundColor = UIColor.clear//UIColor(named: ColorName.coolGrey)
 
         return view
     }()
@@ -58,7 +66,7 @@ class PinnedMessageView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.7, weight: .semibold)
         label.text = "Pinned Message"
-        label.textColor = UIColor.darkText
+        label.textColor = UIColor(named: ColorName.deepSkyBlue)
         label.numberOfLines = 1
 
         return label
@@ -68,14 +76,14 @@ class PinnedMessageView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15.3, weight: .regular)
         label.numberOfLines = 1
+        label.textColor = UIColor(named: ColorName.deepSkyBlue)
 
         return label
     }()
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "whiteCloseButton"), for: .normal)
-        button.backgroundColor = UIColor(named: ColorName.coolGrey)
+        button.setImage(UIImage(named: "blueCloseButton"), for: .normal)
         button.addTarget(self, action: #selector(closeButtonDidTap), for: .touchUpInside)
 
         return button
@@ -134,21 +142,28 @@ extension PinnedMessageView {
         let viewTapgestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
         self.addGestureRecognizer(viewTapgestureRecognizer)
         
-        addSubview(borderView) {
+        addSubview(cloudMainView) {
+            $0.bottom == bottomAnchor - 3
+            $0.leading == leadingAnchor + 10
+            $0.trailing == trailingAnchor - 10
+            $0.top == topAnchor + 3
+        }
+        
+        cloudMainView.addSubview(borderView) {
             $0.bottom == bottomAnchor
             $0.leading == leadingAnchor
             $0.trailing == trailingAnchor
             $0.height == 0.3
         }
         
-        addSubview(leftVerticalView) {
-            $0.leading == leadingAnchor + 10
+        cloudMainView.addSubview(leftVerticalView) {
+            $0.leading == leadingAnchor + 15
             $0.centerY == centerYAnchor
             $0.width == 3
             $0.height == 36
         }
         
-        addSubview(containerImageViewView)
+        cloudMainView.addSubview(containerImageViewView)
         let leadingContainerImageViewView = containerImageViewView.leadingAnchor.constraint(equalTo: leftVerticalView.trailingAnchor, constant: 9)
         let centerYContainerImageViewView = containerImageViewView.topAnchor.constraint(equalTo: leftVerticalView.topAnchor)
         let heightContainerImageViewView = containerImageViewView.bottomAnchor.constraint(equalTo: leftVerticalView.bottomAnchor)
@@ -163,19 +178,19 @@ extension PinnedMessageView {
         NSLayoutConstraint.activate([leadingPhotoImageView, topPhotoImageView, bottomPhotoImageView, widthPhotoImageView])
         
         
-        addSubview(closeButton) {
-            $0.trailing == trailingAnchor - 12
+        cloudMainView.addSubview(closeButton) {
+            $0.trailing == trailingAnchor - 15
             $0.centerY == centerYAnchor
             $0.size([\.all: 40])
             
         }
         
-        addSubview(pinnedMessageLabel) {
+        cloudMainView.addSubview(pinnedMessageLabel) {
             $0.bottom == leftVerticalView.centerYAnchor
             $0.leading == containerImageViewView.trailingAnchor
         }
         
-        addSubview(bodyLabel) {
+        cloudMainView.addSubview(bodyLabel) {
             $0.top == leftVerticalView.centerYAnchor
             $0.leading == pinnedMessageLabel.leadingAnchor
             $0.trailing == closeButton.leadingAnchor - 18
