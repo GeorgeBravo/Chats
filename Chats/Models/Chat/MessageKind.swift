@@ -22,4 +22,6 @@ public enum MessageKind {
     
     /// Add user
     case addUserToChat(UserInviteModel)
+    
+    case unreadMessage(UnreadMessagesModel)
 }

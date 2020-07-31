@@ -102,6 +102,8 @@ public enum LocalizationKeys {
   public static let unpin: String = "Unpin"
   /// Unread
   public static let unread: String = "Unread"
+  /// Unread Messages
+  public static let unreadMessages: String = "UnreadMessages"
   /// @username
   public static let username: String = "Username"
   /// Warning!

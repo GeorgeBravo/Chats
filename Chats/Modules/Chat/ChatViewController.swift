@@ -149,6 +149,7 @@ final class ChatViewController: UIViewController {
         tableView.register(FileMessageCell.self)
         tableView.register(ContactMessageCell.self)
         tableView.register(UserChatEntryTableViewCell.self)
+        tableView.register(UnreadMessagesTableViewCell.self)
         
         tableView.tableFooterView = typingIndicatorView
         tableView.tableFooterView?.isHidden = true

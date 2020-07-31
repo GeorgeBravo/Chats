@@ -32,6 +32,8 @@ final class SampleData {
     private var valueToAdd = 1
     
     private var shouldAddUserToChat = false
+    
+    private var firstCall: Bool = false
 }
 
 // MARK: - Message Generation
@@ -57,7 +59,12 @@ extension SampleData {
         
         self.chatType = chatType
         var messages: [MockMessage] = []
-        
+        if !firstCall {
+            let unreadCellModel = UnreadMessagesModel(title: LocalizationKeys.unreadMessages.localized())
+            let message = MockMessage(unreadModel: unreadCellModel, date: dateAddingRandomTime, chatType: chatType, messageId: UUID().uuidString)
+            messages.append(message)
+            firstCall = true
+        }
         if chatType == .group && shouldAddUserToChat {
             let userInviteModel = UserInviteModel(inviteeUserName: "Жорка", inviterUserName: arc4random_uniform(2) == 0 ? "Не Жорка" : nil)
             let message = MockMessage(model: userInviteModel, date: dateAddingRandomTime, chatType: chatType, messageId: UUID().uuidString)

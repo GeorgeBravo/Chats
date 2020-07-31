@@ -198,6 +198,9 @@
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
 		CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */; };
+		CE46797124D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */; };
+		CE46797324D2EB9A002F2DAE /* UnreadMessagesCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */; };
+		CE46797524D2F6A5002F2DAE /* UnreadMessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */; };
 		CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */; };
 		CE4E426024BC8AFD00BCA9F8 /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */; };
 		CE4E426124BC8AFD00BCA9F8 /* GroupProfileBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */; };
@@ -437,6 +440,9 @@
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
 		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
 		CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelStackView.swift; sourceTree = "<group>"; };
+		CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesTableViewCell.swift; sourceTree = "<group>"; };
+		CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesCellModel.swift; sourceTree = "<group>"; };
+		CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesModel.swift; sourceTree = "<group>"; };
 		CE4E425B24BC8AFD00BCA9F8 /* GroupProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileRouter.swift; sourceTree = "<group>"; };
 		CE4E425C24BC8AFD00BCA9F8 /* GroupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileViewController.swift; sourceTree = "<group>"; };
 		CE4E425D24BC8AFD00BCA9F8 /* GroupProfileBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileBuilder.swift; sourceTree = "<group>"; };
@@ -1366,6 +1372,7 @@
 				2D501BA324B3210900C37DCB /* MediaMessageCell.swift */,
 				2D501BA224B3210900C37DCB /* TextMessageCell.swift */,
 				2DDFA49A24C71BB4007101C7 /* UserChatEntryTableViewCell.swift */,
+				CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */,
 			);
 			path = ChatCells;
 			sourceTree = "<group>";
@@ -1379,6 +1386,7 @@
 				2D501B6C24B320C700C37DCB /* NSConstraintLayoutSet.swift */,
 				2D501C1E24B3293D00C37DCB /* ChatType.swift */,
 				2D1C4D2924ABC7CC0087449A /* Mocks */,
+				CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1394,6 +1402,7 @@
 				2D751D3F24C1382000C40122 /* ChatTableViewTextMessageCellModel.swift */,
 				CE69321C24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift */,
 				2DDFA49C24C71D67007101C7 /* UserChatEntryTableViewCellModel.swift */,
+				CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1832,6 +1841,7 @@
 				2D64CF8924A20E5400C8B94A /* RootViewController.swift in Sources */,
 				2D65C20124AE1A3F00C64534 /* Location.swift in Sources */,
 				2D501B7924B320C800C37DCB /* NSConstraintLayoutSet.swift in Sources */,
+				CE46797524D2F6A5002F2DAE /* UnreadMessagesModel.swift in Sources */,
 				2D501BCD24B3220700C37DCB /* AutocompleteManager.swift in Sources */,
 				2D64CFEB24A20EF000C8B94A /* ViewControllable+AddViewController.swift in Sources */,
 				2D64CFF124A20EF000C8B94A /* UIEdgeInsets+KeyPathInitializable.swift in Sources */,
@@ -1896,6 +1906,7 @@
 				CE69321624C58519001825D4 /* ChatComponent+MessageManipulation.swift in Sources */,
 				2D501BE724B3228100C37DCB /* UIView+AutoLayout.swift in Sources */,
 				2D8B98EE24BC61EB00D9F560 /* ActionTableViewCellModel.swift in Sources */,
+				CE46797124D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift in Sources */,
 				2D65C20B24AE1A3F00C64534 /* ItemWithImage.swift in Sources */,
 				2D65C1FD24AE1A3F00C64534 /* PhotoLibraryPickerViewController.swift in Sources */,
 				2D751D4124C1382000C40122 /* ChatTableViewLocationCellModel.swift in Sources */,
@@ -1914,6 +1925,7 @@
 				2DCF831F24C6E42400003669 /* ChatNavigationBarView.swift in Sources */,
 				2D501C1924B3263700C37DCB /* UniformKeyPathInitializable+Init.swift in Sources */,
 				CE69321D24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift in Sources */,
+				CE46797324D2EB9A002F2DAE /* UnreadMessagesCellModel.swift in Sources */,
 				2D501B9124B320D500C37DCB /* LocationItem.swift in Sources */,
 				2D501C3924B5C4A400C37DCB /* ChatListBuilder.swift in Sources */,
 				2D65C21824AE1A3F00C64534 /* UIColor++.swift in Sources */,
