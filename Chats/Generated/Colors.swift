@@ -27,6 +27,7 @@ internal struct ColorName {
   internal static let coolGray235 = ColorName(rgbValue: 0xebebeb)
   internal static let coolGrey = ColorName(rgbValue: 0xa2a9b6)
   internal static let coolGreyTwo = ColorName(rgbValue: 0xa5aab1)
+  internal static let deepSkyBlue = ColorName(rgbValue: 0x1079fb)
   internal static let electricBlue = ColorName(rgbValue: 0x0048ff)
   internal static let greyish = ColorName(rgbValue: 0xb7b7b7)
   internal static let messageManipulationSeparator = ColorName(rgbValue: 0xd2d5d8)
