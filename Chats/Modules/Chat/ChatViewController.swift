@@ -463,8 +463,8 @@ extension ChatViewController {
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         
-        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 36)
-        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 9, left: 15, bottom: 8, right: 36)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 9, left: 20, bottom: 8, right: 36)
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.shadowOffset = CGSize(width: 0.0, height: 0.0)
         messageInputBar.inputTextView.shadowColor = UIColor.black
