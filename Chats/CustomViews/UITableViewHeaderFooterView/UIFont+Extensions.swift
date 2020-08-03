@@ -6,7 +6,6 @@
 //  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 enum FontStyle: String {

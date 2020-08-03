@@ -104,7 +104,7 @@ final class ChatListViewController: UITableViewController {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        
+        tableView.keyboardDismissMode = .onDrag
         setupView()
         listener?.combineChatListSections()
     }
@@ -159,6 +159,7 @@ extension ChatListViewController {
     
     @objc func showEditing() {
         editButtonPressed = !editButtonPressed
+         createNewChatButton.isHidden = editButtonPressed
         if editButtonPressed && !tableView.isEditing {
             tableView.setEditing(true, animated: true)
         } else if editButtonPressed && tableView.isEditing {
@@ -253,14 +254,22 @@ extension ChatListViewController {
     private func setupSearch() {
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
+        search.searchBar.delegate = self
+        search.searchBar.isUserInteractionEnabled = false
         search.searchBar.placeholder = "Search for messages or users"
         search.searchBar.backgroundImage = UIImage()
         search.searchBar.setImage(UIImage(), for: .search, state: .normal)
-        let offset = UIOffset(horizontal: 50, vertical: 0)
-        search.searchBar.setPositionAdjustment(offset, for: .search)
         if let searchField = search.searchBar.value(forKey: "searchField") as? UITextField {
             
-            searchField.textAlignment = .center
+            let searchBarWidth = search.searchBar.frame.width
+            let placeholderIconWidth = searchField.leftView?.frame.width
+            let placeHolderWidth = searchField.attributedPlaceholder?.size().width
+            let offsetIconToPlaceholder: CGFloat = 8
+            let placeHolderWithIcon = placeholderIconWidth! + offsetIconToPlaceholder
+
+            let offset = UIOffset(horizontal: ((searchBarWidth / 2) - (placeHolderWidth! / 2) - placeHolderWithIcon - placeHolderWithIcon), vertical: 0)
+            search.searchBar.setPositionAdjustment(offset, for: .search)
+            searchField.textAlignment = .left
             searchField.font = UIFont(name: "HelveticaNeue", size: 16.7)
         }
         tableView.tableHeaderView = search.searchBar
@@ -391,9 +400,14 @@ extension ChatListViewController: ChatListTableViewCellDelegate {
     }
 }
 
-extension ChatListViewController: UISearchResultsUpdating {
+extension ChatListViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         //some code
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        print("end searching --> Close Keyboard")
+        searchBar.endEditing(true)
     }
 }
 
