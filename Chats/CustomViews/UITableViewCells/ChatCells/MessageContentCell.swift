@@ -59,7 +59,7 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackViewContainerView = UIView
         .create {
-            $0.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+            $0.backgroundColor = .clear
     }
     
     private lazy var messageReactionImageView = UIImageView
