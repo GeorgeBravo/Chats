@@ -172,8 +172,7 @@ final class ChatViewController: UIViewController {
         .create {
             $0.isHidden = true
             $0.onCloseButtonDidTap = { [weak self] in
-                self?.listener?.unpinnedAllMessages()
-                self?.hidePinnedMessageView()
+                self?.hidePinnedMessage()
             }
             $0.onViewDidTap = { [weak self] in
                 self?.scrollTableViewTopinnedMockMessage()
