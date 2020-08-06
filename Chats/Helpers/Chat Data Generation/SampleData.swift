@@ -82,6 +82,35 @@ extension SampleData {
         completion(messages)
     }
     
+    func getMockedHistory(chatType: ChatType, completion: ([MockMessage]) -> Void) {
+        let date = dateAddingRandomTime
+        let message1 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message2 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message3 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        let message4 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .single)
+        let message5 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message6 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        let message7 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message8 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        let message9 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message10 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message11 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message12 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        let message13 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message14 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message15 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        let message16 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: false, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .single)
+        let message17 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .firstMessage)
+        let message18 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message19 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message20 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message21 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .middleMessage)
+        let message22 = MockMessage(text: Lorem.sentence(), date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString, messageCornerRoundedType: .lastMessage)
+        
+        let mockedMessages = [message1, message2, message3, message4, message5, message6, message7, message8, message9, message10, message11, message12, message13, message14, message15, message16, message17, message18, message19, message20, message21, message22]
+        completion(mockedMessages)
+    }
+    
     // MARK: - Add new user to chat timer
     
     public func startTimer() {

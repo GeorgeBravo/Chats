@@ -19,6 +19,7 @@ struct FrameValues {
 
 protocol ChatPresentableListener: class {
     
+    func setupDefaultHistory()
     func connectMockSocket(with chatType: ChatType)
     func disconnectMockSocket()
     
@@ -72,6 +73,7 @@ final class ChatViewController: UIViewController {
     
     //MARK: - Private
     private let chatType: ChatType
+    private let chatId: Int
     
     private var unreadMessagesCount: Int {
         return chatType != .oneToOne ? 0 : 24
@@ -79,13 +81,16 @@ final class ChatViewController: UIViewController {
     
     private let collocutor = Collocutor(name: "Angie T. Trinh", collocutorImage: UIImage(named: "roflan")!, status: .online)
     
+    private let defaultHistoryCollocutor = Collocutor(name: "Test test test", collocutorImage: UIImage(named: "Dan-Leonard")!, status: .online)
+    
     private let groupInfoModel = ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", imageLink: "img2", messageCount: 2, id: 0, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210)
     
     
     //MARK: - Lifecycle
     
-    init(with chatType: ChatType) {
+    init(with chatType: ChatType, chatId: Int) {
         self.chatType = chatType
+        self.chatId = chatId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -100,6 +105,10 @@ final class ChatViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if chatId == 100 {
+            //add mocked history
+            listener?.setupDefaultHistory()
+        }
         listener?.connectMockSocket(with: chatType)
     }
     
@@ -237,11 +246,16 @@ extension ChatViewController {
         
         unreadMessagesCount == 0 ? setupBackButton(target: self, action: #selector(onBackButtonTapped)) : setupBackButton(with: unreadMessagesCount, target: self, action: #selector(onBackButtonTapped))
         
-        switch chatType {
-        case .oneToOne:
-            setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
-        case .group:
-            setupNavBar(with: groupInfoModel, target: self, action: #selector(onGroupInfoViewTapped))
+        switch chatId {
+        case 100:
+            setupNavBar(with: defaultHistoryCollocutor, target: self, action: #selector(onCollocutorViewTapped))
+        default:
+            switch chatType {
+            case .oneToOne:
+                setupNavBar(with: collocutor, target: self, action: #selector(onCollocutorViewTapped))
+            case .group:
+                setupNavBar(with: groupInfoModel, target: self, action: #selector(onGroupInfoViewTapped))
+            }
         }
         
         configureMessageInputBar()
@@ -262,7 +276,12 @@ extension ChatViewController {
     }
     
     @objc private func onCollocutorViewTapped() {
-        listener?.showUser(with: collocutor)
+        switch chatId {
+        case 100:
+            listener?.showUser(with: defaultHistoryCollocutor)
+        default:
+            listener?.showUser(with: collocutor)
+        }
     }
     
     @objc private func onGroupInfoViewTapped() {

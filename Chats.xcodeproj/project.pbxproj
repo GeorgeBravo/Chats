@@ -207,6 +207,8 @@
 		CE4E426224BC8AFD00BCA9F8 /* GroupProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */; };
 		CE4E426424BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */; };
 		CE4E426624BC9ADB00BCA9F8 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */; };
+		CE5D360F24DB6F18002EA742 /* MessageCornerRoundedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D360E24DB6F18002EA742 /* MessageCornerRoundedType.swift */; };
+		CE5D361224DCA3B4002EA742 /* BezierPath+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D361124DCA3B4002EA742 /* BezierPath+.swift */; };
 		CE5ECC4624C8DA36004A2539 /* PinnedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */; };
 		CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */; };
 		CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */; };
@@ -449,6 +451,8 @@
 		CE4E425E24BC8AFD00BCA9F8 /* GroupProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileInteractor.swift; sourceTree = "<group>"; };
 		CE4E426324BC8F5500BCA9F8 /* ChatComponent+GroupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+GroupProfile.swift"; sourceTree = "<group>"; };
 		CE4E426524BC9ADA00BCA9F8 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		CE5D360E24DB6F18002EA742 /* MessageCornerRoundedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCornerRoundedType.swift; sourceTree = "<group>"; };
+		CE5D361124DCA3B4002EA742 /* BezierPath+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BezierPath+.swift"; sourceTree = "<group>"; };
 		CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedMessageView.swift; sourceTree = "<group>"; };
 		CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWithCameraPreview.swift; sourceTree = "<group>"; };
 		CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationRouter.swift; sourceTree = "<group>"; };
@@ -1035,6 +1039,7 @@
 		2D64CFA124A20EEE00C8B94A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE5D361024DCA393002EA742 /* BezierPath */,
 				2DDFA49724C6F67C007101C7 /* Int */,
 				120E17C824C1C798007FADA0 /* PHAsset */,
 				2D751D3824C0B0FE00C40122 /* UIEdgeInsets */,
@@ -1387,6 +1392,7 @@
 				2D501C1E24B3293D00C37DCB /* ChatType.swift */,
 				2D1C4D2924ABC7CC0087449A /* Mocks */,
 				CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */,
+				CE5D360E24DB6F18002EA742 /* MessageCornerRoundedType.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1546,6 +1552,14 @@
 				CEE78EF124BDC5F600B7E236 /* Components */,
 			);
 			path = GroupProfile;
+			sourceTree = "<group>";
+		};
+		CE5D361024DCA393002EA742 /* BezierPath */ = {
+			isa = PBXGroup;
+			children = (
+				CE5D361124DCA3B4002EA742 /* BezierPath+.swift */,
+			);
+			path = BezierPath;
 			sourceTree = "<group>";
 		};
 		CE5ECC4424C8DA03004A2539 /* PinnedMessageView */ = {
@@ -1775,6 +1789,7 @@
 				2D64CFF324A20EF000C8B94A /* UIStackView+Extensions.swift in Sources */,
 				2D64CF8B24A20E5400C8B94A /* RootComponent+Login.swift in Sources */,
 				2DB6987A24A362660075737F /* ChatRouter.swift in Sources */,
+				CE5D361224DCA3B4002EA742 /* BezierPath+.swift in Sources */,
 				2D64CF7F24A20DB500C8B94A /* AppDelegate.swift in Sources */,
 				2D1C4D3624ABC7F30087449A /* Lorem.swift in Sources */,
 				2D64CFE224A20EF000C8B94A /* UICollectionViewCell+.swift in Sources */,
@@ -1940,6 +1955,7 @@
 				2D65C21B24AE1A3F00C64534 /* UIApplication+Extensions.swift in Sources */,
 				2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */,
 				CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */,
+				CE5D360F24DB6F18002EA742 /* MessageCornerRoundedType.swift in Sources */,
 				2DCA29FB24B734810060913C /* TypingIndicatorView.swift in Sources */,
 				2D65C20E24AE1A3F00C64534 /* ItemWithPhoto.swift in Sources */,
 				2D64CF8824A20E5400C8B94A /* RootInteractor.swift in Sources */,

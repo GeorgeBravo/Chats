@@ -37,8 +37,8 @@ final class ChatListRouter: ViewableRouter<ChatListInteractable, ChatListViewCon
 }
 
 extension ChatListRouter: ChatListRouting {
-    func showChat(of type: ChatType) {
-        let chatRouter = chatBuilder.build(withListener: interactor, of: type)
+    func showChat(of type: ChatType, id: Int) {
+        let chatRouter = chatBuilder.build(withListener: interactor, of: type, chatId: id)
         self.chatRouter = chatRouter
 
         attach(chatRouter)

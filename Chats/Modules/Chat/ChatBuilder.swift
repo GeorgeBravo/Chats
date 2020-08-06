@@ -21,7 +21,7 @@ final class ChatComponent: Component<ChatDependency> {
 // MARK: - Builder
 
 protocol ChatBuildable: Buildable {
-    func build(withListener: ChatListener, of type: ChatType) -> ChatRouting
+    func build(withListener: ChatListener, of type: ChatType, chatId: Int) -> ChatRouting
 }
 
 final class ChatBuilder: Builder<ChatDependency> {
@@ -33,9 +33,9 @@ final class ChatBuilder: Builder<ChatDependency> {
 
 extension ChatBuilder: ChatBuildable {
 
-    func build(withListener listener: ChatListener, of type: ChatType) -> ChatRouting {
+    func build(withListener listener: ChatListener, of type: ChatType, chatId: Int) -> ChatRouting {
         let component = ChatComponent(dependency: dependency)
-        let viewController = ChatViewController(with: type)
+        let viewController = ChatViewController(with: type, chatId: chatId)
         let interactor = ChatInteractor(presenter: viewController)
         interactor.listener = listener
 

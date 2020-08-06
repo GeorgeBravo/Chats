@@ -16,6 +16,8 @@ final class MockSocket {
     
     private var queuedMessage: MockMessage?
     
+    private var queuedMessages: [MockMessage]?
+    
     private var onNewMessageCode: ((MockMessage) -> Void)?
     
     private var onTypingStatusCode: (() -> Void)?
@@ -66,5 +68,13 @@ final class MockSocket {
             }
             onTypingStatusCode?()
         }
+    }
+    
+    @discardableResult
+    func getDefaultHistory(code: @escaping ([MockMessage]) -> Void) -> Self {
+        SampleData.shared.getMockedHistory(chatType: chatType) { (messgaes) in
+            code(messgaes)
+        }
+        return self
     }
 }

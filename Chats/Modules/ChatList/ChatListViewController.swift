@@ -40,7 +40,8 @@ protocol ChatListPresentableListener: class {
     func canReadChat(chatIds: [Int])
     func setupContent()
     
-    func showChat(of type: ChatType)
+    func showChat(of type: ChatType, id: Int)
+    func getChatListTableViewCellModelForRow(indexPath: IndexPath) -> ChatListTableViewCellModel
 }
 
 final class ChatListViewController: UITableViewController {
@@ -464,9 +465,10 @@ extension ChatListViewController {
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                listener?.showChat(of: .group)
-            case 1:
-                listener?.showChat(of: .oneToOne)
+                listener?.showChat(of: .group, id: 0)
+            case 1, 2:
+                guard let id = listener?.getChatListTableViewCellModelForRow(indexPath: indexPath).id else { break }
+                listener?.showChat(of: .oneToOne, id: id)
             default:
                 break
             }
