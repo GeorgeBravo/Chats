@@ -30,18 +30,20 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var messageContainerView = UIView
         .create {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.cornerRadius = 18
     }
     
     private lazy var messageTimestampLabel = UILabel
         .create {
-            $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 11, style: .regular)
             $0.textAlignment = .left
     }
     
     private lazy var editedMessageLabel = UILabel
         .create {
-            $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 11, style: .regular)
             $0.textAlignment = .left
             $0.text = "edited"
     }
@@ -59,11 +61,13 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackViewContainerView = UIView
         .create {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
     }
     
     private lazy var messageReactionImageView = UIImageView
         .create {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.image = UIImage(named: "smiley")
             $0.contentMode = .scaleAspectFit
     }
@@ -75,7 +79,7 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [messageTimestampLabel, readMessageImageContainerView])
-        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.spacing = 6
@@ -93,6 +97,7 @@ public class MessageContentCell: UITableViewCell {
         messageTimestampLabel.text = nil
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
+        horizontalStackViewContainerView.backgroundColor = .clear
         super.prepareForReuse()
     }
     
@@ -107,7 +112,7 @@ public class MessageContentCell: UITableViewCell {
         messageModel = viewModel
         
         if viewModel is ChatTableViewTextMessageCellModel {
-            self.horizontalStackViewContainerView.backgroundColor = UIColor.clear
+            horizontalStackViewContainerView.backgroundColor = UIColor.clear
         }
         
         contentView.isHidden = viewModel.needHideMessage
@@ -205,5 +210,19 @@ extension MessageContentCell {
         guard gesture.state == .began else { return }
         guard let cellNewFrame = superview?.convert(frame, to: nil) else { return }
         messageModel?.messageSelected(cellNewFrame: cellNewFrame)
+    }
+}
+
+extension MessageContentCell {
+    func countHorizontalStackViewContainerViewSize(model: ChatTableViewTextMessageCellModel) -> CGSize {
+        let height: CGFloat = 8 + 5 + 5 //constantHeight + spacing x2
+        var width: CGFloat = model.timestamp.shortDate.sizeOfString(usingFont: messageTimestampLabel.font).width
+        if !model.isIncomingMessage {
+            width += 6  //spacing
+            width += 15 //constantWidth
+        }
+        width += 5  //leftSpacing
+        width += 5  //rightSpacing
+        return CGSize(width: width, height: height)
     }
 }

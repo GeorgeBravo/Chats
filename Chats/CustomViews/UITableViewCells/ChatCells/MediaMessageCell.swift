@@ -39,6 +39,7 @@ final class MediaMessageCell: MessageContentCell {
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewAssetCellModel else { return }
+        horizontalStackViewContainerView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         if let assets = model.assets.assets, assets.count > 0 {
             setupWith(assets: model.assets)
             playButtonView.isHidden = true
