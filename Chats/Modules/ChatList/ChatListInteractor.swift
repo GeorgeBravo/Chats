@@ -192,6 +192,10 @@ extension ChatListInteractor: ChatListInteractable {
 }
 
 extension ChatListInteractor: ChatListPresentableListener {
+    func createNewChat() {
+        
+    }
+    
     func clearHistoryForChat(chatId: Int) {
         clearHistoryForChat(id: chatId)
         combineChatListSections()

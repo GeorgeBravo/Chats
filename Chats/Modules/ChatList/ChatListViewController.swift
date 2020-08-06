@@ -30,6 +30,7 @@ private struct Constants {
 
 protocol ChatListPresentableListener: class {
     func combineChatListSections()
+    func createNewChat()
     func cellForRow(at: IndexPath) -> TableViewCellModel
     func numberOfRows(in section: Int) -> Int
     func numberOfSection() -> Int
@@ -197,9 +198,18 @@ extension ChatListViewController {
                 subview.removeFromSuperview()
             }
         }
-        tableView.isScrollEnabled = true
-        listener?.setupContent()
-        listener?.combineChatListSections()
+        
+        addContactsPicker { [unowned self] contact in
+            self.listener?.showChat(of: .oneToOne, id: 0)
+        }
+    }
+    
+    func addContactsPicker(selection: @escaping ContactsPickerViewController.Selection) {
+        let selection : ContactsPickerViewController.Selection = selection
+        let vc = ContactsPickerViewController(selection: selection)
+        vc.isCreateNewChat = true
+        vc.view.backgroundColor = .white
+        self.present(vc, animated: true, completion: nil)
     }
     
     func removeEditingView() {
