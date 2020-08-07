@@ -512,7 +512,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 self.listener?.messageList.append(mockLocationMessage)
             case .file(let file):
                 guard let file = file else { return }
-                let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: true, chatType: self.chatType, messageId: UUID().uuidString)
+                let mockFileMessage = MockMessage(fileItem: file, date: Date(), isIncomingMessage: false, chatType: self.chatType, messageId: UUID().uuidString)
                 self.listener?.messageList.append(mockFileMessage)
             }
         }

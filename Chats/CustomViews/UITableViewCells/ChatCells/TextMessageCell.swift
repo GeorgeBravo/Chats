@@ -12,6 +12,8 @@ private struct Constants {
     static let textViewLineSpacing: CGFloat = 3.0
     static let textViewFontSize: CGFloat = 16.0
     static let textFromDateViewSpacing: CGFloat = 12.0
+    static let messageTextViewBottomSpacing: CGFloat = 0.0
+    static let messageTextViewTrailingSpacing: CGFloat = 5.0
 }
 
 final class TextMessageCell: MessageContentCell, TableViewCellSetup {
@@ -19,7 +21,8 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     //MARK: - Variables
     private var messageTextViewBottomConstraint: NSLayoutConstraint?
     private var messageTextViewTrailingConstraint: NSLayoutConstraint?
-    private var messageTextViewWidthConstraint: NSLayoutConstraint?
+    private var messageTextViewMaxWidthConstraint: NSLayoutConstraint?
+    private var messageTextViewMinWidthConstraint: NSLayoutConstraint?
     
     // MARK: - UI Variables
     private lazy var messageTextView: UITextView = {
@@ -51,8 +54,9 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
     // MARK: - Override logic
     public override func prepareForReuse() {
         super.prepareForReuse()
-        messageTextViewBottomConstraint?.constant = -7
-        messageTextViewTrailingConstraint?.constant = -5
+        messageTextViewBottomConstraint?.constant = Constants.messageTextViewBottomSpacing
+        messageTextViewTrailingConstraint?.constant = -Constants.messageTextViewTrailingSpacing
+        messageTextViewMinWidthConstraint?.constant = UIScreen.main.bounds.width * 0.3
     }
     
     override func layoutSubviews() {
@@ -88,14 +92,15 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         
         messageContainerView.addSubview(messageTextView) {
             $0.top == messageContainerView.topAnchor
-            $0.leading == messageContainerView.leadingAnchor + 5
+            $0.leading == messageContainerView.leadingAnchor + Constants.messageTextViewTrailingSpacing
             
-            messageTextViewTrailingConstraint = $0.trailing == messageContainerView.trailingAnchor - 5
-            messageTextViewBottomConstraint = $0.bottom == messageContainerView.bottomAnchor - 3    //as horizontalStack
-            messageTextViewWidthConstraint = $0.width <= UIScreen.main.bounds.width * 0.6
+            messageTextViewTrailingConstraint = $0.trailing == messageContainerView.trailingAnchor - Constants.messageTextViewTrailingSpacing
+            messageTextViewBottomConstraint = $0.bottom == messageContainerView.bottomAnchor + Constants.messageTextViewBottomSpacing
+            messageTextViewMaxWidthConstraint = $0.width <= UIScreen.main.bounds.width * 0.6
+            messageTextViewMinWidthConstraint = $0.width >= UIScreen.main.bounds.width * 0.3
             
             messageTextViewBottomConstraint?.priority = UILayoutPriority(rawValue: 999)
-            messageTextViewWidthConstraint?.priority = UILayoutPriority(rawValue: 900)
+            messageTextViewMaxWidthConstraint?.priority = UILayoutPriority(rawValue: 900)
         }
     }
     
@@ -103,32 +108,39 @@ final class TextMessageCell: MessageContentCell, TableViewCellSetup {
         let horizontalContainerViewSize = countHorizontalStackViewContainerViewSize(model: model)
         let maxViewWidth = UIScreen.main.bounds.width * 0.6
         messageTextView.frame = CGRect(0.0, 0.0, maxViewWidth, 0.0)
-        
-        let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: model.message.count - 1)
-        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
-        let lastLineMaxX = lastLineFragmentRect.maxX
-        let numberOfLines = (textLength / (maxViewWidth - 10)).rounded(.up)
+        let textViewSideSpacings: CGFloat = 10 // default TextView textRect insets (5,5)
+        let maxTextRectWidth = maxViewWidth - textViewSideSpacings
+        let lastLineMaxX = getLastLineMaxX(with: model.message)
+        let numberOfLines = (textLength / (maxTextRectWidth)).rounded(.up)
+        let horizontalViewSideSpacings = countHorizontalContainerSideSpacings()
+        let totalTrailingNeededSpacing = horizontalContainerViewSize.width + horizontalViewSideSpacings
+        let totalBottomSpacing = horizontalContainerViewSize.height + Constants.messageTextViewBottomSpacing
         
         if lastLineMaxX < maxViewWidth && numberOfLines == 1 {
-            if lastLineMaxX < maxViewWidth - 10 - horizontalContainerViewSize.width - 5 - 5 {
-                messageTextViewTrailingConstraint?.constant = -horizontalContainerViewSize.width - 5 - 5
+            let totalFreeWidth = maxTextRectWidth - totalTrailingNeededSpacing
+            
+            if lastLineMaxX < totalFreeWidth {
+                messageTextViewMinWidthConstraint?.constant = lastLineMaxX
+                messageTextViewTrailingConstraint?.constant = -totalTrailingNeededSpacing
             } else {
-                messageTextViewBottomConstraint?.constant = -horizontalContainerViewSize.height - 3
+                messageTextViewBottomConstraint?.constant = -totalBottomSpacing
             }
         } else {
-            if maxViewWidth - 10 * numberOfLines - lastLineMaxX - horizontalContainerViewSize.width - 5 - 5 - 10 - 5 <= 0 {
-                messageTextViewBottomConstraint?.constant = -horizontalContainerViewSize.height - 3
+            let messageTextViewSpacingToHorizontalView = maxViewWidth - textViewSideSpacings * numberOfLines - lastLineMaxX - horizontalContainerViewSize.width - horizontalViewSideSpacings - horizontalViewTrailingValue() - Constants.messageTextViewTrailingSpacing
+            if messageTextViewSpacingToHorizontalView <= 0 {
+                messageTextViewBottomConstraint?.constant = -totalBottomSpacing
+            } else {
+                messageTextViewMinWidthConstraint?.constant = lastLineMaxX + horizontalContainerViewSize.width + horizontalViewSideSpacings + horizontalViewTrailingValue() + Constants.messageTextViewTrailingSpacing
             }
         }
         messageTextViewBottomConstraint?.isActive = true
         messageTextViewTrailingConstraint?.isActive = true
     }
     
-}
-
-extension String {
-    func sizeOfString(usingFont font: UIFont) -> CGSize {
-        let fontAttributes = [NSAttributedString.Key.font: font]
-        return self.size(withAttributes: fontAttributes)
+    func getLastLineMaxX(with message: String) -> CGFloat {
+        let lastGlyphIndex = messageTextView.layoutManager.glyphIndexForCharacter(at: message.count - 1)
+        let lastLineFragmentRect = messageTextView.layoutManager.lineFragmentUsedRect(forGlyphAt: lastGlyphIndex, effectiveRange: nil)
+        return lastLineFragmentRect.maxX
     }
+    
 }
