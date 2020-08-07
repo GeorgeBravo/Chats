@@ -10,7 +10,7 @@ import UIKit
 
 private struct Constants {
     static let bigRadius: CGFloat = 20.0
-    static let smallRadius: CGFloat = 5.0
+    static let smallRadius: CGFloat = 7.0
 }
 
 enum MessageCornerRoundedType {

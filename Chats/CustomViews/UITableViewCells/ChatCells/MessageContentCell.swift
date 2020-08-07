@@ -152,7 +152,7 @@ public class MessageContentCell: UITableViewCell {
             contentView.addSubview(messageReactionImageView) {
                 $0.size([\.all: 20])
                 $0.leading == messageContainerView.trailingAnchor + 10
-                $0.top == messageContainerView.topAnchor + 5
+                $0.top == messageContainerView.topAnchor + 2
             }
         }
     }
@@ -165,8 +165,8 @@ extension MessageContentCell {
         backgroundColor = UIColor.clear
         
         contentView.addSubview(messageContainerView) {
-            $0.top == contentView.topAnchor + 5
-            $0.bottom == contentView.bottomAnchor - 5
+            $0.top == contentView.topAnchor + 2
+            $0.bottom == contentView.bottomAnchor - 2
         }
         
         horizontalStackViewContainerView.addSubview(horizontalStackView) {
