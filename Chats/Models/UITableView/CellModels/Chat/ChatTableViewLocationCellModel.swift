@@ -28,6 +28,7 @@ struct ChatTableViewLocationCellModel: ChatContentTableViewCellModel {
     var messageId: String
     
     var chatType: ChatType
+    var messageCornerRoundedType: MessageCornerRoundedType
     
 
     // MARK: - Init
@@ -40,7 +41,8 @@ struct ChatTableViewLocationCellModel: ChatContentTableViewCellModel {
          chatType: ChatType,
          needHideMessage: Bool,
          isPinned: Bool = false,
-         messageId: String) {
+         messageId: String,
+         messageCornerRoundedType: MessageCornerRoundedType) {
         self.locationItem = locationItem
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -51,6 +53,7 @@ struct ChatTableViewLocationCellModel: ChatContentTableViewCellModel {
         self.needHideMessage = needHideMessage
         self.isPinned = isPinned
         self.messageId = messageId
+        self.messageCornerRoundedType = messageCornerRoundedType
     }
 }
 

@@ -30,6 +30,7 @@ private struct Constants {
 
 protocol ChatListPresentableListener: class {
     func combineChatListSections()
+    func createNewChat()
     func cellForRow(at: IndexPath) -> TableViewCellModel
     func numberOfRows(in section: Int) -> Int
     func numberOfSection() -> Int
@@ -40,7 +41,8 @@ protocol ChatListPresentableListener: class {
     func canReadChat(chatIds: [Int])
     func setupContent()
     
-    func showChat(of type: ChatType)
+    func showChat(of type: ChatType, id: Int)
+    func getChatListTableViewCellModelForRow(indexPath: IndexPath) -> ChatListTableViewCellModel
 }
 
 final class ChatListViewController: UITableViewController {
@@ -196,9 +198,18 @@ extension ChatListViewController {
                 subview.removeFromSuperview()
             }
         }
-        tableView.isScrollEnabled = true
-        listener?.setupContent()
-        listener?.combineChatListSections()
+        
+        addContactsPicker { [unowned self] contact in
+            self.listener?.showChat(of: .oneToOne, id: 0)
+        }
+    }
+    
+    func addContactsPicker(selection: @escaping ContactsPickerViewController.Selection) {
+        let selection : ContactsPickerViewController.Selection = selection
+        let vc = ContactsPickerViewController(selection: selection)
+        vc.isCreateNewChat = true
+        vc.view.backgroundColor = .white
+        self.present(vc, animated: true, completion: nil)
     }
     
     func removeEditingView() {
@@ -464,9 +475,10 @@ extension ChatListViewController {
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                listener?.showChat(of: .group)
-            case 1:
-                listener?.showChat(of: .oneToOne)
+                listener?.showChat(of: .group, id: 0)
+            case 1, 2:
+                guard let id = listener?.getChatListTableViewCellModelForRow(indexPath: indexPath).id else { break }
+                listener?.showChat(of: .oneToOne, id: id)
             default:
                 break
             }

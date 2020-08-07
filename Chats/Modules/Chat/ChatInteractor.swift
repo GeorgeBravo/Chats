@@ -249,6 +249,11 @@ extension ChatInteractor: ChatPresentableListener {
     }
 
     // MARK: - Mock Socket
+    func setupDefaultHistory() {
+        MockSocket.shared.getDefaultHistory { [weak self] (messages) in
+            self?.messageList.append(contentsOf: messages)
+        }
+    }
     
     func connectMockSocket(with chatType: ChatType) {
         MockSocket.shared.connect(with: chatType)

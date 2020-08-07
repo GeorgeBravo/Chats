@@ -27,6 +27,8 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
     var messageId: String
     
     var chatType: ChatType
+    
+    var messageCornerRoundedType: MessageCornerRoundedType
 
     // MARK: - Init
     init(fileItem: FileItem,
@@ -38,7 +40,8 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
          chatType: ChatType,
          needHideMessage: Bool,
          isPinned: Bool = false,
-         messageId: String) {
+         messageId: String,
+         messageCornerRoundedType: MessageCornerRoundedType) {
         self.file = fileItem
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -49,5 +52,6 @@ struct ChatTableViewFileCellModel: ChatContentTableViewCellModel {
         self.needHideMessage = needHideMessage
         self.isPinned = isPinned
         self.messageId = messageId
+        self.messageCornerRoundedType = messageCornerRoundedType
     }
 }

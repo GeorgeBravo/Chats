@@ -25,6 +25,7 @@ protocol ChatContentTableViewCellModel: ChatTableViewCellModel {
     var messageId: String { get set }
     
     var chatType: ChatType { get }
+    var messageCornerRoundedType: MessageCornerRoundedType { get }
     
     // MARK: - Logic
     func messageSelected(cellNewFrame: CGRect)

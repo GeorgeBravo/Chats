@@ -35,7 +35,7 @@ public class MessageContentCell: UITableViewCell {
     public lazy var messageContainerView = UIView
         .create {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.cornerRadius = 18
+            $0.cornerRadius = 0
     }
     
     private lazy var messageTimestampLabel = UILabel
@@ -109,6 +109,10 @@ public class MessageContentCell: UITableViewCell {
     public override func layoutSubviews() {
         super.layoutSubviews()
         horizontalStackViewContainerView.cornerRadius = horizontalStackViewContainerView.frame.height / 2
+        guard let msgModel = messageModel else { return }
+        self.contentView.layoutSubviews()
+        let corners = msgModel.messageCornerRoundedType.getCorners(isIncomming: msgModel.isIncomingMessage)
+        messageContainerView.roundCorners(topLeft: corners.topLeft, topRight: corners.topRight, bottomLeft: corners.bottomLeft, bottomRight: corners.bottomRight)
     }
     
     func setup(with viewModel: TableViewCellModel) {

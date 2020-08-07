@@ -25,6 +25,7 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
     var messageId: String
     
     var chatType: ChatType
+    var messageCornerRoundedType: MessageCornerRoundedType
 
     var messageSelection: MessageSelection?
     var needHideMessage: Bool
@@ -39,7 +40,8 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
          chatType: ChatType,
          needHideMessage: Bool,
          isPinned: Bool = false,
-         messageId: String) {
+         messageId: String,
+         messageCornerRoundedType: MessageCornerRoundedType) {
         self.contact = contact
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -50,5 +52,6 @@ struct ChatTableViewContactCellModel: ChatContentTableViewCellModel {
         self.needHideMessage = needHideMessage
         self.isPinned = isPinned
         self.messageId = messageId
+        self.messageCornerRoundedType = messageCornerRoundedType
     }
 }

@@ -10,7 +10,7 @@ import BRIck
 import Foundation
 
 protocol ChatListRouting: ViewableRouting {
-    func showChat(of type: ChatType)
+    func showChat(of type: ChatType, id: Int)
     func hideChat()
     
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
@@ -79,7 +79,8 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
     private func setupChatContent() {
         favoriteChatListModels = [
             ChatListTableViewCellModel(title: "", collocutorName: "Alfa Enzo Group Chat", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date(), imageLink: "img2", messageCount: 2, id: 7, isGroupChat: true, lastSender: "You", membersCount: 322000, membersOnline: 1210),
-            ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore, imageLink: nil, messageCount: 66, id: 1)
+            ChatListTableViewCellModel(title: "", collocutorName: "Angie T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore, imageLink: nil, messageCount: 66, id: 1),
+            ChatListTableViewCellModel(title: "", collocutorName: "Test test test", message: "In this chat history is downloaded by default..." , timeSent: "3.00 P.M", sentDate: Date().dayBefore, imageLink: "Dan-Leonard", messageCount: 12, id: 100)
         ]
         
         chatListModels = [
@@ -180,8 +181,8 @@ final class ChatListInteractor: PresentableInteractor<ChatListPresentable> {
 
 extension ChatListInteractor: ChatListInteractable {
     
-    func showChat(of type: ChatType) {
-        router?.showChat(of: type)
+    func showChat(of type: ChatType, id: Int) {
+        router?.showChat(of: type, id: id)
     }
     
     // MARK: - Chat Listener
@@ -191,6 +192,10 @@ extension ChatListInteractor: ChatListInteractable {
 }
 
 extension ChatListInteractor: ChatListPresentableListener {
+    func createNewChat() {
+        
+    }
+    
     func clearHistoryForChat(chatId: Int) {
         clearHistoryForChat(id: chatId)
         combineChatListSections()
@@ -260,5 +265,9 @@ extension ChatListInteractor: ChatListPresentableListener {
     
     func sectionModel(for number: Int) -> TableViewSectionModel {
         return sections[number]
+    }
+    
+    func getChatListTableViewCellModelForRow(indexPath: IndexPath) -> ChatListTableViewCellModel {
+        return favoriteChatListModels[indexPath.row]
     }
 }

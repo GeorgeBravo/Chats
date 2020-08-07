@@ -28,6 +28,7 @@ struct ChatTableViewTextMessageCellModel: ChatContentTableViewCellModel {
     var needHideMessage: Bool
     
     var chatType: ChatType
+    var messageCornerRoundedType: MessageCornerRoundedType
     
     // MARK: - Init
     init(message: String,
@@ -39,7 +40,8 @@ struct ChatTableViewTextMessageCellModel: ChatContentTableViewCellModel {
          chatType: ChatType,
          needHideMessage: Bool,
          isPinned: Bool = false,
-         messageId: String) {
+         messageId: String,
+         messageCornerRoundedType: MessageCornerRoundedType) {
         self.message = message
         self.timestamp = timestamp
         self.profileImage = profileImage
@@ -50,5 +52,6 @@ struct ChatTableViewTextMessageCellModel: ChatContentTableViewCellModel {
         self.needHideMessage = needHideMessage
         self.isPinned = isPinned
         self.messageId = messageId
+        self.messageCornerRoundedType = messageCornerRoundedType
     }
 }

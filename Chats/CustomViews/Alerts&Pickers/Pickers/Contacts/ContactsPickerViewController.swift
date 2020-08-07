@@ -39,6 +39,7 @@ final class ContactsPickerViewController: UIViewController {
     // MARK: Properties
     
     public typealias Selection = (Contact?) -> ()
+    public var isCreateNewChat: Bool = false
     
     fileprivate var selection: Selection?
     
@@ -268,6 +269,9 @@ extension ContactsPickerViewController: UITableViewDelegate {
         guard let contact = contact(at: indexPath) else { return }
         selectedContact = contact
         selection?(selectedContact)
+        if isCreateNewChat {
+            self.dismiss(animated: false, completion: nil)
+        }
     }
 }
 

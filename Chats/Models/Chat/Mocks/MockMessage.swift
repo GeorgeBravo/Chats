@@ -63,25 +63,26 @@ struct MockMessage: ChatScreenDisplayingItems {
     var messageId: String
     
     var isPinned = false
+    var messageCornerRoundedType: MessageCornerRoundedType
     
     var tableViewCellViewModel: ChatTableViewCellModel {
         switch self.messageKind {
         case let .text(message):
-            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewTextMessageCellModel(message: message, timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: messageCornerRoundedType)
         case let .location(locationItem):
-            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewLocationCellModel(locationItem: locationItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: MessageCornerRoundedType.firstMessage)
         case let .asset(assets):
-            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewAssetCellModel(assets: assets, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: MessageCornerRoundedType.firstMessage)
         case let .fileItem(fileItem):
-            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewFileCellModel(fileItem: fileItem, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: MessageCornerRoundedType.firstMessage)
         case let .contact(contact):
-            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewContactCellModel(contact: contact, timestamp: Date(), profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: MessageCornerRoundedType.firstMessage)
         case let .addUserToChat(model):
             return UserChatEntryTableViewCellModel(userInviteModel: model, timestamp: Date())
         case let .unreadMessage(model):
             return UnreadMessagesCellModel(unreadMessagesModel: model, timestamp: Date())
         default:
-            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId)
+            return ChatTableViewTextMessageCellModel(message: "", timestamp: sentDate, profileImage: UIImage(named: "roflan"), isMessageRead: arc4random_uniform(2) == 0, isIncomingMessage: isIncomingMessage, isMessageEdited: arc4random_uniform(2) == 0, chatType: chatType, needHideMessage: needHideMessage, isPinned: isPinned, messageId: messageId, messageCornerRoundedType: MessageCornerRoundedType.firstMessage)
         }
     }
     
@@ -92,17 +93,18 @@ struct MockMessage: ChatScreenDisplayingItems {
     }
     
     // MARK: - Initialization
-    private init(messageKind: MessageKind, date: Date, isIncomingMessage: Bool = true, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
+    private init(messageKind: MessageKind, date: Date, isIncomingMessage: Bool = true, chatType: ChatType, needHideMessage: Bool = false, messageId: String, messageCornerRoundedType: MessageCornerRoundedType = .firstMessage) {
         self.messageKind = messageKind
         self.sentDate = date
         self.isIncomingMessage = isIncomingMessage
         self.needHideMessage = needHideMessage
         self.chatType = chatType
         self.messageId = messageId
+        self.messageCornerRoundedType = messageCornerRoundedType
     }
 
-    init(text: String, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
-        self.init(messageKind: .text(text), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId)
+    init(text: String, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String, messageCornerRoundedType: MessageCornerRoundedType = .firstMessage) {
+        self.init(messageKind: .text(text), date: date, isIncomingMessage: isIncomingMessage, chatType: chatType, needHideMessage: needHideMessage, messageId: messageId, messageCornerRoundedType: messageCornerRoundedType)
     }
     
     init(assets: AssetMediaItem, date: Date, isIncomingMessage: Bool, chatType: ChatType, needHideMessage: Bool = false, messageId: String) {
