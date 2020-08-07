@@ -66,7 +66,7 @@ extension SampleData {
             firstCall = true
         }
         if chatType == .group && shouldAddUserToChat {
-            let userInviteModel = UserInviteModel(inviteeUserName: "Жорка", inviterUserName: arc4random_uniform(2) == 0 ? "Не Жорка" : nil)
+            let userInviteModel = UserInviteModel(inviteeUserName: "Жорка", inviterUserName: randomBool() ? "Не Жорка" : nil)
             let message = MockMessage(model: userInviteModel, date: dateAddingRandomTime, chatType: chatType, messageId: UUID().uuidString)
             messages.append(message)
             shouldAddUserToChat = false
@@ -74,12 +74,16 @@ extension SampleData {
             for _ in 0..<count {
                 let date = dateAddingRandomTime
                 let randomSentence = Lorem.sentence()
-                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: true, chatType: chatType, messageId: UUID().uuidString)
+                let message = MockMessage(text: randomSentence, date: date, isIncomingMessage: randomBool(), chatType: chatType, messageId: UUID().uuidString)
                 messages.append(message)
             }
         }
      
         completion(messages)
+    }
+    
+    func randomBool() -> Bool {
+        return arc4random_uniform(2) == 0
     }
     
     func getMockedHistory(chatType: ChatType, completion: ([MockMessage]) -> Void) {

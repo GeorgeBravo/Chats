@@ -10,6 +10,10 @@ import UIKit
 
 private struct Constants {
     static let longPressDuration: TimeInterval = 0.4
+    static let sendStatusImageViewWidth: CGFloat = 15.0
+    static let horizontalStackViewSpacing: CGFloat = 6.0
+    static let horizontalStackViewSideSpacing: CGFloat = 5.0
+    static let horizontalStackViewContainerViewTrailing: CGFloat = 10.0
 }
 
 public class MessageContentCell: UITableViewCell {
@@ -30,18 +34,20 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var messageContainerView = UIView
         .create {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.cornerRadius = 0
     }
     
     private lazy var messageTimestampLabel = UILabel
         .create {
-            $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 11, style: .regular)
             $0.textAlignment = .left
     }
     
     private lazy var editedMessageLabel = UILabel
         .create {
-            $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            $0.font = UIFont.helveticaNeueFontOfSize(size: 11, style: .regular)
             $0.textAlignment = .left
             $0.text = "edited"
     }
@@ -59,11 +65,14 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackViewContainerView = UIView
         .create {
-            $0.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.backgroundColor = .clear
+            $0.clipsToBounds = true
     }
     
     private lazy var messageReactionImageView = UIImageView
         .create {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.image = UIImage(named: "smiley")
             $0.contentMode = .scaleAspectFit
     }
@@ -75,10 +84,10 @@ public class MessageContentCell: UITableViewCell {
     
     public lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [messageTimestampLabel, readMessageImageContainerView])
-        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
-        stackView.spacing = 6
+        stackView.spacing = Constants.horizontalStackViewSpacing
         
         return stackView
     }()
@@ -93,6 +102,7 @@ public class MessageContentCell: UITableViewCell {
         messageTimestampLabel.text = nil
         trailingConstraint?.isActive = false
         leadingConstraint?.isActive = false
+        horizontalStackViewContainerView.backgroundColor = .clear
         super.prepareForReuse()
     }
     
@@ -111,7 +121,7 @@ public class MessageContentCell: UITableViewCell {
         messageModel = viewModel
         
         if viewModel is ChatTableViewTextMessageCellModel {
-            self.horizontalStackViewContainerView.backgroundColor = UIColor.clear
+            horizontalStackViewContainerView.backgroundColor = UIColor.clear
         }
         
         contentView.isHidden = viewModel.needHideMessage
@@ -172,16 +182,16 @@ extension MessageContentCell {
         horizontalStackViewContainerView.addSubview(horizontalStackView) {
             $0.centerX == horizontalStackViewContainerView.centerXAnchor
             $0.centerY == horizontalStackViewContainerView.centerYAnchor
-            $0.leading == horizontalStackViewContainerView.leadingAnchor + 5
-            $0.trailing == horizontalStackViewContainerView.trailingAnchor - 5
-            $0.top == horizontalStackViewContainerView.topAnchor + 5
-            $0.bottom == horizontalStackViewContainerView.bottomAnchor - 5
+            $0.leading == horizontalStackViewContainerView.leadingAnchor + Constants.horizontalStackViewSideSpacing
+            $0.trailing == horizontalStackViewContainerView.trailingAnchor - Constants.horizontalStackViewSideSpacing
+            $0.top == horizontalStackViewContainerView.topAnchor + Constants.horizontalStackViewSideSpacing
+            $0.bottom == horizontalStackViewContainerView.bottomAnchor - Constants.horizontalStackViewSideSpacing
             $0.height == 8
         }
         
         messageContainerView.addSubview(horizontalStackViewContainerView) {
-            $0.bottom == messageContainerView.bottomAnchor - 7
-            $0.trailing == messageContainerView.trailingAnchor - 10
+            $0.bottom == messageContainerView.bottomAnchor - 4
+            $0.trailing == messageContainerView.trailingAnchor - Constants.horizontalStackViewContainerViewTrailing
         }
         
         readMessageImageContainerView.addSubview(readMessageImageView) {
@@ -191,7 +201,7 @@ extension MessageContentCell {
             $0.trailing <= readMessageImageContainerView.trailingAnchor
             $0.top <= readMessageImageContainerView.topAnchor
             $0.bottom <= readMessageImageContainerView.bottomAnchor
-            $0.width == 15
+            $0.width == Constants.sendStatusImageViewWidth
         }
     }
     
@@ -209,5 +219,26 @@ extension MessageContentCell {
         guard gesture.state == .began else { return }
         guard let cellNewFrame = superview?.convert(frame, to: nil) else { return }
         messageModel?.messageSelected(cellNewFrame: cellNewFrame)
+    }
+}
+
+extension MessageContentCell {
+    func countHorizontalStackViewContainerViewSize(model: ChatTableViewTextMessageCellModel) -> CGSize {
+        let height: CGFloat = 8 + Constants.horizontalStackViewSideSpacing * 2
+        var width: CGFloat = model.timestamp.shortDate.sizeOfString(usingFont: messageTimestampLabel.font).width
+        if !model.isIncomingMessage {
+            width += Constants.horizontalStackViewSpacing
+            width += Constants.sendStatusImageViewWidth
+        }
+        width += Constants.horizontalStackViewSideSpacing * 2
+        return CGSize(width: width, height: height)
+    }
+    
+    func countHorizontalContainerSideSpacings() -> CGFloat {
+        return Constants.horizontalStackViewSideSpacing * 2
+    }
+    
+    func horizontalViewTrailingValue() -> CGFloat {
+        return Constants.horizontalStackViewContainerViewTrailing
     }
 }
