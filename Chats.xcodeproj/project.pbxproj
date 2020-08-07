@@ -195,6 +195,7 @@
 		2DDFA4A124C724F4007101C7 /* UserInviteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDFA4A024C724F4007101C7 /* UserInviteModel.swift */; };
 		2DEAAC8E24C8566300A95F49 /* ChatScrollDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAAC8D24C8566200A95F49 /* ChatScrollDownView.swift */; };
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
+		CE1904B424DD75610064AD48 /* String+Size+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1904B324DD75610064AD48 /* String+Size+Extension.swift */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
 		CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */; };
@@ -439,6 +440,7 @@
 		2DEAAC8D24C8566200A95F49 /* ChatScrollDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScrollDownView.swift; sourceTree = "<group>"; };
 		455760A4044106F48F993A05 /* Pods_Chats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
+		CE1904B324DD75610064AD48 /* String+Size+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Size+Extension.swift"; sourceTree = "<group>"; };
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
 		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
 		CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelStackView.swift; sourceTree = "<group>"; };
@@ -1123,6 +1125,7 @@
 			isa = PBXGroup;
 			children = (
 				2D64CFC524A20EEE00C8B94A /* String+Extension.swift */,
+				CE1904B324DD75610064AD48 /* String+Size+Extension.swift */,
 			);
 			path = String;
 			sourceTree = "<group>";
@@ -1904,6 +1907,7 @@
 				CE69321424C584FD001825D4 /* MessageManipulationInteractor.swift in Sources */,
 				120E17CA24C1C7BC007FADA0 /* PHAsset+Extensions.swift in Sources */,
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
+				CE1904B424DD75610064AD48 /* String+Size+Extension.swift in Sources */,
 				CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */,
 				2D1C4D3724ABC7F30087449A /* SampleData.swift in Sources */,
 				2D8B98F624BC626000D9F560 /* SectionHeaderViewSetup.swift in Sources */,

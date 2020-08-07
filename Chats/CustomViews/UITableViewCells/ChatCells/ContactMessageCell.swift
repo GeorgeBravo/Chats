@@ -62,7 +62,7 @@ final class ContactMessageCell: MessageContentCell, TableViewCellSetup {
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
         guard let model = viewModel as? ChatTableViewContactCellModel else { return }
-
+        
         displayNameLabel.text = model.contact.displayName
         phoneNumberLabel.text = model.contact.phones.map { $0.number }.joined(separator: "\n")
         

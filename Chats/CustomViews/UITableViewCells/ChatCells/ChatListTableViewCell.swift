@@ -227,7 +227,7 @@ class ChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             $0.bottom == mainView.bottomAnchor
             $0.leading == messageLabel.leadingAnchor
             $0.trailing == timeSent.trailingAnchor
-            $0.height == 1
+            $0.height == 0.4
         }
     }
     

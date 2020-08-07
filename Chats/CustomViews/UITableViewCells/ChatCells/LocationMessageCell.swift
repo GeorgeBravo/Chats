@@ -44,6 +44,7 @@ final class LocationMessageCell: MessageContentCell {
     
     override func setup(with viewModel: TableViewCellModel) {
         super.setup(with: viewModel)
+        horizontalStackViewContainerView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
         guard let model = viewModel as? ChatTableViewLocationCellModel else { return }
         
         let options = LocationMessageSnapshotOptions(showsBuildings: true, showsPointsOfInterest: true, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
@@ -52,7 +53,6 @@ final class LocationMessageCell: MessageContentCell {
         annotationView.image = pinImage
         annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
 //        let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
-        
         activityIndicator.startAnimating()
         
         let snapshotOptions = MKMapSnapshotter.Options()
