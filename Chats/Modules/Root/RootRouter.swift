@@ -9,7 +9,7 @@
 import BRIck
 import UIKit
 
-protocol RootInteractable: Interactable, ChatListListener {
+protocol RootInteractable: Interactable, ChatListListener, CameraScreenListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -23,8 +23,10 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
 
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
-         _ chatListBuildable: ChatListBuildable) {
+         _ chatListBuildable: ChatListBuildable,
+         _ cameraScreenBuildable: CameraScreenBuildable) {
         self.chatListBuildable = chatListBuildable
+        self.cameraScreenBuildable = cameraScreenBuildable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -35,10 +37,12 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
             detach(oldRouter)
         }
     }
+    
     // MARK: - Chat List
     
     var chatListBuildable: ChatListBuildable
-
+    var cameraScreenBuildable: CameraScreenBuildable
+    
     // MARK: - Transition Properties
 
     fileprivate var targetRouter: ViewableRouting?
@@ -54,6 +58,15 @@ extension RootRouter: RootRouting {
 
         replace(chatListRouter, animated: false, embedInNavigationController: true)
         currentRouter = chatListRouter
+    }
+    
+    func showCameraScreen() {
+        let cameraScreenRouter = cameraScreenBuildable.build(withListener: self.interactor)
+        
+        attach(cameraScreenRouter)
+        
+        replace(cameraScreenRouter, animated: false, embedInNavigationController: true)
+        currentRouter = cameraScreenRouter
     }
 }
 

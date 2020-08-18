@@ -211,6 +211,12 @@
 		CE5D360F24DB6F18002EA742 /* MessageCornerRoundedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D360E24DB6F18002EA742 /* MessageCornerRoundedType.swift */; };
 		CE5D361224DCA3B4002EA742 /* BezierPath+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5D361124DCA3B4002EA742 /* BezierPath+.swift */; };
 		CE5ECC4624C8DA36004A2539 /* PinnedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */; };
+		CE5F158D24EBD39300827D90 /* CameraScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F158924EBD39300827D90 /* CameraScreenRouter.swift */; };
+		CE5F158E24EBD39300827D90 /* CameraScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F158A24EBD39300827D90 /* CameraScreenViewController.swift */; };
+		CE5F158F24EBD39300827D90 /* CameraScreenBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F158B24EBD39300827D90 /* CameraScreenBuilder.swift */; };
+		CE5F159024EBD39300827D90 /* CameraScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F158C24EBD39300827D90 /* CameraScreenInteractor.swift */; };
+		CE5F159224EBDFD500827D90 /* RootComponent+CameraScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F159124EBDFD500827D90 /* RootComponent+CameraScreen.swift */; };
+		CE5F159524EBF2C100827D90 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5F159424EBF2C100827D90 /* CameraManager.swift */; };
 		CE60611824BEFE5200C07BC2 /* ItemWithCameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */; };
 		CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */; };
 		CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */; };
@@ -456,6 +462,12 @@
 		CE5D360E24DB6F18002EA742 /* MessageCornerRoundedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCornerRoundedType.swift; sourceTree = "<group>"; };
 		CE5D361124DCA3B4002EA742 /* BezierPath+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BezierPath+.swift"; sourceTree = "<group>"; };
 		CE5ECC4524C8DA36004A2539 /* PinnedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedMessageView.swift; sourceTree = "<group>"; };
+		CE5F158924EBD39300827D90 /* CameraScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScreenRouter.swift; sourceTree = "<group>"; };
+		CE5F158A24EBD39300827D90 /* CameraScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScreenViewController.swift; sourceTree = "<group>"; };
+		CE5F158B24EBD39300827D90 /* CameraScreenBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScreenBuilder.swift; sourceTree = "<group>"; };
+		CE5F158C24EBD39300827D90 /* CameraScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScreenInteractor.swift; sourceTree = "<group>"; };
+		CE5F159124EBDFD500827D90 /* RootComponent+CameraScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+CameraScreen.swift"; sourceTree = "<group>"; };
+		CE5F159424EBF2C100827D90 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		CE60611724BEFE5200C07BC2 /* ItemWithCameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWithCameraPreview.swift; sourceTree = "<group>"; };
 		CE69320D24C584FD001825D4 /* MessageManipulationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationRouter.swift; sourceTree = "<group>"; };
 		CE69320E24C584FD001825D4 /* MessageManipulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationViewController.swift; sourceTree = "<group>"; };
@@ -971,6 +983,7 @@
 		2D64CF8024A20E4400C8B94A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CE5F158824EBD36D00827D90 /* CameraScreen */,
 				2D64CF8124A20E5400C8B94A /* Root */,
 				2D501C3224B5C48600C37DCB /* ChatList */,
 				2DB6987524A362500075737F /* Chat */,
@@ -995,6 +1008,7 @@
 			children = (
 				2D64CF8624A20E5400C8B94A /* RootComponent+Login.swift */,
 				2D501C3B24B5C57800C37DCB /* RootComponent+ChatList.swift */,
+				CE5F159124EBDFD500827D90 /* RootComponent+CameraScreen.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1573,6 +1587,26 @@
 			path = PinnedMessageView;
 			sourceTree = "<group>";
 		};
+		CE5F158824EBD36D00827D90 /* CameraScreen */ = {
+			isa = PBXGroup;
+			children = (
+				CE5F158924EBD39300827D90 /* CameraScreenRouter.swift */,
+				CE5F158A24EBD39300827D90 /* CameraScreenViewController.swift */,
+				CE5F158B24EBD39300827D90 /* CameraScreenBuilder.swift */,
+				CE5F158C24EBD39300827D90 /* CameraScreenInteractor.swift */,
+				CE5F159324EBF2A400827D90 /* Components */,
+			);
+			path = CameraScreen;
+			sourceTree = "<group>";
+		};
+		CE5F159324EBF2A400827D90 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CE5F159424EBF2C100827D90 /* CameraManager.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		CE69320C24C584E0001825D4 /* MessageManipulation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1776,12 +1810,14 @@
 				2D64CFE824A20EF000C8B94A /* UITableViewHeaderFooterView+.swift in Sources */,
 				2D501C2624B3620A00C37DCB /* UIView+Creatable.swift in Sources */,
 				2D65C20424AE1A3F00C64534 /* ContactsPickerViewController.swift in Sources */,
+				CE5F159024EBD39300827D90 /* CameraScreenInteractor.swift in Sources */,
 				2D8B990524BC690E00D9F560 /* TableViewSections.swift in Sources */,
 				2D501C2924B4B70200C37DCB /* ChatViewController.swift in Sources */,
 				2D501BEA24B3228F00C37DCB /* InputBarSendButton.swift in Sources */,
 				2D501B4424B3207C00C37DCB /* ChatViewController+Keyboard.swift in Sources */,
 				2D65C22024AE1A3F00C64534 /* UITextField+Extensions.swift in Sources */,
 				2D501BC724B321D600C37DCB /* AttachmentsView.swift in Sources */,
+				CE5F159224EBDFD500827D90 /* RootComponent+CameraScreen.swift in Sources */,
 				1279D5DF24BC73FF0012467B /* FilePickerViewController.swift in Sources */,
 				2D17D71C24AC8DBB009B2E16 /* InputBarAccessoryView.swift in Sources */,
 				2D501C1A24B3263700C37DCB /* LayoutAnchor+Comparable.swift in Sources */,
@@ -1821,6 +1857,7 @@
 				2D65C1FE24AE1A3F00C64534 /* LocationSearchResultsViewController.swift in Sources */,
 				2D501B5024B320A700C37DCB /* UIEdgeInsets+Extensions.swift in Sources */,
 				2D501C3C24B5C57800C37DCB /* RootComponent+ChatList.swift in Sources */,
+				CE5F159524EBF2C100827D90 /* CameraManager.swift in Sources */,
 				CE99B9E924B45F3100F4CEB6 /* EditButtonSettupable.swift in Sources */,
 				2D501BEF24B322A200C37DCB /* InputBarAccessoryView+Availability.swift in Sources */,
 				2D501BC524B321D600C37DCB /* ImageAttachmentCell.swift in Sources */,
@@ -1897,6 +1934,7 @@
 				2D65C20A24AE1A3F00C64534 /* ImagePickerViewController.swift in Sources */,
 				2D1C4D2224AB97440087449A /* Collocutor.swift in Sources */,
 				2D501B7524B320C800C37DCB /* LocationMessageSnapshotOptions.swift in Sources */,
+				CE5F158E24EBD39300827D90 /* CameraScreenViewController.swift in Sources */,
 				CECA0E3724B627680067D5B6 /* CollocutorProfileViewController.swift in Sources */,
 				2D501BD524B3221B00C37DCB /* AutocompleteTableView.swift in Sources */,
 				2D501BC624B321D600C37DCB /* AttachmentCell.swift in Sources */,
@@ -1963,6 +2001,7 @@
 				2DCA29FB24B734810060913C /* TypingIndicatorView.swift in Sources */,
 				2D65C20E24AE1A3F00C64534 /* ItemWithPhoto.swift in Sources */,
 				2D64CF8824A20E5400C8B94A /* RootInteractor.swift in Sources */,
+				CE5F158F24EBD39300827D90 /* CameraScreenBuilder.swift in Sources */,
 				2D65C1FF24AE1A3F00C64534 /* LocationPickerViewController.swift in Sources */,
 				2D64CF7E24A20DB500C8B94A /* AppComponent.swift in Sources */,
 				2D501B7824B320C800C37DCB /* MessageKind.swift in Sources */,
@@ -1985,6 +2024,7 @@
 				2D501C1624B3263700C37DCB /* LayoutAnchor.swift in Sources */,
 				CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */,
 				2D501BA524B3210900C37DCB /* MessageContentCell.swift in Sources */,
+				CE5F158D24EBD39300827D90 /* CameraScreenRouter.swift in Sources */,
 				2D501B4C24B320A700C37DCB /* CGRect+Extensions.swift in Sources */,
 				CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */,
 				2D64CFF024A20EF000C8B94A /* String+Extension.swift in Sources */,

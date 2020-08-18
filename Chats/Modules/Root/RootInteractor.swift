@@ -10,6 +10,7 @@ import BRIck
 
 protocol RootRouting: LaunchRouting {
     func showChatList()
+    func showCameraScreen()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -37,7 +38,8 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
     override func didBecomeActive() {
         super.didBecomeActive()
 
-        router?.showChatList()
+//        router?.showChatList()
+        router?.showCameraScreen()
         // TODO: Implement business logic here.
     }
 
