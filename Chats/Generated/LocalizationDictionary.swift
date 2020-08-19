@@ -70,6 +70,8 @@ public enum LocalizationKeys {
   public static let moreManipulations: String = "MoreManipulations"
   /// Mute
   public static let mute: String = "Mute"
+  /// New!
+  public static let new: String = "New!"
   /// No
   public static let no: String = "No"
   /// Notifications
@@ -82,6 +84,10 @@ public enum LocalizationKeys {
   public static let online: String = "Online"
   /// Pin
   public static let pin: String = "Pin"
+  /// Press and hold to \n try camera effects
+  public static let pressAndHoldToTryCameraEffects: String = "PressAndHoldToTryCameraEffects"
+  /// Whoops, it seems there is a problem with your camera.
+  public static let problemWithYourCamera: String = "ProblemWithYourCamera"
   /// Read
   public static let read: String = "Read"
   /// Reply

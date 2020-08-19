@@ -17,8 +17,7 @@ protocol CameraScreenRouting: ViewableRouting {
 protocol CameraScreenPresentable: Presentable {
     var listener: CameraScreenPresentableListener? { get set }
 
-    func showNoCameraLabel()
-    func setup(with previewLayer: AVCaptureVideoPreviewLayer)
+    func setup(with previewLayer: AVCaptureVideoPreviewLayer?)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -52,6 +51,10 @@ final class CameraScreenInteractor: PresentableInteractor<CameraScreenPresentabl
 
         // TODO: Pause any business logic.
     }
+    
+    deinit {
+        print("CameraScreenInteractor deinit")
+    }
 }
 
 extension CameraScreenInteractor: CameraScreenInteractable {}
@@ -68,11 +71,7 @@ extension CameraScreenInteractor: CameraScreenPresentableListener {
 
 // MARK: - CameraManagerDelegate
 extension CameraScreenInteractor: CameraManagerDelegate {
-    func showNoCameraLabel() {
-        presenter.showNoCameraLabel()
-    }
-    
-    func setup(with previewLayer: AVCaptureVideoPreviewLayer) {
+    func setup(with previewLayer: AVCaptureVideoPreviewLayer?) {
         presenter.setup(with: previewLayer)
     }
 }

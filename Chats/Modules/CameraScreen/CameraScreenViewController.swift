@@ -11,8 +11,12 @@ import AVFoundation
 import BRIck
 
 private struct Constants {
-    static let descriptionLabelFontSize: CGFloat = 16.0
+    static let descriptionLabelFontSize: CGFloat = 18.0
     static let cameraLayerCornerRadius: CGFloat = 16.0
+    static let newDescriptionLabelYCenterSpacing: CGFloat = 8.0
+    static let newDescriptionLabelTopSpacing: CGFloat = 36.0
+    static let descriptionLabelTopSpacing: CGFloat = 4.0
+    static let labelSideSpacing: CGFloat = 16.0
 }
 
 protocol CameraScreenPresentableListener: class {
@@ -31,6 +35,9 @@ final class CameraScreenViewController: UIViewController {
     // MARK: - UI Variables
     private var cameraPreviewView: UIView = {
         let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.maskToBounds = true
         return view
     }()
     
@@ -48,7 +55,9 @@ final class CameraScreenViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .white
-        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionLabelFontSize, style: .medium)
+        label.textAlignment = .center
+        label.contentMode = .center
+        label.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionLabelFontSize, style: .bold)
         return label
     }()
     
@@ -56,6 +65,8 @@ final class CameraScreenViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .white
+        label.textAlignment = .center
+        label.contentMode = .center
         label.font = UIFont.helveticaNeueFontOfSize(size: Constants.descriptionLabelFontSize, style: .regular)
         return label
     }()
@@ -63,6 +74,7 @@ final class CameraScreenViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
         setupViews()
         listener?.checkAndStartCameraSession()
     }
@@ -77,7 +89,36 @@ final class CameraScreenViewController: UIViewController {
 extension CameraScreenViewController {
     
     private func setupViews() {
-        view.backgroundColor = .green
+        view.backgroundColor = .clear
+        
+        view.addSubview(cameraPreviewView) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
+            $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
+        }
+        
+        newDescriptionLabel.text = LocalizationKeys.new.localized()
+        view.addSubview(newDescriptionLabel) {
+            $0.top == view.centerYAnchor + Constants.newDescriptionLabelYCenterSpacing
+            $0.leading == view.leadingAnchor + Constants.labelSideSpacing
+            $0.trailing == view.trailingAnchor - Constants.labelSideSpacing
+        }
+        
+        descriptionLabel.text = LocalizationKeys.pressAndHoldToTryCameraEffects.localized()
+        view.addSubview(descriptionLabel) {
+            $0.top == newDescriptionLabel.bottomAnchor + Constants.descriptionLabelTopSpacing
+            $0.leading == view.leadingAnchor + Constants.labelSideSpacing
+            $0.trailing == view.trailingAnchor - Constants.labelSideSpacing
+        }
+        
+        view.addSubview(touchSignImageView) {
+            $0.bottom == newDescriptionLabel.topAnchor -  Constants.newDescriptionLabelTopSpacing
+            $0.centerX == view.centerXAnchor
+            $0.width == view.width / 3.5
+            $0.height == view.width / 3.5
+        }
+        
     }
     
 }
@@ -85,20 +126,20 @@ extension CameraScreenViewController {
 // MARK: - CameraScreenPresentable
 extension CameraScreenViewController: CameraScreenPresentable {
     
-    func showNoCameraLabel() {
-        print("showNoCameraLabel")
-    }
-    
-    func setup(with previewLayer: AVCaptureVideoPreviewLayer) {
+    func setup(with previewLayer: AVCaptureVideoPreviewLayer?) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.view.backgroundColor = .clear
             self.cameraPreviewLayer = previewLayer
-            self.cameraPreviewLayer.frame = self.view.layer.bounds
-            self.view.layer.addSublayer(self.cameraPreviewLayer)
+            if let previewLayer = previewLayer {
+                self.cameraPreviewLayer.frame = self.cameraPreviewView.layer.bounds
+                self.cameraPreviewView.layer.cornerRadius = Constants.cameraLayerCornerRadius
+                self.cameraPreviewView.layer.addSublayer(self.cameraPreviewLayer)
+            }
+            self.newDescriptionLabel.text = previewLayer == nil ?  LocalizationKeys.problemWithYourCamera.localized() : LocalizationKeys.new.localized()
+            self.descriptionLabel.text = previewLayer == nil ? "" : LocalizationKeys.pressAndHoldToTryCameraEffects.localized()
         }
-        
     }
+    
 }
 
 // MARK: - CameraScreenViewControllable

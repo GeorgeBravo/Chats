@@ -199,6 +199,7 @@
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
 		CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */; };
+		CE31C76E24ED22D900866015 /* CameraManipulationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C76D24ED22D900866015 /* CameraManipulationStackView.swift */; };
 		CE46797124D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */; };
 		CE46797324D2EB9A002F2DAE /* UnreadMessagesCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */; };
 		CE46797524D2F6A5002F2DAE /* UnreadMessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */; };
@@ -450,6 +451,7 @@
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
 		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
 		CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelStackView.swift; sourceTree = "<group>"; };
+		CE31C76D24ED22D900866015 /* CameraManipulationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManipulationStackView.swift; sourceTree = "<group>"; };
 		CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesTableViewCell.swift; sourceTree = "<group>"; };
 		CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesCellModel.swift; sourceTree = "<group>"; };
 		CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesModel.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE31C76C24ED22A300866015 /* CameraManipulationStackView */,
 				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
@@ -1559,6 +1562,14 @@
 			path = ButtonLabelStackView;
 			sourceTree = "<group>";
 		};
+		CE31C76C24ED22A300866015 /* CameraManipulationStackView */ = {
+			isa = PBXGroup;
+			children = (
+				CE31C76D24ED22D900866015 /* CameraManipulationStackView.swift */,
+			);
+			path = CameraManipulationStackView;
+			sourceTree = "<group>";
+		};
 		CE4E425A24BC8AD500BCA9F8 /* GroupProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -2037,6 +2048,7 @@
 				2D6A76CE24BC5E7C0075A8C8 /* OptionsTableViewSectionModel.swift in Sources */,
 				2D1C4D2E24ABC7D50087449A /* MockSocket.swift in Sources */,
 				2D65C21124AE1A3F00C64534 /* UISegmentedControl+Extensions.swift in Sources */,
+				CE31C76E24ED22D900866015 /* CameraManipulationStackView.swift in Sources */,
 				2D65C21024AE1A3F00C64534 /* Array+Extensions.swift in Sources */,
 				2D751D4B24C1382F00C40122 /* AddContactsTableViewCellModel.swift in Sources */,
 				2D501B9024B320D500C37DCB /* SenderType.swift in Sources */,

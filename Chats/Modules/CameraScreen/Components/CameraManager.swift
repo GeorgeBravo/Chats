@@ -9,8 +9,7 @@
 import AVFoundation
 
 protocol CameraManagerDelegate: class {
-    func showNoCameraLabel()
-    func setup(with previewLayer: AVCaptureVideoPreviewLayer)
+    func setup(with previewLayer: AVCaptureVideoPreviewLayer?)
 }
 
 final class CameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -36,7 +35,7 @@ final class CameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     private func setupAVCapture() {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
             AVCaptureDevice.authorizationStatus(for: .video) == .authorized else {
-                delegate?.showNoCameraLabel()
+                delegate?.setup(with: nil)
                 return
         }
         session.sessionPreset = AVCaptureSession.Preset.medium
@@ -50,7 +49,8 @@ final class CameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
         do {
             deviceInput = try AVCaptureDeviceInput(device: captureDevice)
             guard deviceInput != nil else {
-                print("error: cant get deviceInput")
+                print("CameraManager error: cant get deviceInput")
+                delegate?.setup(with: nil)
                 return
             }
 
@@ -72,7 +72,8 @@ final class CameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
             startCamera()
         } catch let error as NSError {
             deviceInput = nil
-            print("error: \(error.localizedDescription)")
+            delegate?.setup(with: nil)
+            print("CameraManager error: \(error.localizedDescription)")
         }
     }
     
