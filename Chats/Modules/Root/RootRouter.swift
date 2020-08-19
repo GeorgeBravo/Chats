@@ -9,7 +9,7 @@
 import BRIck
 import UIKit
 
-protocol RootInteractable: Interactable, ChatListListener {
+protocol RootInteractable: Interactable, ChatListListener, ThreadsChatListListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -22,12 +22,15 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
     // TODO: Constructor inject child builder protocols to allow building children.
 
     init(interactor: RootInteractable,
-         viewController: RootViewControllable,
-         _ chatListBuildable: ChatListBuildable) {
-        self.chatListBuildable = chatListBuildable
-        super.init(interactor: interactor, viewController: viewController)
-        interactor.router = self
-    }
+            viewController: RootViewControllable,
+            _ threadsChatListBuildable: ThreadsChatListBuildable, _ chatListBuildable: ChatListBuildable) {
+            self.chatListBuildable = chatListBuildable
+           self.threadsChatListBuildable = threadsChatListBuildable
+           super.init(interactor: interactor, viewController: viewController)
+           interactor.router = self
+       }
+    
+    
 
     private var currentRouter: ViewableRouting? {
         willSet {
@@ -38,6 +41,7 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
     // MARK: - Chat List
     
     var chatListBuildable: ChatListBuildable
+    var threadsChatListBuildable: ThreadsChatListBuildable
 
     // MARK: - Transition Properties
 
@@ -46,6 +50,14 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
 }
 
 extension RootRouter: RootRouting {
+    func showThreadsChatList() {
+        let threadsChatListRouter = threadsChatListBuildable.build(withListener: self.interactor)
+        attach(threadsChatListRouter)
+        
+        replace(threadsChatListRouter, animated: false, embedInNavigationController: true)
+        currentRouter = threadsChatListRouter
+    }
+    
     //MARK: - Chat List
     func showChatList() {
         let chatListRouter = chatListBuildable.build(withListener: self.interactor)
