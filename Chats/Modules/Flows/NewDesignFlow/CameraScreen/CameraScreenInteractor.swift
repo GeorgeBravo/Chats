@@ -23,17 +23,20 @@ protocol CameraScreenPresentable: Presentable {
 
 protocol CameraScreenListener: class {
 
+    func hideCameraScreen()
     // TODO: Declare methods the interactor can invoke to communicate with other BRIcks.
 }
 
 final class CameraScreenInteractor: PresentableInteractor<CameraScreenPresentable> {
 
+    // MARK: - Variables
     weak var router: CameraScreenRouting?
     weak var listener: CameraScreenListener?
     private let cameraManager = CameraManager()
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
+    // MARK: - Life cycle
     override init(presenter: CameraScreenPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
@@ -52,14 +55,12 @@ final class CameraScreenInteractor: PresentableInteractor<CameraScreenPresentabl
         // TODO: Pause any business logic.
     }
     
-    deinit {
-        print("CameraScreenInteractor deinit")
-    }
 }
 
 extension CameraScreenInteractor: CameraScreenInteractable {}
 
 extension CameraScreenInteractor: CameraScreenPresentableListener {
+    
     func checkAndStartCameraSession() {
         cameraManager.checkCameraAuthorizationStatus()
     }
@@ -67,11 +68,18 @@ extension CameraScreenInteractor: CameraScreenPresentableListener {
     func stopCameraSession() {
         cameraManager.stopCamera()
     }
+    
+    func hideCameraScreen() {
+        listener?.hideCameraScreen()
+    }
+    
 }
 
 // MARK: - CameraManagerDelegate
 extension CameraScreenInteractor: CameraManagerDelegate {
+    
     func setup(with previewLayer: AVCaptureVideoPreviewLayer?) {
         presenter.setup(with: previewLayer)
     }
+    
 }

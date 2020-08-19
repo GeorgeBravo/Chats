@@ -23,6 +23,7 @@ protocol CameraScreenPresentableListener: class {
 
     func checkAndStartCameraSession()
     func stopCameraSession()
+    func hideCameraScreen()
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -71,6 +72,14 @@ final class CameraScreenViewController: UIViewController {
         return label
     }()
     
+    private var backButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.backgroundColor = .yellow
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(hideCameraScreen), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +96,6 @@ final class CameraScreenViewController: UIViewController {
 
 // MARK: - Setup Views
 extension CameraScreenViewController {
-    
     private func setupViews() {
         view.backgroundColor = .clear
         
@@ -119,8 +127,21 @@ extension CameraScreenViewController {
             $0.height == view.width / 3.5
         }
         
+        view.addSubview(backButton) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
+            $0.width == 40
+            $0.height == 40
+        }
     }
-    
+}
+
+
+// MARK: - Selectors
+extension CameraScreenViewController {
+    @objc func hideCameraScreen() {
+        listener?.hideCameraScreen()
+    }
 }
 
 // MARK: - CameraScreenPresentable
@@ -130,7 +151,7 @@ extension CameraScreenViewController: CameraScreenPresentable {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.cameraPreviewLayer = previewLayer
-            if let previewLayer = previewLayer {
+            if previewLayer != nil {
                 self.cameraPreviewLayer.frame = self.cameraPreviewView.layer.bounds
                 self.cameraPreviewView.layer.cornerRadius = Constants.cameraLayerCornerRadius
                 self.cameraPreviewView.layer.addSublayer(self.cameraPreviewLayer)
