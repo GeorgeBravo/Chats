@@ -1,45 +1,44 @@
+// 
+//  ThreadsChatInteractor.swift
+//  Chats
 //
-//  RootInteractor.swift
-//  Cc Dns
-//
-//  Created by Касилов Георгий on 3/31/20.
-//  Copyright © 2020 RestySpp. All rights reserved.
+//  Created by Mykhailo H on 8/19/20.
+//  Copyright © 2020 Касилов Георгий. All rights reserved.
 //
 
 import BRIck
 
-protocol RootRouting: LaunchRouting {
-    func showChatList()
-    func showThreadsChatList()
+protocol ThreadsChatRouting: ViewableRouting {
+
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
-protocol RootPresentable: Presentable {
-    var listener: RootPresentableListener? { get set }
+protocol ThreadsChatPresentable: Presentable {
+    var listener: ThreadsChatPresentableListener? { get set }
 
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol RootListener: class {
+protocol ThreadsChatListener: class {
+
     // TODO: Declare methods the interactor can invoke to communicate with other BRIcks.
 }
 
-final class RootInteractor: PresentableInteractor<RootPresentable> {
-    weak var router: RootRouting?
-    weak var listener: RootListener?
+final class ThreadsChatInteractor: PresentableInteractor<ThreadsChatPresentable> {
+
+    weak var router: ThreadsChatRouting?
+    weak var listener: ThreadsChatListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
-    override init(presenter: RootPresentable) {
+    override init(presenter: ThreadsChatPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
     override func didBecomeActive() {
         super.didBecomeActive()
-
-        router?.showThreadsChatList()
-//        router?.showChatList()
+        
         // TODO: Implement business logic here.
     }
 
@@ -50,6 +49,6 @@ final class RootInteractor: PresentableInteractor<RootPresentable> {
     }
 }
 
-extension RootInteractor: RootPresentableListener {}
+extension ThreadsChatInteractor: ThreadsChatInteractable {}
 
-extension RootInteractor: RootInteractable {}
+extension ThreadsChatInteractor: ThreadsChatPresentableListener {}

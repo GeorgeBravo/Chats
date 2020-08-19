@@ -9,7 +9,7 @@
 import BRIck
 import UIKit
 
-protocol RootInteractable: Interactable, ChatListListener, CameraScreenListener {
+protocol RootInteractable: Interactable, ChatListListener, ThreadsChatListListener {
     var router: RootRouting? { get set }
     var listener: RootListener? { get set }
 }
@@ -22,14 +22,15 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
     // TODO: Constructor inject child builder protocols to allow building children.
 
     init(interactor: RootInteractable,
-         viewController: RootViewControllable,
-         _ chatListBuildable: ChatListBuildable,
-         _ cameraScreenBuildable: CameraScreenBuildable) {
-        self.chatListBuildable = chatListBuildable
-        self.cameraScreenBuildable = cameraScreenBuildable
-        super.init(interactor: interactor, viewController: viewController)
-        interactor.router = self
-    }
+            viewController: RootViewControllable,
+            _ threadsChatListBuildable: ThreadsChatListBuildable, _ chatListBuildable: ChatListBuildable) {
+            self.chatListBuildable = chatListBuildable
+           self.threadsChatListBuildable = threadsChatListBuildable
+           super.init(interactor: interactor, viewController: viewController)
+           interactor.router = self
+       }
+    
+    
 
     private var currentRouter: ViewableRouting? {
         willSet {
@@ -41,8 +42,8 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
     // MARK: - Chat List
     
     var chatListBuildable: ChatListBuildable
-    var cameraScreenBuildable: CameraScreenBuildable
-    
+    var threadsChatListBuildable: ThreadsChatListBuildable
+
     // MARK: - Transition Properties
 
     fileprivate var targetRouter: ViewableRouting?
@@ -50,6 +51,14 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
 }
 
 extension RootRouter: RootRouting {
+    func showThreadsChatList() {
+        let threadsChatListRouter = threadsChatListBuildable.build(withListener: self.interactor)
+        attach(threadsChatListRouter)
+        
+        replace(threadsChatListRouter, animated: false, embedInNavigationController: true)
+        currentRouter = threadsChatListRouter
+    }
+    
     //MARK: - Chat List
     func showChatList() {
         let chatListRouter = chatListBuildable.build(withListener: self.interactor)
@@ -58,15 +67,6 @@ extension RootRouter: RootRouting {
 
         replace(chatListRouter, animated: false, embedInNavigationController: true)
         currentRouter = chatListRouter
-    }
-    
-    func showCameraScreen() {
-        let cameraScreenRouter = cameraScreenBuildable.build(withListener: self.interactor)
-        
-        attach(cameraScreenRouter)
-        
-        replace(cameraScreenRouter, animated: false, embedInNavigationController: true)
-        currentRouter = cameraScreenRouter
     }
 }
 

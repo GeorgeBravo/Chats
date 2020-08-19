@@ -42,11 +42,10 @@ extension RootBuilder: RootBuildable {
         let interactor = RootInteractor(presenter: viewController)
         
         let chatListBuilder = ChatListBuilder(dependency: component)
-        let cameraScreenBuilder = CameraScreenBuilder(dependency: component)
+        let threadsCHatListBuilder = ThreadsChatListBuilder(dependency: component)
 
         return RootRouter(interactor: interactor,
                           viewController: viewController,
-                          chatListBuilder,
-                          cameraScreenBuilder)
+                          threadsCHatListBuilder, chatListBuilder)
     }
 }
