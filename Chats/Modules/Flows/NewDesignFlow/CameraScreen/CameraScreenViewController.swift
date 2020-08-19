@@ -17,6 +17,8 @@ private struct Constants {
     static let newDescriptionLabelTopSpacing: CGFloat = 36.0
     static let descriptionLabelTopSpacing: CGFloat = 4.0
     static let labelSideSpacing: CGFloat = 16.0
+    static let cameraManipulationsStackViewSpacing: CGFloat = 24.0
+    static let cameraManipulationsStackViewWidth: CGFloat = 40
 }
 
 protocol CameraScreenPresentableListener: class {
@@ -80,6 +82,9 @@ final class CameraScreenViewController: UIViewController {
         return button
     }()
     
+    private lazy var cameraManipulationsStackView = CameraManipulationsStackView()
+    private var emojiStateButton = RoundedBlurredButton(frame: .zero, blurStyle: .dark)
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,6 +138,21 @@ extension CameraScreenViewController {
             $0.width == 40
             $0.height == 40
         }
+        
+        view.addSubview(cameraManipulationsStackView) {
+            $0.top == cameraPreviewView.topAnchor + Constants.cameraManipulationsStackViewSpacing
+            $0.trailing == cameraPreviewView.trailingAnchor - Constants.cameraManipulationsStackViewSpacing
+            $0.width == Constants.cameraManipulationsStackViewWidth
+        }
+        cameraManipulationsStackView.delegate = self
+        cameraManipulationsStackView.setCurrentOptions(with: [.messages, .gallery, .lightning, .switchCamera])
+        
+        view.addSubview(emojiStateButton) {
+            $0.top == cameraPreviewView.topAnchor + Constants.cameraManipulationsStackViewSpacing
+            $0.leading == cameraPreviewView.leadingAnchor + Constants.cameraManipulationsStackViewSpacing
+        }
+        emojiStateButton.setTitle("\u{1F603} Normal", for: .normal)
+        emojiStateButton.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 12.0, bottom: 8.0, right: 12.0)
     }
 }
 
@@ -165,3 +185,10 @@ extension CameraScreenViewController: CameraScreenPresentable {
 
 // MARK: - CameraScreenViewControllable
 extension CameraScreenViewController: CameraScreenViewControllable {}
+
+// MARK: - CameraManipulationsStackViewDelegate
+extension CameraScreenViewController: CameraManipulationsStackViewDelegate {
+    func buttonPressed(with manipulationType: CameraManipulationTypes) {
+        print(manipulationType.stringDescription)
+    }
+}

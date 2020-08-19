@@ -215,6 +215,8 @@
 		CE31C77B24ED2A8D00866015 /* CameraScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77624ED2A8D00866015 /* CameraScreenInteractor.swift */; };
 		CE31C77C24ED2A8D00866015 /* CameraScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77724ED2A8D00866015 /* CameraScreenRouter.swift */; };
 		CE31C77F24ED2FFF00866015 /* ThreadsChatListComponent+CameraScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77E24ED2FFF00866015 /* ThreadsChatListComponent+CameraScreen.swift */; };
+		CE31C78224ED484C00866015 /* CameraManipulationsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C78124ED484C00866015 /* CameraManipulationsStackView.swift */; };
+		CE31C78524ED498800866015 /* RoundedBlurredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C78424ED498800866015 /* RoundedBlurredButton.swift */; };
 		CE46797124D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */; };
 		CE46797324D2EB9A002F2DAE /* UnreadMessagesCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */; };
 		CE46797524D2F6A5002F2DAE /* UnreadMessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */; };
@@ -476,6 +478,8 @@
 		CE31C77624ED2A8D00866015 /* CameraScreenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScreenInteractor.swift; sourceTree = "<group>"; };
 		CE31C77724ED2A8D00866015 /* CameraScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScreenRouter.swift; sourceTree = "<group>"; };
 		CE31C77E24ED2FFF00866015 /* ThreadsChatListComponent+CameraScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadsChatListComponent+CameraScreen.swift"; sourceTree = "<group>"; };
+		CE31C78124ED484C00866015 /* CameraManipulationsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManipulationsStackView.swift; sourceTree = "<group>"; };
+		CE31C78424ED498800866015 /* RoundedBlurredButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlurredButton.swift; sourceTree = "<group>"; };
 		CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesTableViewCell.swift; sourceTree = "<group>"; };
 		CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesCellModel.swift; sourceTree = "<group>"; };
 		CE46797424D2F6A5002F2DAE /* UnreadMessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadMessagesModel.swift; sourceTree = "<group>"; };
@@ -1094,6 +1098,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE31C78024ED482A00866015 /* CameraManipulationsStackView */,
 				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
@@ -1657,6 +1662,23 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		CE31C78024ED482A00866015 /* CameraManipulationsStackView */ = {
+			isa = PBXGroup;
+			children = (
+				CE31C78324ED497400866015 /* RoundedBlurredButton */,
+				CE31C78124ED484C00866015 /* CameraManipulationsStackView.swift */,
+			);
+			path = CameraManipulationsStackView;
+			sourceTree = "<group>";
+		};
+		CE31C78324ED497400866015 /* RoundedBlurredButton */ = {
+			isa = PBXGroup;
+			children = (
+				CE31C78424ED498800866015 /* RoundedBlurredButton.swift */,
+			);
+			path = RoundedBlurredButton;
+			sourceTree = "<group>";
+		};
 		CE4E425A24BC8AD500BCA9F8 /* GroupProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1919,6 +1941,7 @@
 				2D501BE124B3224600C37DCB /* HorizontalEdgePadding.swift in Sources */,
 				2D501BD424B3221B00C37DCB /* AutocompleteCell.swift in Sources */,
 				2D501BF324B322AC00C37DCB /* InputTextView.swift in Sources */,
+				CE31C78524ED498800866015 /* RoundedBlurredButton.swift in Sources */,
 				2D65C1FC24AE1A3F00C64534 /* Assets.swift in Sources */,
 				2D501BFA24B322B600C37DCB /* InputBarAccessoryViewDelegate.swift in Sources */,
 				2D501B9224B320D500C37DCB /* AudioItem.swift in Sources */,
@@ -2115,6 +2138,7 @@
 				2D64CFF024A20EF000C8B94A /* String+Extension.swift in Sources */,
 				1258C08B24ED2326003FB518 /* ThreadsChatInteractor.swift in Sources */,
 				2DDFA4A124C724F4007101C7 /* UserInviteModel.swift in Sources */,
+				CE31C78224ED484C00866015 /* CameraManipulationsStackView.swift in Sources */,
 				1258C08924ED2326003FB518 /* ThreadsChatViewController.swift in Sources */,
 				CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */,
 				2DB6987C24A362660075737F /* ChatBuilder.swift in Sources */,
