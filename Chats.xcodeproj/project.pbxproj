@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		120E17CA24C1C7BC007FADA0 /* PHAsset+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */; };
+		1237AC8C24EBED730065DCEA /* ThreadsChatListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1237AC8824EBED730065DCEA /* ThreadsChatListRouter.swift */; };
+		1237AC8D24EBED730065DCEA /* ThreadsChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1237AC8924EBED730065DCEA /* ThreadsChatListViewController.swift */; };
+		1237AC8E24EBED730065DCEA /* ThreadsChatListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1237AC8A24EBED730065DCEA /* ThreadsChatListBuilder.swift */; };
+		1237AC8F24EBED730065DCEA /* ThreadsChatListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1237AC8B24EBED730065DCEA /* ThreadsChatListInteractor.swift */; };
+		1258C08224ED21A5003FB518 /* RootComponent+ThreadsChatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08124ED21A5003FB518 /* RootComponent+ThreadsChatList.swift */; };
+		1258C08824ED2326003FB518 /* ThreadsChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08424ED2326003FB518 /* ThreadsChatRouter.swift */; };
+		1258C08924ED2326003FB518 /* ThreadsChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08524ED2326003FB518 /* ThreadsChatViewController.swift */; };
+		1258C08A24ED2326003FB518 /* ThreadsChatBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08624ED2326003FB518 /* ThreadsChatBuilder.swift */; };
+		1258C08B24ED2326003FB518 /* ThreadsChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08724ED2326003FB518 /* ThreadsChatInteractor.swift */; };
+		1258C08E24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */; };
 		1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */; };
 		1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */; };
 		1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */; };
@@ -249,6 +259,16 @@
 
 /* Begin PBXFileReference section */
 		120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PHAsset+Extensions.swift"; sourceTree = "<group>"; };
+		1237AC8824EBED730065DCEA /* ThreadsChatListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListRouter.swift; sourceTree = "<group>"; };
+		1237AC8924EBED730065DCEA /* ThreadsChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListViewController.swift; sourceTree = "<group>"; };
+		1237AC8A24EBED730065DCEA /* ThreadsChatListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListBuilder.swift; sourceTree = "<group>"; };
+		1237AC8B24EBED730065DCEA /* ThreadsChatListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListInteractor.swift; sourceTree = "<group>"; };
+		1258C08124ED21A5003FB518 /* RootComponent+ThreadsChatList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+ThreadsChatList.swift"; sourceTree = "<group>"; };
+		1258C08424ED2326003FB518 /* ThreadsChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatRouter.swift; sourceTree = "<group>"; };
+		1258C08524ED2326003FB518 /* ThreadsChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatViewController.swift; sourceTree = "<group>"; };
+		1258C08624ED2326003FB518 /* ThreadsChatBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatBuilder.swift; sourceTree = "<group>"; };
+		1258C08724ED2326003FB518 /* ThreadsChatInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatInteractor.swift; sourceTree = "<group>"; };
+		1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadsChatListComponent+ThreadsChat.swift"; sourceTree = "<group>"; };
 		1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListLargeTitleView.swift; sourceTree = "<group>"; };
 		1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
 		1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewSectionModel.swift; sourceTree = "<group>"; };
@@ -520,6 +540,64 @@
 				120E17C924C1C7BC007FADA0 /* PHAsset+Extensions.swift */,
 			);
 			path = PHAsset;
+			sourceTree = "<group>";
+		};
+		1237AC7A24EBE59F0065DCEA /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				1237AC7C24EBE5D10065DCEA /* NewDesignFlow */,
+				1237AC7B24EBE5C80065DCEA /* OldDesignFlow */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		1237AC7B24EBE5C80065DCEA /* OldDesignFlow */ = {
+			isa = PBXGroup;
+			children = (
+				2D501C3224B5C48600C37DCB /* ChatList */,
+				2DB6987524A362500075737F /* Chat */,
+			);
+			path = OldDesignFlow;
+			sourceTree = "<group>";
+		};
+		1237AC7C24EBE5D10065DCEA /* NewDesignFlow */ = {
+			isa = PBXGroup;
+			children = (
+				1258C08324ED22DE003FB518 /* ThreadsChat */,
+				1237AC8724EBED4C0065DCEA /* ThreadsChatList */,
+			);
+			path = NewDesignFlow;
+			sourceTree = "<group>";
+		};
+		1237AC8724EBED4C0065DCEA /* ThreadsChatList */ = {
+			isa = PBXGroup;
+			children = (
+				1258C08C24ED2366003FB518 /* Components */,
+				1237AC8824EBED730065DCEA /* ThreadsChatListRouter.swift */,
+				1237AC8924EBED730065DCEA /* ThreadsChatListViewController.swift */,
+				1237AC8A24EBED730065DCEA /* ThreadsChatListBuilder.swift */,
+				1237AC8B24EBED730065DCEA /* ThreadsChatListInteractor.swift */,
+			);
+			path = ThreadsChatList;
+			sourceTree = "<group>";
+		};
+		1258C08324ED22DE003FB518 /* ThreadsChat */ = {
+			isa = PBXGroup;
+			children = (
+				1258C08424ED2326003FB518 /* ThreadsChatRouter.swift */,
+				1258C08524ED2326003FB518 /* ThreadsChatViewController.swift */,
+				1258C08624ED2326003FB518 /* ThreadsChatBuilder.swift */,
+				1258C08724ED2326003FB518 /* ThreadsChatInteractor.swift */,
+			);
+			path = ThreadsChat;
+			sourceTree = "<group>";
+		};
+		1258C08C24ED2366003FB518 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		1279D5CB24B5D2C40012467B /* ChatListView */ = {
@@ -971,9 +1049,8 @@
 		2D64CF8024A20E4400C8B94A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1237AC7A24EBE59F0065DCEA /* Flows */,
 				2D64CF8124A20E5400C8B94A /* Root */,
-				2D501C3224B5C48600C37DCB /* ChatList */,
-				2DB6987524A362500075737F /* Chat */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -995,6 +1072,7 @@
 			children = (
 				2D64CF8624A20E5400C8B94A /* RootComponent+Login.swift */,
 				2D501C3B24B5C57800C37DCB /* RootComponent+ChatList.swift */,
+				1258C08124ED21A5003FB518 /* RootComponent+ThreadsChatList.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1780,6 +1858,7 @@
 				2D501C2924B4B70200C37DCB /* ChatViewController.swift in Sources */,
 				2D501BEA24B3228F00C37DCB /* InputBarSendButton.swift in Sources */,
 				2D501B4424B3207C00C37DCB /* ChatViewController+Keyboard.swift in Sources */,
+				1258C08A24ED2326003FB518 /* ThreadsChatBuilder.swift in Sources */,
 				2D65C22024AE1A3F00C64534 /* UITextField+Extensions.swift in Sources */,
 				2D501BC724B321D600C37DCB /* AttachmentsView.swift in Sources */,
 				1279D5DF24BC73FF0012467B /* FilePickerViewController.swift in Sources */,
@@ -1787,6 +1866,7 @@
 				2D501C1A24B3263700C37DCB /* LayoutAnchor+Comparable.swift in Sources */,
 				1279D5D724B623220012467B /* UIFont+Extensions.swift in Sources */,
 				2D64CFEE24A20EF000C8B94A /* ViewableRouting+.swift in Sources */,
+				1258C08824ED2326003FB518 /* ThreadsChatRouter.swift in Sources */,
 				2D64CFF424A20EF000C8B94A /* Configure.swift in Sources */,
 				2DEAAC8E24C8566300A95F49 /* ChatScrollDownView.swift in Sources */,
 				2D64CFF324A20EF000C8B94A /* UIStackView+Extensions.swift in Sources */,
@@ -1837,6 +1917,7 @@
 				CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */,
 				2D501BF924B322B600C37DCB /* InputItem.swift in Sources */,
 				2D751D4224C1382000C40122 /* ChatTableViewCellModel.swift in Sources */,
+				1237AC8C24EBED730065DCEA /* ThreadsChatListRouter.swift in Sources */,
 				2DDFA49D24C71D67007101C7 /* UserChatEntryTableViewCellModel.swift in Sources */,
 				2D501BAB24B3210900C37DCB /* MediaMessageCell.swift in Sources */,
 				CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */,
@@ -1878,14 +1959,17 @@
 				2D501C3824B5C4A400C37DCB /* ChatListViewController.swift in Sources */,
 				2D751D4424C1382000C40122 /* ChatTableViewContactCellModel.swift in Sources */,
 				2D501C1C24B3263700C37DCB /* LayoutProxy.swift in Sources */,
+				1237AC8F24EBED730065DCEA /* ThreadsChatListInteractor.swift in Sources */,
 				2D501BF424B322AC00C37DCB /* SeparatorLine.swift in Sources */,
 				CECA0E3624B627680067D5B6 /* CollocutorProfileBuilder.swift in Sources */,
 				CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */,
 				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D751D4324C1382000C40122 /* ChatListTableViewCellModel.swift in Sources */,
+				1237AC8D24EBED730065DCEA /* ThreadsChatListViewController.swift in Sources */,
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
 				CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */,
 				1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */,
+				1237AC8E24EBED730065DCEA /* ThreadsChatListBuilder.swift in Sources */,
 				1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */,
 				1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */,
 				CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */,
@@ -1909,6 +1993,7 @@
 				2D501C3724B5C4A400C37DCB /* ChatListRouter.swift in Sources */,
 				CE1904B424DD75610064AD48 /* String+Size+Extension.swift in Sources */,
 				CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */,
+				1258C08E24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift in Sources */,
 				2D1C4D3724ABC7F30087449A /* SampleData.swift in Sources */,
 				2D8B98F624BC626000D9F560 /* SectionHeaderViewSetup.swift in Sources */,
 				2D64CFE124A20EF000C8B94A /* UIView+.swift in Sources */,
@@ -1988,9 +2073,12 @@
 				2D501B4C24B320A700C37DCB /* CGRect+Extensions.swift in Sources */,
 				CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */,
 				2D64CFF024A20EF000C8B94A /* String+Extension.swift in Sources */,
+				1258C08B24ED2326003FB518 /* ThreadsChatInteractor.swift in Sources */,
 				2DDFA4A124C724F4007101C7 /* UserInviteModel.swift in Sources */,
+				1258C08924ED2326003FB518 /* ThreadsChatViewController.swift in Sources */,
 				CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */,
 				2DB6987C24A362660075737F /* ChatBuilder.swift in Sources */,
+				1258C08224ED21A5003FB518 /* RootComponent+ThreadsChatList.swift in Sources */,
 				2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */,
 				2D1C4D1724AB41BF0087449A /* CollocutorStatusView.swift in Sources */,
 				2D65C21F24AE1A3F00C64534 /* Locale+Extensions.swift in Sources */,
