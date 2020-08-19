@@ -83,12 +83,12 @@ extension ChatNavigationBarView {
         containerView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 754.0), for: .horizontal)
         
         addSubview(containerView) {
-            spacingConstraint = $0.leading == stackView.trailingAnchor + 180
+            spacingConstraint = $0.leading == stackView.trailingAnchor + UIScreen.main.bounds.width
             spacingConstraint?.priority = UILayoutPriority(rawValue: 749)
             $0.leading >= stackView.trailingAnchor + 8.0
             $0.height == heightAnchor
             $0.centerY == centerYAnchor
-            $0.trailing == trailingAnchor
+            $0.trailing == trailingAnchor - 2
             $0.width == heightAnchor
         }
     }

@@ -109,16 +109,16 @@ final class ChatInteractor: PresentableInteractor<ChatPresentable> {
     }
     
     private func askAboutPinUnpinMessage(chatTVCellModel: ChatContentTableViewCellModel) {
-            for (index, item) in self.messageList.enumerated() {
-                if item.messageId == chatTVCellModel.messageId {
-                    if !self.messageList[index].isPinned {
-                        self.presenter.showPinnedMessage(mockMessage: item)
-                    } else {
-                        self.presenter.hidePinnedMessage()
-                    }
+        for (index, item) in self.messageList.enumerated() {
+            if item.messageId == chatTVCellModel.messageId {
+                if !self.messageList[index].isPinned {
+                    self.presenter.showPinnedMessage(mockMessage: item)
+                } else {
+                    self.presenter.hidePinnedMessage()
                 }
             }
         }
+    }
     
     func updateMessageListAfterPinUnpin(mockMessage: MockMessage) {
         for (index, item) in self.messageList.enumerated() {

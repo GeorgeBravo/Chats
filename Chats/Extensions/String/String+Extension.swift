@@ -22,4 +22,5 @@ extension String {
     func mutableStringWithAttributes(_ attributes: [NSAttributedString.Key : Any]) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: self, attributes: attributes)
     }
+
 }
