@@ -11,7 +11,7 @@ import UIKit
 
 private struct Constants {
     static let leadingOffset: CGFloat = 16.0
-    static let verticalOffset: CGFloat = 8.0
+    static let verticalOffset: CGFloat = 40.0
     static let fontSize: CGFloat = 17.0
 }
 
@@ -45,7 +45,7 @@ class ChatListSectionHeaderView: UITableViewHeaderFooterView, SectionHeaderViewS
         addSubview(titleLabel) {
             $0.leading == leadingAnchor + Constants.leadingOffset
             $0.top == topAnchor + Constants.verticalOffset
-            $0.centerY == centerYAnchor
+            $0.bottom == bottomAnchor
         }
     }
 }
