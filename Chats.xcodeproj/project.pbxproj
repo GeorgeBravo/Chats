@@ -241,6 +241,7 @@
 		CE71CFD224B4B58000862A73 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD024B4B58000862A73 /* Colors.swift */; };
 		CE71CFD324B4B58000862A73 /* LocalizationDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */; };
 		CE88616E24C1ACDB00B837C6 /* UserTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D751D4924C1382F00C40122 /* UserTableViewCellModel.swift */; };
+		CE9108C724F47ADD00C13B56 /* NewCustomChatListNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9108C624F47ADD00C13B56 /* NewCustomChatListNavigationView.swift */; };
 		CE99B9E924B45F3100F4CEB6 /* EditButtonSettupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */; };
 		CE99B9F524B4968900F4CEB6 /* OptionSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */; };
 		CECA0E3524B627680067D5B6 /* CollocutorProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */; };
@@ -256,6 +257,7 @@
 		CECA0E4824B62C6A0067D5B6 /* UINavigationItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */; };
 		CECA0E4A24B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */; };
 		CEDC1FF124BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */; };
+		CEE21B5C24EFF10300ADD587 /* CircleProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE21B5B24EFF10200ADD587 /* CircleProgressButton.swift */; };
 		CEE78EF324BDC62100B7E236 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */; };
 		CEE78EF724BDD03500B7E236 /* AddContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */; };
 		CEEB02CB24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEB02CA24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift */; };
@@ -501,6 +503,7 @@
 		CE71CFCE24B4B47900862A73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE71CFD024B4B58000862A73 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		CE71CFD124B4B58000862A73 /* LocalizationDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationDictionary.swift; sourceTree = "<group>"; };
+		CE9108C624F47ADD00C13B56 /* NewCustomChatListNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCustomChatListNavigationView.swift; sourceTree = "<group>"; };
 		CE99B9E824B45F3100F4CEB6 /* EditButtonSettupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonSettupable.swift; sourceTree = "<group>"; };
 		CE99B9F424B4968900F4CEB6 /* OptionSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSectionHeaderView.swift; sourceTree = "<group>"; };
 		CECA0E3124B627670067D5B6 /* CollocutorProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollocutorProfileInteractor.swift; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 		CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Extensions.swift"; sourceTree = "<group>"; };
 		CECA0E4924B638DB0067D5B6 /* CollocutorManipulationsButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollocutorManipulationsButtonsStackView.swift; sourceTree = "<group>"; };
 		CEDC1FF024BCB0AA00EB4B5F /* GroupProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileTableViewCell.swift; sourceTree = "<group>"; };
+		CEE21B5B24EFF10200ADD587 /* CircleProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressButton.swift; sourceTree = "<group>"; };
 		CEE78EF224BDC62100B7E236 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		CEE78EF624BDD03500B7E236 /* AddContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsTableViewCell.swift; sourceTree = "<group>"; };
 		CEEB02CA24C6D80300A90A13 /* MessageManipulationTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManipulationTableViewSectionModel.swift; sourceTree = "<group>"; };
@@ -1094,6 +1098,8 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE9108C524F47AB400C13B56 /* NewCustomChatListNavigationView */,
+				CEE21B5A24EFF04600ADD587 /* CircleProgressButton */,
 				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
@@ -1721,6 +1727,14 @@
 			path = CollocutorManipulationsButtonsStackView;
 			sourceTree = "<group>";
 		};
+		CE9108C524F47AB400C13B56 /* NewCustomChatListNavigationView */ = {
+			isa = PBXGroup;
+			children = (
+				CE9108C624F47ADD00C13B56 /* NewCustomChatListNavigationView.swift */,
+			);
+			path = NewCustomChatListNavigationView;
+			sourceTree = "<group>";
+		};
 		CE99B9EE24B4730200F4CEB6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1744,6 +1758,14 @@
 				CECA0E4624B62C6A0067D5B6 /* UINavigationItem+Extensions.swift */,
 			);
 			path = UINavigationController;
+			sourceTree = "<group>";
+		};
+		CEE21B5A24EFF04600ADD587 /* CircleProgressButton */ = {
+			isa = PBXGroup;
+			children = (
+				CEE21B5B24EFF10200ADD587 /* CircleProgressButton.swift */,
+			);
+			path = CircleProgressButton;
 			sourceTree = "<group>";
 		};
 		CEE78EF124BDC5F600B7E236 /* Components */ = {
@@ -2004,6 +2026,7 @@
 				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D751D4324C1382000C40122 /* ChatListTableViewCellModel.swift in Sources */,
 				1237AC8D24EBED730065DCEA /* ThreadsChatListViewController.swift in Sources */,
+				CEE21B5C24EFF10300ADD587 /* CircleProgressButton.swift in Sources */,
 				2D17D71924AC8DBB009B2E16 /* UITextView+Extensions.swift in Sources */,
 				CE69321224C584FD001825D4 /* MessageManipulationViewController.swift in Sources */,
 				1279D5DC24B8A81E0012467B /* StatusView.swift in Sources */,
@@ -2066,6 +2089,7 @@
 				2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */,
 				2DCF831F24C6E42400003669 /* ChatNavigationBarView.swift in Sources */,
 				2D501C1924B3263700C37DCB /* UniformKeyPathInitializable+Init.swift in Sources */,
+				CE9108C724F47ADD00C13B56 /* NewCustomChatListNavigationView.swift in Sources */,
 				CE69321D24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift in Sources */,
 				CE46797324D2EB9A002F2DAE /* UnreadMessagesCellModel.swift in Sources */,
 				2D501B9124B320D500C37DCB /* LocationItem.swift in Sources */,

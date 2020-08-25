@@ -22,18 +22,14 @@ final class ThreadsChatListViewController: UIViewController {
     // MARK: - Properties
     
     // MARK: - UI Variables
-    private var cameraButton: UIButton = {
-        let button = UIButton(frame: .zero)
-        button.backgroundColor = .black
-        button.addTarget(self, action: #selector(goToCameraScreen), for: .touchUpInside)
-        button.isUserInteractionEnabled = true
-        return button
+    private var navigationBar: NewCustomChatListNavigationView = {
+        let view = NewCustomChatListNavigationView()
+        return view
     }()
     
     weak var listener: ThreadsChatListPresentableListener?
     
     //MARK: - Life Cycle
-    
     override func loadView() {
         super.loadView()
     }
@@ -42,17 +38,24 @@ final class ThreadsChatListViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupViews()
+        let timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(incrementProgress), userInfo: nil, repeats: true)
     }
     
     // MARK: - Setup Views Logic
     func setupViews() {
         view.backgroundColor = .white
-        view.addSubview(cameraButton) {
+        
+        view.addSubview(navigationBar) {
             $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
             $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
-            $0.width == 40
-            $0.height == 40
+            $0.height == 60
         }
+        navigationBar.delegate = self
+    }
+    
+    @objc func incrementProgress() {
+        navigationBar.cameraButton.progress += 0.01
     }
 }
 
@@ -68,3 +71,18 @@ extension ThreadsChatListViewController: ThreadsChatListPresentable {}
 
 // MARK: - ThreadsChatListViewControllable
 extension ThreadsChatListViewController: ThreadsChatListViewControllable {}
+
+// MARK: - NewCustomChatListNavigationViewDelegate
+extension ThreadsChatListViewController: NewCustomChatListNavigationViewDelegate {
+    func pencilButtonTapped() {
+        
+    }
+    
+    func avatarButtonTapped() {
+        
+    }
+    
+    func cameraButtonTapped() {
+        goToCameraScreen()
+    }
+}
