@@ -18,6 +18,9 @@
 		1258C08A24ED2326003FB518 /* ThreadsChatBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08624ED2326003FB518 /* ThreadsChatBuilder.swift */; };
 		1258C08B24ED2326003FB518 /* ThreadsChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08724ED2326003FB518 /* ThreadsChatInteractor.swift */; };
 		1258C08E24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */; };
+		1258C09024EE6AD4003FB518 /* ThreadsChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C08F24EE6AD4003FB518 /* ThreadsChatListTableViewCell.swift */; };
+		1258C09224EE739B003FB518 /* ThreadsChatListTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C09124EE739B003FB518 /* ThreadsChatListTableViewCellModel.swift */; };
+		1258C09524EECB95003FB518 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258C09424EECB95003FB518 /* GradientView.swift */; };
 		1279D5CD24B5D30C0012467B /* ChatListLargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */; };
 		1279D5CF24B5FB070012467B /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */; };
 		1279D5D324B60FE50012467B /* ChatListTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */; };
@@ -269,6 +272,9 @@
 		1258C08624ED2326003FB518 /* ThreadsChatBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatBuilder.swift; sourceTree = "<group>"; };
 		1258C08724ED2326003FB518 /* ThreadsChatInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatInteractor.swift; sourceTree = "<group>"; };
 		1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadsChatListComponent+ThreadsChat.swift"; sourceTree = "<group>"; };
+		1258C08F24EE6AD4003FB518 /* ThreadsChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListTableViewCell.swift; sourceTree = "<group>"; };
+		1258C09124EE739B003FB518 /* ThreadsChatListTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsChatListTableViewCellModel.swift; sourceTree = "<group>"; };
+		1258C09424EECB95003FB518 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		1279D5CC24B5D30C0012467B /* ChatListLargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListLargeTitleView.swift; sourceTree = "<group>"; };
 		1279D5CE24B5FB070012467B /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
 		1279D5D224B60FE50012467B /* ChatListTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewSectionModel.swift; sourceTree = "<group>"; };
@@ -598,6 +604,14 @@
 				1258C08D24ED238A003FB518 /* ThreadsChatListComponent+ThreadsChat.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		1258C09324EECB84003FB518 /* GradientView */ = {
+			isa = PBXGroup;
+			children = (
+				1258C09424EECB95003FB518 /* GradientView.swift */,
+			);
+			path = GradientView;
 			sourceTree = "<group>";
 		};
 		1279D5CB24B5D2C40012467B /* ChatListView */ = {
@@ -1080,6 +1094,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				1258C09324EECB84003FB518 /* GradientView */,
 				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
 				2DCA29FA24B734800060913C /* TypingIndicatorView.swift */,
@@ -1459,6 +1474,7 @@
 				2D501BA224B3210900C37DCB /* TextMessageCell.swift */,
 				2DDFA49A24C71BB4007101C7 /* UserChatEntryTableViewCell.swift */,
 				CE46797024D2E98A002F2DAE /* UnreadMessagesTableViewCell.swift */,
+				1258C08F24EE6AD4003FB518 /* ThreadsChatListTableViewCell.swift */,
 			);
 			path = ChatCells;
 			sourceTree = "<group>";
@@ -1490,6 +1506,7 @@
 				CE69321C24C5D859001825D4 /* MessageManipulationTableViewCellModel.swift */,
 				2DDFA49C24C71D67007101C7 /* UserChatEntryTableViewCellModel.swift */,
 				CE46797224D2EB9A002F2DAE /* UnreadMessagesCellModel.swift */,
+				1258C09124EE739B003FB518 /* ThreadsChatListTableViewCellModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1916,6 +1933,7 @@
 				2D4FF56224B7013000CAFF53 /* UnderneathView.swift in Sources */,
 				CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */,
 				2D501BF924B322B600C37DCB /* InputItem.swift in Sources */,
+				1258C09224EE739B003FB518 /* ThreadsChatListTableViewCellModel.swift in Sources */,
 				2D751D4224C1382000C40122 /* ChatTableViewCellModel.swift in Sources */,
 				1237AC8C24EBED730065DCEA /* ThreadsChatListRouter.swift in Sources */,
 				2DDFA49D24C71D67007101C7 /* UserChatEntryTableViewCellModel.swift in Sources */,
@@ -2022,6 +2040,7 @@
 				2D501C3A24B5C4A400C37DCB /* ChatListInteractor.swift in Sources */,
 				2D501BD024B3221000C37DCB /* AutocompleteSession.swift in Sources */,
 				CEEB02CD24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift in Sources */,
+				1258C09524EECB95003FB518 /* GradientView.swift in Sources */,
 				CE69321B24C5D46D001825D4 /* MessageManipulationTableViewCell.swift in Sources */,
 				2D501BEB24B3228F00C37DCB /* InputBarButtonItem.swift in Sources */,
 				1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */,
@@ -2067,6 +2086,7 @@
 				2D501BD124B3221000C37DCB /* AutocompleteCompletion.swift in Sources */,
 				2D64CFE924A20EF000C8B94A /* UITableView+.swift in Sources */,
 				2D751D4C24C1382F00C40122 /* GroupProfileTableViewCellModel.swift in Sources */,
+				1258C09024EE6AD4003FB518 /* ThreadsChatListTableViewCell.swift in Sources */,
 				2D501C1624B3263700C37DCB /* LayoutAnchor.swift in Sources */,
 				CE4E425F24BC8AFD00BCA9F8 /* GroupProfileRouter.swift in Sources */,
 				2D501BA524B3210900C37DCB /* MessageContentCell.swift in Sources */,
