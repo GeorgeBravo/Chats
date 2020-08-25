@@ -12,6 +12,7 @@ enum TableViewCellType: CaseIterable {
     case collocutorOption
     case collocutorInfo
     case chatList
+    case treadsChatList
     case textMessage
     case location
     case assets
@@ -47,6 +48,7 @@ extension TableViewCellType {
         case .messageManipulation: return MessageManipulationTableViewCell.self
         case .userChatEntry: return UserChatEntryTableViewCell.self
         case .unreadMessages: return UnreadMessagesTableViewCell.self
+        case .treadsChatList: return ThreadsChatListTableViewCell.self
         }
     }
 }
