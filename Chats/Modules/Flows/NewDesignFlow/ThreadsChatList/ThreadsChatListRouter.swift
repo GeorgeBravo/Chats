@@ -8,7 +8,7 @@
 
 import BRIck
 
-protocol ThreadsChatListInteractable: Interactable, ThreadsChatListener {
+protocol ThreadsChatListInteractable: Interactable, ThreadsChatListener, CameraScreenListener {
     var router: ThreadsChatListRouting? { get set }
     var listener: ThreadsChatListListener? { get set }
 }
@@ -21,11 +21,44 @@ protocol ThreadsChatListViewControllable: ViewControllable {
 final class ThreadsChatListRouter: ViewableRouter<ThreadsChatListInteractable, ThreadsChatListViewControllable> {
 
     // TODO: Constructor inject child builder protocols to allow building children.
-
-    override init(interactor: ThreadsChatListInteractable, viewController: ThreadsChatListViewControllable) {
+    
+    // MARK: - Variables
+    private var currentRouter: ViewableRouting? {
+        willSet {
+            guard let oldRouter = currentRouter else { return }
+            detach(oldRouter)
+        }
+    }
+    
+    private var cameraScreenBuilder: CameraScreenBuildable
+    private var cameraScreenRouter: ViewableRouting?
+    
+    // MARK: - Init
+    init(
+        interactor: ThreadsChatListInteractable,
+        viewController: ThreadsChatListViewControllable,
+        _ cameraScreenBuilder: CameraScreenBuildable
+    ) {
+        self.cameraScreenBuilder = cameraScreenBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
 }
 
-extension ThreadsChatListRouter: ThreadsChatListRouting {}
+extension ThreadsChatListRouter: ThreadsChatListRouting {
+    func showCameraScreen() {
+        let cameraScreenRouter = cameraScreenBuilder.build(withListener: interactor)
+        self.cameraScreenRouter = cameraScreenRouter
+        
+        attach(cameraScreenRouter)
+        pushRouter(cameraScreenRouter, animated: false)
+    }
+    
+    func hideCameraScreen() {
+        guard let cameraScreenRouter = cameraScreenRouter else { return }
+
+        detach(cameraScreenRouter)
+        cameraScreenRouter.popRouter(animated: false)
+        self.cameraScreenRouter = nil
+    }
+}

@@ -10,16 +10,28 @@ import UIKit
 import BRIck
 
 protocol ThreadsChatListPresentableListener: class {
+
     func combineChatListSections()
     func cellForRow(at: IndexPath) -> TableViewCellModel
     func numberOfRows(in section: Int) -> Int
     func numberOfSection() -> Int
     func sectionModel(for number: Int) -> TableViewSectionModel
+    
+    func showCameraScreen()
+    func hideCameraScreen()
+    // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
+    // This protocol is implemented by the corresponding interactor class.
 }
 
 final class ThreadsChatListViewController: UIViewController {
     
-    //MARK: - Properties
+    // MARK: - Properties
+    
+    // MARK: - UI Variables
+    private var navigationBar: NewCustomChatListNavigationView = {
+        let view = NewCustomChatListNavigationView()
+        return view
+    }()
     
     weak var listener: ThreadsChatListPresentableListener?
     private var cellSpacingHeight: CGFloat = 50
@@ -54,8 +66,15 @@ final class ThreadsChatListViewController: UIViewController {
 
 extension ThreadsChatListViewController {
     private func setupView() {
+        view.addSubview(navigationBar) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
+            $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
+            $0.height == 60
+        }
+        
         view.addSubview(chatTableView) {
-            $0.top == view.topAnchor + 100
+            $0.top == navigationBar.bottomAnchor
             $0.bottom == view.bottomAnchor
             $0.width == view.frame.width
         }
@@ -65,8 +84,13 @@ extension ThreadsChatListViewController {
             $0.leading == searchView.leadingAnchor + 12
             $0.trailing == searchView.trailingAnchor - 12
         }
+        navigationBar.delegate = self
     }
     
+    @objc func incrementProgress() {
+        navigationBar.cameraButton.progress += 0.01
+    }
+
     private func setupSearch() {
         search.searchBar.isUserInteractionEnabled = false
         search.searchBar.placeholder = "Search"
@@ -98,6 +122,15 @@ extension ThreadsChatListViewController: ThreadsChatListPresentable {
     }
 }
 
+// MARK: - Selectors
+extension ThreadsChatListViewController {
+    @objc func goToCameraScreen() {
+        listener?.showCameraScreen()
+    }
+}
+
+
+// MARK: - ThreadsChatListViewControllable
 extension ThreadsChatListViewController: ThreadsChatListViewControllable {}
 
 extension ThreadsChatListViewController: UITableViewDataSource , UITableViewDelegate {
@@ -143,3 +176,17 @@ extension ThreadsChatListViewController: UITableViewDataSource , UITableViewDele
     }
 }
 
+// MARK: - NewCustomChatListNavigationViewDelegate
+extension ThreadsChatListViewController: NewCustomChatListNavigationViewDelegate {
+    func pencilButtonTapped() {
+        
+    }
+    
+    func avatarButtonTapped() {
+        
+    }
+    
+    func cameraButtonTapped() {
+        goToCameraScreen()
+    }
+}

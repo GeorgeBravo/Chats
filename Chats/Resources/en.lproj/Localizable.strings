@@ -70,3 +70,8 @@
 "ClearHistory" = "Clear History";
 "DeleteJustForMe" = "Delete just for me";
 "UnreadMessages" = "Unread Messages";
+
+// MARK: - Camera Screen
+"New!" = "New!";
+"PressAndHoldToTryCameraEffects" = "Press and hold to \n try camera effects";
+"ProblemWithYourCamera" = "Whoops, it seems there is a problem with your camera.";

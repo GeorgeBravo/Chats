@@ -38,7 +38,9 @@ extension ThreadsChatListBuilder: ThreadsChatListBuildable {
         let viewController = ThreadsChatListViewController()
         let interactor = ThreadsChatListInteractor(presenter: viewController)
         interactor.listener = listener
+        
+        let cameraScreenBuilder = CameraScreenBuilder(dependency: component)
 
-        return ThreadsChatListRouter(interactor: interactor, viewController: viewController)
+        return ThreadsChatListRouter(interactor: interactor, viewController: viewController, cameraScreenBuilder)
     }
 }

@@ -21,32 +21,34 @@ protocol RootViewControllable: ViewControllable {
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable> {
     // TODO: Constructor inject child builder protocols to allow building children.
 
-    init(interactor: RootInteractable,
-            viewController: RootViewControllable,
-            _ threadsChatListBuildable: ThreadsChatListBuildable, _ chatListBuildable: ChatListBuildable) {
-            self.chatListBuildable = chatListBuildable
-           self.threadsChatListBuildable = threadsChatListBuildable
-           super.init(interactor: interactor, viewController: viewController)
-           interactor.router = self
-       }
-    
-    
-
     private var currentRouter: ViewableRouting? {
         willSet {
             guard let oldRouter = currentRouter else { return }
             detach(oldRouter)
         }
     }
-    // MARK: - Chat List
     
+    // MARK: - Chat List
     var chatListBuildable: ChatListBuildable
     var threadsChatListBuildable: ThreadsChatListBuildable
 
     // MARK: - Transition Properties
-
     fileprivate var targetRouter: ViewableRouting?
     fileprivate lazy var animationInProgress = false
+    
+    // MARK: - Init
+    init(
+        interactor: RootInteractable,
+        viewController: RootViewControllable,
+        _ threadsChatListBuildable: ThreadsChatListBuildable,
+        _ chatListBuildable: ChatListBuildable
+    ) {
+        self.chatListBuildable = chatListBuildable
+        self.threadsChatListBuildable = threadsChatListBuildable
+        super.init(interactor: interactor, viewController: viewController)
+        interactor.router = self
+    }
+    
 }
 
 extension RootRouter: RootRouting {
@@ -58,7 +60,6 @@ extension RootRouter: RootRouting {
         currentRouter = threadsChatListRouter
     }
     
-    //MARK: - Chat List
     func showChatList() {
         let chatListRouter = chatListBuildable.build(withListener: self.interactor)
 

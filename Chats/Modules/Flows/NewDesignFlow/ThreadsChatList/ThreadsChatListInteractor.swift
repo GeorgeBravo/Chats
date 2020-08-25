@@ -11,6 +11,8 @@ import UIKit
 
 protocol ThreadsChatListRouting: ViewableRouting {
 
+    func showCameraScreen()
+    func hideCameraScreen()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -74,6 +76,7 @@ final class ThreadsChatListInteractor: PresentableInteractor<ThreadsChatListPres
     }
 }
 
+// MARK: - ThreadsChatListInteractable
 extension ThreadsChatListInteractor: ThreadsChatListInteractable {}
 
 extension ThreadsChatListInteractor: ThreadsChatListPresentableListener {
@@ -103,5 +106,13 @@ extension ThreadsChatListInteractor: ThreadsChatListPresentableListener {
     
     func getChatListTableViewCellModelForRow(indexPath: IndexPath) -> ThreadsChatListTableViewCellModel {
         return favoriteChatListModels[indexPath.row]
+    }
+
+    func showCameraScreen() {
+        router?.showCameraScreen()
+    }
+    
+    func hideCameraScreen() {
+        router?.hideCameraScreen()
     }
 }
