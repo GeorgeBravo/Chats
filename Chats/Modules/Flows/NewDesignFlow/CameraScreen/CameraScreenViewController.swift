@@ -24,8 +24,10 @@ private struct Constants {
 protocol CameraScreenPresentableListener: class {
 
     func checkAndStartCameraSession()
+    func getCloseFriendCollectionViewDataSourceAndDelegate() -> CloseFriendsCollectionViewDataSource
     func stopCameraSession()
     func hideCameraScreen()
+    func fillCloseFriendsCollectionViewDataSource()
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -85,12 +87,36 @@ final class CameraScreenViewController: UIViewController {
     private lazy var cameraManipulationsStackView = CameraManipulationsStackView()
     private var emojiStateButton = RoundedBlurredButton(frame: .zero, blurStyle: .dark)
     
+    // MARK: - UI Variables
+    private lazy var closeFriendsCollectionView: UICollectionView = { [unowned self] in
+        $0.register(CloseFriendCollectionViewCell.self)
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.bounces = true
+        $0.backgroundColor = .clear
+        $0.clipsToBounds = true
+        $0.allowsMultipleSelection = false
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UICollectionView(frame: .zero, collectionViewLayout: closeFriendsCollectionViewLayout))
+    
+    private lazy var closeFriendsCollectionViewLayout: UICollectionViewFlowLayout = {
+        $0.minimumInteritemSpacing = 0.0
+        $0.minimumLineSpacing = 0.0
+        $0.scrollDirection = .horizontal
+        return $0
+    }(UICollectionViewFlowLayout())
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupViews()
         listener?.checkAndStartCameraSession()
+        guard let dataSource = listener?.getCloseFriendCollectionViewDataSourceAndDelegate() else { return }
+        closeFriendsCollectionView.delegate = dataSource
+        closeFriendsCollectionView.dataSource = dataSource
+        listener?.fillCloseFriendsCollectionViewDataSource()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -105,6 +131,13 @@ extension CameraScreenViewController {
         view.backgroundColor = .clear
         
         view.addSubview(cameraPreviewView) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
+            $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
+        }
+        
+        view.addSubview(closeFriendsCollectionView) {
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
             $0.leading == view.safeAreaLayoutGuide.leadingAnchor
@@ -179,6 +212,10 @@ extension CameraScreenViewController: CameraScreenPresentable {
             self.newDescriptionLabel.text = previewLayer == nil ?  LocalizationKeys.problemWithYourCamera.localized() : LocalizationKeys.new.localized()
             self.descriptionLabel.text = previewLayer == nil ? "" : LocalizationKeys.pressAndHoldToTryCameraEffects.localized()
         }
+    }
+    
+    func updateCloseFriendsCollectionView() {
+        closeFriendsCollectionView.reloadData()
     }
     
 }

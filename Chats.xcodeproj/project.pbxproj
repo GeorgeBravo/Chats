@@ -209,6 +209,12 @@
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
 		CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */; };
 		CE2C50AB24CB372500731904 /* ButtonLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */; };
+		CE2DE62124EFF4680055F062 /* CloseFriendsCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62024EFF4680055F062 /* CloseFriendsCollectionViewDataSource.swift */; };
+		CE2DE62524EFF6EB0055F062 /* CloseFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62424EFF6EB0055F062 /* CloseFriendCollectionViewCell.swift */; };
+		CE2DE62924EFF8480055F062 /* CollectionViewCellSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62824EFF8480055F062 /* CollectionViewCellSetup.swift */; };
+		CE2DE62B24EFF8D00055F062 /* CollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62A24EFF8D00055F062 /* CollectionViewCellModel.swift */; };
+		CE2DE62D24EFF9130055F062 /* CollectionViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62C24EFF9130055F062 /* CollectionViewCellType.swift */; };
+		CE2DE63024F005320055F062 /* CloseFriendCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2DE62F24F005320055F062 /* CloseFriendCollectionViewCellModel.swift */; };
 		CE31C77824ED2A8D00866015 /* CameraScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77224ED2A8D00866015 /* CameraScreenViewController.swift */; };
 		CE31C77924ED2A8D00866015 /* CameraScreenBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77324ED2A8D00866015 /* CameraScreenBuilder.swift */; };
 		CE31C77A24ED2A8D00866015 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31C77524ED2A8D00866015 /* CameraManager.swift */; };
@@ -472,6 +478,12 @@
 		CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatComponent+CollocutorProfile.swift"; sourceTree = "<group>"; };
 		CE2C50A724CAF58000731904 /* DateFormatterConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterConstants.swift; sourceTree = "<group>"; };
 		CE2C50AA24CB372500731904 /* ButtonLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonLabelStackView.swift; sourceTree = "<group>"; };
+		CE2DE62024EFF4680055F062 /* CloseFriendsCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseFriendsCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		CE2DE62424EFF6EB0055F062 /* CloseFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseFriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE2DE62824EFF8480055F062 /* CollectionViewCellSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellSetup.swift; sourceTree = "<group>"; };
+		CE2DE62A24EFF8D00055F062 /* CollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellModel.swift; sourceTree = "<group>"; };
+		CE2DE62C24EFF9130055F062 /* CollectionViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellType.swift; sourceTree = "<group>"; };
+		CE2DE62F24F005320055F062 /* CloseFriendCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseFriendCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		CE31C77224ED2A8D00866015 /* CameraScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScreenViewController.swift; sourceTree = "<group>"; };
 		CE31C77324ED2A8D00866015 /* CameraScreenBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScreenBuilder.swift; sourceTree = "<group>"; };
 		CE31C77524ED2A8D00866015 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
@@ -879,6 +891,7 @@
 		2D1C4D1F24AB972A0087449A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DE62624EFF8350055F062 /* UICollectionView */,
 				2D17D98724AC8E9A009B2E16 /* Protocols */,
 				2D751D3024C0854D00C40122 /* Chat */,
 				2D501C4424B5E6D200C37DCB /* UITableView */,
@@ -1098,6 +1111,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DE62224EFF6C50055F062 /* UICollectionViewCells */,
 				CE31C78024ED482A00866015 /* CameraManipulationsStackView */,
 				CE2C50A924CB371300731904 /* ButtonLabelStackView */,
 				2D501BB324B3216000C37DCB /* PlayButtonView.swift */,
@@ -1642,6 +1656,41 @@
 			path = ButtonLabelStackView;
 			sourceTree = "<group>";
 		};
+		CE2DE62224EFF6C50055F062 /* UICollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DE62424EFF6EB0055F062 /* CloseFriendCollectionViewCell.swift */,
+			);
+			path = UICollectionViewCells;
+			sourceTree = "<group>";
+		};
+		CE2DE62624EFF8350055F062 /* UICollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DE62E24F005180055F062 /* CellModels */,
+				CE2DE62724EFF83E0055F062 /* Protocols */,
+			);
+			path = UICollectionView;
+			sourceTree = "<group>";
+		};
+		CE2DE62724EFF83E0055F062 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DE62A24EFF8D00055F062 /* CollectionViewCellModel.swift */,
+				CE2DE62824EFF8480055F062 /* CollectionViewCellSetup.swift */,
+				CE2DE62C24EFF9130055F062 /* CollectionViewCellType.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE2DE62E24F005180055F062 /* CellModels */ = {
+			isa = PBXGroup;
+			children = (
+				CE2DE62F24F005320055F062 /* CloseFriendCollectionViewCellModel.swift */,
+			);
+			path = CellModels;
+			sourceTree = "<group>";
+		};
 		CE31C77124ED2A8D00866015 /* CameraScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -1658,6 +1707,7 @@
 			isa = PBXGroup;
 			children = (
 				CE31C77524ED2A8D00866015 /* CameraManager.swift */,
+				CE2DE62024EFF4680055F062 /* CloseFriendsCollectionViewDataSource.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1926,6 +1976,7 @@
 				1258C08824ED2326003FB518 /* ThreadsChatRouter.swift in Sources */,
 				2D64CFF424A20EF000C8B94A /* Configure.swift in Sources */,
 				2DEAAC8E24C8566300A95F49 /* ChatScrollDownView.swift in Sources */,
+				CE2DE62D24EFF9130055F062 /* CollectionViewCellType.swift in Sources */,
 				2D64CFF324A20EF000C8B94A /* UIStackView+Extensions.swift in Sources */,
 				2D64CF8B24A20E5400C8B94A /* RootComponent+Login.swift in Sources */,
 				2DB6987A24A362660075737F /* ChatRouter.swift in Sources */,
@@ -2024,6 +2075,7 @@
 				2D501BF424B322AC00C37DCB /* SeparatorLine.swift in Sources */,
 				CECA0E3624B627680067D5B6 /* CollocutorProfileBuilder.swift in Sources */,
 				CE2C50A824CAF58000731904 /* DateFormatterConstants.swift in Sources */,
+				CE2DE62924EFF8480055F062 /* CollectionViewCellSetup.swift in Sources */,
 				1279D5E224BDA7EA0012467B /* FileItem.swift in Sources */,
 				2D751D4324C1382000C40122 /* ChatListTableViewCellModel.swift in Sources */,
 				1237AC8D24EBED730065DCEA /* ThreadsChatListViewController.swift in Sources */,
@@ -2084,6 +2136,7 @@
 				2D501BD024B3221000C37DCB /* AutocompleteSession.swift in Sources */,
 				CEEB02CD24C6D88E00A90A13 /* MessageManipulationSectionHeaderView.swift in Sources */,
 				CE69321B24C5D46D001825D4 /* MessageManipulationTableViewCell.swift in Sources */,
+				CE2DE62B24EFF8D00055F062 /* CollectionViewCellModel.swift in Sources */,
 				2D501BEB24B3228F00C37DCB /* InputBarButtonItem.swift in Sources */,
 				1279D5D924B73D950012467B /* ChatListEditingModeView.swift in Sources */,
 				2D65C21D24AE1A3F00C64534 /* Optional+Extensions.swift in Sources */,
@@ -2102,6 +2155,7 @@
 				2D751D4024C1382000C40122 /* ChatTableViewAssetCellModel.swift in Sources */,
 				2D64CFF524A20EF000C8B94A /* Create.swift in Sources */,
 				2D1C4D2F24ABC7D50087449A /* MockMessage.swift in Sources */,
+				CE2DE62524EFF6EB0055F062 /* CloseFriendCollectionViewCell.swift in Sources */,
 				CECA0E3524B627680067D5B6 /* CollocutorProfileInteractor.swift in Sources */,
 				2D65C21B24AE1A3F00C64534 /* UIApplication+Extensions.swift in Sources */,
 				2D17D71724AC8DBB009B2E16 /* NSNotification+Extensions.swift in Sources */,
@@ -2122,6 +2176,7 @@
 				2D501BCA24B321E000C37DCB /* AttachmentManagerDataSource.swift in Sources */,
 				CE69321124C584FD001825D4 /* MessageManipulationRouter.swift in Sources */,
 				2D65C20524AE1A3F00C64534 /* Contacts.swift in Sources */,
+				CE2DE62124EFF4680055F062 /* CloseFriendsCollectionViewDataSource.swift in Sources */,
 				2D65C21C24AE1A3F00C64534 /* UIAlertController+Extensions.swift in Sources */,
 				2D65C21224AE1A3F00C64534 /* UIImageView+Extensions.swift in Sources */,
 				2D8B98F724BC626000D9F560 /* TableViewCellType.swift in Sources */,
@@ -2135,6 +2190,7 @@
 				2D501B4C24B320A700C37DCB /* CGRect+Extensions.swift in Sources */,
 				CE31C77B24ED2A8D00866015 /* CameraScreenInteractor.swift in Sources */,
 				CECA0E4424B62B6C0067D5B6 /* UIAlertAction+Extension.swift in Sources */,
+				CE2DE63024F005320055F062 /* CloseFriendCollectionViewCellModel.swift in Sources */,
 				2D64CFF024A20EF000C8B94A /* String+Extension.swift in Sources */,
 				1258C08B24ED2326003FB518 /* ThreadsChatInteractor.swift in Sources */,
 				2DDFA4A124C724F4007101C7 /* UserInviteModel.swift in Sources */,
