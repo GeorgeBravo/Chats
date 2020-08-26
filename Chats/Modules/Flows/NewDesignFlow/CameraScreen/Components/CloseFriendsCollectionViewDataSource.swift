@@ -18,6 +18,8 @@ private struct Constants {
 
 protocol CloseFriendsCollectionViewDataSourceDelegate: class {
     func updateCloseFriendsCollectionView()
+    func updatePageControl(isOnLeftSide: Bool)
+    func setPageControl(needShow: Bool)
 }
 
 class CloseFriendsCollectionViewDataSource: NSObject {
@@ -27,7 +29,7 @@ class CloseFriendsCollectionViewDataSource: NSObject {
     private var models = [CloseFriendCollectionViewCellModel]()
     var minimumInteritemSpacing: CGFloat = 0.0
     let minimumLineSpacing: CGFloat = 0.0
-    var sideCellOffset: CGFloat = 0.0
+    private var isOnLeftSide: Bool = false
     private var userButtonWidth: CGFloat = 0.0
     
     // MARK: - Logic
@@ -36,6 +38,7 @@ class CloseFriendsCollectionViewDataSource: NSObject {
         self.models.append(models)
         self.models.append(models[1])
         delegate?.updateCloseFriendsCollectionView()
+        delegate?.setPageControl(needShow: self.models.count > 4)
     }
 }
 
@@ -73,7 +76,7 @@ extension CloseFriendsCollectionViewDataSource: UICollectionViewDelegateFlowLayo
         var inset: CGFloat = minimumInteritemSpacing
         var itemsToCount = models.count
         if itemsToCount >= 5 { itemsToCount = 4 }
-        let cellWidth = userButtonWidth + sideCellOffset * 2
+        let cellWidth = userButtonWidth
         let totalCellsWidth = cellWidth * CGFloat(itemsToCount)
         let totalContentSize = totalCellsWidth + minimumInteritemSpacing * CGFloat(itemsToCount - 1)
         inset = (collectionView.bounds.width - totalContentSize) / 2
@@ -82,6 +85,10 @@ extension CloseFriendsCollectionViewDataSource: UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return countSizeForItems(for: collectionView)
+    }
+    
+    func countSizeForItems(for collectionView: UICollectionView) -> CGSize {
         let partedWidth = collectionView.bounds.width / 17
         minimumInteritemSpacing = partedWidth
         userButtonWidth = partedWidth * 3
@@ -101,3 +108,17 @@ extension CloseFriendsCollectionViewDataSource: UICollectionViewDelegateFlowLayo
         
 }
 
+// MARK: - UIScrollViewDelegate
+extension CloseFriendsCollectionViewDataSource: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let collectionView = scrollView as? UICollectionView else { return }
+        
+        let newSide = collectionView.contentOffset.x < collectionView.contentSize.width / 4
+        if newSide != isOnLeftSide {
+            isOnLeftSide = newSide
+            delegate?.updatePageControl(isOnLeftSide: isOnLeftSide)
+        }
+    }
+    
+}

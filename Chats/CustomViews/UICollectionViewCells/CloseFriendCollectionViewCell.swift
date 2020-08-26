@@ -9,7 +9,7 @@
 import UIKit
 
 private struct Constants {
-    static let userButtonBottomConstraint: CGFloat = 16.0
+    static let userButtonBottomConstraint: CGFloat = 32.0
 }
 
 protocol CloseFriendCollectionViewCellDelegate: class {

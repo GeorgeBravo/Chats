@@ -19,6 +19,8 @@ protocol CameraScreenPresentable: Presentable {
 
     func setup(with previewLayer: AVCaptureVideoPreviewLayer?)
     func updateCloseFriendsCollectionView()
+    func updatePageControl(isOnLeftSide: Bool)
+    func setPageControl(needShow: Bool)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -97,7 +99,16 @@ extension CameraScreenInteractor: CameraManagerDelegate {
 }
 
 extension CameraScreenInteractor: CloseFriendsCollectionViewDataSourceDelegate {
+    
     func updateCloseFriendsCollectionView() {
         presenter.updateCloseFriendsCollectionView()
+    }
+    
+    func updatePageControl(isOnLeftSide: Bool) {
+        presenter.updatePageControl(isOnLeftSide: isOnLeftSide)
+    }
+    
+    func setPageControl(needShow: Bool) {
+        presenter.setPageControl(needShow: needShow)
     }
 }

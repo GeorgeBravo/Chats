@@ -107,6 +107,13 @@ final class CameraScreenViewController: UIViewController {
         return $0
     }(UICollectionViewFlowLayout())
     
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPage = 1
+        pageControl.numberOfPages = 2
+        return pageControl
+    }()
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +142,11 @@ extension CameraScreenViewController {
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
             $0.leading == view.safeAreaLayoutGuide.leadingAnchor
             $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
+        }
+        
+        view.addSubview(pageControl) {
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+            $0.centerX == view.safeAreaLayoutGuide.centerXAnchor
         }
         
         view.addSubview(closeFriendsCollectionView) {
@@ -216,6 +228,14 @@ extension CameraScreenViewController: CameraScreenPresentable {
     
     func updateCloseFriendsCollectionView() {
         closeFriendsCollectionView.reloadData()
+    }
+    
+    func updatePageControl(isOnLeftSide: Bool) {
+        pageControl.currentPage = isOnLeftSide ? 0 : 1
+    }
+    
+    func setPageControl(needShow: Bool) {
+        pageControl.isHidden = !needShow
     }
     
 }
