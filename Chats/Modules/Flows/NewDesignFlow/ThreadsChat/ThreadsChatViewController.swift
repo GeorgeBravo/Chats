@@ -19,6 +19,8 @@ final class ThreadsChatViewController: UIViewController {
 
     //MARK: - Properties
     weak var listener: ThreadsChatPresentableListener?
+    
+    var transitionController = ChatTransitionController(duration: 0.6)
 }
 
 extension ThreadsChatViewController: ThreadsChatPresentable {}
