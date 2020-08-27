@@ -221,12 +221,12 @@ extension ThreadsChatListViewController: ChatAnimatorDelegate {
     }
         
     func imageSnapshot(for animator: ChatAnimator) -> UIView? {
-        chatCell()?.userAvatar.snapshotView(afterScreenUpdates: false)
+        chatCell()?.avatarView.snapshotView(afterScreenUpdates: false)
     }
     
     func imageFrame(for animator: ChatAnimator) -> CGRect? {
         guard let chatCell = chatCell() else { return nil }
-        return chatCell.userAvatar.superview?.convert(chatCell.userAvatar.frame, to: chatCell)
+        return chatCell.avatarView.superview?.convert(chatCell.avatarView.frame, to: chatCell)
     }
     
     func nameLabel(for animator: ChatAnimator) -> UIView? {

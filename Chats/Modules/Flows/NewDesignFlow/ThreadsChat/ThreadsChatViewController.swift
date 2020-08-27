@@ -41,7 +41,7 @@ final class ThreadsChatViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         
         view.addSubview(mainView) {
             $0.top == view.topAnchor

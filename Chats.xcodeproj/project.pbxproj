@@ -209,6 +209,8 @@
 		2DEAAC8E24C8566300A95F49 /* ChatScrollDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAAC8D24C8566200A95F49 /* ChatScrollDownView.swift */; };
 		440B513524F53C8100DDD2D4 /* ChatAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B513424F53C8100DDD2D4 /* ChatAnimator.swift */; };
 		440B513724F6E9AA00DDD2D4 /* ChatTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B513624F6E9AA00DDD2D4 /* ChatTransitionController.swift */; };
+		440B513A24F7F7F700DDD2D4 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B513924F7F7F700DDD2D4 /* AvatarView.swift */; };
+		440B513C24F7F82500DDD2D4 /* AvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B513B24F7F82500DDD2D4 /* AvatarModel.swift */; };
 		C852E3FC1CABCE78AFC5C0BB /* Pods_Chats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455760A4044106F48F993A05 /* Pods_Chats.framework */; };
 		CE1904B424DD75610064AD48 /* String+Size+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1904B324DD75610064AD48 /* String+Size+Extension.swift */; };
 		CE26469B24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26469A24B3565800EE7241 /* ChatComponent+CollocutorProfile.swift */; };
@@ -484,6 +486,8 @@
 		2DEAAC8D24C8566200A95F49 /* ChatScrollDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScrollDownView.swift; sourceTree = "<group>"; };
 		440B513424F53C8100DDD2D4 /* ChatAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAnimator.swift; sourceTree = "<group>"; };
 		440B513624F6E9AA00DDD2D4 /* ChatTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTransitionController.swift; sourceTree = "<group>"; };
+		440B513924F7F7F700DDD2D4 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		440B513B24F7F82500DDD2D4 /* AvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModel.swift; sourceTree = "<group>"; };
 		455760A4044106F48F993A05 /* Pods_Chats.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chats.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		889D71FAEF99B391BC3AF6B2 /* Pods-Chats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chats.release.xcconfig"; path = "Target Support Files/Pods-Chats/Pods-Chats.release.xcconfig"; sourceTree = "<group>"; };
 		CE1904B324DD75610064AD48 /* String+Size+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Size+Extension.swift"; sourceTree = "<group>"; };
@@ -1134,6 +1138,7 @@
 		2D64CF8D24A20EE300C8B94A /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				440B513824F7F7D700DDD2D4 /* AvatarView */,
 				1258C09324EECB84003FB518 /* GradientView */,
 				CE9108C524F47AB400C13B56 /* NewCustomChatListNavigationView */,
 				CEE21B5A24EFF04600ADD587 /* CircleProgressButton */,
@@ -1644,6 +1649,15 @@
 			path = ChatTransition;
 			sourceTree = "<group>";
 		};
+		440B513824F7F7D700DDD2D4 /* AvatarView */ = {
+			isa = PBXGroup;
+			children = (
+				440B513924F7F7F700DDD2D4 /* AvatarView.swift */,
+				440B513B24F7F82500DDD2D4 /* AvatarModel.swift */,
+			);
+			path = AvatarView;
+			sourceTree = "<group>";
+		};
 		BBA296A30C95258C30A67D6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2047,6 +2061,7 @@
 				2D501BF324B322AC00C37DCB /* InputTextView.swift in Sources */,
 				CE31C78524ED498800866015 /* RoundedBlurredButton.swift in Sources */,
 				2D65C1FC24AE1A3F00C64534 /* Assets.swift in Sources */,
+				440B513A24F7F7F700DDD2D4 /* AvatarView.swift in Sources */,
 				2D501BFA24B322B600C37DCB /* InputBarAccessoryViewDelegate.swift in Sources */,
 				2D501B9224B320D500C37DCB /* AudioItem.swift in Sources */,
 				2D501BA924B3210900C37DCB /* ContactMessageCell.swift in Sources */,
@@ -2261,6 +2276,7 @@
 				1258C08224ED21A5003FB518 /* RootComponent+ThreadsChatList.swift in Sources */,
 				2D1C4D0D24AB36350087449A /* BackButtonSettupable.swift in Sources */,
 				2D1C4D1724AB41BF0087449A /* CollocutorStatusView.swift in Sources */,
+				440B513C24F7F82500DDD2D4 /* AvatarModel.swift in Sources */,
 				2D65C21F24AE1A3F00C64534 /* Locale+Extensions.swift in Sources */,
 				2D6A76CE24BC5E7C0075A8C8 /* OptionsTableViewSectionModel.swift in Sources */,
 				2D1C4D2E24ABC7D50087449A /* MockSocket.swift in Sources */,
