@@ -209,13 +209,7 @@ extension ThreadsChatListViewController: ChatAnimatorDelegate {
         guard let indexPath = selectedIndexPath else { return nil }
         return chatTableView.cellForRow(at: indexPath) as? ThreadsChatListTableViewCell
     }
-    
-    private func chatModel() -> ThreadsChatListTableViewCellModel? {
-        guard let indexPath = selectedIndexPath else { return nil }
         
-        return listener?.cellForRow(at: indexPath) as? ThreadsChatListTableViewCellModel
-    }
-    
     func frame(for animator: ChatAnimator) -> CGRect? {
         guard let cell = chatCell() else { return nil }
         
@@ -225,10 +219,9 @@ extension ThreadsChatListViewController: ChatAnimatorDelegate {
     func snapshot(for animator: ChatAnimator) -> UIView? {
         chatCell()?.snapshotView(afterScreenUpdates: false)
     }
-    
-    func image(for animator: ChatAnimator) -> UIImage? {
-//        UIImage(named: chatModel()?.imageLink ?? "")
-        chatCell()?.userAvatar.image
+        
+    func imageSnapshot(for animator: ChatAnimator) -> UIView? {
+        chatCell()?.userAvatar.snapshotView(afterScreenUpdates: false)
     }
     
     func imageFrame(for animator: ChatAnimator) -> CGRect? {
@@ -236,8 +229,8 @@ extension ThreadsChatListViewController: ChatAnimatorDelegate {
         return chatCell.userAvatar.superview?.convert(chatCell.userAvatar.frame, to: chatCell)
     }
     
-    func name(for animator: ChatAnimator) -> String? {
-        chatModel()?.collocutorName
+    func nameLabel(for animator: ChatAnimator) -> UIView? {
+        chatCell()?.userName.snapshotView(afterScreenUpdates: false)
     }
     
     func nameLabelFrame(for animator: ChatAnimator) -> CGRect? {
