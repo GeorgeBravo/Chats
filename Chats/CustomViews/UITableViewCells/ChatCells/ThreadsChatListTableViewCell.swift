@@ -23,7 +23,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return view
     }()
     
-    private lazy var userAvatar: UIImageView = {
+    private(set) lazy var userAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "roflan")
         imageView.contentMode = .scaleToFill
@@ -48,7 +48,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return view
     }()
     
-    private lazy var userName: UILabel = {
+    private(set) lazy var userName: UILabel = {
         let label = UILabel()
         label.font = UIFont.helveticaNeueFontOfSize(size: 16.7, style: .medium)
         label.textAlignment = .left
@@ -223,7 +223,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         }
     }
     private func setupViews() {
-        selectionStyle = .none
+        selectionColor = .clear
         
         self.contentView.addSubview(mainView) {
             $0.top == contentView.topAnchor + 15
