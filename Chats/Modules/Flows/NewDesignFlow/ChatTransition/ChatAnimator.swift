@@ -113,7 +113,7 @@ class ChatAnimator: NSObject {
         
         //temp
         let removeFromSuperview = {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 snapshot.removeFromSuperview()
                 mainView.removeFromSuperview()
                 avatarImageView.removeFromSuperview()
@@ -122,9 +122,7 @@ class ChatAnimator: NSObject {
                 navBar.removeFromSuperview()
                 self.dimmedView.removeFromSuperview()
                 
-                destinationController.dismiss(animated: false, completion: {
-                    self.toDelegate?.animationDidEnd(for: self)
-                })
+                containerView.addSubview(destinationController.view)
             }
         }
         
@@ -150,8 +148,8 @@ class ChatAnimator: NSObject {
                 navBarSuperview.frame = CGRect(x: snapshotFrame.minX, y: 0, width: snapshotFrame.width, height: snapshotFrame.height + self.topInset)
                 mainView.frame = CGRect(x: snapshotFrame.minX, y: navBarSuperview.frame.maxY, width: snapshotFrame.width, height: containerView.frame.height - navBarSuperview.frame.height)
                 
-                navBarSuperview.layer.cornerRadius = 30
-                mainView.layer.cornerRadius = 30
+                navBarSuperview.layer.cornerRadius = UIView.underlayViewCornerRadius()
+                mainView.layer.cornerRadius = UIView.underlayViewCornerRadius()
             }
             
         }, completion: { (finished) in
@@ -162,7 +160,6 @@ class ChatAnimator: NSObject {
             transitionContext.completeTransition(true)
             self.fromDelegate?.animationDidEnd(for: self)
             self.toDelegate?.animationDidEnd(for: self)
-            containerView.addSubview(destinationController.view)
         })
     }
     
