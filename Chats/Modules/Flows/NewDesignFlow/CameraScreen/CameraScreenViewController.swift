@@ -17,13 +17,17 @@ private struct Constants {
     static let newDescriptionLabelTopSpacing: CGFloat = 36.0
     static let descriptionLabelTopSpacing: CGFloat = 4.0
     static let labelSideSpacing: CGFloat = 16.0
+    static let cameraManipulationsStackViewSpacing: CGFloat = 24.0
+    static let cameraManipulationsStackViewWidth: CGFloat = 40
 }
 
 protocol CameraScreenPresentableListener: class {
 
     func checkAndStartCameraSession()
+    func getCloseFriendCollectionViewDataSourceAndDelegate() -> CloseFriendsCollectionViewDataSource
     func stopCameraSession()
     func hideCameraScreen()
+    func fillCloseFriendsCollectionViewDataSource()
     // TODO: Declare properties and methods that the view controller can invoke to perform business logic, such as signIn().
     // This protocol is implemented by the corresponding interactor class.
 }
@@ -80,12 +84,46 @@ final class CameraScreenViewController: UIViewController {
         return button
     }()
     
+    private lazy var cameraManipulationsStackView = CameraManipulationsStackView()
+    private var emojiStateButton = RoundedBlurredButton(frame: .zero, blurStyle: .dark)
+    
+    // MARK: - UI Variables
+    private lazy var closeFriendsCollectionView: UICollectionView = { [unowned self] in
+        $0.register(CloseFriendCollectionViewCell.self)
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.bounces = true
+        $0.backgroundColor = .clear
+        $0.clipsToBounds = true
+        $0.allowsMultipleSelection = false
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UICollectionView(frame: .zero, collectionViewLayout: closeFriendsCollectionViewLayout))
+    
+    private lazy var closeFriendsCollectionViewLayout: UICollectionViewFlowLayout = {
+        $0.minimumInteritemSpacing = 0.0
+        $0.minimumLineSpacing = 0.0
+        $0.scrollDirection = .horizontal
+        return $0
+    }(UICollectionViewFlowLayout())
+    
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPage = 1
+        pageControl.numberOfPages = 2
+        return pageControl
+    }()
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         setupViews()
         listener?.checkAndStartCameraSession()
+        guard let dataSource = listener?.getCloseFriendCollectionViewDataSourceAndDelegate() else { return }
+        closeFriendsCollectionView.delegate = dataSource
+        closeFriendsCollectionView.dataSource = dataSource
+        listener?.fillCloseFriendsCollectionViewDataSource()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -100,6 +138,18 @@ extension CameraScreenViewController {
         view.backgroundColor = .clear
         
         view.addSubview(cameraPreviewView) {
+            $0.top == view.safeAreaLayoutGuide.topAnchor
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+            $0.leading == view.safeAreaLayoutGuide.leadingAnchor
+            $0.trailing == view.safeAreaLayoutGuide.trailingAnchor
+        }
+        
+        view.addSubview(pageControl) {
+            $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
+            $0.centerX == view.safeAreaLayoutGuide.centerXAnchor
+        }
+        
+        view.addSubview(closeFriendsCollectionView) {
             $0.top == view.safeAreaLayoutGuide.topAnchor
             $0.bottom == view.safeAreaLayoutGuide.bottomAnchor
             $0.leading == view.safeAreaLayoutGuide.leadingAnchor
@@ -133,6 +183,21 @@ extension CameraScreenViewController {
             $0.width == 40
             $0.height == 40
         }
+        
+        view.addSubview(cameraManipulationsStackView) {
+            $0.top == cameraPreviewView.topAnchor + Constants.cameraManipulationsStackViewSpacing
+            $0.trailing == cameraPreviewView.trailingAnchor - Constants.cameraManipulationsStackViewSpacing
+            $0.width == Constants.cameraManipulationsStackViewWidth
+        }
+        cameraManipulationsStackView.delegate = self
+        cameraManipulationsStackView.setCurrentOptions(with: [.messages, .gallery, .lightning, .switchCamera])
+        
+        view.addSubview(emojiStateButton) {
+            $0.top == cameraPreviewView.topAnchor + Constants.cameraManipulationsStackViewSpacing
+            $0.leading == cameraPreviewView.leadingAnchor + Constants.cameraManipulationsStackViewSpacing
+        }
+        emojiStateButton.setTitle("\u{1F603} Normal", for: .normal)
+        emojiStateButton.contentEdgeInsets = UIEdgeInsets(top: 8.0, left: 12.0, bottom: 8.0, right: 12.0)
     }
 }
 
@@ -161,7 +226,26 @@ extension CameraScreenViewController: CameraScreenPresentable {
         }
     }
     
+    func updateCloseFriendsCollectionView() {
+        closeFriendsCollectionView.reloadData()
+    }
+    
+    func updatePageControl(isOnLeftSide: Bool) {
+        pageControl.currentPage = isOnLeftSide ? 0 : 1
+    }
+    
+    func setPageControl(needShow: Bool) {
+        pageControl.isHidden = !needShow
+    }
+    
 }
 
 // MARK: - CameraScreenViewControllable
 extension CameraScreenViewController: CameraScreenViewControllable {}
+
+// MARK: - CameraManipulationsStackViewDelegate
+extension CameraScreenViewController: CameraManipulationsStackViewDelegate {
+    func buttonPressed(with manipulationType: CameraManipulationTypes) {
+        print(manipulationType.stringDescription)
+    }
+}
