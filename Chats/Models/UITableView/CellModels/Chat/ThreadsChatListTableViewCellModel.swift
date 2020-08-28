@@ -22,12 +22,12 @@ struct ThreadsChatListTableViewCellModel: TableViewCellModel {
     var messageCount: Int?
     var isEditing: Bool?
     var id: Int?
-    var isGroupChat: Bool?
-    var isOnline: Bool?
+    var isGroupChat: Bool? = false
+    var isOnline: Bool? = false
     var lastSender: String?
     var membersCount: Int?
     var membersOnline: Int?
-    var hasStory: Bool?
+    var hasStory: Bool? = false
     
     // MARK: - Logic
     func timeText() -> String? {

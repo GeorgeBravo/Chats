@@ -33,12 +33,20 @@ final class ThreadsChatListRouter: ViewableRouter<ThreadsChatListInteractable, T
     private var cameraScreenBuilder: CameraScreenBuildable
     private var cameraScreenRouter: ViewableRouting?
     
+    private var threadsChatBuilder: ThreadsChatBuildable
+    private var threadsChatRouter: ViewableRouting?
+    
+    private var chatListVC: ThreadsChatListViewControllable
+    
     // MARK: - Init
     init(
         interactor: ThreadsChatListInteractable,
         viewController: ThreadsChatListViewControllable,
-        _ cameraScreenBuilder: CameraScreenBuildable
+        _ cameraScreenBuilder: CameraScreenBuildable,
+        _ threadsChatBuilder: ThreadsChatBuildable
     ) {
+        self.chatListVC = viewController
+        self.threadsChatBuilder = threadsChatBuilder
         self.cameraScreenBuilder = cameraScreenBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
@@ -46,6 +54,14 @@ final class ThreadsChatListRouter: ViewableRouter<ThreadsChatListInteractable, T
 }
 
 extension ThreadsChatListRouter: ThreadsChatListRouting {
+    func openChatScreen() {
+        let threadsChatRouter = threadsChatBuilder.build(withListener: interactor, withVC: chatListVC)
+        self.threadsChatRouter = threadsChatRouter
+        
+        attach(threadsChatRouter)
+        present(threadsChatRouter, animated: true, modalPresentationStyle: .custom)
+    }
+    
     func showCameraScreen() {
         let cameraScreenRouter = cameraScreenBuilder.build(withListener: interactor)
         self.cameraScreenRouter = cameraScreenRouter

@@ -78,7 +78,7 @@ final class CameraScreenViewController: UIViewController {
     
     private var backButton: UIButton = {
         let button = UIButton(frame: .zero)
-        button.backgroundColor = .yellow
+        button.backgroundColor = .clear
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(hideCameraScreen), for: .touchUpInside)
         return button

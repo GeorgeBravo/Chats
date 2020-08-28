@@ -18,6 +18,7 @@ struct CircleProgressButtonSettings {
 
 @IBDesignable
 class CircleProgressButton: UIView {
+    var fullProgress: Bool = false
     var settings: CircleProgressButtonSettings {
         didSet {
             setNeedsDisplay()
@@ -96,7 +97,7 @@ class CircleProgressButton: UIView {
     }
     
     private func updateAsset() {
-        let isFullProgress = progress > 1.0
-        currentImageName = isFullProgress ? settings.fullProgressImageName : settings.baseImageName
+        fullProgress = progress > 1.0
+        currentImageName = fullProgress ? settings.fullProgressImageName : settings.baseImageName
     }
 }

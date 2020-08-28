@@ -59,7 +59,7 @@ class AvatarView: UIView {
     private func setupUserAvatar(model: UserAvatarModel) {
         userAvatar.cornerRadius = 33
         userAvatar.image = UIImage(named: model.image)
-        addOnlineView(isOnline: false)
+        addOnlineView(isOnline: model.isOnline)
         
         addStoryLayer(hasStory: model.hasStory)
         
@@ -87,7 +87,9 @@ class AvatarView: UIView {
         }
         groupChatBottomImageView.image = UIImage(named: model.bottomImage)
         
-        addOnlineView(isOnline: true)
+        addOnlineView(isOnline: model.isOnline)
+        addStoryLayer(hasStory: false)
+        
     }
     
     private func addStoryLayer(hasStory: Bool) {
@@ -133,5 +135,4 @@ class AvatarView: UIView {
             $0.height == 19.3
         }
     }
-    
 }

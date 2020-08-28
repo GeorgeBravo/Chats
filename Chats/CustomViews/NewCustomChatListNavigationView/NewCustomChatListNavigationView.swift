@@ -11,7 +11,7 @@ import UIKit
 private struct Constants {
     static let cameraButtonHeightWidth: CGFloat = 44.0
     static let pencilButtonHeightWidth: CGFloat = 44.0
-    static let avatarButtonHeightWidth: CGFloat = 44.0
+    static let avatarButtonHeightWidth: CGFloat = 53
     static let cameraTrailingSpacing: CGFloat = 19.0
     static let pencilLeadingSpacing: CGFloat = 23.0
 }
@@ -90,6 +90,19 @@ extension NewCustomChatListNavigationView {
             $0.width == Constants.cameraButtonHeightWidth
             $0.trailing == trailingAnchor - Constants.cameraTrailingSpacing
         }
+    }
+    
+    func setHidden(hidded: Bool) {
+        setView(view: self.pencilButton, hidden: hidded)
+        setView(view: self.avatarButton, hidden: hidded)
+        setView(view: self.cameraButton, hidden: hidded)
+        self.layoutIfNeeded()
+    }
+    
+    func setView(view: UIView, hidden: Bool) {
+        UIView.transition(with: view, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            view.alpha = hidden ? 0 : 1
+        })
     }
 }
 

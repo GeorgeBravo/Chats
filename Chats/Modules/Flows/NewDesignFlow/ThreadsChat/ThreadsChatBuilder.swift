@@ -21,7 +21,7 @@ final class ThreadsChatComponent: Component<ThreadsChatDependency> {
 // MARK: - Builder
 
 protocol ThreadsChatBuildable: Buildable {
-    func build(withListener: ThreadsChatListener) -> ThreadsChatRouting
+    func build(withListener: ThreadsChatListener, withVC: ThreadsChatListViewControllable) -> ThreadsChatRouting
 }
 
 final class ThreadsChatBuilder: Builder<ThreadsChatDependency> {
@@ -32,13 +32,16 @@ final class ThreadsChatBuilder: Builder<ThreadsChatDependency> {
 }
 
 extension ThreadsChatBuilder: ThreadsChatBuildable {
-
-    func build(withListener listener: ThreadsChatListener) -> ThreadsChatRouting {
+    func build(withListener listener: ThreadsChatListener, withVC: ThreadsChatListViewControllable) -> ThreadsChatRouting {
         let component = ThreadsChatComponent(dependency: dependency)
         let viewController = ThreadsChatViewController()
+        viewController.transitioningDelegate = viewController.transitionController
+        if let chatListVC = withVC as? ThreadsChatListViewController {
+             viewController.transitionController.fromDelegate = chatListVC
+        }
         let interactor = ThreadsChatInteractor(presenter: viewController)
         interactor.listener = listener
-
+        
         return ThreadsChatRouter(interactor: interactor, viewController: viewController)
     }
 }
