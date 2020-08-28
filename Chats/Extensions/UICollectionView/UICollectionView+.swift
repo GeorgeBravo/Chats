@@ -34,4 +34,11 @@ extension UICollectionView {
 
         return cell
     }
+    
+    func dequeueReusableCell<T: UICollectionViewCell>(of type: T.Type, for indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: String(describing: type.self), for: indexPath) as? T else {
+            fatalError("Unable to Dequeue Reusable Table View Cell")
+        }
+        return cell
+    }
 }

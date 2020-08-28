@@ -18,6 +18,9 @@ protocol CameraScreenPresentable: Presentable {
     var listener: CameraScreenPresentableListener? { get set }
 
     func setup(with previewLayer: AVCaptureVideoPreviewLayer?)
+    func updateCloseFriendsCollectionView()
+    func updatePageControl(isOnLeftSide: Bool)
+    func setPageControl(needShow: Bool)
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
@@ -33,14 +36,17 @@ final class CameraScreenInteractor: PresentableInteractor<CameraScreenPresentabl
     weak var router: CameraScreenRouting?
     weak var listener: CameraScreenListener?
     private let cameraManager = CameraManager()
-
+    private var closeFriendsCollectionViewDataSource: CloseFriendsCollectionViewDataSource
+    
     // TODO: Add additional dependencies to constructor. Do not perform any logic in constructor.
 
     // MARK: - Life cycle
     override init(presenter: CameraScreenPresentable) {
+        closeFriendsCollectionViewDataSource = CloseFriendsCollectionViewDataSource()
         super.init(presenter: presenter)
         presenter.listener = self
         cameraManager.delegate = self
+        closeFriendsCollectionViewDataSource.delegate = self
     }
 
     override func didBecomeActive() {
@@ -65,12 +71,20 @@ extension CameraScreenInteractor: CameraScreenPresentableListener {
         cameraManager.checkCameraAuthorizationStatus()
     }
     
+    func getCloseFriendCollectionViewDataSourceAndDelegate() -> CloseFriendsCollectionViewDataSource {
+        return closeFriendsCollectionViewDataSource
+    }
+    
     func stopCameraSession() {
         cameraManager.stopCamera()
     }
     
     func hideCameraScreen() {
         listener?.hideCameraScreen()
+    }
+    
+    func fillCloseFriendsCollectionViewDataSource() {
+        closeFriendsCollectionViewDataSource.fillModels(with: [CloseFriendCollectionViewCellModel(userImage: nil, isPhotoCellModel: true), CloseFriendCollectionViewCellModel(userImage: #imageLiteral(resourceName: "Dan-Leonard")), CloseFriendCollectionViewCellModel(userImage: #imageLiteral(resourceName: "roflan"))])
     }
     
 }
@@ -82,4 +96,19 @@ extension CameraScreenInteractor: CameraManagerDelegate {
         presenter.setup(with: previewLayer)
     }
     
+}
+
+extension CameraScreenInteractor: CloseFriendsCollectionViewDataSourceDelegate {
+    
+    func updateCloseFriendsCollectionView() {
+        presenter.updateCloseFriendsCollectionView()
+    }
+    
+    func updatePageControl(isOnLeftSide: Bool) {
+        presenter.updatePageControl(isOnLeftSide: isOnLeftSide)
+    }
+    
+    func setPageControl(needShow: Bool) {
+        presenter.setPageControl(needShow: needShow)
+    }
 }

@@ -61,4 +61,11 @@ extension UIView{
         shape.path = maskPath.cgPath
         layer.mask = shape
     }
+    
+    static func underlayViewCornerRadius() -> CGFloat {
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let topInset = window?.safeAreaInsets.top ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        return topInset > statusBarHeight ? 40 : 5
+    }
 }

@@ -50,7 +50,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return animation
     }()
     
-    private lazy var userAvatar: UIImageView = {
+    private(set) lazy var userAvatar: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "roflan")
         imageView.contentMode = .scaleToFill
@@ -75,7 +75,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return view
     }()
     
-    private lazy var userName: UILabel = {
+    private(set) lazy var userName: UILabel = {
         let label = UILabel()
         label.font = UIFont.helveticaNeueFontOfSize(size: 16.7, style: .medium)
         label.textAlignment = .left
@@ -146,9 +146,9 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         // add a TAP gesture
         // note that adding the PAN gesture to a cell disables the built-in tap responder (didSelectRowAtIndexPath)
         // so we can add in our own here if we want both swipe and tap actions
-        let tRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tRecognizer.delegate = self
-        addGestureRecognizer(tRecognizer)
+//        let tRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+//        tRecognizer.delegate = self
+//        addGestureRecognizer(tRecognizer)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -351,7 +351,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     }
     
     private func setupViews() {
-        selectionStyle = .none
+        selectionColor = .clear
         
         self.contentView.addSubview(mainView) {
             $0.top == contentView.topAnchor + 15

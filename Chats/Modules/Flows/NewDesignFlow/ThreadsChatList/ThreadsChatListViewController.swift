@@ -29,6 +29,8 @@ final class ThreadsChatListViewController: UIViewController {
     var navigationBarViewHeightConstraint: NSLayoutConstraint?
     private var lastContentOffset: CGFloat = 0
     
+    private var selectedIndexPath: IndexPath?
+    
     // MARK: - UI Variables
     private var navigationBarView: NewCustomChatListNavigationView = {
         let view = NewCustomChatListNavigationView()
@@ -219,6 +221,17 @@ extension ThreadsChatListViewController: UITableViewDataSource , UITableViewDele
             navigationBarView.setHidden(hidded: false)
         }
     }
+        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        
+        let viewController = ThreadsChatViewController()
+        viewController.transitioningDelegate = viewController.transitionController
+//        viewController.transitionController.toDelegate = viewController
+        viewController.transitionController.fromDelegate = self
+        viewController.modalPresentationStyle = .custom
+        present(viewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - NewCustomChatListNavigationViewDelegate
@@ -237,17 +250,70 @@ extension ThreadsChatListViewController: NewCustomChatListNavigationViewDelegate
 }
 
 extension ThreadsChatListViewController: SlidingCellDelegate {
-    func hasPerformedSwipe(touch: CGPoint) {
-        if let indexPath = chatTableView.indexPathForRow(at: touch) {
-            // Access the image or the cell at this index path
-            print("got a swipe row:\(indexPath.row)")
+        func hasPerformedSwipe(touch: CGPoint) {
+            if let indexPath = chatTableView.indexPathForRow(at: touch) {
+                // Access the image or the cell at this index path
+                print("got a swipe row:\(indexPath.row)")
+            }
+        }
+        
+        func hasPerformedTap(touch: CGPoint) {
+            print("yo")
+            if let indexPath = chatTableView.indexPathForRow(at: touch) {
+                // Access the image or the cell at this index path
+                print("got a tap row:\(indexPath.row)")
+            }
         }
     }
+
+        
+extension ThreadsChatListViewController: ChatAnimatorDelegate {
     
-    func hasPerformedTap(touch: CGPoint) {
-        if let indexPath = chatTableView.indexPathForRow(at: touch) {
-        // Access the image or the cell at this index path
-            print("got a tap row:\(indexPath.row)")
-        }
+    private func chatCell() -> ThreadsChatListTableViewCell? {
+        guard let indexPath = selectedIndexPath else { return nil }
+        return chatTableView.cellForRow(at: indexPath) as? ThreadsChatListTableViewCell
+    }
+    
+    private func chatModel() -> ThreadsChatListTableViewCellModel? {
+        guard let indexPath = selectedIndexPath else { return nil }
+        
+        return listener?.cellForRow(at: indexPath) as? ThreadsChatListTableViewCellModel
+    }
+    
+    func frame(for animator: ChatAnimator) -> CGRect? {
+        guard let cell = chatCell() else { return nil }
+        
+        return chatTableView.convert(cell.frame, to: view)
+    }
+    
+    func snapshot(for animator: ChatAnimator) -> UIView? {
+        chatCell()?.snapshotView(afterScreenUpdates: false)
+    }
+    
+    func image(for animator: ChatAnimator) -> UIImage? {
+//        UIImage(named: chatModel()?.imageLink ?? "")
+        chatCell()?.userAvatar.image
+    }
+    
+    func imageFrame(for animator: ChatAnimator) -> CGRect? {
+        guard let chatCell = chatCell() else { return nil }
+        return chatCell.userAvatar.superview?.convert(chatCell.userAvatar.frame, to: chatCell)
+    }
+    
+    func name(for animator: ChatAnimator) -> String? {
+        chatModel()?.collocutorName
+    }
+    
+    func nameLabelFrame(for animator: ChatAnimator) -> CGRect? {
+        guard let chatCell = chatCell() else { return nil }
+        return chatCell.userName.superview?.convert(chatCell.userName.frame, to: chatCell)
+    }
+    
+    func animationDidStart(for imageAnimator: ChatAnimator) {
+        chatCell()?.isHidden = true
+    }
+    
+    func animationDidEnd(for imageAnimator: ChatAnimator) {
+        chatCell()?.isHidden = false
     }
 }
