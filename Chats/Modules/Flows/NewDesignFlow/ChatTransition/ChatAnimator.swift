@@ -12,9 +12,9 @@ import UIKit
 protocol ChatAnimatorDelegate: class {
     func frame(for animator: ChatAnimator) -> CGRect?
     func snapshot(for animator: ChatAnimator) -> UIView?
-    func image(for animator: ChatAnimator) -> UIImage?
+    func imageSnapshot(for animator: ChatAnimator) -> UIView?
     func imageFrame(for animator: ChatAnimator) -> CGRect?
-    func name(for animator: ChatAnimator) -> String?
+    func nameLabel(for animator: ChatAnimator) -> UIView?
     func nameLabelFrame(for animator: ChatAnimator) -> CGRect?
     
     func animationDidStart(for imageAnimator: ChatAnimator)
@@ -44,9 +44,9 @@ class ChatAnimator: NSObject {
             let destinationController = transitionContext.viewController(forKey: .to),
             let snapshotFrame = fromDelegate?.frame(for: self),
             let snapshot = fromDelegate?.snapshot(for: self),
-            let image = fromDelegate?.image(for: self),
+            let imageSnapshot = fromDelegate?.imageSnapshot(for: self),
             let imageFrame = fromDelegate?.imageFrame(for: self),
-            let name = fromDelegate?.name(for: self),
+            let nameLabel = fromDelegate?.nameLabel(for: self),
             let nameLabelFrame = fromDelegate?.nameLabelFrame(for: self)
         else {
             print("animatePresenting guard")
@@ -92,20 +92,9 @@ class ChatAnimator: NSObject {
         containerView.addSubview(navBar)
         
         //MARK: - Avatar & name
-        let avatarImageView = UIImageView()
-        avatarImageView.image = image
-        avatarImageView.frame = imageFrame
-        avatarImageView.layer.cornerRadius = imageFrame.height / 2
-        avatarImageView.clipsToBounds = true
-        avatarImageView.contentMode = .scaleAspectFill
-        navBar.addSubview(avatarImageView)
-        
-        let nameLabel = UILabel()
-        nameLabel.text = name
-        nameLabel.font = UIFont.helveticaNeueFontOfSize(size: 16.7, style: .medium)
-        nameLabel.textAlignment = .left
-        nameLabel.textColor = UIColor(named: ColorName.optionsBlackColor)
-        
+        imageSnapshot.frame = imageFrame
+        navBar.addSubview(imageSnapshot)
+                
         nameLabel.frame = nameLabelFrame
         navBar.addSubview(nameLabel)
         
@@ -116,7 +105,7 @@ class ChatAnimator: NSObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 snapshot.removeFromSuperview()
                 mainView.removeFromSuperview()
-                avatarImageView.removeFromSuperview()
+                imageSnapshot.removeFromSuperview()
                 nameLabel.removeFromSuperview()
                 navBarSuperview.removeFromSuperview()
                 navBar.removeFromSuperview()

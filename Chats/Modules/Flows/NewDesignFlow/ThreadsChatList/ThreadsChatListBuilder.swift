@@ -40,7 +40,8 @@ extension ThreadsChatListBuilder: ThreadsChatListBuildable {
         interactor.listener = listener
         
         let cameraScreenBuilder = CameraScreenBuilder(dependency: component)
+        let threadsChatBuilder = ThreadsChatBuilder(dependency: component)
 
-        return ThreadsChatListRouter(interactor: interactor, viewController: viewController, cameraScreenBuilder)
+        return ThreadsChatListRouter(interactor: interactor, viewController: viewController, cameraScreenBuilder, threadsChatBuilder)
     }
 }

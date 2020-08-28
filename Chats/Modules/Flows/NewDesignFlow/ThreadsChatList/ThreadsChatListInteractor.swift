@@ -13,6 +13,7 @@ protocol ThreadsChatListRouting: ViewableRouting {
 
     func showCameraScreen()
     func hideCameraScreen()
+    func openChatScreen()
     // TODO: Declare methods the interactor can invoke to manage sub-tree view the router.
 }
 
@@ -73,7 +74,7 @@ final class ThreadsChatListInteractor: PresentableInteractor<ThreadsChatListPres
             ThreadsChatListTableViewCellModel(title: "", collocutorName: "Dmitriy T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 55, id: 4, isGroupChat: true, isOnline: true, lastSender: "Mishalaka"),
             ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 5, isGroupChat: true, isOnline: true, lastSender: "Lisa"),
              ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 31, isGroupChat: true,isOnline: true, lastSender: "Lisa"),
-             ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 15, isGroupChat: true, isOnline: true, lastSender: "Lisa"),
+             ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 15, isGroupChat: true, isOnline: true, lastSender: "Lisa", hasStory: false),
              ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 55, isGroupChat: true,  lastSender: "Lisa"),
              ThreadsChatListTableViewCellModel(title: "", collocutorName: "Susana T. Trinh", message: "Just a quick reminder! We need to book flights back from the trip beca..." , timeSent: "1.15 P.M", sentDate: Date().dayBefore.dayBefore.dayBefore.dayBefore.dayBefore.dayBefore, imageLink: nil, messageCount: 99, id: 52, isGroupChat: true, lastSender: "Lisa")
         ]
@@ -84,6 +85,10 @@ final class ThreadsChatListInteractor: PresentableInteractor<ThreadsChatListPres
 extension ThreadsChatListInteractor: ThreadsChatListInteractable {}
 
 extension ThreadsChatListInteractor: ThreadsChatListPresentableListener {
+    func showChat() {
+        router?.openChatScreen()
+    }
+    
     func combineChatListSections() {
         let firstSection = ChatListTableViewSectionModel(headerViewType: .chatList, title: "", cellModels: favoriteChatListModels)
         let secondSection = ChatListTableViewSectionModel(headerViewType: .chatList, title: "CHATS", cellModels: chatListModels)

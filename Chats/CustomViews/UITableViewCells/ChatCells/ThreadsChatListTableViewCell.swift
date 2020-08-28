@@ -30,12 +30,6 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     var lastTranslation = CGPoint()
     
     //MARK: - Views
-    private lazy var mainView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
     private lazy var deleteCellView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -50,87 +44,46 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         return animation
     }()
     
-    private(set) lazy var userAvatar: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "roflan")
-        imageView.contentMode = .scaleToFill
-        imageView.cornerRadius = 33
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+    private lazy var mainView = UIView.create {
+        $0.backgroundColor = .white
+    }
     
-    private lazy var onlineView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 15.35
-        view.clipsToBounds = true
-        view.backgroundColor = .white
-        return view
-    }()
+    private(set) lazy var avatarView = AvatarView.create {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
     
-    private lazy var greenIndicator: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 9.65
-        view.clipsToBounds = true
-        view.backgroundColor = .green
-        return view
-    }()
+    private(set) lazy var userName = UILabel.create {
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 16.7, style: .medium)
+        $0.textAlignment = .left
+        $0.textColor = UIColor(named: ColorName.optionsBlackColor)
+    }
     
-    private(set) lazy var userName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.helveticaNeueFontOfSize(size: 16.7, style: .medium)
-        label.textAlignment = .left
-        label.textColor = UIColor(named: ColorName.optionsBlackColor)
-        return label
-    }()
+    private lazy var timeSent = UILabel.create {
+        $0.font =  UIFont.helveticaNeueFontOfSize(size: 13.3, style: .regular)
+        $0.textAlignment = .right
+        $0.textColor = UIColor(named: ColorName.slateGrey)
+    }
     
-    private lazy var timeSent: UILabel = {
-        let label = UILabel()
-        label.font =  UIFont.helveticaNeueFontOfSize(size: 13.3, style: .regular)
-        label.textAlignment = .right
-        label.textColor = UIColor(named: ColorName.slateGrey)
-        return label
-    }()
+    private lazy var messageLabel = UILabel.create {
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 14, style: .regular)
+        $0.textAlignment = .left
+        $0.textColor = .black
+        $0.numberOfLines = 1
+    }
     
-    private lazy var groupChatTopImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "roflan")
-        imageView.clipsToBounds = true
-        imageView.cornerRadius = 22.35
-        return imageView
-    }()
+    private lazy var messageCount = UILabel.create {
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 12.7, style: .medium)
+        $0.textAlignment = .center
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
+        $0.textColor = UIColor.white
+    }
     
-    private lazy var groupChatBottomImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Dan-Leonard")
-        imageView.clipsToBounds = true
-        imageView.cornerRadius = 22.35
-        return imageView
-    }()
-    
-    private lazy var messageLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.helveticaNeueFontOfSize(size: 14, style: .regular)
-        label.textAlignment = .left
-        label.textColor = .black
-        label.numberOfLines = 1
-        return label
-    }()
-    
-    private lazy var messageCount: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.helveticaNeueFontOfSize(size: 12.7, style: .medium)
-        label.textAlignment = .center
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 10
-        label.backgroundColor = UIColor(named: ColorName.coolGreyTwo)
-        label.textColor = UIColor.white
-        return label
-    }()
-    private lazy var lastActivityLabel = UILabel
-        .create {
-            $0.font = UIFont.helveticaNeueFontOfSize(size: 12, style: .regular)
-            $0.textAlignment = .left
-            $0.textColor = UIColor(named: ColorName.warmGrey)
+    private lazy var lastActivityLabel = UILabel.create {
+        $0.font = UIFont.helveticaNeueFontOfSize(size: 12, style: .regular)
+        $0.textAlignment = .left
+        $0.textColor = UIColor(named: ColorName.warmGrey)
     }
     
     
@@ -280,75 +233,6 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
     }
     
     // MARK: - UI
-    private func setupGroupChat(isGroup: Bool) {
-        if isGroup {
-            userAvatar.image = nil
-            userAvatar.cornerRadius = 0
-            userAvatar.addSubview(groupChatTopImageView) {
-                $0.top == userAvatar.topAnchor
-                $0.trailing == userAvatar.trailingAnchor
-                $0.width == 44.7
-                $0.height == 44.7
-            }
-            
-            userAvatar.addSubview(groupChatBottomImageView) {
-                $0.bottom == userAvatar.bottomAnchor
-                $0.leading == userAvatar.leadingAnchor
-                $0.width == 44.7
-                $0.height == 44.7
-            }
-            addOnlineView(isOnline: true)
-        } else {
-            userAvatar.cornerRadius = 33
-            groupChatTopImageView.removeFromSuperview()
-            groupChatBottomImageView.removeFromSuperview()
-            addOnlineView(isOnline: false)
-        }
-    }
-    
-    private func addStoryLayer(hasStory: Bool) {
-        if hasStory {
-            let radial = GradientView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
-            radial.backgroundColor = UIColor.clear
-            userAvatar.layer.borderColor = UIColor.white.cgColor
-            userAvatar.layer.borderWidth = 4
-            mainView.addSubview(radial) {
-                $0.top == userAvatar.topAnchor - 2
-                $0.leading == userAvatar.leadingAnchor - 2
-                $0.width == 70
-                $0.height == 70
-            }
-            radial.addCircleGradiendBorder(5)
-        } else {
-            userAvatar.layer.borderWidth = 0
-            userAvatar.layer.borderColor = UIColor.clear.cgColor
-            for subview in mainView.subviews {
-                if subview.isKind(of: GradientView.self) {
-                    subview.removeFromSuperview()
-                }
-            }
-        }
-    }
-    
-    private func addOnlineView(isOnline: Bool) {
-        if !isOnline {
-            onlineView.removeFromSuperview()
-            greenIndicator.removeFromSuperview()
-            return
-        }
-        mainView.addSubview(onlineView) {
-            $0.bottom == userAvatar.bottomAnchor + 2
-            $0.trailing == userAvatar.trailingAnchor + 5
-            $0.width == 30.7
-            $0.height == 30.7
-        }
-        onlineView.addSubview(greenIndicator) {
-            $0.centerX ==  onlineView.centerXAnchor
-            $0.centerY == onlineView.centerYAnchor
-            $0.width == 19.3
-            $0.height == 19.3
-        }
-    }
     
     private func setupViews() {
         selectionColor = .clear
@@ -366,13 +250,14 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             $0.width == 44
             $0.height == 44
         }
+        
         self.contentView.bringSubviewToFront(mainView)
         
-        mainView.addSubview(userAvatar) {
+        mainView.addSubview(avatarView) {
             $0.centerY == mainView.centerYAnchor
-            $0.leading == mainView.leadingAnchor + 10
-            $0.width == 66
-            $0.height == 66
+            $0.leading == mainView.leadingAnchor + 20
+            $0.width == 70
+            $0.height == 70
         }
         
         mainView.addSubview(timeSent) {
@@ -384,7 +269,7 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         
         mainView.addSubview(userName) {
             $0.top == mainView.topAnchor + 13
-            $0.leading == userAvatar.trailingAnchor + 13.3
+            $0.leading == avatarView.trailingAnchor + 13.3
             $0.trailing <= timeSent.leadingAnchor + 10
             $0.height == 20
         }
@@ -399,13 +284,13 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         
         mainView.addSubview(messageLabel) {
             $0.top == userName.bottomAnchor
-            $0.leading == userAvatar.trailingAnchor + 13.3
+            $0.leading == avatarView.trailingAnchor + 13.3
             $0.trailing == timeSent.leadingAnchor - 10
         }
         
         mainView.addSubview(lastActivityLabel) {
             $0.top == messageLabel.bottomAnchor + 2
-            $0.leading == userAvatar.trailingAnchor + 13.3
+            $0.leading == avatarView.trailingAnchor + 13.3
             $0.height == 14
             $0.bottom == mainView.bottomAnchor - 10
         }
@@ -430,21 +315,19 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
             userName.text = collocutorName
         }
         
-        if let goupedChat = model.isGroupChat {
-            setupGroupChat(isGroup: goupedChat)
+        let isGroupChat = model.isGroupChat ?? false
+        if isGroupChat {
+            let groupModel = GroupAvatarModel(topImage: "roflan", bottomImage: "Dan-Leonard", isOnline: model.isOnline ?? false)
+            avatarView.setupView(model: groupModel)
+        } else {
+            let userModel = UserAvatarModel(image: model.imageLink ?? "roflan", hasStory: model.hasStory ?? false, isOnline: model.isOnline ?? false)
+            avatarView.setupView(model: userModel)
         }
         
-        if let isOnline = model.isOnline {
-            addOnlineView(isOnline: isOnline)
+        if let isSelected = model.isSelected {
+            chatSelected = isSelected
         }
         
-        if let hasStory = model.hasStory {
-            addStoryLayer(hasStory: hasStory)
-        }
-        
-        if let isSelectedd = model.isSelected {
-            chatSelected = isSelectedd
-        }
         if let groupChat = model.isGroupChat, let  message = model.message , let sender = model.lastSender {
             if groupChat == true {
                 setupGroupChatMessage(lastSender: sender, message: message)
@@ -463,9 +346,6 @@ class ThreadsChatListTableViewCell: UITableViewCell, TableViewCellSetup {
         }
         if let id = model.id {
             chatId = id
-        }
-        if let image = model.imageLink {
-            userAvatar.image = UIImage(named: image)
         }
     }
 }
